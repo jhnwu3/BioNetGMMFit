@@ -418,7 +418,6 @@ int main() {
     cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
     cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
     cout << "sdbeta:" << sdbeta << endl;
-    // cout << "wt:" << endl << wt << endl;
 
     MatrixXd GBMAT(0, 0); // iterations of global best vectors
     MatrixXd PBMAT(nParts, Npars + 1); // particle best matrix + 1 for cost component
@@ -494,14 +493,10 @@ int main() {
             if(step == 0){
                 /* temporarily assign specified k constants */
                 for(int i = 0; i < Npars; i++){
-                    POSMAT(particle, i) = pUnifDist(pGenerator);//tru.k(i) + alpha * (0.5 - unifDist(pGenerator));
-                    // if(i > 1){
-                    //     POSMAT(particle, i) = tru.k(i);
-                    // }
+                    POSMAT(particle, i) = pUnifDist(pGenerator);
+                 
                 }
                 
-              //  POSMAT.row(particle) = tru.k;
-
                 struct K pos;
                 pos.k = VectorXd::Zero(Npars);
                 for(int i = 0; i < Npars; i++){
@@ -722,18 +717,8 @@ int main() {
         sfi = sfi - (sfe - sfg) / nSteps2;   // reduce the inertial weight after each step 
         sfs = sfs + (sfe - sfg) / nSteps2;
 
-        if(step == 0){ // quick plug to see PBMAT
-            cout << "New PBMAT:" << endl;
-            cout << PBMAT << endl << endl;
-        }
     }
     cout << "GBMAT after targeted PSO:" << endl << GBMAT << endl;
-    trukCost = 0;
-    for(int t = 0; t < nTimeSteps; t++){
-        trukCost += calculate_cf2(Yt3Vecs[t], Xt3Vecs[t], weights[t]);
-    }
-
-    cout << "truk: " << tru.k.transpose() << " with trukCost with new weights:" << trukCost << endl;
     dist = calculate_cf1(tru.k, GBVEC);
     cout << "total difference b/w truk and final GBVEC:" << dist << endl; // compute difference
     
