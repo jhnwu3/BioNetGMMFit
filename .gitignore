@@ -30,3 +30,16 @@
 *.exe
 *.out
 *.app
+
+#VScode 
+*.json
+.vscode/*
+.vscode/c_cpp_properties.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
