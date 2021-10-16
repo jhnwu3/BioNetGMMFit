@@ -466,7 +466,7 @@ int main() {
     }
 
     double costSeedK = 0;
-    X_t = (exponentialMatrix(seed.k, nSpecies) * X_0.transpose()).transpose();
+    X_t = (exponentialMatrix(seed.k, tf, nSpecies) * X_0.transpose()).transpose();
     XtmVec = moment_vector(X_t, nMoments);
     costSeedK = calculate_cf2(YtmVec, XtmVec, weight);
     cout << "seedk:"<< seed.k.transpose()<< "| cost:" << costSeedK << endl;
@@ -503,7 +503,7 @@ int main() {
                     pos.k(i) = POSMAT(particle, i);
                 }
                 double cost = 0;
-                X_t = (exponentialMatrix(pos.k, nSpecies) * X_0.transpose()).transpose();
+                X_t = (evolutionMatrix(pos.k, tf, nSpecies) * X_0.transpose()).transpose();
                 XtmVec = moment_vector(X_t, nMoments);
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
 
@@ -531,7 +531,7 @@ int main() {
                 POSMAT.row(particle) = pos.k;
 
                 double cost = 0;
-                X_t = (exponentialMatrix(pos.k, nSpecies) * X_0.transpose()).transpose();
+                X_t = (evolutionMatrix(pos.k, tf, nSpecies) * X_0.transpose()).transpose();
                 XtmVec = moment_vector(X_t, nMoments);
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
                
@@ -595,7 +595,7 @@ int main() {
             gPos.k = GBVEC;
             
             double cost = 0;
-            X_t = (exponentialMatrix(gPos.k, nSpecies) * X_0.transpose()).transpose();
+            X_t = (evolutionMatrix(gPos.k, tf, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
             weight = customWtMat(Y_t, X_t, nMoments, N, subset);
             cost = calculate_cf2(YtmVec, XtmVec, weight);
@@ -661,7 +661,7 @@ int main() {
                 }
                 //VectorXd XtPSO3 = VectorXd::Zero(nMoments);
                 double cost = 0;
-                X_t = (exponentialMatrix(pos.k, nSpecies) * X_0.transpose()).transpose();
+                X_t = (evolutionMatrix(pos.k, tf, nSpecies) * X_0.transpose()).transpose();
                 XtmVec = moment_vector(X_t, nMoments);
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
                 
@@ -690,7 +690,7 @@ int main() {
                 
                 double cost = 0;
                 /* solve ODEs with new system and recompute cost */
-                X_t = (exponentialMatrix(pos.k, nSpecies) * X_0.transpose()).transpose();
+                X_t = (evolutionMatrix(pos.k, tf, nSpecies) * X_0.transpose()).transpose();
                 XtmVec = moment_vector(X_t, nMoments);
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
                 
