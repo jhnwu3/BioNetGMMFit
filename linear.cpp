@@ -595,7 +595,7 @@ int main() {
             gPos.k = GBVEC;
             
             double cost = 0;
-            X_t = (exponentialMatrix(pos.k, nSpecies) * X_0.transpose()).transpose();
+            X_t = (exponentialMatrix(gPos.k, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
             weight = customWtMat(Y_t, X_t, nMoments, N, subset);
             cost = calculate_cf2(YtmVec, XtmVec, weight);
