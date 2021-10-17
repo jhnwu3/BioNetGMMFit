@@ -81,14 +81,15 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
             }
         }
     }
-    cout << "line 84" << endl;
+    cout << "line 84:"<< nMoments << endl;
     // concatenate all moment vectors needed.
     for(int i = 0; i < nMoments; i++){
+        cout << "i:" << i << endl;
         if(i < sample.cols()){
             moments(i) = mu(i);
         }else if (i >= sample.cols() && i < 2 * sample.cols()){
             moments(i) = variances(i - sample.cols());
-        }else if (i >= 2 * N_SPECIES){
+        }else if (i >= 2 * sample.cols()){
             moments(i) = covariances(i - (2 * sample.cols()));
         }
     }
