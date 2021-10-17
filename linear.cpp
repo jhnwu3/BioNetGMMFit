@@ -441,7 +441,7 @@ int main() {
     cout << "PSO begins!" << endl;
     for(int step = 0; step < nSteps; step++){
         cout << "step:" << step << endl;
-    #pragma omp parallel for 
+    // #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
@@ -494,8 +494,8 @@ int main() {
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
                
                 /* update gBest and pBest */
-                #pragma omp critical
-               {
+            //     #pragma omp critical
+            //    {
                 if(cost < PBMAT(particle, Npars)){ // particle best cost
                     for(int i = 0; i < Npars; i++){
                         PBMAT(particle, i) = pos.k(i);
@@ -506,7 +506,7 @@ int main() {
                         GBVEC = pos.k;
                     }   
                 }
-              }
+            //   }
             }
         }
         GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after resizing
