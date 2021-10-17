@@ -81,6 +81,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
             }
         }
     }
+    cout <<"covariances:"<< covariances.size() << endl;
     cout << "line 84:"<< nMoments << endl;
     // concatenate all moment vectors needed.
     for(int i = 0; i < nMoments; i++){
