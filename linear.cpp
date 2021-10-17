@@ -410,9 +410,9 @@ int main() {
     cout << "Calculating Yt!" << endl;
 
     Y_t = (evolutionMatrix(tru.k, tf, nSpecies) * Y_0.transpose()).transpose();
-    cout << "did this compute?" << endl;
+    
     YtmVec = moment_vector(Y_t, nMoments);
-
+    cout << "did this compute?" << endl;
     /* Instantiate seedk aka global costs */
     struct K seed;
     seed.k = VectorXd::Zero(Npars); 
