@@ -8,7 +8,7 @@ all: linear nonlinear
 linear: linear.o
 	g++ linear.o -o linear -fopenmp
 linear.o: linear.cpp
-	g++ -c -O3 linear.cpp -o para.o -fopenmp
+	g++ -c -O3 linear.cpp -o linear.o -fopenmp
 
 	
 nonlinear: nonlinear.o
