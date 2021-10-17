@@ -460,11 +460,9 @@ int main() {
                     pos.k(i) = POSMAT(particle, i);
                 }
                 double cost = 0;
-                cout << "line 463" << endl;
                 X_t = (evolutionMatrix(pos.k, tf, nSpecies) * X_0.transpose()).transpose();
                 XtmVec = moment_vector(X_t, nMoments);
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
-                cout << "line 466" << endl;
                 /* instantiate PBMAT */
                 for(int i = 0; i < Npars; i++){
                     PBMAT(particle, i) = POSMAT(particle, i);
