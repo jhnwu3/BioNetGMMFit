@@ -455,7 +455,7 @@ int main() {
     tru.k <<  0.27678200,  0.83708059, 0.44321700, 0.04244124, 0.05516000, 0.30464502; // Bill k
     cout << "Calculating Yt!" << endl;
 
-    Y_t = (evolutionMatrix(tru.k, nSpecies) * Y_0.transpose()).transpose();
+    Y_t = (evolutionMatrix(tru.k, tf, nSpecies) * Y_0.transpose()).transpose();
     YtmVec = moment_vector(Y_t, nMoments);
 
     /* Instantiate seedk aka global costs */
