@@ -68,7 +68,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     for(int c = 0; c < nVar; c++){
         variances(c) = (sample.col(c).array() - mu(c)).square().sum() / ((double) sample.col(c).array().size() - 1);
     }
-
+    cout << "variances:" << variances << endl;
     int nCross = nMoments - 2*sample.cols();
     VectorXd covariances(0);
     if(nCross > 0){
