@@ -493,12 +493,11 @@ int main() {
     }
     
     /* matrix math for the z random vals. */
-    MatrixXd rbind(2, N); // first calculate a 2xN rbind matrix
     for (int i = 0; i < x.size(); i++) {
         rbind(0, i) = x(i) - mu_x;
         rbind(1, i) = y(i) - mu_y;
     }
-    MatrixXd zMean(1, N); // calculate the vector of means
+    
     zMean = sigma_12 * sigma_22.inverse() * rbind;
     for (int i = 0; i < zMean.size(); i++) {
         zMean(0, i) = zMean(0, i) + mu_z;
