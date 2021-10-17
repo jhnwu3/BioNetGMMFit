@@ -410,7 +410,7 @@ int main() {
     mt19937 gen(RanDev());
     uniform_real_distribution<double> unifDist(uniLowBound, uniHiBound);
     
-    MatrixXd weight = MatrixXd::Identity(nMoments);
+    MatrixXd weight = MatrixXd::Identity(nMoments, nMoments);
 
     cout << "Using two part PSO " << "Sample Size:" << N << " with:" << nMoments << " moments." << endl;
     cout << "Using Times:" << tf << endl;
