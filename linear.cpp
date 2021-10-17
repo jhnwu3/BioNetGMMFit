@@ -24,10 +24,6 @@ using namespace boost;
 using namespace boost::math;
 using namespace boost::numeric::odeint;
 
-/* typedefs for boost ODE-ints */
-typedef boost::array< double, N_SPECIES > State_N;
-typedef runge_kutta_cash_karp54< State_N > Error_RK_Stepper_N;
-typedef controlled_runge_kutta< Error_RK_Stepper_N > Controlled_RK_Stepper_N;
 
 struct Multi_Normal_Random_Variable
 {
@@ -58,49 +54,6 @@ struct K
 {
     VectorXd k;
 };
-
-struct Protein_Components {
-    int index;
-    MatrixXd mat;
-    VectorXd mVec;
-    double timeToRecord;
-    Protein_Components(double tf, int mom, int n) {
-        mVec = VectorXd::Zero(mom);
-        mat = MatrixXd::Zero(n, N_SPECIES);
-        timeToRecord = tf;
-    }
-};
-
-struct Moments_Mat_Obs
-{
-    struct Protein_Components& dComp;
-    Moments_Mat_Obs(struct Protein_Components& dCom) : dComp(dCom) {}
-    void operator()(State_N const& c, const double t) const
-    {
-        if (t == dComp.timeToRecord) {
-            int upperDiag = 2 * N_SPECIES;
-            for (int i = 0; i < N_SPECIES; i++) {
-                dComp.mVec(i) += c[i];
-                //cout << "see what's up:" << dComp.mVec.transpose() << endl;
-                dComp.mat(dComp.index, i) = c[i];
-                for (int j = i; j < N_SPECIES; j++) {
-                    if (i == j && (N_SPECIES + i) < dComp.mVec.size()) { // diagonal elements
-                        dComp.mVec(N_SPECIES + i) += c[i] * c[j]; // variances
-                    }
-                    else if (upperDiag < dComp.mVec.size()){
-                        dComp.mVec(upperDiag) += c[i] * c[j]; // covariances
-                        upperDiag++;
-                    }
-                }
-            }
-        }
-    }
-};
-
-State_N convertInit(const MatrixXd& sample, int index){
-    State_N c0 = {sample(index,0), sample(index,1), 0, 0, sample(index,4), 0};
-    return c0;
-}
 
 VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     VectorXd moments(nMoments);
