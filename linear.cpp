@@ -137,15 +137,9 @@ VectorXd comp_vel_vec(const VectorXd& posK, int seed, double epsi, double nan, i
         double pos = rPoint(px);
         if (pos > 1.0 - nan) {
             cout << "overflow!" << endl;
-            // while(pos > 1.0){
-            //     pos -= 0.001;
-            // }
             pos -= epsi;
         }else if (pos < nan) {
             cout << "underflow!"<< pos << endl;
-            // while( pos < 0.001){
-            //     pos += 0.001;
-            // }
             pos += epsi;
             cout << "pos" << posK.transpose() << endl; 
         }
@@ -355,7 +349,7 @@ int main() {
     int nParts2 = 5; // second part PSO
     int nSteps2 = 5000;
     int nMoments = (N_SPECIES * (N_SPECIES + 3)) / 2; // var + mean + cov
-    int hone = 24;
+    int hone = 4;
     //nMoments = 2*N_SPECIES; // mean + var only!
     VectorXd wmatup(4);
     wmatup << 0.15, 0.35, 0.60, 0.9;
