@@ -64,7 +64,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     if(nMoments > sample.cols()){
         nVar = 0;
     }
-    
+
     for(int c = 0; c < nVar; c++){
         variances(c) = (sample.col(c).array() - mu(c)).square().sum() / ((double) sample.col(c).array().size() - 1);
     }
@@ -440,6 +440,7 @@ int main() {
     /* Blind PSO begins */
     cout << "PSO begins!" << endl;
     for(int step = 0; step < nSteps; step++){
+        cout << "step:" << step << endl;
     #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
