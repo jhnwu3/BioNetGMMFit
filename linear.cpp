@@ -66,7 +66,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     }
     // dont forget to subtract mu.
     for(int c = 0; c < nVar; c++){
-        variances(c) = (sample.col(c).array()).square().sum() / ((double) sample.col(c).array().size() - 1);
+        variances(c) = (sample.col(c).array() - mu(c)).square().sum() / ((double) sample.col(c).array().size() - 1);
     }
 
     int nCross = nMoments - 2*sample.cols();
@@ -76,7 +76,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
         covariances.conservativeResize(nCross);
         for (int i = 0; i < sample.cols(); i++) {
             for (int j = i + 1; j < sample.cols(); j++) {
-                covariances(n) = ((sample.col(i).array() * sample.col(j).array()).sum())/( sample.rows() - 1);
+                covariances(n) = ((sample.col(i).array() -mu(i)) * (sample.col(j).array() - mu(j))).sum() / ( sample.rows() - 1);
                 n++;
             }
         }
