@@ -252,6 +252,8 @@ MatrixXd readIntoMatrix(ifstream& in, int rows, int cols) {
     return mat;
 }
 MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, const VectorXd& subCol){
+    
+    bool useInverse = true;
     /* first moment differences */
     MatrixXd fmdiffs = Yt - Xt; 
     /* second moment difference computations - @todo make it variable later */
@@ -296,11 +298,18 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
     }
     int rank = subCol.size();
-    MatrixXd wt = MatrixXd::Zero(rank, rank);
-
-    for(int i = 0; i < rank; i++){
-        wt(i,i) = 1 / variances(subCol(i)); // cleanup code and make it more vectorized later.
+    MatrixXd wt = MatrixXd::Identity(rank, rank);
+    if(!useInverse){
+        for(int i = 0; i < rank; i++){
+            wt(i,i) = 1 / variances(subCol(i)); // cleanup code and make it more vectorized later.
+        }
+    }else{
+        for(int i = 0; i < aDiff.rows(); i++){
+            wt += aDiff.row(i).transpose() * aDiff.row(i);
+        }
     }
+
+
     cout << "new wt mat:" << endl << wt << endl;
 
     return wt;
