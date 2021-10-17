@@ -152,7 +152,7 @@ VectorXd comp_vel_vec(const VectorXd& posK, int seed, double epsi, double nan, i
         double x = aDist(generator);
         double y = bDist(generator);
 
-        rPoint(smart) = (x / (x + y)); 
+        rPoint(px) = (x / (x + y)); 
     }
     
     return rPoint;
@@ -357,7 +357,7 @@ int main() {
     int nSteps = 5;
     int nParts2 = 5; // second part PSO
     int nSteps2 = 5000;
-    int nMoments = (N_SPECIES * (N_SPECIES + 3)) / 2; // var + mean + cov
+    int nMoments = (nSpecies * (nSpecies + 3)) / 2; // var + mean + cov
     int hone = 4;
     //nMoments = 2*N_SPECIES; // mean + var only!
     VectorXd wmatup(4);
@@ -394,8 +394,8 @@ int main() {
     ifstream Y0File("knewY.0.txt");
     VectorXd YtmVec(nMoments);
     VectorXd XtmVec(nMoments);
-    X_0_Full = readIntoMatrix(X0File, sizeFile, N_SPECIES);
-    Y_0_Full = readIntoMatrix(Y0File, sizeFile, N_SPECIES);
+    X_0_Full = readIntoMatrix(X0File, sizeFile, nSpecies);
+    Y_0_Full = readIntoMatrix(Y0File, sizeFile, nSpecies);
     X0File.close();
     Y0File.close();
     
