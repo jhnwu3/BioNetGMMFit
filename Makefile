@@ -14,7 +14,7 @@ linear.o: linear.cpp
 nonlinear: nonlinear.o
 	g++ nonlinear.o -o nonlinear -fopenmp
 nonlinear.o: nonlinear.cpp
-	g++ nonlinear.cpp -o nonlinear.o -fopenmp
+	g++ -c -O3 nonlinear.cpp -o nonlinear.o -fopenmp
 
 
 # this target deletes all files produced from the Makefile
