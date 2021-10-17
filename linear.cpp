@@ -396,8 +396,8 @@ int main() {
     Y0File.close();
     
     cout << "Blocking Data!" << endl;
-    X_0 = X_0_Full.block(startRow, 0, N, Npars);
-    Y_0 = Y_0_Full.block(startRow, 0, N, Npars);
+    X_0 = X_0_Full.block(startRow, 0, N, nSpecies);
+    Y_0 = Y_0_Full.block(startRow, 0, N, nSpecies);
     cout << "Using starting row of data:" << startRow << " and " << N << " data pts!" << endl;
     cout << "first row X0:" << X_0.row(0) << endl;
     cout << "final row X0:" << X_0.row(N - 1) << endl << endl << endl << endl;
