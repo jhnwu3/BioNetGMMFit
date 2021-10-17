@@ -307,7 +307,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         for(int i = 0; i < aDiff.rows(); i++){
             wt += aDiff.row(i).transpose() * aDiff.row(i);
         }
-        wt = wt.inverse();
+        wt = (wt / aDiff.rows()).inverse();
     }
 
 
@@ -645,7 +645,7 @@ int main() {
     for(int i = 0; i < nMoments; i++){
         subset(i) = i;
     }
-    // subset << 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11;//, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 ,23, 24, 25, 26;
+
     cout << "targeted PSO has started!" << endl; 
     sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
     sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
@@ -658,7 +658,6 @@ int main() {
             nearby = squeeze * nearby;
             /* reinstantiate gCost */
             struct K gPos;
-            // GBVEC << 0.648691,	0.099861,	0.0993075,	0.8542755,	0.049949,	0.0705955;
             gPos.k = GBVEC;
             
             double cost = 0;
