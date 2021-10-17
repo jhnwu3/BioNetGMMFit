@@ -1,982 +1,1133 @@
+// PSO_S.cpp : Dr. Stewart's 3 variable linear system R script in C++ format.
+//
+
 #include <iostream>
 #include <fstream>
 #include <boost/math/distributions.hpp>
-#include <boost/array.hpp>
-#include <boost/numeric/odeint.hpp>
 #include <random>
 #include <vector>
 #include <Eigen/Dense>
-#include <Eigen/Core>
 #include <unsupported/Eigen/MatrixFunctions>
 #include <cmath>
 #include <chrono>
-#include <omp.h>
-#include <Eigen/StdVector>
-#include <boost/numeric/odeint/external/openmp/openmp.hpp>
-
-#define N_SPECIES 6
-#define N_DIM 6 // dim of PSO hypercube
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using namespace std;
 using namespace boost;
 using namespace boost::math;
-using namespace boost::numeric::odeint;
-
-/* typedefs for boost ODE-ints */
-typedef boost::array< double, N_SPECIES > State_N;
-typedef runge_kutta_cash_karp54< State_N > Error_RK_Stepper_N;
-typedef controlled_runge_kutta< Error_RK_Stepper_N > Controlled_RK_Stepper_N;
-
-struct Multi_Normal_Random_Variable
-{
-    Multi_Normal_Random_Variable(Eigen::MatrixXd const& covar)
-        : Multi_Normal_Random_Variable(Eigen::VectorXd::Zero(covar.rows()), covar)
-    {}
-
-    Multi_Normal_Random_Variable(Eigen::VectorXd const& mean, Eigen::MatrixXd const& covar)
-        : mean(mean)
-    {
-        Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigenSolver(covar);
-        transform = eigenSolver.eigenvectors() * eigenSolver.eigenvalues().cwiseSqrt().asDiagonal();
-    }
-
-    Eigen::VectorXd mean;
-    Eigen::MatrixXd transform;
-
-    Eigen::VectorXd operator()() const
-    {
-        static std::mt19937 gen{ std::random_device{}() }; //std::random_device {} ()
-        static std::normal_distribution<> dist;
-
-        return mean + transform * Eigen::VectorXd{ mean.size() }.unaryExpr([&](auto x) { return dist(gen); });
-    }
-};
-
-struct K
-{
-    VectorXd k;
-};
-
-class Nonlinear_ODE6
-{
-    struct K jay;
-
-public:
-    Nonlinear_ODE6(struct K G) : jay(G) {}
-
-    void operator() (const State_N& c, State_N& dcdt, double t)
-    {
-        dcdt[0] = -(jay.k(0) * c[0] * c[1])  // Syk
-            + jay.k(1) * c[2]
-            + jay.k(2) * c[2];
-
-        dcdt[1] = -(jay.k(0) * c[0] * c[1]) // Vav
-            + jay.k(1) * c[2]
-            + jay.k(5) * c[5];
-
-        dcdt[2] = jay.k(0) * c[0] * c[1] // Syk-Vav
-            - jay.k(1) * c[2]
-            - jay.k(2) * c[2];
-
-        dcdt[3] = jay.k(2) * c[2] //pVav
-            - jay.k(3) * c[3] * c[4]
-            + jay.k(4) * c[5];
-
-        dcdt[4] = -(jay.k(3) * c[3] * c[4]) // SHP1 
-            + jay.k(4) * c[5]
-            + jay.k(5) * c[5];
-
-        dcdt[5] = jay.k(3) * c[3] * c[4]  // SHP1-pVav
-            - jay.k(4) * c[5]
-            - jay.k(5) * c[5];
-    }
-};
-
-struct Protein_Components {
-    int index;
-    MatrixXd mat;
-    VectorXd mVec;
-    double timeToRecord;
-    Protein_Components(double tf, int mom, int n) {
-        mVec = VectorXd::Zero(mom);
-        mat = MatrixXd::Zero(n, N_SPECIES);
-        timeToRecord = tf;
-    }
-};
-
-struct Moments_Mat_Obs
-{
-    struct Protein_Components& dComp;
-    Moments_Mat_Obs(struct Protein_Components& dCom) : dComp(dCom) {}
-    void operator()(State_N const& c, const double t) const
-    {
-        if (t == dComp.timeToRecord) {
-            int upperDiag = 2 * N_SPECIES;
-            for (int i = 0; i < N_SPECIES; i++) {
-                dComp.mVec(i) += c[i];
-                //cout << "see what's up:" << dComp.mVec.transpose() << endl;
-                dComp.mat(dComp.index, i) = c[i];
-                for (int j = i; j < N_SPECIES; j++) {
-                    if (i == j && (N_SPECIES + i) < dComp.mVec.size()) { // diagonal elements
-                        dComp.mVec(N_SPECIES + i) += c[i] * c[j]; // variances
-                    }
-                    else if (upperDiag < dComp.mVec.size()){
-                        dComp.mVec(upperDiag) += c[i] * c[j]; // covariances
-                        upperDiag++;
-                    }
-                }
-            }
-        }
-    }
-};
-
-State_N gen_multi_lognorm_iSub(void) {
-    State_N c0;
-    VectorXd mu(3);
-    mu << 4.78334234137469844730960782,
-        5.52142091946216110500584912965,
-        4.3815581042632114978686130;
-    MatrixXd sigma(3, 3);
-    sigma << 0.008298802814695093876186221, 0, 0,
-        0, 0.0000799968001706564273219830, 0,
-        0, 0, 0.000937060821340228802149700;
-    Multi_Normal_Random_Variable gen(mu, sigma);
-    VectorXd c0Vec = gen();
-    int j = 0;
-    for (int i = 0; i < N_SPECIES; i++) {
-        if (i == 0 || i == 1 || i == 4) { // Syk, Vav, SHP1
-            c0[i] = exp(c0Vec(j));
-            j++;
-        }
-        else {
-            c0[i] = 0;
-        }
-    }
-
-    return c0;
-}
-
-State_N gen_multi_norm_iSub(void) {
-    State_N c0;
-    VectorXd mu(3);
-    mu << 80,
-        120,
-        85;
-    MatrixXd sigma(3, 3);
-    sigma << 50, 0, 0,
-        0, 100, 0,
-        0, 0, 50.0;
-    Multi_Normal_Random_Variable gen(mu, sigma);
-    VectorXd c0Vec = gen();
-    int j = 0;
-    for (int i = 0; i < N_SPECIES; i++) {
-        if (i == 0 || i == 1 || i == 4) { // Syk, Vav, SHP1
-            c0[i] = c0Vec(j);
-            j++;
-        }
-        else {
-            c0[i] = 0;
-        }
-    }
-
-    return c0;
-}
-VectorXd gen_multinorm_iVec(void) {
-    VectorXd c0(N_SPECIES);
-    VectorXd mu(3);
-    mu << 80,
-        120,
-        85;
-    MatrixXd sigma(3, 3);
-    sigma << 50, 0, 0,
-        0, 100, 0,
-        0, 0, 50;
-    Multi_Normal_Random_Variable gen(mu, sigma);
-    VectorXd c0Vec = gen();
-    int j = 0;
-    for (int i = 0; i < N_SPECIES; i++) {
-        if (i == 0 || i == 1 || i == 4) { // Syk, Vav, SHP1
-            c0(i) = c0Vec(j);
-            j++;
-        }else {
-            c0[i] = 0;
-        }
-    }
-
-    return c0;
-}
-VectorXd gen_multi_lognorm_vecSub(void) {
-    VectorXd initVec(N_SPECIES);
-    VectorXd mu(3);
-    mu << 4.78334234137469844730960782,
-        5.52142091946216110500584912965,
-        4.3815581042632114978686130;
-    MatrixXd sigma(3, 3);
-    sigma << 0.008298802814695093876186221, 0, 0,
-        0, 0.0000799968001706564273219830, 0,
-        0, 0, 0.000937060821340228802149700;
-    Multi_Normal_Random_Variable gen(mu, sigma);
-    VectorXd c0Vec = gen();
-    int j = 0;
-    for (int i = 0; i < N_SPECIES; i++) {
-        if (i == 0 || i == 1 || i == 4) { // Syk, Vav, SHP1
-            initVec(i) = exp(c0Vec(j));
-            j++;
-        }
-        else {
-            initVec(i) = 0;
-        }
-    }
-    return initVec;
-}
-State_N convertInit(const MatrixXd& sample, int index){
-    State_N c0 = {sample(index,0), sample(index,1), 0, 0, sample(index,4), 0};
-    return c0;
-}
-VectorXd comp_vel_vec(const VectorXd& posK, int seed, double epsi, double nan, int hone) {
-    
-    VectorXd rPoint;
-    rPoint = posK;
-    std::random_device rand_dev;
-    std::mt19937 generator(rand_dev());
-    vector<int> rand;
-    uniform_real_distribution<double> unifDist(0.0, 1.0);
-    // for (int i = 0; i < N_DIM; i++) {
-    //     rand.push_back(i);
-    // }
-    // shuffle(rand.begin(), rand.end(), generator); // shuffle indices as well as possible. 
-    // int ncomp = rand.at(0);
-    // VectorXd wcomp(ncomp);
-    // shuffle(rand.begin(), rand.end(), generator);
-    // for (int i = 0; i < ncomp; i++) {
-    //     wcomp(i) = rand.at(i);
-    // }
-    int ncomp = posK.size();
-    if(unifDist(generator) < 0.75){
-        for (int smart = 0; smart < 2; smart++) {
-        // int px = wcomp(smart);
-            double pos = rPoint(smart);
-            if (pos > 1.0 - nan) {
-                cout << "overflow!" << endl;
-                // while(pos > 1.0){
-                //     pos -= 0.001;
-                // }
-                pos -= epsi;
-            }else if (pos < nan) {
-                cout << "underflow!"<< pos << endl;
-                // while( pos < 0.001){
-                //     pos += 0.001;
-                // }
-                pos += epsi;
-                cout << "pos" << posK.transpose() << endl; 
-            }
-            double alpha = hone * pos; // Component specific
-            double beta = hone - alpha; // pos specific
-        // cout << "alpha:" << alpha << "beta:" << beta << endl;
-            std::gamma_distribution<double> aDist(alpha, 1); // beta distribution consisting of gamma distributions
-            std::gamma_distribution<double> bDist(beta, 1);
-
-            double x = aDist(generator);
-            double y = bDist(generator);
-
-            rPoint(smart) = (x / (x + y)); 
-        }
-    }else{
-        for (int smart = 0; smart < ncomp; smart++) {
-        // int px = wcomp(smart);
-            double pos = rPoint(smart);
-            if (pos > 1.0 - nan) {
-                cout << "overflow!" << endl;
-                // while(pos > 1.0){
-                //     pos -= 0.001;
-                // }
-                pos -= epsi;
-            }else if (pos < nan) {
-                cout << "underflow!"<< pos << endl;
-                // while( pos < 0.001){
-                //     pos += 0.001;
-                // }
-                pos += epsi;
-                cout << "pos" << posK.transpose() << endl; 
-            }
-            double alpha = hone * pos; // Component specific
-            double beta = hone - alpha; // pos specific
-        // cout << "alpha:" << alpha << "beta:" << beta << endl;
-            std::gamma_distribution<double> aDist(alpha, 1); // beta distribution consisting of gamma distributions
-            std::gamma_distribution<double> bDist(beta, 1);
-
-            double x = aDist(generator);
-            double y = bDist(generator);
-
-            rPoint(smart) = (x / (x + y)); 
-        }
-    }
-    
-    return rPoint;
-}
-MatrixXd calculate_omega_weight_matrix(const MatrixXd &sample, const VectorXd &mu){
-    MatrixXd inv = MatrixXd::Zero(mu.size(), mu.size());
-    VectorXd X = VectorXd::Zero(mu.size());
-    
-    for(int s = 0; s < sample.rows(); s++){
-        int upperDiag = 2 * N_SPECIES;
-        for(int row = 0; row < N_SPECIES; row++){
-            X(row) = sample(s, row); 
-            for(int col = row; col < N_SPECIES; col++){
-                if( row == col){
-                    X(N_SPECIES + row) = sample(s, row) * sample(s, col);
-                }else{
-                    X(upperDiag) = sample(s,row) * sample(s,col);
-                    upperDiag++;
-                }
-            }
-        }
-        for(int i = 0; i < mu.size(); i++){
-            for(int j = 0; j < mu.size(); j++){
-                inv(i,j) += (X(i) - mu(i)) * (X(j) - mu(j));
-            }
-        }
-    }
-    inv /= sample.rows();
-    inv = inv.completeOrthogonalDecomposition().pseudoInverse();
-    return inv;
-}
-double calculate_cf1(const VectorXd& trueVec, const VectorXd& estVec) {
-    double cost = 0;
-    VectorXd diff(trueVec.size());
-    diff = trueVec - estVec;
-    cost = diff.transpose() * diff.transpose().transpose();
-    return cost;
-}
-double calculate_cf2(const VectorXd& trueVec, const  VectorXd& estVec, const MatrixXd& w) {
-    double cost = 0;
-    VectorXd diff(trueVec.size());
-    diff = trueVec - estVec;
-    cost = diff.transpose() * w * (diff.transpose()).transpose();
-    return cost;
-}
-string removeWhiteSpace(string current)
-{
-  string myNewString = "";
-  string temp = "x";
-  for (char c : current)
-  {
-    if (temp.back() != ' ' && c == ' ')
-    {
-      myNewString.push_back(' ');
-    }
-    temp.push_back(c);
-    if (c != ' ')
-    {
-      myNewString.push_back(c);
-    }
-  }
-  return myNewString;
-}
-
-string findDouble(string line, int startPos) {
-    string doble;
-    int i = startPos;
-    int wDist = 0;
-    while (i < line.length() && !isspace(line.at(i)) && line.at(i) != '\t') {
-        i++;
-        wDist++;
-    }
-    doble = line.substr(startPos, wDist);
-
-    return doble;
-}
-MatrixXd readIntoMatrix(ifstream& in, int rows, int cols) {
-    MatrixXd mat(rows, cols);
-    // use first row to determine how many columns to read.
-    for (int i = 0; i < rows; i++) {
-        string line;
-        if (in.is_open()) {
-            getline(in, line);
-            line = removeWhiteSpace(line);
-            int wordPos = 0;
-            for (int j = 0; j < cols; j++) {
-                string subs = findDouble(line, wordPos);
-                mat(i, j) = stod(subs);
-                wordPos += subs.length() + 1;
-            }
-        }
-        else {
-            cout << "Error: File Closed!" << endl;
-        }
-
-    }
-    return mat;
-}
-MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, const VectorXd& subCol){
-    /* first moment differences */
-    MatrixXd fmdiffs = Yt - Xt; 
-    /* second moment difference computations - @todo make it variable later */
-    MatrixXd smdiffs(N, N_SPECIES);
-    for(int i = 0; i < N_SPECIES; i++){
-        smdiffs.col(i) = (Yt.col(i).array() * Yt.col(i).array()) - (Xt.col(i).array() * Xt.col(i).array());
-    }
-
-   
-    int nCross = nMoments - 2 * N_SPECIES;
-    if (nCross < 0){
-        nCross = 0;
-    }
-    MatrixXd cpDiff(N, nCross);
-    
-    /* cross differences */
-    if(nCross > 0){
-        int upperDiag = 0;
-        for(int i = 0; i < N_SPECIES; i++){
-            for(int j = i + 1; j < N_SPECIES; j++){
-                cpDiff.col(upperDiag) = (Yt.col(i).array() * Yt.col(j).array()) - (Xt.col(i).array() * Xt.col(j).array());
-                upperDiag++;
-            }
-        }
-    }
-    MatrixXd aDiff(N, nMoments);
-    for(int i = 0; i < N; i++){
-        for(int moment = 0; moment < nMoments; moment++){
-            if(moment < N_SPECIES){
-                aDiff(i, moment) = fmdiffs(i, moment);
-            }else if (moment >= N_SPECIES && moment < 2 * N_SPECIES){
-                aDiff(i, moment) = smdiffs(i, moment - N_SPECIES);
-            }else if (moment >= 2 * N_SPECIES){
-                aDiff(i, moment) = cpDiff(i, moment - (2 * N_SPECIES));
-            }
-        }
-    }
-    double cost = 0;
-    VectorXd means = aDiff.colwise().mean();
-    VectorXd variances(nMoments);
-    for(int i = 0; i < nMoments; i++){
-        variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
-    }
-    int rank = subCol.size();
-    MatrixXd wt = MatrixXd::Zero(rank, rank);
-
-    for(int i = 0; i < rank; i++){
-        wt(i,i) = 1 / variances(subCol(i)); // cleanup code and make it more vectorized later.
-    }
-    cout << "new wt mat:" << endl << wt << endl;
-
-    return wt;
-}
-
-void printToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
-    ofstream plot;
-    string csvFile = fileName + ".csv";
-	plot.open(csvFile);
-
-    for(int i = 0; i < mat.rows(); i++){
-        for(int j = 0; j < mat.cols(); j++){
-            if(j == 0){
-                plot << mat(i,j);
-            }else{
-                plot << "," << mat(i,j);
-            }
-        }
-        plot << endl;
-    }
-    plot.close();
-}
 
 int main() {
-    auto t1 = std::chrono::high_resolution_clock::now();
-    /*---------------------- Setup ------------------------ */
-  
-    /* Variables (global) */
-    double t0 = 0, tf = 30, dt = 1.0; // time variables
-    int nTimeSteps = 3;
-    VectorXd times = VectorXd::Zero(nTimeSteps);
-    times <<  10, tf, 50;
-    int Npars = N_DIM;
-    double squeeze = 0.500, sdbeta = 0.10; 
-    double boundary = 0.001;
-    /* SETUP */
-    int useDiag = 0;
-    int sf1 = 1;
-    int sf2 = 1;
-    double epsi = 0.02;
-    double nan = 0.005;
-    /* PSO params */
-    double sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
-    double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
-    double alpha = 0.2;
-    int N = 5000;
-    int nParts = 25; // first part PSO
-    int nSteps = 50;
-    int nParts2 = 10; // second part PSO
-    int nSteps2 = 1000;
-    int nMoments = N_SPECIES;//(N_SPECIES * (N_SPECIES + 3)) / 2; // var + mean + cov
-    int hone = 24;
-    //nMoments = 2*N_SPECIES; // mean + var only!
-    VectorXd wmatup(4);
-    wmatup << 0.15, 0.35, 0.60, 0.9;
-    double uniLowBound = 0.0, uniHiBound = 1.0;
-    random_device RanDev;
-    mt19937 gen(RanDev());
-    uniform_real_distribution<double> unifDist(uniLowBound, uniHiBound);
-    
-    vector<MatrixXd> weights;
-    for(int i = 0; i < nTimeSteps; i++){
-        weights.push_back(MatrixXd::Identity(nMoments, nMoments));
-    }
-    // ifstream weightForSingleTime("time1_wt.txt");
-    // weights[0] = readIntoMatrix(weightForSingleTime, nMoments, nMoments);
+	
+	auto t1 = std::chrono::high_resolution_clock::now();
+	/*---------------------- Setup ------------------------ */
+	int bsi = 1, Nterms = 9, useEqual = 0, Niter = 1, Biter = 1; 
 
-    // ifstream weight0("time5_wt0.txt");
-    // ifstream weight1("time5_wt1.txt");
-    // ifstream weight2("time5_wt2.txt");
-    // ifstream weight3("time5_wt3.txt");
-    // ifstream weight4("time5_wt4.txt");
+	/* Variables (global) */
+	
+	int wasflipped = 0, Nprots = 3, Npars = 5;
+	double squeeze = 0.96, sdbeta = 0.05;
 
-    // weights[0] = readIntoMatrix(weight0, nMoments, nMoments);
-    // weights[1] = readIntoMatrix(weight1, nMoments, nMoments);
-    // weights[2] = readIntoMatrix(weight2, nMoments, nMoments);
-    // weights[3] = readIntoMatrix(weight3, nMoments, nMoments);
-    // weights[4] = readIntoMatrix(weight4, nMoments, nMoments);
-    cout << "Using two part PSO " << "Sample Size:" << N << " with:" << nMoments << " moments." << endl;
-    cout << "Using Times:" << times.transpose() << endl;
-    cout << "Bounds for Uniform Distribution (" << uniLowBound << "," << uniHiBound << ")"<< endl;
-    cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
-    cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
-    cout << "sdbeta:" << sdbeta << endl;
-    // cout << "wt:" << endl << wt << endl;
+	/* SETUP */
+	int useDiag = 0;
+	int sf1 = 1;
+	int sf2 = 1;
+	
+	int N = 10000;
 
-    MatrixXd GBMAT(0, 0); // iterations of global best vectors
-    MatrixXd PBMAT(nParts, Npars + 1); // particle best matrix + 1 for cost component
-    MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
+	int Nparts_1 = 5000;
+	int Nsteps_1 = 5;
 
-    cout << "Reading in data!" << endl;
-    /* Initial Conditions */
-    int sizeFile = 25000;
-    int startRow = 0;
-    MatrixXd X_0_Full(sizeFile, Npars);
-    MatrixXd Y_0_Full(sizeFile, Npars);
-    MatrixXd X_0(N, Npars);
-    MatrixXd Y_0(N, Npars);
-    ifstream X0File("knewX.0.txt");
-    ifstream Y0File("knewY.0.txt");
-    
-    X_0_Full = readIntoMatrix(X0File, sizeFile, N_SPECIES);
-    Y_0_Full = readIntoMatrix(Y0File, sizeFile, N_SPECIES);
-    X0File.close();
-    Y0File.close();
-    
-    X_0 = X_0_Full.block(startRow, 0, N, Npars);
-    Y_0 = Y_0_Full.block(startRow, 0, N, Npars);
-    cout << "Using starting row of data:" << startRow << " and " << N << " data pts!" << endl;
-    cout << "first row X0:" << X_0.row(0) << endl;
-    cout << "final row X0:" << X_0.row(N - 1) << endl << endl << endl << endl;
+	int Nparts_2 = 5;
+	int Nsteps_2 = 5000;
 
-    /* Solve for Y_t (mu). */
-    cout << "Loading in Truk!" << endl;
-    struct K tru;
-    tru.k = VectorXd::Zero(Npars);
-    tru.k << 5.0, 0.1, 1.0, 8.69, 0.05, 0.70;
-    tru.k /= (9.69);
-    tru.k(1) += 0.05;
-    tru.k(4) += 0.05; // make sure not so close to the boundary
-    // tru.k <<  0.51599600,  0.06031990, 0.10319900, 0.89680100, 0.05516000, 0.00722394; // Bill k
+	// note for coder: wmatup is a list 
+	vector<double> wmatup; 
+	wmatup.push_back(0.15);
+	wmatup.push_back(0.30);
+	wmatup.push_back(0.45);
+	wmatup.push_back(0.60);
 
-    cout << "Calculating Yt!" << endl;
-    vector<MatrixXd> Yt3Mats;
-    vector<VectorXd> Yt3Vecs;
-    vector<VectorXd> Xt3Vecs;
-    Controlled_RK_Stepper_N controlledStepper;
-    double trukCost = 0;
-    for(int t = 0; t < nTimeSteps; t++){
-        Nonlinear_ODE6 trueSys(tru);
-        Protein_Components Yt(times(t), nMoments, N);
-        Protein_Components Xt(times(t), nMoments, N);
-        Moments_Mat_Obs YtObs(Yt);
-        Moments_Mat_Obs XtObs(Xt);
-        for (int i = 0; i < N; i++) {
-            //State_N c0 = gen_multi_norm_iSub(); // Y_0 is simulated using norm dist.
-            State_N c0 = convertInit(Y_0, i);
-            State_N x0 = convertInit(X_0, i);
-            Yt.index = i;
-            Xt.index = i;
-            integrate_adaptive(controlledStepper, trueSys, c0, t0, times(t), dt, YtObs);
-            integrate_adaptive(controlledStepper, trueSys, x0, t0, times(t), dt, XtObs);
-        }
-        Yt.mVec /= N;
-        Xt.mVec /= N;
-        trukCost += calculate_cf2(Yt.mVec,Xt.mVec, weights[t]);
-        Xt3Vecs.push_back(Xt.mVec);
-        Yt3Mats.push_back(Yt.mat);
-        Yt3Vecs.push_back(Yt.mVec);
-    }
-    cout << "truk cost:"<< trukCost << endl;
-    /* Instantiate seedk aka global costs */
-    struct K seed;
-    seed.k = VectorXd::Zero(Npars); 
-    //seed.k = testVec;
-    for (int i = 0; i < Npars; i++) { 
-        seed.k(i) = unifDist(gen);
-    }
-    // for(int i = 2; i < Npars; i++){
-    //     seed.k(i) = tru.k(i);
-    // }
-   // seed.k = tru.k;
-    // seed.k << 0.648691,	0.099861,	0.0993075,	0.8542755,	0.049949,	0.0705955;
-    double costSeedK = 0;
-    for(int t = 0; t < nTimeSteps; t++){
-        Protein_Components Xt(times(t), nMoments, N);
-        Moments_Mat_Obs XtObs(Xt);
-        Nonlinear_ODE6 sys(seed);
-        for (int i = 0; i < N; i++) {
-            //State_N c0 = gen_multi_norm_iSub();
-            State_N c0 = convertInit(X_0, i);
-            Xt.index = i;
-            integrate_adaptive(controlledStepper, sys, c0, t0, times(t), dt, XtObs);
-        }
-        Xt.mVec /= N;  
-        costSeedK += calculate_cf2(Yt3Vecs[t], Xt.mVec, weights[t]);
-    }
+	double dp = 1, sfp = 3, sfg = 1, sfe = 6;
 
-    cout << "seedk:"<< seed.k.transpose()<< "| cost:" << costSeedK << endl;
-    
-    double gCost = costSeedK; //initialize costs and GBMAT
-    // global values
-    VectorXd GBVEC = seed.k;
-    
-    GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
-    for (int i = 0; i < Npars; i++) {
-        GBMAT(GBMAT.rows() - 1, i) = seed.k(i);
-    }
-    GBMAT(GBMAT.rows() - 1, Npars) = gCost;
-    
-    /* Blind PSO begins */
-    cout << "PSO begins!" << endl;
-    for(int step = 0; step < nSteps; step++){
-    #pragma omp parallel for 
-        for(int particle = 0; particle < nParts; particle++){
-            random_device pRanDev;
-            mt19937 pGenerator(pRanDev());
-            uniform_real_distribution<double> pUnifDist(uniLowBound, uniHiBound);
-            /* instantiate all particle rate constants with unifDist */
-            if(step == 0){
-                /* temporarily assign specified k constants */
-                for(int i = 0; i < Npars; i++){
-                    POSMAT(particle, i) = pUnifDist(pGenerator);//tru.k(i) + alpha * (0.5 - unifDist(pGenerator));
-                    // if(i > 1){
-                    //     POSMAT(particle, i) = tru.k(i);
-                    // }
-                }
-                
-              //  POSMAT.row(particle) = tru.k;
+	vector<double> k;
+	k.push_back(0.27678200 / sf1);
+	k.push_back(0.83708059 / sf1);
+	k.push_back(0.44321700 / sf1);
+	k.push_back(0.04244124 / sf1);
+	k.push_back(0.30464502 / sf1);
 
-                struct K pos;
-                pos.k = VectorXd::Zero(Npars);
-                for(int i = 0; i < Npars; i++){
-                    pos.k(i) = POSMAT(particle, i);
-                }
-                double cost = 0;
-                for(int t = 0; t < nTimeSteps; t++){
-                    Nonlinear_ODE6 initSys(pos);
-                    Protein_Components XtPSO(times(t), nMoments, N);
-                    Moments_Mat_Obs XtObsPSO(XtPSO);
-                    for(int i = 0; i < N; i++){
-                        //State_N c0 = gen_multi_norm_iSub();
-                        State_N c0 = convertInit(X_0, i);
-                        XtPSO.index = i;
-                        integrate_adaptive(controlledStepper, initSys, c0, t0, times(t), dt, XtObsPSO);
-                    }
-                    XtPSO.mVec/=N;
-                    cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
-                }
-                
-                
-                /* instantiate PBMAT */
-                for(int i = 0; i < Npars; i++){
-                    PBMAT(particle, i) = POSMAT(particle, i);
-                }
-                PBMAT(particle, Npars) = cost; // add cost to final column
-            }else{ 
-                /* using new rate constants, instantiate particle best values */
-                /* step into PSO */
-                double w1 = sfi * pUnifDist(pGenerator)/ sf2, w2 = sfc * pUnifDist(pGenerator) / sf2, w3 = sfs * pUnifDist(pGenerator)/ sf2;
-                double sumw = w1 + w2 + w3; //w1 = inertial, w2 = pbest, w3 = gbest
-                w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
-                //w1 = 0.05; w2 = 0.90; w3 = 0.05;
-                struct K pos;
-                pos.k = VectorXd::Zero(Npars);
-                pos.k = POSMAT.row(particle);
-                VectorXd rpoint = comp_vel_vec(pos.k, particle, epsi, nan, hone);
-                VectorXd PBVEC(Npars);
-                for(int i = 0; i < Npars; i++){
-                    PBVEC(i) = PBMAT(particle, i);
-                }
-                pos.k = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
-                POSMAT.row(particle) = pos.k;
+	vector<double> truk; // make a copy of a vector/ array/list 
 
-                double cost = 0;
-                for(int t = 0; t < nTimeSteps; t++){
-                    /*solve ODEs and recompute cost */
-                    Protein_Components XtPSO(times(t), nMoments, N);
-                    Moments_Mat_Obs XtObsPSO1(XtPSO);
-                    Nonlinear_ODE6 stepSys(pos);
-                    for(int i = 0; i < N; i++){
-                        State_N c0 = convertInit(X_0, i);
-                        XtPSO.index = i;
-                        integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
-                    }
-                    XtPSO.mVec/=N;
-                    cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
-                }
-               
-                /* update gBest and pBest */
-                #pragma omp critical
-               {
-                if(cost < PBMAT(particle, Npars)){ // particle best cost
-                    for(int i = 0; i < Npars; i++){
-                        PBMAT(particle, i) = pos.k(i);
-                    }
-                    PBMAT(particle, Npars) = cost;
-                    if(cost < gCost){
-                        gCost = cost;
-                        GBVEC = pos.k;
-                    }   
-                }
-              }
-            }
-        }
-        GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after resizing
-        for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
-        GBMAT(GBMAT.rows() - 1, Npars) = gCost;
-        sfi = sfi - (sfe - sfg) / nSteps;   // reduce the inertial weight after each step 
-        sfs = sfs + (sfe - sfg) / nSteps;
-
-        // print out desired PBMAT for contour plots
-        if(step == 0){
-            printToCsv(PBMAT, "single_PBMAT_t30");
-        }
-    }
-
-    cout << "GBMAT from blind PSO:" << endl << endl;
-    cout << GBMAT << endl << endl;
-    cout << "truk: " << tru.k.transpose() << endl;
-    double dist = calculate_cf1(tru.k, GBVEC);
-    cout << "total difference b/w truk and final GBVEC" << dist << endl << endl; // compute difference
-    auto tB = std::chrono::high_resolution_clock::now();
-    auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
-    cout << "blind PSO FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
-    /*** targeted PSO ***/
-    POSMAT.conservativeResize(nParts2, Npars); // resize matrices to fit targetted PSO
-    PBMAT.conservativeResize(nParts2, Npars + 1);
-    VectorXd subset = VectorXd::Zero(nMoments);
-    for(int i = 0; i < nMoments; i++){
-        subset(i) = i;
-    }
-    // subset << 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11;//, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 ,23, 24, 25, 26;
-    cout << "targeted PSO has started!" << endl; 
-    sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
-    sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
-    double nearby = sdbeta;
-    VectorXd chkpts = wmatup * nSteps2;
-    for(int step = 0; step < nSteps2; step++){
-        if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){ /* update wt   matrix || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3) */
-            cout << "Updating Weight Matrix!" << endl;
-            cout << "GBVEC AND COST:" << GBMAT.row(GBMAT.rows() - 1) << endl;
-            nearby = squeeze * nearby;
-            /* reinstantiate gCost */
-            struct K gPos;
-            // GBVEC << 0.648691,	0.099861,	0.0993075,	0.8542755,	0.049949,	0.0705955;
-            gPos.k = GBVEC;
-            
-            double cost = 0;
-            for(int t = 0; t < nTimeSteps; t++){
-                Protein_Components gXt(times(t), nMoments, N);
-                Moments_Mat_Obs gXtObs(gXt);
-                Nonlinear_ODE6 gSys(gPos);
-                for (int i = 0; i < N; i++) {
-                    //State_N c0 = gen_multi_norm_iSub();
-                    State_N c0 = convertInit(X_0, i);
-                    gXt.index = i;
-                    integrate_adaptive(controlledStepper, gSys, c0, t0, times(t), dt, gXtObs);
-                }
-                gXt.mVec /= N;  
-                weights[t] = customWtMat(Yt3Mats[t], gXt.mat, nMoments, N, subset);
-                cost += calculate_cf2(Yt3Vecs[t], gXt.mVec, weights[t]);
-            }
-            gCost = cost;
-            hone += 4;
-            GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
-            for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = gPos.k(i);}
-            GBMAT(GBMAT.rows() - 1, Npars) = gCost;
-        }
-    #pragma omp parallel for 
-        for(int particle = 0; particle < nParts2; particle++){
-            random_device pRanDev;
-            mt19937 pGenerator(pRanDev());
-            uniform_real_distribution<double> pUnifDist(uniLowBound, uniHiBound);
-        
-            if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){
-                /* reinitialize particles around global best */
-                for(int edim = 0; edim < Npars; edim++){
-                    int wasflipped = 0;
-                    double tmean = GBVEC(edim);
-                    if (GBVEC(edim) > 0.5) {
-                        tmean = 1 - GBVEC(edim);
-                        wasflipped = 1;
-                    }
-                    double myc = (1 - tmean) / tmean;
-                    double alpha = myc / ((1 + myc) * (1 + myc) * (1 + myc)*nearby*nearby);
-                    double beta = myc * alpha;
-
-                    if(alpha < nan){
-                        alpha = epsi;
-                    }
-                    if(beta < nan){
-                        beta = epsi;
-                    }
-
-                    std::gamma_distribution<double> aDist(alpha, 1);
-                    std::gamma_distribution<double> bDist(beta, 1);
-
-                    double x = aDist(pGenerator);
-                    double y = bDist(pGenerator);
-                    double myg = x / (x + y);
-
-                    if(myg >= 1){
-                        myg = myg - epsi;
-                    }
-                    if(myg <= 0){
-                        myg = myg + epsi;
-                    }
-
-                    if (wasflipped == 1) {
-                        wasflipped = 0;
-                        myg = 1 - myg;
-                    }
-                    POSMAT(particle, edim) = myg;
-                }
-
-                /* Write new POSMAT into Ks to be passed into system */
-                struct K pos;
-                pos.k = VectorXd::Zero(Npars);
-                for(int i = 0; i < Npars; i++){
-                    pos.k(i) = POSMAT(particle, i);
-                }
-                //VectorXd XtPSO3 = VectorXd::Zero(nMoments);
-                double cost = 0;
-                for(int t = 0; t < nTimeSteps; t++){
-                    Nonlinear_ODE6 initSys(pos);
-                    Protein_Components XtPSO(times(t), nMoments, N);
-                    Moments_Mat_Obs XtObsPSO(XtPSO);
-                    for(int i = 0; i < N; i++){
-                        State_N c0 = convertInit(X_0, i);
-                        XtPSO.index = i;
-                        integrate_adaptive(controlledStepper, initSys, c0, t0, times(t), dt, XtObsPSO);
-                    }
-                    XtPSO.mVec/=N;
-                    cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
-                }
-                
-                /* initialize PBMAT */
-                for(int i = 0; i < Npars; i++){
-                    PBMAT(particle, i) = POSMAT(particle, i);
-                }
-                PBMAT(particle, Npars) = cost; // add cost to final column
-            }else{ 
-                /* using new rate constants, initialize particle best values */
-                /* step into PSO */
-                double w1 = sfi * pUnifDist(pGenerator)/ sf2, w2 = sfc * pUnifDist(pGenerator) / sf2, w3 = sfs * pUnifDist(pGenerator)/ sf2;
-                double sumw = w1 + w2 + w3; //w1 = inertial, w2 = pbest, w3 = gbest
-                w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
-                //w1 = 0.05; w2 = 0.90; w3 = 0.05;
-                struct K pos;
-                pos.k = VectorXd::Zero(Npars);
-                pos.k = POSMAT.row(particle);
-                VectorXd rpoint = comp_vel_vec(pos.k, particle, epsi, nan, hone);
-                VectorXd PBVEC(Npars);
-                for(int i = 0; i < Npars; i++){
-                    PBVEC(i) = PBMAT(particle, i);
-                }
-                pos.k = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
-                POSMAT.row(particle) = pos.k; // back into POSMAT
-                
-                double cost = 0;
-                /* solve ODEs with new system and recompute cost */
-                for(int t = 0; t < nTimeSteps; t++){
-                    Protein_Components XtPSO(times(t), nMoments, N);
-                    Moments_Mat_Obs XtObsPSO1(XtPSO);
-                    Nonlinear_ODE6 stepSys(pos);
-                    for(int i = 0; i < N; i++){
-                        State_N c0 = convertInit(X_0, i);
-                        XtPSO.index = i;
-                        integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
-                    }
-                    XtPSO.mVec/=N;
-                    cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
-                }
-                
-                /* update pBest and gBest */
-                #pragma omp critical
-                {
-                if(cost < PBMAT(particle, Npars)){ // update particle best 
-                    for(int i = 0; i < Npars; i++){
-                        PBMAT(particle, i) = pos.k(i);
-                    }
-                    PBMAT(particle, Npars) = cost;
-                    if(cost < gCost){ // update global 
-                        gCost = cost;
-                        GBVEC = pos.k;
-                    }   
-                }
-                }
-            }
-        }
-        GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after each step.
-        for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
-        GBMAT(GBMAT.rows() - 1, Npars) = gCost;
-
-        sfi = sfi - (sfe - sfg) / nSteps2;   // reduce the inertial weight after each step 
-        sfs = sfs + (sfe - sfg) / nSteps2;
-
-        if(step == 0){ // quick plug to see PBMAT
-            cout << "New PBMAT:" << endl;
-            cout << PBMAT << endl << endl;
-        }
-    }
-    cout << "GBMAT after targeted PSO:" << endl << GBMAT << endl;
-    trukCost = 0;
-    for(int t = 0; t < nTimeSteps; t++){
-        trukCost += calculate_cf2(Yt3Vecs[t], Xt3Vecs[t], weights[t]);
-    }
-
-    cout << "truk: " << tru.k.transpose() << " with trukCost with new weights:" << trukCost << endl;
-    dist = calculate_cf1(tru.k, GBVEC);
-    cout << "total difference b/w truk and final GBVEC:" << dist << endl; // compute difference
-    
-    ofstream plot;
-	plot.open("GBMATP.csv");
-	MatrixXd GBMATWithSteps(GBMAT.rows(), GBMAT.cols() + 1);
-	VectorXd globalIterations(GBMAT.rows());
-	for(int i = 0; i < GBMAT.rows(); i++){
-		globalIterations(i) = i;
+	for (unsigned int i = 0; i < k.size(); i++) {
+		truk.push_back(k.at(i));
 	}
-	GBMATWithSteps << globalIterations, GBMAT;
-	for(int i = 0; i < GBMATWithSteps.rows(); i++){
-        for(int j = 0; j < GBMATWithSteps.cols(); j++){
-            if(j == 0){
-                plot << GBMATWithSteps(i,j);
-            }else{
-                plot << "," << GBMATWithSteps(i,j);
-            }
-        }
-        plot << endl;
-    }
-	plot.close();
 
-    auto t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
-    cout << "CODE FINISHED RUNNING IN " << duration << " s TIME!" << endl;
+	// print truk values to a .par file w/ 5 columns? 
+	ofstream truk_file("truk.par");
+	for (unsigned int i = 0; i < truk.size(); i++) {
+		truk_file << " " << truk.at(i);
+	}
+	truk_file.close();
 
-    return 0; // just to close the program at the end.
+	
+	double mu_x = 1.47, mu_y = 1.74, mu_z = 1.99; // true means for MVN(theta)
+
+	double var_x = 0.77, var_y = 0.99, var_z = 1.11; // true variances for MVN(theta);
+
+	double rho_xy = 0.10, rho_xz = 0.05, rho_yz = 0.10; // true correlations for MVN
+
+	double sigma_x = sqrt(var_x), sigma_y = sqrt(var_y), sigma_z = sqrt(var_z);
+
+	double cov_xy = rho_xy * sigma_x * sigma_y;
+	double cov_xz = rho_xz * sigma_x * sigma_z;
+	double cov_yz = rho_yz * sigma_y * sigma_z;
+
+	/* sigma matrices */
+	MatrixXd sigma_12(1, 2);
+	sigma_12 << cov_xz, cov_yz;
+	
+	MatrixXd sigma_22(2, 2);
+	sigma_22 << var_x, cov_xy,
+		cov_xy, var_y;
+	
+	MatrixXd sigma_21(2, 1);
+	sigma_21 = sigma_12.transpose();
+
+	/* conditional variances of proteins*/
+	double cvar_ygx = (1 - (rho_xy * rho_xy)) * (sigma_y * sigma_y);
+
+	double cvar_zgxy = var_z - (sigma_12 * sigma_22.inverse() * sigma_21)(0,0); // note: since matrix types are incompatible witgh doubles, we must do matrix math first, then convert to double.
+
+	int t = 3; // num steps away from initial state
+
+	// first instantiate a matrix, then performance matrix math to form MT
+	MatrixXd M(3,3);
+	M << -k.at(2), k.at(2), 0,
+		k.at(1), -k.at(1) - k.at(4), k.at(4),
+		k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+	MatrixXd MT(3, 3);
+	MT = t * M.transpose();
+   
+	MatrixXd EMT(3, 3);
+	EMT = MT.exp();
+	
+	/* actually global variables that are being recalculated in PSO */
+	double omp_1, omp_2, omp_3, ovp_1 = 0, ovp_2 = 0, ovp_3 = 0, ocov_12, ocov_13, ocov_23;
+	double pmp_1, pmp_2, pmp_3, pvp_1 = 0, pvp_2 = 0, pvp_3 = 0, pcov_12, pcov_13, pcov_23;
+	double cost_seedk, cost_gbest, cost_sofar;
+	MatrixXd X_0(N, 3);
+	MatrixXd X_0_obs(N, 3);
+	MatrixXd Y_t_obs(N, 3);
+	MatrixXd Y_t(N, 3);
+	VectorXd pmpV(3);
+
+	MatrixXd GBMAT;
+	MatrixXd w_mat(9, 9);
+
+	VectorXd gbest(Npars), best_sofar(Npars);
+
+	VectorXd x(N); //note the data sample x is a list of 10000 RV from normal dist
+	VectorXd pa_x(N);
+	VectorXd y(N);
+	VectorXd pa_y(N);
+	VectorXd z(N); // z big questions about how to get the data values for it. It takes in a far bigger value???
+	VectorXd pa_z(N);
+
+	VectorXd all_terms(9);
+	VectorXd term_vec(9);
+
+	/* IMPORTANT THAT YOU INSTANTIATE THE RANDOM GENERATOR LIKE THIS!*/
+	std::random_device rand_dev;
+	std::mt19937 generator(rand_dev());
+	uniform_real_distribution<double> unifDist(0.0, 1.0);
+
+	for (int q = 1; q <= Niter; q++) {
+
+		int dpFlag = 1;   // Unsure what this print statement does, will ask later.
+		if (q % 10 == 0) {
+			cout << "Working on replicate " << q << "\n";
+		}
+
+		if (bsi == 0 || q == 1) {
+			/* Simulate Y(t) and X(0) */
+			
+			
+			std::normal_distribution<double> xNorm(mu_x, sigma_x);
+
+			for (int i = 0; i < N; i++) {
+				x(i) = (xNorm(generator));
+				pa_x(i) = (exp(x(i)));
+			}
+			
+			
+			for (int i = 0; i < x.size(); i++) {
+				std::normal_distribution<double> yNorm(mu_y + sigma_y * rho_xy * (x(i) - mu_x) / sigma_x, sqrt(cvar_ygx));
+				y(i) = (yNorm(generator));
+				pa_y(i) = (exp(y(i)));
+			}
+			
+			/* matrix math for the z random vals. */
+			MatrixXd rbind(2, N); // first calculate a 2xN rbind matrix
+			for (int i = 0; i < x.size(); i++) {
+				rbind(0, i) = x(i) - mu_x;
+				rbind(1, i) = y(i) - mu_y;
+			}
+			MatrixXd zMean(1, N); // calculate the vector of means
+			zMean = sigma_12 * sigma_22.inverse() * rbind;
+			for (int i = 0; i < zMean.size(); i++) {
+				zMean(0, i) = zMean(0, i) + mu_z;
+			}
+			// finally actually calculate z and pa_z vectors
+			for (int i = 0; i < N; i++) {
+				std::normal_distribution<double> zNorm(zMean(0,i), sqrt(cvar_zgxy));
+				z(i) = (zNorm(generator));
+				pa_z(i) = (exp(z(i)));
+			}
+
+			/* Create Y.0 */
+			MatrixXd Y_0(N, 3);
+			/*for (int i = 0; i < N; i++) {
+				// fill it up from vectors
+				Y_0(i, 0) = pa_x(i);
+				Y_0(i, 1) = pa_y(i);
+				Y_0(i, 2) = pa_z(i);
+			}*/
+			Y_0.col(0) = pa_x;
+			Y_0.col(1) = pa_y;
+			Y_0.col(2) = pa_z;
+			
+			Y_t = (EMT * Y_0.transpose()).transpose();
+			
+			if (bsi == 1 && q == 1) {
+				Y_t_obs = Y_t;
+			}
+
+			/*  # Compute the observed means, variances, and covariances
+				# Add random noise to Y.t
+				# trusd < -apply(Y.t, 2, sd)
+				# error     <- t(matrix(rnorm(N*Nprots,rep(0,Nprots),trusd*0.01),nrow=3))
+				# Y.t < -Y.t + error */
+
+			/* means */
+			
+			VectorXd ompV = Y_t.colwise().mean();
+		
+			omp_1 = ompV(0);
+			omp_2 = ompV(1);
+			omp_3 = ompV(2);
+
+			/* variances - actually have to manually calculate it, no easy library  */
+			ovp_1 = (Y_t.col(0).array() - Y_t.col(0).array().mean()).square().sum() / ((double)Y_t.col(0).array().size() - 1);
+			ovp_2 = (Y_t.col(1).array() - Y_t.col(1).array().mean()).square().sum() / ((double)Y_t.col(1).array().size() - 1);
+			ovp_3 = (Y_t.col(2).array() - Y_t.col(2).array().mean()).square().sum() / ((double)Y_t.col(2).array().size() - 1);
+
+			/* covariances - also requires manual calculation*/
+			double sum12 = 0, sum13 = 0, sum23 = 0;
+			for (int n = 0; n < N; n++)
+			{
+				sum12 += (Y_t(n, 0) - omp_1) * (Y_t(n, 1) - omp_2);
+				sum13 += (Y_t(n, 0) - omp_1) * (Y_t(n, 2) - omp_3);
+				sum23 += (Y_t(n, 1) - omp_2) * (Y_t(n, 2) - omp_3);
+
+			}
+			int N_SUBTRACT_ONE = N - 1;
+			ocov_12 = sum12 / N_SUBTRACT_ONE;
+			ocov_13 = sum13 / N_SUBTRACT_ONE;
+			ocov_23 = sum23 / N_SUBTRACT_ONE;
+			
+			for (int i = 0; i < N; i++) {
+				x(i) = (xNorm(generator));
+				pa_x(i) = (exp(x(i)));
+			}
+
+		    
+			for (int i = 0; i < N; i++) {
+				std::normal_distribution<double> yNorm(mu_y + sigma_y * rho_xy * (x(i) - mu_x) / sigma_x, sqrt(cvar_ygx));
+				y(i) = (yNorm(generator));
+				pa_y(i) = (exp(y(i)));
+			}
+
+			/* matrix math for the z random vals. */
+			MatrixXd r1bind(2, N); // first calculate a 2xN rbind matrix
+			for (int i = 0; i < N; i++) {
+				r1bind(0, i) = x(i) - mu_x;
+				r1bind(1, i) = y(i) - mu_y;
+			}
+			MatrixXd z1Mean(1, N); // calculate the vector of means
+			z1Mean = sigma_12 * sigma_22.inverse() * r1bind;
+			for (int i = 0; i < z1Mean.size(); i++) {
+				z1Mean(0, i) = z1Mean(0, i) + mu_z;
+			}
+			// finally actually calculate z and pa_z vectors
+			for (int i = 0; i < N; i++) {
+				std::normal_distribution<double> zNorm(z1Mean(0, i), sqrt(cvar_zgxy));
+				z(i) = (zNorm(generator));
+				pa_z(i) = (exp(z(i)));
+			}
+
+			
+			/*for (int i = 0; i < N; i++) {
+				// fill it up from vectors
+				X_0(i, 0) = pa_x(i);
+				X_0(i, 1) = pa_y(i);
+				X_0(i, 2) = pa_z(i);
+			}*/
+			X_0.col(0) = pa_x;
+			X_0.col(1) = pa_y;
+			X_0.col(2) = pa_z;
+			
+			if (bsi == 1 && q == 1) {// save the simulated CYTOF data time 0
+				X_0_obs = X_0;
+			}
+
+		}
+		
+		if (bsi == 1 && q > 1) {
+
+			/* create shuffled indices based on uniform rand dist */
+			vector<int> bindices;
+			for (int i = 0; i < N; i++) {
+				bindices.push_back(i);
+			}
+			shuffle(bindices.begin(), bindices.end(), generator); // shuffle indices as well as possible. 
+
+			MatrixXd X_0(N, 3);
+			MatrixXd Y_t(N, 3);
+			/* shuffle all of the values in the observed matrices*/
+			for (int i = 0; i < N; i++) {
+				X_0(i , 0) = X_0_obs(bindices.at(i), 0);
+				X_0(i, 1) = X_0_obs(bindices.at(i), 1);
+				X_0(i, 2) = X_0_obs(bindices.at(i), 2);
+				Y_t(i, 0) = Y_t_obs(bindices.at(i), 0);
+				Y_t(i, 1) = Y_t_obs(bindices.at(i), 1);
+				Y_t(i, 2) = Y_t_obs(bindices.at(i), 2);
+			}
+			
+			/* re-calc new omp, ovp, and ocovs, which should be the same???*/
+			VectorXd ompV = Y_t.colwise().mean();
+			
+			omp_1 = ompV(0);
+			omp_2 = ompV(1);
+			omp_3 = ompV(2);
+
+			
+			/* variances - actually have to manually calculate it, no easy library  */
+		
+			ovp_1 = (Y_t.col(0).array() - Y_t.col(0).array().mean()).square().sum() / ((double)Y_t.col(0).array().size() - 1);
+			ovp_2 = (Y_t.col(1).array() - Y_t.col(1).array().mean()).square().sum() / ((double)Y_t.col(1).array().size() - 1);
+			ovp_3 = (Y_t.col(2).array() - Y_t.col(2).array().mean()).square().sum() / ((double)Y_t.col(2).array().size() - 1);
+
+	
+
+			/* covariances - also requires manual calculation*/
+			double sum12 = 0, sum13 = 0, sum23 = 0;
+			for (int n = 0; n < N; n++)
+			{
+				sum12 += (Y_t(n, 0) - omp_1) * (Y_t(n, 1) - omp_2);
+				sum13 += (Y_t(n, 0) - omp_1) * (Y_t(n, 2) - omp_3);
+				sum23 += (Y_t(n, 1) - omp_2) * (Y_t(n, 2) - omp_3);
+
+			}
+			int N_SUBTRACT_ONE = N - 1;
+			ocov_12 = sum12 / N_SUBTRACT_ONE;
+			ocov_13 = sum13 / N_SUBTRACT_ONE;
+			ocov_23 = sum23 / N_SUBTRACT_ONE;
+
+		}
+		
+		// Initialize variables to start the layered particle swarms
+		int Nparts = Nparts_1;
+		int Nsteps = Nsteps_1;
+
+		VectorXd vectorOfOnes(9);		
+		for (int i = 0; i < 9; i++) {
+			vectorOfOnes(i) = 1;
+		}
+		w_mat = vectorOfOnes.asDiagonal(); //initialize weight matrix
+		
+		VectorXd seedk(Npars); //initialize global best
+		for (int i = 0; i < Npars; i++) { seedk(i) = unifDist(generator) /sf2; }
+
+		/*Compute cost of seedk */
+		for (int i = 0; i < Npars; i++) { k.at(i) = seedk(i); }
+
+		MatrixXd HM(3, 3);
+		HM << -k.at(2), k.at(2), 0,
+			k.at(1), -k.at(1) - k.at(4), k.at(4),
+			k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+		MatrixXd HMT(3, 3);
+		HMT = t * HM.transpose();
+		
+		MatrixXd EHMT;
+		EHMT = HMT.exp();
+		
+		MatrixXd Q(N,3);
+		Q = (EHMT * X_0.transpose()).transpose();
+		
+		//re-calc new omp, ovp, and ocovs, which should be the same???
+	    pmpV = Q.colwise().mean();
+
+		pmp_1 = pmpV(0);
+		pmp_2 = pmpV(1);
+		pmp_3 = pmpV(2);
+	
+		// variances - actually have to manually calculate it, no easy library
+		pvp_1 = (Q.col(0).array() - Q.col(0).array().mean()).square().sum() / ((double) Q.col(0).array().size() - 1);
+		pvp_2 = (Q.col(1).array() - Q.col(1).array().mean()).square().sum() / ((double) Q.col(1).array().size() - 1);
+		pvp_3 = (Q.col(2).array() - Q.col(2).array().mean()).square().sum() / ((double) Q.col(2).array().size() - 1);
+
+		// covariances - also requires manual calculation 
+		double sum12 = 0, sum13 = 0, sum23 = 0;
+		
+		for (int n = 0; n < Q.rows(); n++)
+		{
+			sum12 += (Q(n, 0) - pmp_1) * (Q(n, 1) - pmp_2);	
+			sum13 += (Q(n, 0) - pmp_1) * (Q(n, 2) - pmp_3);
+			sum23 += (Q(n, 1) - pmp_2) * (Q(n, 2) - pmp_3);
+
+		}
+		double N_SUBTRACT_ONE = Q.rows() - 1.0;
+		
+		pcov_12 = sum12 / N_SUBTRACT_ONE;
+		pcov_13 = sum13 / N_SUBTRACT_ONE;
+		pcov_23 = sum23 / N_SUBTRACT_ONE;
+
+		double term_1 = pmp_1 - omp_1, 
+			term_2 = pmp_2 - omp_2, 
+			term_3 = pmp_3 - omp_3, 
+			term_4 = pvp_1 - ovp_1, 
+			term_5 = pvp_2 - ovp_2,
+			term_6 = pvp_3 - ovp_3,
+			term_7 = pcov_12 - ocov_12, 
+			term_8 = pcov_13 - ocov_13,
+			term_9 = pcov_23 - ocov_23;
+		// note to self: I'm using vectorXd from now on b/c it plays way better than the vectors built into C++ unless ofc there are strings that we need to input.
+	
+		all_terms << term_1, term_2, term_3, term_4, term_5, term_6, term_7, term_8, term_9;
+	
+		
+		term_vec = all_terms;
+		
+		
+		cost_seedk = term_vec.transpose() * w_mat * (term_vec.transpose()).transpose();
+
+		// instantiate values 
+		gbest = seedk;
+		best_sofar = seedk;
+		cost_gbest = cost_seedk;
+		cost_sofar = cost_seedk;
+
+		GBMAT.conservativeResize(1, 6);
+		
+		// will probably find a better method later, but will for now just create temp vec to assign values.
+		
+		VectorXd cbind(gbest.size() + 1);
+		cbind << gbest, cost_gbest;
+		GBMAT.row(GBMAT.rows() - 1) = cbind;
+	
+		
+		double nearby = sdbeta;
+		MatrixXd POSMAT(Nparts, Npars);
+		
+		for (int pso = 1; pso <= Biter + 1 ; pso++) {
+			cout << "PSO:" << pso << endl;
+
+			if (pso < Biter + 1) {
+				for (int i = 0; i < Nparts; i++) {
+					// row by row in matrix using uniform dist.
+					for (int n = 0; n < Npars; n++) {
+						POSMAT(i, n) = unifDist(generator) / sf2;
+					}
+				}
+				
+			}
+			
+			if (pso == Biter + 1) {
+				Nparts = Nparts_2;
+				Nsteps = Nsteps_2;
+
+				GBMAT.conservativeResize(GBMAT.rows() + 1, 6);
+				cbind << best_sofar, cost_sofar;
+				GBMAT.row(GBMAT.rows() - 1) = cbind;
+
+				gbest = best_sofar;
+				cost_gbest = cost_sofar;
+
+				// reset POSMAT? 
+				POSMAT.resize(Nparts, Npars);
+				POSMAT.setZero();
+	
+				for (int init = 0; init < Nparts; init++) {
+					for (int edim = 0; edim < Npars; edim++) {
+						double tmean = gbest(edim);
+						if (gbest(edim) > 0.5) {
+							tmean = 1 - gbest(edim);
+							wasflipped = 1;
+						}
+						double myc = (1 - tmean) / tmean;
+						double alpha = myc / ((1 + myc) * (1 + myc) * (1 + myc)*nearby*nearby);
+						double beta = myc * alpha;
+
+						std::gamma_distribution<double> aDist(alpha, 1);
+						std::gamma_distribution<double> bDist(beta, 1);
+
+						double x = aDist(generator);
+						double y = bDist(generator);
+						double myg = x / (x + y);
+						// sample from beta dist - this can be quite inefficient and taxing, there is another way with a gamma dist (THAT NEEDS TO BE REINVESTIGATED), but works so far. 
+						//beta_distribution<double> betaDist(alpha, beta);
+						//double randFromUnif = unifDist(generator);
+						//double myg = quantile(betaDist, randFromUnif);
+
+						if (wasflipped == 1) {
+							wasflipped = 0;
+							myg = 1 - myg;
+						}
+						POSMAT(init, edim) = myg;
+					}
+				}
+				
+			} 
+			
+			// initialize PBMAT 
+			MatrixXd PBMAT = POSMAT; // keep track of ea.particle's best, and it's corresponding cost
+			
+			PBMAT.conservativeResize(POSMAT.rows(), POSMAT.cols() + 1);
+			for (int i = 0; i < PBMAT.rows(); i++) { PBMAT(i, PBMAT.cols() - 1) = 0; } // add the 0's on far right column
+			
+			for (int h = 0; h < Nparts; h++) {
+				for (int init = 0; init < Npars; init++) { k.at(init) = PBMAT(h, init); }
+
+				HM << -k.at(2), k.at(2), 0,
+					k.at(1), -k.at(1) - k.at(4), k.at(4),
+					k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+				HMT = t * HM.transpose();
+				EHMT = HMT.exp(); // NOTE MATRIX EXPONENTIATION ACTUALLY TAKES A REALLY LONG TIME TO RUN
+				Q = (EHMT * X_0.transpose()).transpose();
+
+				pmpV = Q.colwise().mean();
+				
+				pmp_1 = pmpV(0);
+				pmp_2 = pmpV(1);
+				pmp_3 = pmpV(2);
+
+				// variances - below is manual calculation  
+				pvp_1 = (Q.col(0).array() - Q.col(0).array().mean()).square().sum() / ((double)Q.col(0).array().size() - 1);
+				pvp_2 = (Q.col(1).array() - Q.col(1).array().mean()).square().sum() / ((double)Q.col(1).array().size() - 1);
+				pvp_3 = (Q.col(2).array() - Q.col(2).array().mean()).square().sum() / ((double)Q.col(2).array().size() - 1);
+				
+				// covariances - also requires manual calculation 
+				double sum12 = 0, sum13 = 0, sum23 = 0;
+
+				for (int n = 0; n < Q.rows(); n++)
+				{
+					sum12 += (Q(n, 0) - pmp_1) * (Q(n, 1) - pmp_2);
+					sum13 += (Q(n, 0) - pmp_1) * (Q(n, 2) - pmp_3);
+					sum23 += (Q(n, 1) - pmp_2) * (Q(n, 2) - pmp_3);
+				}
+			    N_SUBTRACT_ONE = Q.rows() - 1.0;
+
+				pcov_12 = sum12 / N_SUBTRACT_ONE;
+				pcov_13 = sum13 / N_SUBTRACT_ONE;
+				pcov_23 = sum23 / N_SUBTRACT_ONE;
+				
+				 term_1 = pmp_1 - omp_1,
+					term_2 = pmp_2 - omp_2,
+					term_3 = pmp_3 - omp_3,
+					term_4 = pvp_1 - ovp_1,
+					term_5 = pvp_2 - ovp_2,
+					term_6 = pvp_3 - ovp_3,
+					term_7 = pcov_12 - ocov_12,
+					term_8 = pcov_13 - ocov_13,
+					term_9 = pcov_23 - ocov_23;
+				// note to self: I'm using vectorXd from now on b/c it plays way better than the vectors built into C++ unless ofc there are strings that we need to input.
+				
+				all_terms << term_1, term_2, term_3, term_4, term_5, term_6, term_7, term_8, term_9;
+				term_vec = all_terms; 
+
+				PBMAT(h, Npars) = term_vec.transpose() * w_mat * (term_vec.transpose()).transpose();
+			}
+
+			
+			// ALL SWARMS BEGIN TO MOVE HERE 
+			double sfi = sfe;
+			double sfc = sfp;
+			double sfs = sfg;
+
+			for (int iii = 0; iii < Nsteps; iii++) { //REMEMBER IF THERE IS ITERATION WITH iii MAKE SURE TO SUBTRACT ONE
+
+				
+				if (pso == (Biter + 1)) {
+					vector<int> chkpts;
+					
+					for (unsigned int i = 0; i < wmatup.size(); i++) {	
+						chkpts.push_back(wmatup.at(i)* Nsteps);
+					}
+					
+					if (iii == chkpts.at(0) || iii == chkpts.at(1) || iii == chkpts.at(2) || iii == chkpts.at(3)) {
+						nearby = squeeze * nearby;
+
+						for (int i = 0; i < Npars; i++) { // best estimate of k to compute w.mat
+							k.at(i) = gbest(i);
+						}
+
+						HM << -k.at(2), k.at(2), 0,
+							k.at(1), -k.at(1) - k.at(4), k.at(4),
+							k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+						HMT = t * HM.transpose();
+						EHMT = HMT.exp();
+						Q = (EHMT * X_0.transpose()).transpose();
+
+						MatrixXd fmdiffs(Q.rows(), 3);
+						fmdiffs = Y_t - Q;
+						
+						VectorXd mxt(3);
+						mxt = Q.colwise().mean();
+				
+						VectorXd myt(3); 
+						myt = Y_t.colwise().mean();
+					
+						MatrixXd residxt(Q.rows(), Q.cols());
+						residxt.col(0) = mxt.row(0).replicate(N, 1);
+						residxt.col(1) = mxt.row(1).replicate(N, 1);
+						residxt.col(2) = mxt.row(2).replicate(N, 1);
+						residxt = Q - residxt;
+
+						MatrixXd residyt(Y_t.rows(), Y_t.cols());
+						residyt.col(0) = myt.row(0).replicate(N, 1);
+						residyt.col(1) = myt.row(1).replicate(N, 1);
+						residyt.col(2) = myt.row(2).replicate(N, 1);
+						residyt = Y_t - residyt;
+
+						MatrixXd smdiffs(N, 3);
+						smdiffs = (residyt.array() * residyt.array()) - (residxt.array()* residxt.array());
+
+						MatrixXd cprxt(N, 3);
+						cprxt.col(0) = residxt.col(0).array() * residxt.col(1).array();
+						cprxt.col(1) = residxt.col(0).array() * residxt.col(2).array();
+						cprxt.col(2) = residxt.col(1).array() * residxt.col(2).array();
+
+						MatrixXd cpryt(N, 3);
+						cpryt.col(0) = residyt.col(0).array() * residyt.col(1).array();
+						cpryt.col(1) = residyt.col(0).array() * residyt.col(2).array();
+						cpryt.col(2) = residyt.col(1).array() * residyt.col(2).array();
+
+						MatrixXd cpdiffs(N, 3);
+						cpdiffs = cpryt - cprxt;
+
+						MatrixXd Adiffs(N, 9);
+						Adiffs << fmdiffs, smdiffs, cpdiffs; // concatenate
+
+						MatrixXd g_mat(N, Nterms);
+						g_mat = Adiffs;
+						for (int m = 0; m < N; m++) { w_mat = w_mat + g_mat.row(m).transpose() * g_mat.row(m); }
+						w_mat = w_mat / N;
+						w_mat = w_mat.inverse();
+
+						if (useDiag == 1) { w_mat = w_mat.diagonal().diagonal(); }
+
+						// CALCULATE MEANS, VARIANCES, AND COVARIANCES
+						pmpV = Q.colwise().mean();
+
+						pmp_1 = pmpV(0);
+						pmp_2 = pmpV(1);
+						pmp_3 = pmpV(2);
+
+						// variances - manually calculate it, no easy library 
+						pvp_1 = (Q.col(0).array() - Q.col(0).array().mean()).square().sum() / ((double)Q.col(0).array().size() - 1);
+						pvp_2 = (Q.col(1).array() - Q.col(1).array().mean()).square().sum() / ((double)Q.col(1).array().size() - 1);
+						pvp_3 = (Q.col(2).array() - Q.col(2).array().mean()).square().sum() / ((double)Q.col(2).array().size() - 1);
+
+						// covariances - manual calculation 
+						double sum12 = 0, sum13 = 0, sum23 = 0;
+
+						for (int n = 0; n < Q.rows(); n++)
+						{
+							sum12 += (Q(n, 0) - pmp_1) * (Q(n, 1) - pmp_2);
+							sum13 += (Q(n, 0) - pmp_1) * (Q(n, 2) - pmp_3);
+							sum23 += (Q(n, 1) - pmp_2) * (Q(n, 2) - pmp_3);
+
+						}
+						N_SUBTRACT_ONE = Q.rows() - 1.0;
+
+						pcov_12 = sum12 / N_SUBTRACT_ONE;
+						pcov_13 = sum13 / N_SUBTRACT_ONE;
+						pcov_23 = sum23 / N_SUBTRACT_ONE;
+
+						term_1 = pmp_1 - omp_1,
+							term_2 = pmp_2 - omp_2,
+							term_3 = pmp_3 - omp_3,
+							term_4 = pvp_1 - ovp_1,
+							term_5 = pvp_2 - ovp_2,
+							term_6 = pvp_3 - ovp_3,
+							term_7 = pcov_12 - ocov_12,
+							term_8 = pcov_13 - ocov_13,
+							term_9 = pcov_23 - ocov_23;
+						// note to self: I'm using vectorXd from now on b/c it plays way better than the vectors built into C++ unless ofc there are strings that we need to input.
+						
+						all_terms << term_1, term_2, term_3, term_4, term_5, term_6, term_7, term_8, term_9;
+						term_vec = all_terms;
+						
+						cost_gbest = term_vec.transpose() * w_mat * term_vec.transpose().transpose();
+						
+						GBMAT.conservativeResize(GBMAT.rows() + 1, GBMAT.cols());
+						VectorXd cbind1(GBMAT.cols());
+						cbind1 << gbest, cost_gbest;
+						GBMAT.row(GBMAT.rows() - 1) = cbind1;
+						
+						POSMAT.resize(Nparts,Npars); //reset to 0???
+						POSMAT.setZero();
+						
+						for (int init = 0; init < Nparts; init++) {
+							for (int edim = 0; edim < Npars; edim++) {
+								double tmean = gbest(edim);
+								if (gbest(edim) > 0.5) {
+									tmean = 1 - gbest(edim);
+									wasflipped = 1;
+									
+								}
+								double myc = (1 - tmean) / tmean;
+								double alpha = myc / ((1 + myc) * (1 + myc) * (1 + myc) * nearby * nearby);
+								double beta = myc * alpha;
+
+								// sample from beta dist - this can be quite inefficient and taxing, there is another way with a gamma dist (THAT NEEDS TO BE REINVESTIGATED), but works so far.
+								std::gamma_distribution<double> aDist(alpha, 1);
+								std::gamma_distribution<double> bDist(beta, 1);
+
+								double x = aDist(generator);
+								double y = bDist(generator);
+								double myg = x/(x+y);
+								if (wasflipped == 1) {
+									wasflipped = 0;
+									myg = 1 - myg;
+								}
+								POSMAT(init, edim) = myg;
+							}
+						}
+						
+						MatrixXd cbindMat(POSMAT.rows(), POSMAT.cols() + 1); // keep track of each particle's best and it's corresponding cost
+						cbindMat << POSMAT, VectorXd::Zero(POSMAT.rows());
+
+						for (int h = 0; h < Nparts; h++) {
+							for (int init = 0; init < Npars; init++) { k.at(init) = PBMAT(h, init); } 
+
+							HM << -k.at(2), k.at(2), 0,
+								k.at(1), -k.at(1) - k.at(4), k.at(4),
+								k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+							HMT = t * HM.transpose();
+							EHMT = HMT.exp();
+							Q = (EHMT * X_0.transpose()).transpose();
+
+
+							// CALCULATE MEANS, VARIANCES, AND COVARIANCES
+							pmpV = Q.colwise().mean();
+
+							pmp_1 = pmpV(0);
+							pmp_2 = pmpV(1);
+							pmp_3 = pmpV(2);
+
+							// variances - manually calculate it, no easy library 
+							pvp_1 = (Q.col(0).array() - Q.col(0).array().mean()).square().sum() / ((double)Q.col(0).array().size() - 1);
+							pvp_2 = (Q.col(1).array() - Q.col(1).array().mean()).square().sum() / ((double)Q.col(1).array().size() - 1);
+							pvp_3 = (Q.col(2).array() - Q.col(2).array().mean()).square().sum() / ((double)Q.col(2).array().size() - 1);
+							// covariances - manual calculation 
+							double sum12 = 0, sum13 = 0, sum23 = 0;
+
+							for (int n = 0; n < Q.rows(); n++)
+							{
+								sum12 += (Q(n, 0) - pmp_1) * (Q(n, 1) - pmp_2);
+								sum13 += (Q(n, 0) - pmp_1) * (Q(n, 2) - pmp_3);
+								sum23 += (Q(n, 1) - pmp_2) * (Q(n, 2) - pmp_3);
+
+							}
+							N_SUBTRACT_ONE = Q.rows() - 1.0;
+
+							pcov_12 = sum12 / N_SUBTRACT_ONE;
+							pcov_13 = sum13 / N_SUBTRACT_ONE;
+							pcov_23 = sum23 / N_SUBTRACT_ONE;
+
+							term_1 = pmp_1 - omp_1,
+								term_2 = pmp_2 - omp_2,
+								term_3 = pmp_3 - omp_3,
+								term_4 = pvp_1 - ovp_1,
+								term_5 = pvp_2 - ovp_2,
+								term_6 = pvp_3 - ovp_3,
+								term_7 = pcov_12 - ocov_12,
+								term_8 = pcov_13 - ocov_13,
+								term_9 = pcov_23 - ocov_23;
+							// note to self: I'm using vectorXd from now on b/c it plays way better than the vectors built into C++ unless ofc there are strings that we need to input.
+
+							all_terms << term_1, term_2, term_3, term_4, term_5, term_6, term_7, term_8, term_9;
+							term_vec = all_terms;
+							PBMAT(h, Npars) = term_vec.transpose() * w_mat * term_vec.transpose().transpose();
+						}
+					}
+				}
+
+				//cout << "line 802" << endl;
+				for (int jjj = 0; jjj < Nparts; jjj++) {
+
+					double w1 = sfi * unifDist(generator) /sf2, w2 = sfc*  unifDist(generator) / sf2, w3 = sfs * unifDist(generator) / sf2;
+					double sumw = w1 + w2 + w3;
+
+					w1 = w1 / sumw;
+					w2 = w2 / sumw;
+					w3 = w3 / sumw;
+
+					// R -sample ~ shuffle
+					
+					vector<int> seqOneToFive;
+					seqOneToFive.clear();
+					for (int i = 0; i < Npars; i++) {
+						seqOneToFive.push_back(i);
+					}
+					shuffle(seqOneToFive.begin(), seqOneToFive.end(), generator); // shuffle indices as well as possible. 
+					int ncomp = seqOneToFive.at(0);
+					VectorXd wcomp(ncomp);
+					shuffle(seqOneToFive.begin(), seqOneToFive.end(), generator);
+					for (int i = 0; i < ncomp; i++) {
+						wcomp(i) = seqOneToFive.at(i);
+					}
+				
+					VectorXd rpoint = POSMAT.row(jjj);
+
+					for (int smart = 0; smart < ncomp; smart++) {
+						int px = wcomp(smart);
+						double pos = rpoint(px);
+						double alpha = 4 * pos;
+						double beta = 4 - alpha;
+
+						std::gamma_distribution<double> aDist(alpha, 1);
+						std::gamma_distribution<double> bDist(beta, 1);
+						
+						double x = aDist(generator);
+						double y = bDist(generator);
+						
+						rpoint(px) = (x/(x+y)) / sf2;
+					}
+					
+					VectorXd PBMATV(5);
+					PBMATV << PBMAT(jjj, 0), PBMAT(jjj, 1), PBMAT(jjj, 2), PBMAT(jjj, 3), PBMAT(jjj, 4);
+					POSMAT.row(jjj) = w1 * rpoint + w2 * PBMATV + w3 * gbest;
+
+
+					
+					for (int i = 0; i < Npars; i++) { k.at(i) = POSMAT(jjj, i); }
+
+					HM << -k.at(2), k.at(2), 0,
+						k.at(1), -k.at(1) - k.at(4), k.at(4),
+						k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+					HMT = t * HM.transpose();
+					EHMT = HMT.exp();
+					Q = (EHMT * X_0.transpose()).transpose();
+
+
+					// CALCULATE MEANS, VARIANCES, AND COVARIANCES
+					pmpV = Q.colwise().mean();
+				
+					pmp_1 = pmpV(0);
+					pmp_2 = pmpV(1);
+					pmp_3 = pmpV(2);
+ 
+					// variances - below is best way to calculate column wise
+					pvp_1 = (Q.col(0).array() - Q.col(0).array().mean()).square().sum() / ((double)Q.col(0).array().size() - 1);
+					pvp_2 = (Q.col(1).array() - Q.col(1).array().mean()).square().sum() / ((double)Q.col(1).array().size() - 1);
+					pvp_3 = (Q.col(2).array() - Q.col(2).array().mean()).square().sum() / ((double)Q.col(2).array().size() - 1);
+
+					// covariances - manual calculation 
+					double sum12 = 0, sum13 = 0, sum23 = 0;
+
+					for (int n = 0; n < Q.rows(); n++)
+					{
+						sum12 += (Q(n, 0) - pmp_1) * (Q(n, 1) - pmp_2);
+						sum13 += (Q(n, 0) - pmp_1) * (Q(n, 2) - pmp_3);
+						sum23 += (Q(n, 1) - pmp_2) * (Q(n, 2) - pmp_3);
+
+					}
+					N_SUBTRACT_ONE = Q.rows() - 1.0;
+
+					pcov_12 = sum12 / N_SUBTRACT_ONE;
+					pcov_13 = sum13 / N_SUBTRACT_ONE;
+					pcov_23 = sum23 / N_SUBTRACT_ONE;
+
+					term_1 = pmp_1 - omp_1,
+						term_2 = pmp_2 - omp_2,
+						term_3 = pmp_3 - omp_3,
+						term_4 = pvp_1 - ovp_1,
+						term_5 = pvp_2 - ovp_2,
+						term_6 = pvp_3 - ovp_3,
+						term_7 = pcov_12 - ocov_12,
+						term_8 = pcov_13 - ocov_13,
+						term_9 = pcov_23 - ocov_23;
+					// note to self: I'm using vectorXd from now on b/c it plays way better than the vectors built into C++ unless ofc there are strings that we need to input.
+
+					all_terms << term_1, term_2, term_3, term_4, term_5, term_6, term_7, term_8, term_9;
+					term_vec = all_terms;
+
+					// USE THE MOST RECENT ESTIMATE OF WMAT UNLESS USEEQUAL == 1
+					double cost_newpos;
+					if (useEqual == 0) {
+						
+						cost_newpos = term_vec.transpose() * w_mat * term_vec.transpose().transpose();
+						
+					}
+					if (useEqual == 1) {
+						cost_newpos = term_vec.transpose() * vectorOfOnes.asDiagonal() * term_vec.transpose().transpose();
+						
+					}
+					if (cost_newpos < PBMAT(jjj, Npars)) {
+						//cout << "line 913" << endl;
+						VectorXd POSMAT_cost_newpos(POSMAT.cols());
+						POSMAT_cost_newpos = POSMAT.row(jjj);
+						POSMAT_cost_newpos.conservativeResize(PBMAT.cols());
+						POSMAT_cost_newpos(PBMAT.cols() - 1) = cost_newpos;
+						PBMAT.row(jjj) = POSMAT_cost_newpos;
+
+						if (cost_newpos < cost_gbest) {
+							gbest = POSMAT.row(jjj);
+							cost_gbest = cost_newpos;
+						}
+					}
+					
+				}
+
+
+				sfi = sfi - (sfe - sfg) / Nsteps; // reduce the inertial weight after each step
+				sfs = sfs + (sfe - sfg) / Nsteps; // increase social weight after each step
+
+
+				// CHECK IF NEW GLOBAL BEST HAS BEEN FOUND
+				int neflag = 0;
+				int lastrow = GBMAT.rows() - 1;
+				
+				for (int ne = 0; ne < Npars; ne++) {
+					if (GBMAT(lastrow, ne) != gbest(ne)) {
+						neflag = 1;
+					}
+				}
+
+				if (GBMAT(lastrow, Npars) != cost_gbest) {
+					neflag = 1;
+				}
+
+				//IF NEW GLOBAL BEST HAS BEEN FOUND, THEN UPDATE GBMAT
+				if (neflag == 1) {
+					//cout << "line 943" << endl;
+					GBMAT.conservativeResize(GBMAT.rows() + 1, GBMAT.cols()); //rbind method currently.... where cbind is the "column bind vector"
+					cbind << gbest, cost_gbest;
+					GBMAT.row(GBMAT.rows() - 1) = cbind;
+				}
+				
+			}
+
+			if (pso < (Biter + 1)) {
+				for (int init = 0; init < Npars; init++) { // best estimate of k to compute w.mat
+					k.at(init) = gbest(init);
+				}
+
+				HM << -k.at(2), k.at(2), 0,
+					k.at(1), -k.at(1) - k.at(4), k.at(4),
+					k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+				HMT = t * HM.transpose();
+				EHMT = HMT.exp();
+				Q = (EHMT * X_0.transpose()).transpose();
+				
+				MatrixXd fmdiffs(N, 3);
+				fmdiffs = Y_t - Q;
+
+				VectorXd mxt(3);
+				mxt = Q.colwise().mean();
+
+				VectorXd myt(3);
+				myt = Y_t.colwise().mean();
+
+				MatrixXd residxt(Q.rows(), Q.cols());
+				residxt.col(0) = mxt.row(0).replicate(N, 1);
+				residxt.col(1) = mxt.row(1).replicate(N, 1);
+				residxt.col(2) = mxt.row(2).replicate(N, 1);
+				residxt = Q - residxt;
+
+				MatrixXd residyt(Y_t.rows(), Y_t.cols());
+				residyt.col(0) = myt.row(0).replicate(N, 1);
+				residyt.col(1) = myt.row(1).replicate(N, 1);
+				residyt.col(2) = myt.row(2).replicate(N, 1);
+				residyt = Y_t - residyt;
+
+				MatrixXd smdiffs(N, 3);
+				smdiffs = (residyt.array() * residyt.array()) - (residxt.array() * residxt.array());
+				
+				MatrixXd cprxt(N, 3);
+				cprxt.col(0) = residxt.col(0).array() * residxt.col(1).array();
+				cprxt.col(1) = residxt.col(0).array() * residxt.col(2).array();
+				cprxt.col(2) = residxt.col(1).array() * residxt.col(2).array();
+
+				MatrixXd cpryt(N, 3);
+				cpryt.col(0) = residyt.col(0).array() * residyt.col(1).array();
+				cpryt.col(1) = residyt.col(0).array() * residyt.col(2).array();
+				cpryt.col(2) = residyt.col(1).array() * residyt.col(2).array();
+
+				MatrixXd cpdiffs(N, 3);
+				cpdiffs = cpryt - cprxt;
+
+				MatrixXd Adiffs(N, 9);
+
+				Adiffs << fmdiffs, smdiffs, cpdiffs; // concatenate
+
+				MatrixXd g_mat(N, Nterms);
+				g_mat = Adiffs;
+
+				w_mat.setZero();
+				for (int m = 0; m < N; m++) { w_mat = w_mat + (g_mat.row(m).transpose()) * g_mat.row(m); }
+				w_mat = (w_mat/N).inverse();
+			
+				if (useDiag == 1) { w_mat = w_mat.diagonal().diagonal(); }
+
+				// Update cost_gbest with w_mat
+
+				for (int init = 0; init < Npars; init++) { // recompute the cost for seedk using this w.mat
+					k.at(init) = gbest(init);
+				}
+
+				HM << -k.at(2), k.at(2), 0,
+					k.at(1), -k.at(1) - k.at(4), k.at(4),
+					k.at(3), k.at(0), -k.at(0) - k.at(3);
+
+				HMT = t * HM.transpose();
+				EHMT = HMT.exp();
+				Q = (EHMT * X_0.transpose()).transpose();
+
+
+				// CALCULATE MEANS, VARIANCES, AND COVARIANCES
+				pmpV = Q.colwise().mean();
+
+				pmp_1 = pmpV(0);
+				pmp_2 = pmpV(1);
+				pmp_3 = pmpV(2);
+
+				pvp_1 = 0;
+				pvp_2 = 0;
+				pvp_3 = 0;
+				// variances - manually calculate it, no easy library 
+				pvp_1 = (Q.col(0).array() - Q.col(0).array().mean()).square().sum() / ((double)Q.col(0).array().size() - 1);
+				pvp_2 = (Q.col(1).array() - Q.col(1).array().mean()).square().sum() / ((double)Q.col(1).array().size() - 1);
+				pvp_3 = (Q.col(2).array() - Q.col(2).array().mean()).square().sum() / ((double)Q.col(2).array().size() - 1);
+				// covariances - manual calculation 
+				double sum12 = 0, sum13 = 0, sum23 = 0;
+
+				for (int n = 0; n < Q.rows(); n++)
+				{
+					sum12 += (Q(n, 0) - pmp_1) * (Q(n, 1) - pmp_2);
+					sum13 += (Q(n, 0) - pmp_1) * (Q(n, 2) - pmp_3);
+					sum23 += (Q(n, 1) - pmp_2) * (Q(n, 2) - pmp_3);
+
+				}
+				double N_SUBTRACT_ONE = Q.rows() - 1.0;
+
+				pcov_12 = sum12 / N_SUBTRACT_ONE;
+				pcov_13 = sum13 / N_SUBTRACT_ONE;
+				pcov_23 = sum23 / N_SUBTRACT_ONE;
+
+				term_1 = pmp_1 - omp_1,
+					term_2 = pmp_2 - omp_2,
+					term_3 = pmp_3 - omp_3,
+					term_4 = pvp_1 - ovp_1,
+					term_5 = pvp_2 - ovp_2,
+					term_6 = pvp_3 - ovp_3,
+					term_7 = pcov_12 - ocov_12,
+					term_8 = pcov_13 - ocov_13,
+					term_9 = pcov_23 - ocov_23;
+				// note to self: I'm using vectorXd from now on b/c it plays way better than the vectors built into C++ unless ofc there are strings that we need to input.
+
+				all_terms << term_1, term_2, term_3, term_4, term_5, term_6, term_7, term_8, term_9;
+				term_vec = all_terms;
+
+				cost_gbest = term_vec.transpose() * w_mat * (term_vec.transpose()).transpose();
+
+				GBMAT.conservativeResize(GBMAT.rows() + 1, GBMAT.cols());
+				VectorXd cbind(gbest.size() + 1);
+				cbind << gbest, cost_gbest;
+				GBMAT.row(GBMAT.rows() - 1) = cbind;
+
+				if (cost_gbest < cost_sofar) {
+					best_sofar = gbest;
+					cost_sofar = cost_gbest;
+				}
+			}
+
+			if (bsi == 0 || q == 1) {
+				if (pso < (Biter + 1)) {
+					cout << "blindpso+cost.est:" << endl << best_sofar << endl << cost_sofar << endl << endl;
+				}
+				if (pso == (Biter + 1)) {
+					cout << "igmme + cost.est:"<< endl << gbest << endl << cost_gbest  << endl << endl;
+					cout << "w.mat" << w_mat.transpose()  << endl << endl;
+				}
+			}
+			if (bsi == 1 && q > 1) {
+				if (pso == 1) {
+					cout << gbest << cost_gbest << "ubsreps+cost.mat" << endl << endl;
+				}
+				if (pso > 1) {
+					cout << gbest << cost_gbest << "wbsreps+cost.mat" << endl << endl;
+				} 
+			} 
+		}  // end loop over PSO layers */
+		
+
+	} // end loop over NIter simulations
+	cout << "GBMAT: " << endl;
+	cout << GBMAT << endl;
+	auto t2 = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
+	cout << "CODE FINISHED RUNNING IN "<< duration<< " s TIME!" << endl;
+
+
+	return 0; // just to close the program at the end.
 }
 
+
+
+
+
+
+
+/* generate random individual values */
+
+/*double uniformRandDouble(double range_from, double range_to) {
+	std::random_device rand_dev;
+	std::mt19937 generator(rand_dev());
+	std::uniform_int_distribution<double>    distr(range_from, range_to);
+	return distr(generator);
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
+// Debug program: F5 or Debug > Start Debugging menu
+
+// Tips for Getting Started: 
+//   1. Use the Solution Explorer window to add/manage files
+//   2. Use the Team Explorer window to connect to source control
+//   3. Use the Output window to see build output and other messages
+//   4. Use the Error List window to view errors
+//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
+//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
