@@ -466,7 +466,7 @@ int main() {
     }
 
     double costSeedK = 0;
-    X_t = (exponentialMatrix(seed.k, tf, nSpecies) * X_0.transpose()).transpose();
+    X_t = (evolutionMatrix(seed.k, tf, nSpecies) * X_0.transpose()).transpose();
     XtmVec = moment_vector(X_t, nMoments);
     costSeedK = calculate_cf2(YtmVec, XtmVec, weight);
     cout << "seedk:"<< seed.k.transpose()<< "| cost:" << costSeedK << endl;
