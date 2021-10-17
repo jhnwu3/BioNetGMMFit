@@ -512,6 +512,7 @@ int main() {
     X_0.col(0) = pa_x;
     X_0.col(1) = pa_y;
     X_0.col(2) = pa_z;
+    /*TERRIBLE IMPLEMENTATION ABOVE OF X0 AND Y0 ^ */
 
     /* Solve for Y_t (mu). */
     cout << "Loading in Truk!" << endl;
