@@ -563,7 +563,7 @@ int main() {
             for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = gPos.k(i);}
             GBMAT(GBMAT.rows() - 1, Npars) = gCost;
         }
-    #pragma omp parallel for 
+    // #pragma omp parallel for 
         for(int particle = 0; particle < nParts2; particle++){
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
@@ -652,8 +652,8 @@ int main() {
                 cost = calculate_cf2(YtmVec, XtmVec, weight);
                 
                 /* update pBest and gBest */
-                #pragma omp critical
-                {
+                // #pragma omp critical
+                // {
                 if(cost < PBMAT(particle, Npars)){ // update particle best 
                     for(int i = 0; i < Npars; i++){
                         PBMAT(particle, i) = pos.k(i);
@@ -664,7 +664,7 @@ int main() {
                         GBVEC = pos.k;
                     }   
                 }
-                }
+                // }
             }
         }
         GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after each step.
