@@ -390,12 +390,12 @@ int main() {
     ifstream Y0File("knewY.0.txt");
     VectorXd YtmVec(nMoments);
     VectorXd XtmVec(nMoments);
-    cout << "right here bic boyo" << endl;
     X_0_Full = readIntoMatrix(X0File, sizeFile, N_SPECIES);
     Y_0_Full = readIntoMatrix(Y0File, sizeFile, N_SPECIES);
     X0File.close();
     Y0File.close();
     
+    cout << "Blocking Data!" << endl;
     X_0 = X_0_Full.block(startRow, 0, N, Npars);
     Y_0 = Y_0_Full.block(startRow, 0, N, Npars);
     cout << "Using starting row of data:" << startRow << " and " << N << " data pts!" << endl;
