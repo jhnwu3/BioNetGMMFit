@@ -6162,3 +6162,10 @@ GBMAT after targeted PSO:
  0.248238  0.592076  0.356404  0.138908  0.356293 0.0651544
 total difference b/w truk and final GBVEC:0.0803517
 CODE FINISHED RUNNING IN 6 s TIME!
+Job Statistics for 2163680:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2163680   rsjxw007 2021-10-17T16:04:28 2021-10-17T16:04:36   00:00:08             00:04.699  COMPLETED  0:0   r1pl-hpcf-n21         billing=1,cpu=1,mem=7812M,node=1 
+   2163680.batch            2021-10-17T16:04:28 2021-10-17T16:04:36   00:00:08          0  00:04.698  COMPLETED  0:0   r1pl-hpcf-n21                                          
+  2163680.extern            2021-10-17T16:04:28 2021-10-17T16:04:36   00:00:08          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n21                                          
+CPU Efficiency: 62.50% of 00:00:08 core-walltime
