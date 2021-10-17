@@ -259,10 +259,9 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
     /* second moment difference computations - @todo make it variable later */
     MatrixXd smdiffs(N, N_SPECIES);
     for(int i = 0; i < N_SPECIES; i++){
-        smdiffs.col(i) = (Yt.col(i).array() * Yt.col(i).array()) - (Xt.col(i).array() * Xt.col(i).array());
+        smdiffs.col(i) = (Yt.col(i).array() - Yt.col(i).array().mean()) * (Yt.col(i).array() - Yt.col(i).array().mean()) - ((Xt.col(i).array() -Xt.col(i).array().mean()) *(Xt.col(i).array() - Xt.col(i).array().mean()));
     }
 
-   
     int nCross = nMoments - 2 * N_SPECIES;
     if (nCross < 0){
         nCross = 0;
@@ -274,7 +273,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         int upperDiag = 0;
         for(int i = 0; i < N_SPECIES; i++){
             for(int j = i + 1; j < N_SPECIES; j++){
-                cpDiff.col(upperDiag) = (Yt.col(i).array() * Yt.col(j).array()) - (Xt.col(i).array() * Xt.col(j).array());
+                cpDiff.col(upperDiag) = ((Yt.col(i).array() - Yt.col(i).array().mean()) * (Yt.col(j).array() -Yt.col(j).array().mean())) - ((Xt.col(i).array() - Xt.col(i).array().mean()) * (Xt.col(j).array() - Xt.col(j).array().mean()));
                 upperDiag++;
             }
         }
