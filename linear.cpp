@@ -362,7 +362,7 @@ int main() {
     int hone = 4;
     //nMoments = 2*N_SPECIES; // mean + var only!
     VectorXd wmatup(4);
-    wmatup << 0.15, 0.35, 0.60, 0.9;
+    wmatup << 0.15, 0.30, 0.45, 0.60;
     double uniLowBound = 0.0, uniHiBound = 1.0;
     random_device RanDev;
     mt19937 gen(RanDev());
