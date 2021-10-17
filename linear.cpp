@@ -73,7 +73,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     VectorXd covariances(0);
     if(nCross > 5){
         int n = 0;
-        covariances.resize(nCross);
+        covariances = VectorXd::Zero(nCross);
         for (int i = 0; i < sample.cols(); i++) {
             for (int j = i + 1; j < sample.cols(); j++) {
                 covariances(n) = ((sample.col(i).array() * sample.col(j).array()).sum())/( sample.rows() - 1);
