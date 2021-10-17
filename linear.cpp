@@ -497,7 +497,7 @@ int main() {
         rbind(0, i) = x(i) - mu_x;
         rbind(1, i) = y(i) - mu_y;
     }
-    
+
     zMean = sigma_12 * sigma_22.inverse() * rbind;
     for (int i = 0; i < zMean.size(); i++) {
         zMean(0, i) = zMean(0, i) + mu_z;
@@ -536,7 +536,8 @@ int main() {
     XtmVec = moment_vector(X_t, nMoments);
     costSeedK = calculate_cf2(YtmVec, XtmVec, weight);
     cout << "seedk:"<< seed.k.transpose()<< "| cost:" << costSeedK << endl;
-    
+    cout << "XtmVec:" << XtmVec.transpose() << endl;
+    cout << "YtmVec:" << YtmVec.transpose() << endl;
     double gCost = costSeedK; //initialize costs and GBMAT
     // global values
     VectorXd GBVEC = seed.k;
