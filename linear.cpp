@@ -413,7 +413,7 @@ int main() {
     MatrixXd weight = MatrixXd::Identity(nMoments);
 
     cout << "Using two part PSO " << "Sample Size:" << N << " with:" << nMoments << " moments." << endl;
-    cout << "Using Times:" << times.transpose() << endl;
+    cout << "Using Times:" << tf << endl;
     cout << "Bounds for Uniform Distribution (" << uniLowBound << "," << uniHiBound << ")"<< endl;
     cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
     cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
