@@ -33,7 +33,7 @@ int main() {
 	int sf1 = 1;
 	int sf2 = 1;
 	
-	int N = 10000;
+	int N = 5000;
 
 	int Nparts_1 = 5000;
 	int Nsteps_1 = 5;
