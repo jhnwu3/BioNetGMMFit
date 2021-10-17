@@ -70,6 +70,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     }
     cout << "line 71" << endl;
     int nCross = nMoments - 2*sample.cols();
+    cout << "ncross:" << nCross << endl;
     VectorXd covariances(0);
     if(nCross > 5){
         int n = 0;
