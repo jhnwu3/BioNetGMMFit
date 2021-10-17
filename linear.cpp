@@ -390,6 +390,7 @@ int main() {
     ifstream Y0File("knewY.0.txt");
     VectorXd YtmVec(nMoments);
     VectorXd XtmVec(nMoments);
+    cout << "right here bic boyo" << endl;
     X_0_Full = readIntoMatrix(X0File, sizeFile, N_SPECIES);
     Y_0_Full = readIntoMatrix(Y0File, sizeFile, N_SPECIES);
     X0File.close();
