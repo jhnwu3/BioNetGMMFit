@@ -103,10 +103,10 @@ MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
 		k(1), -k(1) - k(4), k(4),
 		k(3), k(0), -k(0) - k(3);
 
-	MatrixXd MT(N_SPECIES, N_SPECIES);
+	MatrixXd MT(nSpecies, nSpecies);
 	MT = tf * M.transpose();
    
-	MatrixXd EMT(3, 3);
+	MatrixXd EMT(nSpecies, nSpecies);
 	EMT = MT.exp();
 
     return EMT;
@@ -382,10 +382,10 @@ int main() {
     int startRow = 0;
     MatrixXd X_0_Full(sizeFile, nSpecies);
     MatrixXd Y_0_Full(sizeFile, nSpecies);
-    MatrixXd X_0(N, Npars);
-    MatrixXd Y_0(N, Npars);
-    MatrixXd X_t(N, Npars);
-    MatrixXd Y_t(N, Npars);
+    MatrixXd X_0(N, nSpecies);
+    MatrixXd Y_0(N, nSpecies);
+    MatrixXd X_t(N, nSpecies);
+    MatrixXd Y_t(N, nSpecies);
     ifstream X0File("knewX.0.txt");
     ifstream Y0File("knewY.0.txt");
     VectorXd YtmVec(nMoments);
@@ -410,6 +410,7 @@ int main() {
     cout << "Calculating Yt!" << endl;
 
     Y_t = (evolutionMatrix(tru.k, tf, nSpecies) * Y_0.transpose()).transpose();
+    cout << "did this compute?" << endl;
     YtmVec = moment_vector(Y_t, nMoments);
 
     /* Instantiate seedk aka global costs */
