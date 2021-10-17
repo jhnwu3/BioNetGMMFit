@@ -72,7 +72,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     int nCross = nMoments - 2*sample.cols();
     cout << "ncross:" << nCross << endl;
     VectorXd covariances(0);
-    if(nCross > 5){
+    if(nCross > 0){
         int n = 0;
         covariances.conservativeResize(nCross);
         for (int i = 0; i < sample.cols(); i++) {
