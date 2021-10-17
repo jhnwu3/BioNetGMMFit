@@ -307,6 +307,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         for(int i = 0; i < aDiff.rows(); i++){
             wt += aDiff.row(i).transpose() * aDiff.row(i);
         }
+        wt = wt.inverse();
     }
 
 
