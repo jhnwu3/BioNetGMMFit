@@ -121,7 +121,7 @@ VectorXd comp_vel_vec(const VectorXd& posK, int seed, double epsi, double nan, i
     std::mt19937 generator(rand_dev());
     vector<int> rand;
     uniform_real_distribution<double> unifDist(0.0, 1.0);
-    for (int i = 0; i < N_DIM; i++) {
+    for (int i = 0; i < posK.size(); i++) {
         rand.push_back(i);
     }
     shuffle(rand.begin(), rand.end(), generator); // shuffle indices as well as possible. 
@@ -690,26 +690,12 @@ int main() {
                     double alpha = myc / ((1 + myc) * (1 + myc) * (1 + myc)*nearby*nearby);
                     double beta = myc * alpha;
 
-                    if(alpha < nan){
-                        alpha = epsi;
-                    }
-                    if(beta < nan){
-                        beta = epsi;
-                    }
-
                     std::gamma_distribution<double> aDist(alpha, 1);
                     std::gamma_distribution<double> bDist(beta, 1);
 
                     double x = aDist(pGenerator);
                     double y = bDist(pGenerator);
                     double myg = x / (x + y);
-
-                    if(myg >= 1){
-                        myg = myg - epsi;
-                    }
-                    if(myg <= 0){
-                        myg = myg + epsi;
-                    }
 
                     if (wasflipped == 1) {
                         wasflipped = 0;
