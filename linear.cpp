@@ -15,7 +15,7 @@
 #include <boost/numeric/odeint/external/openmp/openmp.hpp>
 
 #define N_SPECIES 3
-#define N_DIM 5 // dim of PSO hypercube
+#define N_DIM 6 // dim of PSO hypercube
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
