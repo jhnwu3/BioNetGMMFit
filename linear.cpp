@@ -380,8 +380,8 @@ int main() {
     /* Initial Conditions */
     int sizeFile = 25000;
     int startRow = 0;
-    MatrixXd X_0_Full(sizeFile, Npars);
-    MatrixXd Y_0_Full(sizeFile, Npars);
+    MatrixXd X_0_Full(sizeFile, nSpecies);
+    MatrixXd Y_0_Full(sizeFile, nSpecies);
     MatrixXd X_0(N, Npars);
     MatrixXd Y_0(N, Npars);
     MatrixXd X_t(N, Npars);
