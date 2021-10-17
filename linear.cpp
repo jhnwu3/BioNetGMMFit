@@ -64,13 +64,12 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     if(nMoments > sample.cols()){
         nVar = 0;
     }
-    cout << "line 67" << endl;
+    
     for(int c = 0; c < nVar; c++){
         variances(c) = (sample.col(c).array() - mu(c)).square().sum() / ((double) sample.col(c).array().size() - 1);
     }
-    cout << "line 71" << endl;
+
     int nCross = nMoments - 2*sample.cols();
-    cout << "ncross:" << nCross << endl;
     VectorXd covariances(0);
     if(nCross > 0){
         int n = 0;
@@ -82,11 +81,9 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
             }
         }
     }
-    cout <<"covariances:"<< covariances.size() << endl;
-    cout << "line 84:"<< nMoments << endl;
+
     // concatenate all moment vectors needed.
     for(int i = 0; i < nMoments; i++){
-        cout << "i:" << i << endl;
         if(i < sample.cols()){
             moments(i) = mu(i);
         }else if (i >= sample.cols() && i < 2 * sample.cols()){
