@@ -172,7 +172,7 @@ MatrixXd calculate_omega_weight_matrix(const MatrixXd &sample, const VectorXd &m
         for(int row = 0; row < N_SPECIES; row++){
             X(row) = sample(s, row); 
             for(int col = row; col < N_SPECIES; col++){
-                if( row == col){
+                if(row == col){
                     X(N_SPECIES + row) = sample(s, row) * sample(s, col);
                 }else{
                     X(upperDiag) = sample(s,row) * sample(s,col);
@@ -440,7 +440,7 @@ int main() {
     /* Blind PSO begins */
     cout << "PSO begins!" << endl;
     for(int step = 0; step < nSteps; step++){
-        cout << "step:" << step << endl;
+        
     // #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
@@ -541,6 +541,7 @@ int main() {
     double nearby = sdbeta;
     VectorXd chkpts = wmatup * nSteps2;
     for(int step = 0; step < nSteps2; step++){
+        cout << "step:" << step << endl;
         if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){ /* update wt   matrix || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3) */
             cout << "Updating Weight Matrix!" << endl;
             cout << "GBVEC AND COST:" << GBMAT.row(GBMAT.rows() - 1) << endl;
