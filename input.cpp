@@ -522,6 +522,8 @@ int ReadCsvDataParam(int &xDataSize, int &yDataSize){
 
 
     input.close();
+
+    return 0;
 }
 
 int main() {
