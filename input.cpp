@@ -508,6 +508,7 @@ int ReadCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2){
     cout << nPart1 << " " << nSteps1 << " " << nPart2 << " " << nSteps2 << endl;
 
     input.close();
+    return 0;
 }
 
 int ReadCsvDataParam(int &xDataSize, int &yDataSize){
