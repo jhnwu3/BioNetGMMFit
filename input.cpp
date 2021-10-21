@@ -500,6 +500,7 @@ int ReadCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2){
         if(isNumber(param)){ // only add into parameter vector if actually an int.
            params.push_back(std::stoi(param)); 
         }
+        cout << param << endl;
     }
     nPart1 = params.at(0);
     nSteps1 = params.at(1);
