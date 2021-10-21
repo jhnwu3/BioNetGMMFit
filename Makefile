@@ -18,7 +18,7 @@ nonlinear.o: nonlinear.cpp
 
 input: input.o
 	g++ input.o -o input -fopenmp
-input.o: nonlinear.cpp
+input.o: input.cpp
 	g++ -c -O3 input.cpp -o input.o -fopenmp
 
 
