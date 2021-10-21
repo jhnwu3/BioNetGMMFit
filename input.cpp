@@ -495,14 +495,18 @@ int ReadCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2){
         return EXIT_FAILURE;
     }
     vector<int> params;
-    string param;
-    while(std::getline(input, param,',')){
-        if(isNumber(param)){ // only add into parameter vector if actually an int.
-           params.push_back(std::stoi(param)); 
-           cout << param << endl;
+    string line;
+    while(std::getline(input, line)){
+        std::stringstream ss(line);
+        string col;
+        while(std::getline(ss, col, ',')){
+            if(isNumber(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stoi(col)); 
+                cout << col << endl;
+            }
         }
-        cout << "param:" << param << endl;
     }
+    
     nPart1 = params.at(0);
     nSteps1 = params.at(1);
     nPart2 = params.at(2);
