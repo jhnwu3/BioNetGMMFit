@@ -315,7 +315,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
     return wt;
 }
 
-void printToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
+void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
     ofstream plot;
     string csvFile = fileName + ".csv";
 	plot.open(csvFile);
@@ -625,7 +625,7 @@ int main() {
 
         // print out desired PBMAT for contour plots
         if(step == 0){
-            printToCsv(PBMAT, "single_PBMAT_t30");
+            matrixToCsv(PBMAT, "single_PBMAT_t30");
         }
     }
 
@@ -773,25 +773,12 @@ int main() {
     dist = calculate_cf1(tru.k, GBVEC);
     cout << "total difference b/w truk and final GBVEC:" << dist << endl; // compute difference
     
-    ofstream plot;
-	plot.open("GBMATP.csv");
 	MatrixXd GBMATWithSteps(GBMAT.rows(), GBMAT.cols() + 1);
 	VectorXd globalIterations(GBMAT.rows());
 	for(int i = 0; i < GBMAT.rows(); i++){
 		globalIterations(i) = i;
 	}
-	GBMATWithSteps << globalIterations, GBMAT;
-	for(int i = 0; i < GBMATWithSteps.rows(); i++){
-        for(int j = 0; j < GBMATWithSteps.cols(); j++){
-            if(j == 0){
-                plot << GBMATWithSteps(i,j);
-            }else{
-                plot << "," << GBMATWithSteps(i,j);
-            }
-        }
-        plot << endl;
-    }
-	plot.close();
+	matrixToCsv(GBMATWithSteps, "GBMAT");
 
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
