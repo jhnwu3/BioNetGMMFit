@@ -16,6 +16,11 @@ nonlinear: nonlinear.o
 nonlinear.o: nonlinear.cpp
 	g++ -c -O3 nonlinear.cpp -o nonlinear.o -fopenmp
 
+input: input.o
+	g++ input.o -o input -fopenmp
+input.o: nonlinear.cpp
+	g++ -c -O3 input.cpp -o input.o -fopenmp
+
 
 # this target deletes all files produced from the Makefile
 # so that a completely new compile of all items is required
