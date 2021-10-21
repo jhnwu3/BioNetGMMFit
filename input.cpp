@@ -497,12 +497,11 @@ int ReadCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2){
     vector<int> params;
     string line;
     while(std::getline(input, line)){
-        std::stringstream ss(line);
+        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
         string col;
         while(std::getline(ss, col, ',')){
             if(isNumber(col)){ // only add into parameter vector if actually an int.
                 params.push_back(std::stoi(col)); 
-                cout << col << endl;
             }
         }
     }
@@ -511,24 +510,31 @@ int ReadCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2){
     nSteps1 = params.at(1);
     nPart2 = params.at(2);
     nSteps2 = params.at(3);
-    cout << nPart1 << " " << nSteps1 << " " << nPart2 << " " << nSteps2 << endl;
 
     input.close();
     return 0;
 }
 
 int ReadCsvDataParam(int &xDataSize, int &yDataSize){
-    ifstream input("PSO.csv");
+    ifstream input("data_parameters.csv");
     if(!input.is_open()){
-        throw std::runtime_error("Could not open PSO file");
+        throw std::runtime_error("Could not open data parameters file");
         return EXIT_FAILURE;
     }
-    
-    string row;
-
-
+    vector<int> params;
+    string line;
+    while(std::getline(input, line)){
+        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
+        string col;
+        while(std::getline(ss, col, ',')){
+            if(isNumber(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stoi(col)); 
+            }
+        }
+    }
+    xDataSize = params.at(0);
+    yDataSize = params.at(1);
     input.close();
-
     return 0;
 }
 
@@ -542,7 +548,7 @@ int main() {
         cout << "Failed Readings." << endl;
         return EXIT_FAILURE;
     }
-
+    cout << nPart1 << " " << nSteps1 << " " << nParts2 << " " << nSteps2 << endl;
     return 0; // just to close the program at the end.
 }
 
