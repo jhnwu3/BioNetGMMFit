@@ -3,7 +3,7 @@
 CXX = g++
 
 # target linear and nonlinear.
-all: linear nonlinear
+all: linear nonlinear input
 
 linear: linear.o
 	g++ linear.o -o linear -fopenmp
