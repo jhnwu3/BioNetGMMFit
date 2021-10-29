@@ -8,10 +8,19 @@ It takes into account both linear and nonlinear models of evolution for estimati
 All software currently has only been tested on Linux-based systems.
 
 ### *Eigen*
-Snapshot uses the Eigen 3.3.9 linear algebra library for matrix computations.
+Snapshot uses the Eigen 3.3.9 linear algebra library for matrix computations. If on Ubuntu, you can do a quick install using:
+
+    sudo apt install libeigen3-dev
+
+otherwise you can see more detailed install instructions [here](https://eigen.tuxfamily.org/dox/GettingStarted.html)
 
 ### *Boost*
-Snapshot uses the Boost 1.7.2 mathematics C++ library for ODE estimations for nonlinear systems.
+Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonlinear systems. To install the whole boost C++ library, you can try:
+
+    sudo apt-get install libboost-all-dev
+
+However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
+detailed install intructions can be found [here]
 
 ## **Getting Started** ##
 
