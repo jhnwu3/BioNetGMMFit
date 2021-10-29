@@ -20,7 +20,7 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
     sudo apt-get install libboost-all-dev
 
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
-detailed install intructions can be found [here]
+detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
 
 ## **Getting Started** ##
 
