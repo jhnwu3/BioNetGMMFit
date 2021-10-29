@@ -2,3 +2,5 @@ n_particles1,15
 n_steps1,50
 n_particles2,10
 n_steps2,1000
+use_mixedMoments?,1
+use_linear?,1
