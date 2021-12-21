@@ -29,14 +29,17 @@ int main(){
     int nSteps1 = 50;
     int nParts2 = 10; // second part PSO
     int nSteps2 = 1000;
-    int useMixMom = 1;
+    int useOnlySecMom = 1;
+    int useOnlyFirstMom = 1;
     int useLinear = 0;
     int xDataSize = 0;
     int yDataSize = 0;
     int nSpecies = 0;
     int nRates = 0;
+    int nRuns = 0;
+    
     cout << "Reading in data!" << endl;
-    if(readCsvPSO(nParts1, nSteps1, nParts2, nSteps2, useMixMom, useLinear) != 0 || readCsvDataParam(xDataSize, yDataSize, nSpecies, nRates)){
+    if(readCsvPSO(nParts1, nSteps1, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns) != 0 || readCsvDataParam(xDataSize, yDataSize, nSpecies, nRates)){
         return EXIT_FAILURE;
     }
 
@@ -53,7 +56,7 @@ int main(){
     if(useLinear == 1){
         GBMAT = linearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates);
     }else{
-        GBMAT = nonlinearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates, useMixMom);
+        GBMAT = nonlinearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates, useOnlySecMom, nRuns, useOnlyFirstMom);
     }
 
     auto t2 = std::chrono::high_resolution_clock::now();
