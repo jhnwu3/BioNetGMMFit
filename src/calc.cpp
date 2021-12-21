@@ -15,21 +15,97 @@ double calculate_cf2(const VectorXd& trueVec, const  VectorXd& estVec, const Mat
     return cost;
 }
 
-
-MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N){
-    
-    bool useInverse = true;
-    if(Yt.cols() > 4){
-        useInverse = false;
+MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useBanks){
+    /* first moment differences */
+    MatrixXd fmdiffs = MatrixXd::Zero(Yt.rows(), Yt.cols());
+    for(int i = 0; i < Yt.cols(); i++){
+        fmdiffs.col(i) = Yt.col(i).array() - Yt.col(i).array().mean();
     }
+    /* second moment difference computations - @todo make it variable later */
+    MatrixXd smdiffs(Yt.rows(), Yt.cols());
+    for(int i = 0; i < Yt.cols(); i++){
+        smdiffs.col(i) = (Yt.col(i).array() * Yt.col(i).array()) - (Yt.col(i).array().mean() * Yt.col(i).array().mean());
+    }
+    /* If no cross moments, then have a check for it */
+    int nCross = nMoments - (2 * Yt.cols());
+    if (nCross < 0){
+        nCross = 0;
+    }
+    MatrixXd cpDiff(Yt.rows(), nCross);
+
+    /* cross differences */
+    if(nCross > 0){
+        int upperDiag = 0;
+        for(int i = 0; i < Yt.cols(); i++){
+            for(int j = i + 1; j < Yt.cols(); j++){
+                cpDiff.col(upperDiag) = (Yt.col(i).array() * Yt.col(j).array()) - (Yt.col(i).array().mean() * Yt.col(j).array().mean());
+                upperDiag++;
+            }
+        }
+    }
+
+    MatrixXd aDiff(Yt.rows(), nMoments);
+    for(int i = 0; i < Yt.rows(); i++){
+        for(int moment = 0; moment < nMoments; moment++){
+            if(moment < Yt.cols()){
+                aDiff(i, moment) = fmdiffs(i, moment);
+            }else if (moment >= Yt.cols() && moment < 2 * Yt.cols()){
+                aDiff(i, moment) = smdiffs(i, moment - Yt.cols());
+            }else if (moment >= 2 * Yt.cols()){
+                aDiff(i, moment) = cpDiff(i, moment - (2 * Yt.cols()));
+            }
+        }
+    }
+    double cost = 0;
+    VectorXd means = aDiff.colwise().mean();
+    VectorXd variances(nMoments);
+    for(int i = 0; i < nMoments; i++){
+        variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
+    }
+    VectorXd covariances(nMoments - 1);
+    
+    for(int i = 0; i < nMoments - 1; i++){
+        int j = i + 1;
+        covariances(i) = ( (aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
+    }
+
+    MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
+   
+    
+    if(useBanks){
+        for(int i = 0; i < nMoments; i++){
+        wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
+        }
+        for(int i = 0; i < nMoments - 1; i++){
+            int j = i + 1;
+            wt(i,j) = covariances(i);
+            wt(j,i) = covariances(i);
+        }
+        cout << "Weights Before Inversion:" << endl << wt << endl;
+        wt = wt.llt().solve(MatrixXd::Identity(nMoments, nMoments));
+        cout << "Weights:" << endl;
+        cout << wt << endl;
+    }else{
+        for(int i = 0; i < nMoments; i++){
+            wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
+        }
+        cout << "Weights:"<< endl;
+        cout << wt << endl;
+    }
+    return wt;
+}
+
+MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useBanks){
+    
     /* first moment differences */
     MatrixXd fmdiffs = Yt - Xt; 
     /* second moment difference computations - @todo make it variable later */
     MatrixXd smdiffs(N, Yt.cols());
-    for(int i = 0; i < smdiffs.cols(); i++){
-        smdiffs.col(i) = (Yt.col(i).array() - Yt.col(i).array().mean()) * (Yt.col(i).array() - Yt.col(i).array().mean()) - ((Xt.col(i).array() -Xt.col(i).array().mean()) *(Xt.col(i).array() - Xt.col(i).array().mean()));
+    for(int i = 0; i < Yt.cols(); i++){
+        smdiffs.col(i) = (Yt.col(i).array() * Yt.col(i).array()) - (Xt.col(i).array() * Xt.col(i).array());
     }
 
+    /* If no cross moments, then have a check for it */
     int nCross = nMoments - 2 * Yt.cols();
     if (nCross < 0){
         nCross = 0;
@@ -41,7 +117,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         int upperDiag = 0;
         for(int i = 0; i < Yt.cols(); i++){
             for(int j = i + 1; j < Yt.cols(); j++){
-                cpDiff.col(upperDiag) = ((Yt.col(i).array() - Yt.col(i).array().mean()) * (Yt.col(j).array() -Yt.col(j).array().mean())) - ((Xt.col(i).array() - Xt.col(i).array().mean()) * (Xt.col(j).array() - Xt.col(j).array().mean()));
+                cpDiff.col(upperDiag) = (Yt.col(i).array() * Yt.col(j).array()) - (Xt.col(i).array() * Xt.col(j).array());
                 upperDiag++;
             }
         }
@@ -64,20 +140,35 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
     for(int i = 0; i < nMoments; i++){
         variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
     }
-    int rank = nMoments;
-    MatrixXd wt = MatrixXd::Identity(rank, rank);
-    if(!useInverse){
-        for(int i = 0; i < rank; i++){
-            wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
-        }
-    }else{
-        for(int i = 0; i < aDiff.rows(); i++){
-            wt += aDiff.row(i).transpose() * aDiff.row(i);
-        }
-        wt = (wt / aDiff.rows()).inverse();
+    VectorXd covariances(nMoments - 1);
+    
+    for(int i = 0; i < nMoments - 1; i++){
+        int j = i + 1;
+        covariances(i) = ( (aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
     }
 
-    cout << "new wt mat:" << endl << wt << endl;
-
+    MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
+   
+    
+    if(useBanks){
+        for(int i = 0; i < nMoments; i++){
+        wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
+        }
+        for(int i = 0; i < nMoments - 1; i++){
+            int j = i + 1;
+            wt(i,j) = covariances(i);
+            wt(j,i) = covariances(i);
+        }
+        cout << "Weights Before Inversion:" << endl << wt << endl;
+        wt = wt.llt().solve(MatrixXd::Identity(nMoments, nMoments));
+        cout << "Weights:" << endl;
+        cout << wt << endl;
+    }else{
+        for(int i = 0; i < nMoments; i++){
+            wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
+        }
+        cout << "Weights:"<< endl;
+        cout << wt << endl;
+    }
     return wt;
 }

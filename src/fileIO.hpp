@@ -30,7 +30,7 @@ MatrixXd txtToMatrix(const string& fileName, int rows, int cols);
 // }
 
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useMixMom, int &useLinear);
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns);
 int readCsvDataParam(int &xDataSize, int &yDataSize, int &nSpecies, int &nRates);
 VectorXd readCsvTimeParam();
 #endif
