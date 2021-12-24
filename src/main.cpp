@@ -39,24 +39,45 @@ int main(){
     int nRuns = 0;
     
     cout << "Reading in data!" << endl;
-    if(readCsvPSO(nParts1, nSteps1, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns) != 0 || readCsvDataParam(xDataSize, yDataSize, nSpecies, nRates)){
+    if(readCsvPSO(nParts1, nSteps1, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns) != 0 || 
+        readCsvDataParam(nSpecies, nRates) != 0){
         return EXIT_FAILURE;
     }
-
+    cout << "npartsblind:" << nParts1 << endl;
+    cout << "nruns:" << nRuns << endl;
+    cout << "nSpecies:" << nSpecies << endl;
+    cout << "useOnlySecMom:" << useOnlySecMom << endl;
+    MatrixXd X_0 = csvToMatrix("../input/testX.csv");
+    MatrixXd Y_0 = csvToMatrix("../input/testY.csv");
+    cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
+    cout << "Y_0:" << "(" << Y_0.rows() << "," << Y_0.cols() << ")" << endl;
+    int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
+    cout << "moments:" << nMoments << endl;
     /* Temp Initial Conditions */
-    MatrixXd X_0(xDataSize, nSpecies);
-    MatrixXd Y_0(yDataSize, nSpecies);
-    X_0 = txtToMatrix("input/knewX.0.txt", xDataSize, nSpecies);
-    Y_0 = txtToMatrix("input/knewY.0.txt", yDataSize, nSpecies);
+    // MatrixXd X_0(xDataSize, nSpecies);
+    // MatrixXd Y_0(yDataSize, nSpecies);
+    // X_0 = txtToMatrix("input/knewX.0.txt", xDataSize, nSpecies);
+    // Y_0 = txtToMatrix("input/knewY.0.txt", yDataSize, nSpecies);
+    
+    /* Fixed Initial Conditions */
 
     // cout << "Using starting row of data:" << startRow << " and " << N << " data pts!" << endl;
     // cout << "first row X0:" << X_0.row(0) << endl;
     // cout << "final row X0:" << X_0.row(N - 1) << endl << endl << endl << endl;
+
+    if(useOnlySecMom){  // these will be added to the options sheet later.
+        cout << "USING NONMIXED MOMENTS!!" << endl;
+        nMoments = 2 * X_0.cols();
+    }
+    if(useOnlyFirstMom){
+        cout << "USING ONLY MEANS!" << endl;
+        nMoments = X_0.cols();
+    }
     MatrixXd GBMAT;
     if(useLinear == 1){
-        GBMAT = linearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates);
+        GBMAT = linearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates, nMoments);
     }else{
-        GBMAT = nonlinearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates, useOnlySecMom, nRuns, useOnlyFirstMom);
+        GBMAT = nonlinearModel(nParts1, nSteps1, nParts2, nSteps2, X_0, Y_0, nRates, nRuns, nMoments);
     }
 
     auto t2 = std::chrono::high_resolution_clock::now();

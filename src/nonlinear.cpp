@@ -50,7 +50,7 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
     return rPoint;
 }
 
-MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd &Y_0, int nRates, int useOnlySecMom, int nRuns, int useOnlyFirstMom){
+MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd &Y_0, int nRates, int nRuns, int nMoments){
     auto t1 = std::chrono::high_resolution_clock::now();
     /*---------------------- Setup ------------------------ */
     VectorXd times = readCsvTimeParam();
@@ -71,8 +71,6 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
     double alpha = 0.2;
     int N = 5000;
-
-    int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2; // var + mean + cov
     int hone = 28;
     //nMoments = 2*N_SPECIES; // mean + var only!
     VectorXd wmatup(4);
@@ -83,24 +81,9 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     uniform_real_distribution<double> unifDist(uniLowBound, uniHiBound);
     
     vector<MatrixXd> weights;
-    if(useOnlySecMom){  // these will be added to the options sheet later.
-        cout << "USING NONMIXED MOMENTS!!" << endl;
-        nMoments = 2 * X_0.cols();
-    }
-    if(useOnlyFirstMom){
-        cout << "USING ONLY MEANS!" << endl;
-        nMoments = X_0.cols();
-    }
 
     for(int i = 0; i < nTimeSteps; i++){
         weights.push_back(MatrixXd::Identity(nMoments, nMoments));
-    }
-    if(useOnlySecMom){
-        for(int i = 0; i < nTimeSteps; i++){
-            for(int j = 2*X_0.cols(); j < nMoments; j++){
-                weights[i](j,j) = 0;
-            }
-        }
     }
     
     cout << "Using two part PSO " << "Sample Size:" << N << " with:" << nMoments << " moments." << endl;
