@@ -1,7 +1,7 @@
-n_particles1,15
-n_steps1,50
-n_particles2,10
-n_steps2,1000
+n_particles1,2
+n_steps1,2
+n_particles2,1
+n_steps2,2
 use_OnlySecMoments?,0
 use_OnlyFirstMoments?,0
 use_linear?,1

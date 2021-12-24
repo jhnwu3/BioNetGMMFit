@@ -3,11 +3,11 @@
 CXX = g++
 
 # target linear and nonlinear.
-all: snapshot
+all: sig
 
 # target dependencies for main PSO program - also equally messy code inside!
-snapshot: fileIO.o linear.o nonlinear.o calc.o main.o
-	g++ main.o fileIO.o linear.o nonlinear.o calc.o -o snapshot -fopenmp
+sig: fileIO.o linear.o nonlinear.o calc.o main.o
+	g++ main.o fileIO.o linear.o nonlinear.o calc.o -o sig -fopenmp
 calc.o: calc.cpp main.hpp calc.hpp
 	g++ -c calc.cpp
 fileIO.o: fileIO.cpp main.hpp fileIO.hpp 

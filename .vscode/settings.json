@@ -105,7 +105,8 @@
         "ranges": "cpp",
         "scoped_allocator": "cpp",
         "span": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "charconv": "cpp"
     },
     "C_Cpp.errorSquiggles": "Enabled"
 }

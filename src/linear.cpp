@@ -45,6 +45,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
 /* placeholder function -> will generalize for greater proteins if we ever get a better matrix. */
 MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
     MatrixXd M(nSpecies, nSpecies);
+    cout << "(" << M.rows() << "," << M.cols() << ")" << endl;
 	M << -k(2), k(2), 0,
 		k(1), -k(1) - k(4), k(4),
 		k(3), k(0), -k(0) - k(3);
@@ -54,7 +55,6 @@ MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
    
 	MatrixXd EMT(nSpecies, nSpecies);
 	EMT = MT.exp();
-
     return EMT;
 }
 
@@ -109,10 +109,11 @@ IMPORTANT NOTE FOR FUTURE CHANGES! -> Y0 will turn into Yt as Y0 technically doe
 for pseudo-tests as this project is still in its infancy.
 */
 
-MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, MatrixXd &Y_0, int nRates) {
+MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, MatrixXd &Y_0, int nRates, int nMoments) {
   
     /* Variables (global) */
     VectorXd times = readCsvTimeParam();
+    cout << "times:" << times.transpose() << endl << endl;
     int midPt = times.size() / 2;
     double tf = times(midPt);
     double t0 = 0, dt = 1.0; // time variables
@@ -129,12 +130,11 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     double sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
     double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
     double alpha = 0.2;
-    int N = 5000;
+    int N = X_0.rows();
     // int nParts = 5000; // first part PSO
     // int nSteps = 5;
     // int nParts2 = 5; // second part PSO
     // int nSteps2 = 5000;
-    int nMoments = (nSpecies * (nSpecies + 3)) / 2; // var + mean + cov
     int hone = 4;
     //nMoments = 2*N_SPECIES; // mean + var only!
     VectorXd wmatup(4);
@@ -158,10 +158,11 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Solve for Y_t (mu). */
     cout << "Loading in Truk!" << endl;
     VectorXd trueK = VectorXd::Zero(Npars);
-    trueK <<  0.27678200,  0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
+    trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
     cout << "Calculating Yt!" << endl;
 
     Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
+    cout << "moment vec" << endl;
     YtmVec = moment_vector(Y_t, nMoments);
     /* Instantiate seedk aka global costs */
     VectorXd seed;
@@ -281,7 +282,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     VectorXd chkpts = wmatup * nSteps2;
     for(int step = 0; step < nSteps2; step++){
         if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){ /* update wt   matrix || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3) */
-            cout << "Updating Weight Matrix!" << endl;
+           
             cout << "GBVEC AND COST:" << GBMAT.row(GBMAT.rows() - 1) << endl;
             nearby = squeeze * nearby;
             /* reinstantiate gCost */
@@ -290,7 +291,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             double cost = 0;
             X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
-            weight = customWtMat(Y_t, X_t, nMoments, N);
+            weight = customWtMat(Y_t, X_t, nMoments, N, false, true);
+            cout << "Updated Weight Matrix!" << endl;
             cost = calculate_cf2(YtmVec, XtmVec, weight);
             
             gCost = cost;

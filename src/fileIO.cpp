@@ -20,12 +20,28 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 
-bool isNumber(const std::string& str){
-    char* ptr;
-    strtol(str.c_str(), &ptr, 10);
-    return *ptr == '\0';
+bool isNumber(const std::string& s)
+{
+    int it = 0;
+    while (it < s.length() && std::isdigit(s.at(it))) ++it; 
+    return (it == (s.length() - 1));
 }
 
+bool isDouble(const std::string& s)
+{
+    int decimals = 0;
+    int it = 0;
+    for(int i = 0; i < s.length(); i++){
+        if(s.at(i) == '.'){
+            decimals++;
+        }
+    }
+    if(decimals != 1){
+        return false;
+    }
+    while (it < s.length() && std::isdigit(s.at(it))) ++it; 
+    return (it == (s.length() - 2)); // -2, 1 for null, 1 for the .
+}
 
 string removeWhiteSpace(string current)
 {
@@ -85,6 +101,35 @@ MatrixXd txtToMatrix(const string& fileName, int rows, int cols) {
     return mat;
 }
 
+MatrixXd csvToMatrix (const std::string & path) {
+    std::ifstream indata;
+    indata.open(path);
+    if(!indata.is_open()){
+        throw std::runtime_error("Invalid Sample File Name!");
+        exit(EXIT_FAILURE);
+    }
+    std::string line;
+    std::vector<double> values;
+    unsigned int rows = 0;
+    while (std::getline(indata, line)) {
+        std::stringstream lineStream(line);
+        std::string cell;
+        while (std::getline(lineStream, cell, ',')) {
+            values.push_back(std::stod(cell));
+        }
+        ++rows;
+    }
+    MatrixXd mat = MatrixXd::Zero(rows, values.size()/rows);
+    int i = 0;
+    for(int r = 0; r < rows; r++){
+        for(int c = 0; c < mat.cols(); c++){
+            mat(r,c) = values[i];
+            i++;
+        }
+    }
+    return mat;
+}
+
 void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
     ofstream plot;
     string csvFile = fileName + ".csv";
@@ -105,7 +150,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
 
 // Reads PSO Parameters File
 int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns){
-    ifstream input("PSO.csv");
+    ifstream input("../PSO.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
         return EXIT_FAILURE;
@@ -121,7 +166,6 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
             }
         }
     }
-    
     nPart1 = params.at(0);
     nSteps1 = params.at(1);
     nPart2 = params.at(2);
@@ -135,8 +179,8 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
 }
 
 // Reads Input Data Parameters.
-int readCsvDataParam(int &xDataSize, int &yDataSize, int &nSpecies, int &nRates){
-    ifstream input("data_parameters.csv");
+int readCsvDataParam(int &nSpecies, int &nRates){
+    ifstream input("../data_parameters.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         return EXIT_FAILURE;
@@ -152,10 +196,8 @@ int readCsvDataParam(int &xDataSize, int &yDataSize, int &nSpecies, int &nRates)
             }
         }
     }
-    xDataSize = params.at(0);
-    yDataSize = params.at(1);
-    nSpecies = params.at(2);
-    nRates - params.at(3);
+    nSpecies = params.at(0);
+    nRates = params.at(1);
     input.close();
     return 0;
 }
@@ -163,19 +205,19 @@ int readCsvDataParam(int &xDataSize, int &yDataSize, int &nSpecies, int &nRates)
 // Reads Time Step Parameters.
 VectorXd readCsvTimeParam(){
 
-    ifstream input("data_parameters.csv");
+    ifstream input("../time_steps.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         exit;
     }
-    vector<int> params;
+    vector<double> params;
     string line;
     while(std::getline(input, line)){
         std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
         string col;
         while(std::getline(ss, col, ',')){
-            if(isNumber(col)){ // only add into parameter vector if actually an int.
-                params.push_back(std::stoi(col)); 
+            if(isNumber(col) || isDouble(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stod(col)); 
             }
         }
     }
