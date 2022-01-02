@@ -3,7 +3,7 @@
 #SBATCH --job-name=parallelPSO
 #SBATCH --partition=general
 #SBATCH --nodes=1
-#SBATCH --output=./slurm_outputs/test%j.txt
+#SBATCH --output=.example/test%j.txt
 #SBATCH --cpus-per-task=30
 # load all modules, build terminal code, move all outputs into output folders.
 
