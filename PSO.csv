@@ -4,5 +4,5 @@ n_particles2,1
 n_steps2,2
 use_OnlySecMoments?,0
 use_OnlyFirstMoments?,0
-use_linear?,1
+use_linear?,0
 nRuns,1
