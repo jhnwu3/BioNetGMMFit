@@ -24,6 +24,8 @@ bool isNumber(const std::string& s)
 {
     int it = 0;
     while (it < s.length() && std::isdigit(s.at(it))) ++it; 
+    cout << "it:" << it << endl;
+    cout << "slen:" << s.length() << endl;
     return (it == (s.length() - 1));
 }
 
