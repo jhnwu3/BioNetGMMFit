@@ -6,5 +6,5 @@
 #SBATCH --output=test%j.txt
 #SBATCH --cpus-per-task=30
 # load all modules, build terminal code, move all outputs into output folders.
-
+chmod u+x sig
 ./sig
