@@ -165,9 +165,9 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
         string col;
         while(std::getline(ss, col, ',')){
             cout << "col:" << col << "isNumber:" << isNumber(col) << endl;
-            if(isNumber(col)){ // only add into parameter vector if actually an int.
-                params.push_back(std::stoi(col)); 
-            }
+            // if(isNumber(col)){ // only add into parameter vector if actually an int.
+            //     params.push_back(std::stoi(col)); 
+            // }
         }
     }
     cout << "params:" << params.size() << endl;
