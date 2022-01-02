@@ -167,6 +167,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
             }
         }
     }
+    cout << "params:" << params.size() << endl;
     nPart1 = params.at(0);
     nSteps1 = params.at(1);
     nPart2 = params.at(2);
