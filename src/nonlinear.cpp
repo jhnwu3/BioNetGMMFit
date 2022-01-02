@@ -71,7 +71,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
     double alpha = 0.2;
     int N = 5000;
-    int hone = 28;
+    int hone = 28; 
     int startRow = 0;
     MatrixXd X_0 = X_0_full.block(startRow, 0, N, Npars);
     MatrixXd Y_0 = Y_0_full.block(startRow, 0, N, Npars);
@@ -315,7 +315,6 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         }
         GBVECS(run, Npars) = gCost;
     }
-    matrixToCsv(GBVECS,"runs");
     trukCost = 0;
     for(int t = 0; t < nTimeSteps; t++){
         trukCost += calculate_cf2(Yt3Vecs[t], Xt3Vecs[t], weights[t]);
@@ -323,11 +322,6 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
 
     cout << "truk: " << tru.k.transpose() << " with trukCost with new weights:" << trukCost << endl;
     
-    for(int i = 0; i < nTimeSteps; i++){
-        string fileName = "3TimeWeights_" + to_string(i);
-        matrixToCsv(weights[i], fileName);
-    }
-
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
     cout << "CODE FINISHED RUNNING IN " << duration << " s TIME!" << endl;
