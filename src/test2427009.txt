@@ -1,8 +1,0 @@
-/var/spool/slurmd/job2427009/slurm_script: line 10: ./sig: Permission denied
-Job Statistics for 2427009:
-           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
----------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
-         2427009   rsjxw007 2022-01-02T14:14:53 2022-01-02T14:14:53   00:00:00             00:00.011     FAILED 126+   r1pl-hpcf-n21     billing=30,cpu=30,mem=234360M,node=1 
-   2427009.batch            2022-01-02T14:14:53 2022-01-02T14:14:53   00:00:00          0  00:00.010     FAILED 126+   r1pl-hpcf-n21                                          
-  2427009.extern            2022-01-02T14:14:53 2022-01-02T14:14:54   00:00:01          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n21                                          
-CPU Efficiency: 0.00% of 00:00:00 core-walltime

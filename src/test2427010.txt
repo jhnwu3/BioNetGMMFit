@@ -1,1 +1,0 @@
-/var/spool/slurmd/job2427010/slurm_script: line 10: ./sig: Permission denied
