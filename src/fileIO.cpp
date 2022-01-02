@@ -155,6 +155,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
         throw std::runtime_error("Could not open PSO file");
         return EXIT_FAILURE;
     }
+    cout << "csvPSO" << endl;
     vector<int> params;
     string line;
     while(std::getline(input, line)){
@@ -181,6 +182,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
 // Reads Input Data Parameters.
 int readCsvDataParam(int &nSpecies, int &nRates){
     ifstream input("../data_parameters.csv");
+    cout << "csvData" << endl;
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         return EXIT_FAILURE;
