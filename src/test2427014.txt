@@ -1,0 +1,29 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+g++ -c fileIO.cpp 
+g++ main.o fileIO.o linear.o nonlinear.o calc.o -o sig -fopenmp
+Reading in data!
+csvPSO
+params:0
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check: __n (which is 0) >= this->size() (which is 0)
+/var/spool/slurmd/job2427014/slurm_script: line 16: 1762410 Aborted                 (core dumped) ./sig
+Job Statistics for 2427014:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2427014   rsjxw007 2022-01-02T14:37:08 2022-01-02T14:37:18   00:00:10             00:08.204     FAILED  6:0   r1pl-hpcf-n21     billing=30,cpu=30,mem=234360M,node=1 
+   2427014.batch            2022-01-02T14:37:08 2022-01-02T14:37:18   00:00:10          0  00:08.202     FAILED  6:0   r1pl-hpcf-n21                                          
+  2427014.extern            2022-01-02T14:37:08 2022-01-02T14:37:18   00:00:10          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n21                                          
+CPU Efficiency: 2.67% of 00:05:00 core-walltime
