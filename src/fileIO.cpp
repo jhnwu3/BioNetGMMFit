@@ -23,14 +23,19 @@ using Eigen::VectorXd;
 bool isNumber(const std::string& s)
 {
     int it = 0;
-    while (it < s.length() && std::isdigit(s.at(it))) ++it; 
-    cout << "it:" << it << endl;
-    cout << "slen:" << s.length() << endl;
-    return (it == (s.length() - 1));
+    bool allDigits = true;
+    while (it < s.length()){
+        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0')){ // check for control characters to check for numbers correctly.
+            allDigits = false;
+        }
+        ++it; 
+    } 
+    return allDigits;
 }
 
 bool isDouble(const std::string& s)
 {
+    bool allDigits = true;
     int decimals = 0;
     int it = 0;
     for(int i = 0; i < s.length(); i++){
@@ -41,8 +46,13 @@ bool isDouble(const std::string& s)
     if(decimals != 1){
         return false;
     }
-    while (it < s.length() && std::isdigit(s.at(it))) ++it; 
-    return (it == (s.length() - 2)); // -2, 1 for null, 1 for the .
+     while (it < s.length()){
+        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it) == '.')){ // check for control characters to check for numbers correctly.
+            allDigits = false;
+        }
+        ++it; 
+    } 
+    return allDigits; // -2, 1 for null, 1 for the .
 }
 
 string removeWhiteSpace(string current)
@@ -164,10 +174,9 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
         std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
         string col;
         while(std::getline(ss, col, ',')){
-            cout << "col:" << col << "isNumber:" << endl << isNumber(col) << endl;
-            // if(isNumber(col)){ // only add into parameter vector if actually an int.
-            //     params.push_back(std::stoi(col)); 
-            // }
+            if(isNumber(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stoi(col)); 
+            }
         }
     }
     cout << "params:" << params.size() << endl;
