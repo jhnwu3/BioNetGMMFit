@@ -40,8 +40,7 @@ in order to recompile an executable.
 
 ### *PSO Aside*
 
-Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which
-may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
+Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
 of the targeted to 0. 
 
 ### *Time Inputs*
@@ -56,6 +55,12 @@ However, especially in the nonlinear case where multiple time points and samples
     30
 
 ### *Data Inputs*
+All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
+
+    example
+
+provided in this repo.
+
 All data must be loaded in csv format. Make sure to load your "base" or initial sample values into
 X_0.csv, which will be evolved using the differential equation model selected.
 
@@ -93,6 +98,10 @@ By default, the PSO runs with all moments, with means, variances, and covariance
 
 to use means + variances only.
 
+### *System Parameters*
+
+All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants.
+
 ## **Directory Structure** ##
 
 ## *sig_gmm*
@@ -101,7 +110,7 @@ The default directory contains all configuration csv files needed to run the pro
 ### *src*
 Contains all C++ files needed to recompile the program.
 
-### *input*
+### *data*
 This is where all the protein data is. The simulated data is provided as default for those wanting to use it based on the paper.
 
 
