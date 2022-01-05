@@ -45,6 +45,11 @@ int main(){
         return EXIT_FAILURE;
     }
 
+    cout << "nParts1:" << nParts1 << endl;
+    cout << "nSteps1:" << nSteps1 << endl;
+    cout << "nParts2:" << nParts2 << endl;
+    cout << "nSteps2:" << nSteps2 << endl;
+
     MatrixXd X_0 = csvToMatrix("../data/testX.csv", xDataSize);
     MatrixXd Y_0 = csvToMatrix("../data/testY.csv", yDataSize);
     cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
