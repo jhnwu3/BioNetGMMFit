@@ -114,7 +114,7 @@ struct Moments_Mat_Obs
 
 State_N convertInit(const VectorXd &v1);
 VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone);
-MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0_full, const MatrixXd &Y_0_full, int nRates, int nRuns, int nMoments);
+MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd &Y_0, int nRates, int nRuns, int nMoments);
 
 
 #endif
