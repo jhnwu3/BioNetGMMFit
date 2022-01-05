@@ -139,7 +139,9 @@ MatrixXd csvToMatrix (const std::string & path, int fileSize) {
             i++;
         }
     }
-    return mat;
+    MatrixXd matResized = mat.block(0, 0, fileSize, mat.cols());
+    mat.conservativeResize(0,0); // delete previously allocated matrix
+    return matResized;
 }
 
 void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
