@@ -12,7 +12,7 @@ MatrixXd txtToMatrix(const string& fileName, int rows, int cols);
 //     returns a row x column matrix/vector from data of csv file.
 // */
 // template<typename M>
-MatrixXd csvToMatrix(const std::string & path);
+MatrixXd csvToMatrix(const std::string & path, int fileSize);
 
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
 int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns);
