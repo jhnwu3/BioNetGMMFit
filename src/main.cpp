@@ -48,8 +48,8 @@ int main(){
     cout << "nruns:" << nRuns << endl;
     cout << "nSpecies:" << nSpecies << endl;
     cout << "useOnlySecMom:" << useOnlySecMom << endl;
-    MatrixXd X_0 = csvToMatrix("../data/X_0.csv");
-    MatrixXd Y_0 = csvToMatrix("../data/Y_0.csv");
+    MatrixXd X_0 = csvToMatrix("../data/testX.csv");
+    MatrixXd Y_0 = csvToMatrix("../data/testY.csv");
     cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
     cout << "Y_0:" << "(" << Y_0.rows() << "," << Y_0.cols() << ")" << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
