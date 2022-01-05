@@ -201,7 +201,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 /* temporarily assign specified k constants */
                 for(int i = 0; i < Npars; i++){
                     POSMAT(particle, i) = pUnifDist(pGenerator);
-                 
                 }
                 
                 VectorXd pos;

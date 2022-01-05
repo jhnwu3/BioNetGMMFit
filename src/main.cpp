@@ -40,14 +40,11 @@ int main(){
     
     cout << "Reading in data!" << endl;
     if(readCsvPSO(nParts1, nSteps1, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns) != 0 || 
-        readCsvDataParam(nSpecies, nRates) != 0){
+        readCsvDataParam(nSpecies, nRates, xDataSize, yDataSize) != 0){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
     }
-    cout << "npartsblind:" << nParts1 << endl;
-    cout << "nruns:" << nRuns << endl;
-    cout << "nSpecies:" << nSpecies << endl;
-    cout << "useOnlySecMom:" << useOnlySecMom << endl;
+
     MatrixXd X_0 = csvToMatrix("../data/testX.csv");
     MatrixXd Y_0 = csvToMatrix("../data/testY.csv");
     cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;

@@ -16,6 +16,6 @@ MatrixXd csvToMatrix(const std::string & path);
 
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
 int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns);
-int readCsvDataParam(int &nSpecies, int &nRates);
+int readCsvDataParam(int &nSpecies, int &nRates, int &xSize, int &ySize);
 VectorXd readCsvTimeParam();
 #endif

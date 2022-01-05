@@ -154,6 +154,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
             wt += aDiff.row(i).transpose() * aDiff.row(i);
         }
         wt = (wt / aDiff.rows()).inverse();
+        cout << "wt:" << endl << wt << endl << endl;
     }else{
         if(useBanks){
             for(int i = 0; i < nMoments; i++){

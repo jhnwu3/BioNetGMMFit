@@ -113,7 +113,7 @@ MatrixXd txtToMatrix(const string& fileName, int rows, int cols) {
     return mat;
 }
 
-MatrixXd csvToMatrix (const std::string & path) {
+MatrixXd csvToMatrix (const std::string & path, int fileSize) {
     std::ifstream indata;
     indata.open(path);
     if(!indata.is_open()){
@@ -193,7 +193,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
 }
 
 // Reads Input Data Parameters.
-int readCsvDataParam(int &nSpecies, int &nRates){
+int readCsvDataParam(int &nSpecies, int &nRates, int &xSize, int &ySize){
     ifstream input("../system_parameters.csv");
     cout << "csvData" << endl;
     if(!input.is_open()){
@@ -213,6 +213,8 @@ int readCsvDataParam(int &nSpecies, int &nRates){
     }
     nSpecies = params.at(0);
     nRates = params.at(1);
+    xSize = params.at(2);
+    ySize = params.at(3);
     input.close();
     return 0;
 }
