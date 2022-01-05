@@ -1,0 +1,41 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+From https://github.com/jhnwu3/Snapshot
+   47777b4..a5e31f0  main       -> origin/main
+Updating 47777b4..a5e31f0
+Fast-forward
+ src/calc.cpp   | 1 +
+ src/fileIO.cpp | 6 ++++--
+ src/fileIO.hpp | 2 +-
+ src/linear.cpp | 1 -
+ src/main.cpp   | 7 ++-----
+ 5 files changed, 8 insertions(+), 9 deletions(-)
+g++ -c fileIO.cpp 
+g++ -c linear.cpp -fopenmp
+g++ -c calc.cpp
+g++ -c -O3 -fopenmp main.cpp 
+g++ main.o fileIO.o linear.o nonlinear.o calc.o -o sig -fopenmp
+main.o:main.cpp:function main: error: undefined reference to 'csvToMatrix(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+main.o:main.cpp:function main: error: undefined reference to 'csvToMatrix(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)'
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:10: sig] Error 1
+chmod: cannot access 'sig': No such file or directory
+/var/spool/slurmd/job2431614/slurm_script: line 16: ./sig: No such file or directory
+Job Statistics for 2431614:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2431614   rsjxw007 2022-01-05T15:39:24 2022-01-05T15:40:01   00:00:37             00:34.147     FAILED 127+   r1pl-hpcf-n22     billing=30,cpu=30,mem=234360M,node=1 
+   2431614.batch            2022-01-05T15:39:24 2022-01-05T15:40:01   00:00:37    143.31M  00:34.145     FAILED 127+   r1pl-hpcf-n22                                          
+  2431614.extern            2022-01-05T15:39:24 2022-01-05T15:40:01   00:00:37          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n22                                          
+CPU Efficiency: 3.06% of 00:18:30 core-walltime
