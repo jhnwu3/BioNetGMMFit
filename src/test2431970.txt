@@ -35753,3 +35753,10 @@ GBMAT after targeted PSO:
  4.14574e-08     0.158169     0.807251  1.96022e-08     0.990494      1.61941
 total difference b/w truk and final GBVEC:1.14224
 CODE FINISHED RUNNING IN 77 s TIME!
+Job Statistics for 2431970:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2431970   rsjxw007 2022-01-05T16:59:22 2022-01-05T17:00:42   00:01:20             01:06.006  COMPLETED  0:0   r1pl-hpcf-n22     billing=30,cpu=30,mem=234360M,node=1 
+   2431970.batch            2022-01-05T16:59:22 2022-01-05T17:00:42   00:01:20      3.05M  01:06.004  COMPLETED  0:0   r1pl-hpcf-n22                                          
+  2431970.extern            2022-01-05T16:59:22 2022-01-05T17:00:42   00:01:20          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n22                                          
+CPU Efficiency: 2.75% of 00:40:00 core-walltime
