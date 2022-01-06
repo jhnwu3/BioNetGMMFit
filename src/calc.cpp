@@ -99,13 +99,11 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
     
     /* first moment differences */
     MatrixXd fmdiffs = Yt - Xt; 
-    cout << "102" << endl;
     /* second moment difference computations - @todo make it variable later */
     MatrixXd smdiffs(N, Yt.cols());
     for(int i = 0; i < Yt.cols(); i++){
         smdiffs.col(i) = (Yt.col(i).array() * Yt.col(i).array()) - (Xt.col(i).array() * Xt.col(i).array());
     }
-    cout << "108" << endl;
     /* If no cross moments, then have a check for it */
     int nCross = nMoments - 2 * Yt.cols();
     if (nCross < 0){
