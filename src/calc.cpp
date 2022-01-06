@@ -139,24 +139,29 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
     for(int i = 0; i < nMoments; i++){
         variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
     }
-    VectorXd covariances(nMoments - 1);
     
-    for(int i = 0; i < nMoments - 1; i++){
-        int j = i + 1;
-        covariances(i) = ( (aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
-    }
-    cout << "here?" << endl;
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
     if(useInverse){
-        for(int i = 0; i < aDiff.rows(); i++){
-            wt += aDiff.row(i).transpose() * aDiff.row(i);
+        // compute covariances for differences.
+        for(int i = 0; i < nMoments; i++){
+            for(int j = i + 1; j < nMoments; j++){
+                wt(i,j) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1); 
+                wt(j,i) = wt(i,j); // across diagonal
+            }
         }
+
         wt = (wt / aDiff.rows()).inverse();
         cout << "wt:" << endl << wt << endl << endl;
     }else{
         if(useBanks){
+            VectorXd covariances(nMoments - 1);
+    
+            for(int i = 0; i < nMoments - 1; i++){
+                int j = i + 1;
+                covariances(i) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
+            }
             for(int i = 0; i < nMoments; i++){
-            wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
+                wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
             }
             for(int i = 0; i < nMoments - 1; i++){
                 int j = i + 1;
