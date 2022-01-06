@@ -286,7 +286,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             double cost = 0;
             X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
-            weight = customWtMat(Y_t, X_t, nMoments, N, false, true);
+            weight = customWtMat(Y_t, X_t, nMoments, N, false, false);
             cout << "Updated Weight Matrix!" << endl;
             cost = calculate_cf2(YtmVec, XtmVec, weight);
             gCost = cost;
