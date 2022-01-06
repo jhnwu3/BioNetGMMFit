@@ -48,10 +48,8 @@ MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
 	M << -k(2), k(2), 0,
 		k(1), -k(1) - k(4), k(4),
 		k(3), k(0), -k(0) - k(3);
-
 	MatrixXd MT(nSpecies, nSpecies);
 	MT = tf * M.transpose();
-   
 	MatrixXd EMT(nSpecies, nSpecies);
 	EMT = MT.exp();
     return EMT;
@@ -190,7 +188,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Blind PSO begins */
     cout << "PSO begins!" << endl;
     for(int step = 0; step < nSteps; step++){
-        
     // #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
@@ -292,7 +289,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             weight = customWtMat(Y_t, X_t, nMoments, N, false, true);
             cout << "Updated Weight Matrix!" << endl;
             cost = calculate_cf2(YtmVec, XtmVec, weight);
-            
             gCost = cost;
             hone += 4;
             GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
@@ -403,8 +399,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 	for(int i = 0; i < GBMAT.rows(); i++){
 		globalIterations(i) = i;
 	}
-	matrixToCsv(GBMATWithSteps, "GBMAT");
-
+    cout << "chkpts:" << chkpts << endl;
 
     return GBMAT; // just to close the program at the end.
 }
