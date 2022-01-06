@@ -190,7 +190,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Blind PSO begins */
     cout << "PSO begins!" << endl;
     for(int step = 0; step < nSteps; step++){
-        
     // #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
@@ -403,8 +402,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 	for(int i = 0; i < GBMAT.rows(); i++){
 		globalIterations(i) = i;
 	}
-	matrixToCsv(GBMATWithSteps, "GBMAT");
-
+    cout << "chkpts:" << chkpts << endl;
 
     return GBMAT; // just to close the program at the end.
 }
