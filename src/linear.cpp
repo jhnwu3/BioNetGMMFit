@@ -48,14 +48,10 @@ MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
 	M << -k(2), k(2), 0,
 		k(1), -k(1) - k(4), k(4),
 		k(3), k(0), -k(0) - k(3);
-    cout << "M:" << endl << M << endl;
 	MatrixXd MT(nSpecies, nSpecies);
-    cout << "k:" << endl << k << endl;
 	MT = tf * M.transpose();
-    cout << "MT:" << endl << MT << endl;
 	MatrixXd EMT(nSpecies, nSpecies);
 	EMT = MT.exp();
-    cout << "EMT:" << endl << EMT << endl;
     return EMT;
 }
 
