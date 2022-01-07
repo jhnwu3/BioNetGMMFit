@@ -111,11 +111,12 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Variables (global) */
     VectorXd times = readCsvTimeParam();
     cout << "times:" << times.transpose() << endl << endl;
+    cout << "nparts:" << nParts << endl;
     int midPt = times.size() / 2;
     double tf = times(midPt);
     double t0 = 0, dt = 1.0; // time variables
     int Npars = nRates, nSpecies = X_0.cols();
-    double squeeze = 0.500, sdbeta = 0.10; 
+    double squeeze = 0.96, sdbeta = 0.05; 
     double boundary = 0.001;
     /* SETUP */
     int useDiag = 0;
@@ -156,11 +157,20 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     cout << "Loading in Truk!" << endl;
     VectorXd trueK = VectorXd::Zero(Npars);
     trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
-    cout << "Calculating Yt!" << endl;
 
+    /* basic test */
+    VectorXd localMin = trueK;
+    // localMin << 0.254887,  0.456468,  0.432326,  0.424945,  0.648363;
+    X_t = (evolutionMatrix(localMin, tf, nSpecies) * X_0.transpose()).transpose();
+    XtmVec = moment_vector(X_t, nMoments);
+    cout << "Calculating Yt!" << endl;
     Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
-    cout << "moment vec" << endl;
     YtmVec = moment_vector(Y_t, nMoments);
+
+    cout << "sanity check:" << endl;
+    cout << "XtmVec:" << XtmVec.transpose() << endl;
+    cout << "YtmVec:" << YtmVec.transpose() << endl;
+    cout << "cost:" << calculate_cf2(YtmVec, XtmVec, weight) << endl;
     /* Instantiate seedk aka global costs */
     VectorXd seed;
     seed = VectorXd::Zero(Npars); 
@@ -286,7 +296,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             double cost = 0;
             X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
-            weight = customWtMat(Y_t, X_t, nMoments, N, false, true);
+            weight = customWtMat(Y_t, X_t, nMoments, N, false, false);
             cout << "Updated Weight Matrix!" << endl;
             cost = calculate_cf2(YtmVec, XtmVec, weight);
             gCost = cost;
@@ -394,11 +404,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     dist = calculate_cf1(trueK, GBVEC);
     cout << "total difference b/w truk and final GBVEC:" << dist << endl; // compute difference
     
-	MatrixXd GBMATWithSteps(GBMAT.rows(), GBMAT.cols() + 1);
-	VectorXd globalIterations(GBMAT.rows());
-	for(int i = 0; i < GBMAT.rows(); i++){
-		globalIterations(i) = i;
-	}
+	matrixToCsv(GBMAT, "GBMAT");
     cout << "chkpts:" << chkpts << endl;
 
     return GBMAT; // just to close the program at the end.

@@ -1,4 +1,5 @@
 #include "calc.hpp"
+#include "fileIO.hpp"
 
 double calculate_cf1(const VectorXd& trueVec, const VectorXd& estVec) {
     double cost = 0;
@@ -150,7 +151,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
             }
         }
 
-        wt = (wt / aDiff.rows()).inverse();
+        wt = (wt).inverse();
         cout << "wt:" << endl << wt << endl << endl;
     }else{
         if(useBanks){
