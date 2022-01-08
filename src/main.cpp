@@ -50,8 +50,8 @@ int main(){
     cout << "nParts2:" << nParts2 << endl;
     cout << "nSteps2:" << nSteps2 << endl;
 
-    MatrixXd X_0 = csvToMatrix("../data/3linX.csv", xDataSize);
-    MatrixXd Y_0 = csvToMatrix("../data/3linY.csv", yDataSize);
+    MatrixXd X_0 = csvToMatrix("../data/testXr.csv", xDataSize);
+    MatrixXd Y_0 = csvToMatrix("../data/testYr.csv", yDataSize);
     cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
     cout << "Y_0:" << "(" << Y_0.rows() << "," << Y_0.cols() << ")" << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
