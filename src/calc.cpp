@@ -58,7 +58,6 @@ MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useBanks){
         }
     }
     double cost = 0;
-    VectorXd means = aDiff.colwise().mean();
     VectorXd variances(nMoments);
     for(int i = 0; i < nMoments; i++){
         variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
@@ -135,28 +134,36 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         }
     }
     double cost = 0;
-    VectorXd means = aDiff.colwise().mean();
-    VectorXd variances(nMoments);
-    for(int i = 0; i < nMoments; i++){
-        variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
-    }
+    cout << "means:" << aDiff.colwise().mean().transpose() << endl;
     
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
     if(useInverse){
         // compute covariances for differences.
+        VectorXd variances(nMoments);
+        for(int i = 0; i < nMoments; i++){
+            variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
+        }
+        for(int i = 0; i < nMoments; i++){
+            wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
+        }
         for(int i = 0; i < nMoments; i++){
             for(int j = i + 1; j < nMoments; j++){
                 wt(i,j) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1); 
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-
-        wt = (wt).inverse();
-        cout << "wt:" << endl << wt << endl << endl;
+        // MatrixXd centered = aDiff.rowwise() - aDiff.colwise().mean();
+        // MatrixXd cov = (centered.adjoint() * centered) / double(aDiff.rows() - 1);
+        cout << "before inversion:" << endl << wt << endl;
+        wt = wt.completeOrthogonalDecomposition().pseudoInverse();
+        cout << "after inv wt:" << endl << wt << endl;
     }else{
         if(useBanks){
             VectorXd covariances(nMoments - 1);
-    
+            VectorXd variances(nMoments);
+            for(int i = 0; i < nMoments; i++){
+                variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
+            }
             for(int i = 0; i < nMoments - 1; i++){
                 int j = i + 1;
                 covariances(i) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
@@ -174,6 +181,10 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
             cout << "Weights:" << endl;
             cout << wt << endl;
         }else{
+            VectorXd variances(nMoments);
+            for(int i = 0; i < nMoments; i++){
+                variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
+            }
             for(int i = 0; i < nMoments; i++){
                 wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
             }

@@ -48,8 +48,10 @@ MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
 	M << -k(2), k(2), 0,
 		k(1), -k(1) - k(4), k(4),
 		k(3), k(0), -k(0) - k(3);
+
 	MatrixXd MT(nSpecies, nSpecies);
 	MT = tf * M.transpose();
+
 	MatrixXd EMT(nSpecies, nSpecies);
 	EMT = MT.exp();
     return EMT;
@@ -157,13 +159,14 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     cout << "Loading in Truk!" << endl;
     VectorXd trueK = VectorXd::Zero(Npars);
     trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
-
+    cout << "truk:" << trueK.transpose() << endl;
     /* basic test */
     VectorXd localMin = trueK;
     // localMin << 0.254887,  0.456468,  0.432326,  0.424945,  0.648363;
     X_t = (evolutionMatrix(localMin, tf, nSpecies) * X_0.transpose()).transpose();
     XtmVec = moment_vector(X_t, nMoments);
     cout << "Calculating Yt!" << endl;
+    cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
     Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
     YtmVec = moment_vector(Y_t, nMoments);
 
@@ -224,6 +227,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                     PBMAT(particle, i) = POSMAT(particle, i);
                 }
                 PBMAT(particle, Npars) = cost; // add cost to final column
+               
             }else{ 
                 /* using new rate constants, instantiate particle best values */
                 /* step into PSO */
@@ -296,7 +300,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             double cost = 0;
             X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
-            weight = customWtMat(Y_t, X_t, nMoments, N, false, false);
+            weight = customWtMat(Y_t, X_t, nMoments, N, false, true);
             cout << "Updated Weight Matrix!" << endl;
             cost = calculate_cf2(YtmVec, XtmVec, weight);
             gCost = cost;
