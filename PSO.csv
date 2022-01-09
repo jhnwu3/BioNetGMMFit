@@ -1,5 +1,5 @@
-n_particles1,30
-n_steps1,1500
+n_particles1,2
+n_steps1,10
 n_particles2,1
 n_steps2,10
 use_OnlySecMoments?,0

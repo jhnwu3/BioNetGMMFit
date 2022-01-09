@@ -50,7 +50,7 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
     return rPoint;
 }
 
-MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd &Y_0, int nRates, int nRuns, int nMoments){
+MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd& Y_0, int nRates, int nRuns, int nMoments){
     auto t1 = std::chrono::high_resolution_clock::now();
     /*---------------------- Setup ------------------------ */
     VectorXd times = readCsvTimeParam();
