@@ -3,6 +3,7 @@
 #include "main.hpp"
 #include "calc.hpp"
 #include "fileIO.hpp"
+#include "system.hpp"
 
 VectorXd moment_vector(const MatrixXd &sample, int nMoments);
 MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies);
