@@ -45,10 +45,8 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
 /* placeholder function -> will generalize for greater proteins if we ever get a better matrix. */
 MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
     MatrixXd M(nSpecies, nSpecies);
-	M << -k(2), k(2), 0,
-		k(1), -k(1) - k(4), k(4),
-		k(3), k(0), -k(0) - k(3);
-
+    M = interactionMatrix(nSpecies, k);
+	
 	MatrixXd MT(nSpecies, nSpecies);
 	MT = tf * M.transpose();
 

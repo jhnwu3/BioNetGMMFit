@@ -70,7 +70,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     double sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
     double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
     double alpha = 0.2;
-    int N = 5000;
+    int N = X_0.rows();
     int hone = 28; 
     int startRow = 0;
     //nMoments = 2*N_SPECIES; // mean + var only!
@@ -117,7 +117,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         Protein_Components Xt(times(t), nMoments, N, X_0.cols());
         Moments_Mat_Obs YtObs(Yt);
         Moments_Mat_Obs XtObs(Xt);
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; ++i) {
             //State_N c0 = gen_multi_norm_iSub(); // Y_0 is simulated using norm dist.
             State_N y0 = convertInit(Y_0.row(i));
             State_N x0 = convertInit(X_0.row(i));
@@ -137,12 +137,12 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
 
 
     /* Compute initial wolfe weights */
-    for(int t = 0; t < nTimeSteps; t++){
+    for(int t = 0; t < nTimeSteps; ++t){
         weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
     }
 
     MatrixXd GBVECS = MatrixXd::Zero(nRuns, Npars + 1);
-    for(int run = 0; run < nRuns; run++){
+    for(int run = 0; run < nRuns; ++run){
         // make sure to reset GBMAT, POSMAT, AND PBMAT EVERY RUN!
         double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
         MatrixXd GBMAT = MatrixXd::Zero(0,0); // iterations of global best vectors
@@ -167,7 +167,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
             Protein_Components Xt(times(t), nMoments, N, X_0.cols());
             Moments_Mat_Obs XtObs(Xt);
             Nonlinear_ODE6 sys(seed);
-            for (int i = 0; i < N; i++) {
+            for (int i = 0; i < N; ++i) {
                 //State_N c0 = gen_multi_norm_iSub();
                 State_N c0 = convertInit(X_0.row(i));
                 Xt.index = i;
@@ -192,7 +192,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         double probabilityToTeleport = 3.0/4.0; 
         /* Blind PSO begins */
         cout << "PSO begins!" << endl;
-        for(int step = 0; step < nSteps; step++){
+        for(int step = 0; step < nSteps; ++step){
         #pragma omp parallel for 
             for(int particle = 0; particle < nParts; particle++){
                 random_device pRanDev;

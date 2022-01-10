@@ -6,8 +6,8 @@ CXX = g++
 all: sig
 
 # target dependencies for main PSO program - also equally messy code inside!
-sig: fileIO.o linear.o nonlinear.o calc.o main.o
-	g++ main.o fileIO.o linear.o nonlinear.o calc.o -o sig -fopenmp
+sig: fileIO.o linear.o nonlinear.o calc.o main.o system.o
+	g++ main.o fileIO.o linear.o nonlinear.o calc.o system.o -o sig -fopenmp
 calc.o: calc.cpp main.hpp calc.hpp
 	g++ -c calc.cpp
 fileIO.o: fileIO.cpp main.hpp fileIO.hpp 
@@ -16,7 +16,9 @@ linear.o: linear.cpp main.hpp linear.hpp calc.hpp
 	g++ -c linear.cpp -fopenmp
 nonlinear.o: nonlinear.cpp main.hpp nonlinear.hpp calc.hpp
 	g++ -c nonlinear.cpp -fopenmp
-main.o: main.cpp main.hpp fileIO.hpp linear.hpp nonlinear.hpp calc.hpp
+system.o: ../system.cpp system.hpp main.hpp
+	g++ -c ../system.cpp 
+main.o: main.cpp main.hpp fileIO.hpp linear.hpp nonlinear.hpp system.hpp calc.hpp
 	g++ -c -O3 -fopenmp main.cpp 
 
 
