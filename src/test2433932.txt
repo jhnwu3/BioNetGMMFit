@@ -1,0 +1,8 @@
+./sig: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by ./sig)
+Job Statistics for 2433932:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2433932   rsjxw007 2022-01-11T18:09:36 2022-01-11T18:09:37   00:00:01             00:00.079     FAILED  1:0   r1pl-hpcf-n21     billing=30,cpu=30,mem=234360M,node=1 
+   2433932.batch            2022-01-11T18:09:36 2022-01-11T18:09:37   00:00:01          0  00:00.077     FAILED  1:0   r1pl-hpcf-n21                                          
+  2433932.extern            2022-01-11T18:09:36 2022-01-11T18:09:37   00:00:01          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n21                                          
+CPU Efficiency: 0.00% of 00:00:30 core-walltime
