@@ -6,3 +6,7 @@ use_OnlySecMoments?,0
 use_OnlyFirstMoments?,0
 use_linear?,0
 nRuns,1
+Number_Species,6
+nRates,6
+xDataSize,100
+yDataSize,100
