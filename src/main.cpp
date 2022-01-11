@@ -29,7 +29,7 @@ int main(){
     int nParts = 25; // first part PSO
     int nSteps = 50;
     int nParts2 = 10; // second part PSO
-    int nSteps2 = 1000;
+    int nSteps2 = 100;
     int useOnlySecMom = 1;
     int useOnlyFirstMom = 1;
     int useLinear = 0;
