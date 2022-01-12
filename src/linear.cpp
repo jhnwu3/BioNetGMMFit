@@ -275,8 +275,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     cout << "GBMAT from blind PSO:" << endl << endl;
     cout << GBMAT << endl << endl;
     cout << "truk: " << trueK.transpose() << endl;
-    double dist = calculate_cf1(trueK, GBVEC);
-    cout << "total difference b/w truk and final GBVEC" << dist << endl << endl; // compute difference
 
     /*** targeted PSO ***/
     POSMAT.conservativeResize(nParts2, Npars); // resize matrices to fit targetted PSO
@@ -298,7 +296,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             double cost = 0;
             X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             XtmVec = moment_vector(X_t, nMoments);
-            weight = customWtMat(Y_t, X_t, nMoments, N, false, true);
+            weight = customWtMat(Y_t, X_t, nMoments, N, false);
             cout << "Updated Weight Matrix!" << endl;
             cost = calculate_cf2(YtmVec, XtmVec, weight);
             gCost = cost;
@@ -403,8 +401,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
     }
     cout << "GBMAT after targeted PSO:" << endl << GBMAT << endl;
-    dist = calculate_cf1(trueK, GBVEC);
-    cout << "total difference b/w truk and final GBVEC:" << dist << endl; // compute difference
     
 	matrixToCsv(GBMAT, "GBMAT");
     cout << "chkpts:" << chkpts << endl;
