@@ -1,0 +1,38 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+From https://github.com/jhnwu3/Snapshot
+   a0bad6a..67b13b2  main       -> origin/main
+error: Your local changes to the following files would be overwritten by merge:
+	src/sig
+Please commit your changes or stash them before you merge.
+Aborting
+Updating a0bad6a..67b13b2
+make: Nothing to be done for 'all'.
+Reading in data!
+csvPSO
+params:12
+csvData
+nParts2:1
+nSteps2:10
+X_0:(5000,6)
+Y_0:(5000,6)
+moments:27
+Using two part PSO Sample Size:5000 with:27 moments.
+Using Times:0.5   2  10  20  30
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:30 Nsteps:1500
+Targeted PSO --> nParts:1 Nsteps:10
+sdbeta:0.1
+Loading in Truk!
+Calculating Yt!
