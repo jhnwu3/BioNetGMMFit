@@ -163,7 +163,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
 }
 
 // Reads PSO Parameters File
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns){
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt){
     ifstream input("../PSO.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
@@ -190,6 +190,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
     useOnlyFirstMom = params.at(5);
     useLinear = params.at(6);
     nRuns = params.at(7);
+    simulateYt = params.at(8);
     input.close();
     return 0;
 }
