@@ -38,9 +38,9 @@ int main(){
     int nSpecies = 0;
     int nRates = 0;
     int nRuns = 0;
-    
+    int simulateYt = 1;
     cout << "Reading in data!" << endl;
-    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns) != 0 || 
+    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt) != 0 || 
         readCsvDataParam(nSpecies, nRates, xDataSize, yDataSize) != 0){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
@@ -48,13 +48,19 @@ int main(){
 
     cout << "nParts2:" << nParts2 << endl;
     cout << "nSteps2:" << nSteps2 << endl;
+    MatrixXd X_0;
+    MatrixXd Y_0;
+    if(simulateYt == 1){
+        X_0 = csvToMatrix("../data/testXr.csv", xDataSize);
+        Y_0 = csvToMatrix("../data/testYr.csv", yDataSize);
+        cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
+        cout << "Y_0:" << "(" << Y_0.rows() << "," << Y_0.cols() << ")" << endl;
+    }else{
 
-    MatrixXd X_0 = csvToMatrix("../data/testXr.csv", xDataSize);
-    MatrixXd Y_0 = csvToMatrix("../data/testYr.csv", yDataSize);
-    cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
-    cout << "Y_0:" << "(" << Y_0.rows() << "," << Y_0.cols() << ")" << endl;
-    int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
-    cout << "moments:" << nMoments << endl;
+    }
+    
+    
+
     /* Temp Initial Conditions */
     // MatrixXd X_0(xDataSize, nSpecies);
     // MatrixXd Y_0(yDataSize, nSpecies);
@@ -66,7 +72,7 @@ int main(){
     // cout << "Using starting row of data:" << startRow << " and " << N << " data pts!" << endl;
     // cout << "first row X0:" << X_0.row(0) << endl;
     // cout << "final row X0:" << X_0.row(N - 1) << endl << endl << endl << endl;
-
+    int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         cout << "USING NONMIXED MOMENTS!!" << endl;
         nMoments = 2 * X_0.cols();
@@ -75,6 +81,8 @@ int main(){
         cout << "USING ONLY MEANS!" << endl;
         nMoments = X_0.cols();
     }
+    cout << "moments:" << nMoments << endl;
+
     MatrixXd GBMAT;
     if(useLinear == 1){
         GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, Y_0, nRates, nMoments);
@@ -167,6 +175,8 @@ int main(){
         /* Compute initial wolfe weights */
         for(int t = 0; t < nTimeSteps; ++t){
             weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
+            cout << "wt:" << endl;
+            cout << weights[t] << endl << endl;
         }
 
         MatrixXd GBVECS = MatrixXd::Zero(nRuns, Npars + 1);
@@ -329,9 +339,7 @@ int main(){
 
             cout << "GBMAT from blind PSO:" << endl << endl;
             cout << GBMAT << endl << endl;
-            cout << "truk: " << tru.k.transpose() << endl;
-            double dist = calculate_cf1(tru.k, GBVEC);
-            cout << "total difference b/w truk and final GBVEC" << dist << endl << endl; // compute difference
+            cout <<"truk:" << tru.k.transpose() << endl;
             auto tB = std::chrono::high_resolution_clock::now();
             auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
             cout << "blind PSO FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;

@@ -139,6 +139,8 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     /* Compute initial wolfe weights */
     for(int t = 0; t < nTimeSteps; ++t){
         weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
+        cout << "wt:" << endl;
+        cout << weights[t] << endl << endl;
     }
 
     MatrixXd GBVECS = MatrixXd::Zero(nRuns, Npars + 1);
@@ -302,8 +304,6 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         cout << "GBMAT from blind PSO:" << endl << endl;
         cout << GBMAT << endl << endl;
         cout << "truk: " << tru.k.transpose() << endl;
-        double dist = calculate_cf1(tru.k, GBVEC);
-        cout << "total difference b/w truk and final GBVEC" << dist << endl << endl; // compute difference
         auto tB = std::chrono::high_resolution_clock::now();
         auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
         cout << "blind PSO FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
