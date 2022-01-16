@@ -5,7 +5,7 @@ It takes into account both linear and nonlinear models of evolution for estimati
 ## **Important Note: Operating System**
 The program has only been compiled and tested on Linux based systems, using G++.
 
-## **(Optional) Prerequisites for Compiling ** ##
+## ** Prerequisites for Compiling ** ##
 
 ### *Eigen*
 Snapshot uses the Eigen 3.3.9 C++ linear algebra library for matrix computations. If on Ubuntu, you can do a quick install using:
@@ -23,7 +23,7 @@ However, Snapshot only uses the C++ odeint library, so if storage space is an ex
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
 
 
-## **(Optional) Compilation** ##
+## **Compilation** ##
 
 If you wish to modify the code for your own use or if the binary is not sufficient, a Makefile has been provided in the /src directory. 
 After entering the directory
@@ -64,7 +64,22 @@ provided in this repo.
 All data must be loaded in csv format. Make sure to load your "base" or initial sample values into
 X_0.csv, which will be evolved using the differential equation model selected.
 
-Make sure to specifiy all respective Yt and "evolved" sample file names in the Ytnames.csv file.
+## *Loading in data*
+If you want to load in X data file, make sure to delete or move any pre-existing csv file located in the 
+
+    data/X 
+
+directory and move or copy in your own X.csv file into the directory. Similarly, make sure to move
+all Y_0 or Y_t data files into the directory listed as
+
+    data/Y 
+
+after moving or removing any previous Yt/Y0 files
+## *Important Caveat*
+
+One key thing to understand is every file in either the data/X or data/Y folders are read in alphabetical order. An error message and exit will output if the number of time steps do not match the number of Yt files. Make sure to label each file name in order of the time steps for proper loading.
+
+Furthermore, if one chooses to simulate Y_t instead of inputing their own, keep in mind, it will specifically only choose the first Y file listed in the directory for use as Y_0.
 
 ### *PSO Inputs*
 To set the parameters you want for your estimation run, open up PSO.csv
@@ -91,7 +106,7 @@ The default PSO parameters are listed below,
 | Using Only First Moments?        | 0     |
 | Use Linear Model?                | 1     |
 | Number of Runs                   | 1     |
-
+| Simulate Y_t?                    | 1     |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     use_OnlySecMoments?,1
@@ -100,7 +115,7 @@ to use means + variances only.
 
 ### *System Parameters*
 
-All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants.
+All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants. 
 
 ## **Directory Structure** ##
 

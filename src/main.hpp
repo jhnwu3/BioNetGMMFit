@@ -15,6 +15,7 @@
 #include <omp.h>
 #include <Eigen/StdVector>
 #include <boost/numeric/odeint/external/openmp/openmp.hpp>
+#include <experimental/filesystem>
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -22,6 +23,5 @@ using namespace std;
 using namespace boost;
 using namespace boost::math;
 using namespace boost::numeric::odeint;
-
-
+namespace fs = std::experimental::filesystem;
 #endif
