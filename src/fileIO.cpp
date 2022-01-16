@@ -19,7 +19,6 @@ using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-
 bool isNumber(const std::string& s)
 {
     int it = 0;
@@ -89,12 +88,12 @@ string findDouble(string line, int startPos) {
 
 MatrixXd txtToMatrix(const string& fileName, int rows, int cols) {
     MatrixXd mat(rows, cols);
-    ifstream in(fileName);
+    std::ifstream in(fileName);
     // use first row to determine how many columns to read.
     for (int i = 0; i < rows; i++) {
         string line;
         if (in.is_open()) {
-            getline(in, line);
+            std::getline(in, line);
             line = removeWhiteSpace(line);
             int wordPos = 0;
             for (int j = 0; j < cols; j++) {
@@ -143,9 +142,39 @@ MatrixXd csvToMatrix (const std::string & path, int fileSize) {
     mat.conservativeResize(0,0); // delete previously allocated matrix
     return matResized;
 }
-
+MatrixXd readX(const std::string &path, int xSize){
+    int nFile = 0;
+    MatrixXd X_0;
+    cout << "Reading data/X directory!" << endl;
+    for(const auto & entry : fs::directory_iterator(path)){
+        cout << entry << endl;
+        X_0 = csvToMatrix(entry.path().string(), xSize);
+        ++nFile;
+    }
+    if(nFile < 1){
+        cout << "Error! No X csv file detected in " << path << "!" << endl;
+        exit(-1);
+    }
+    if(nFile > 1){
+        cout << "Multiple X files detected, reading only the last X file read in." << endl;
+    }
+    return X_0;
+}
+vector<MatrixXd> readY(const std::string & path, int ySize){
+    vector<MatrixXd> Y;
+    cout << "Reading data/Y directory!" << endl;
+    for(const auto & entry : fs::directory_iterator(path)){
+        cout << entry << endl;
+        Y.push_back(csvToMatrix(entry.path().string(), ySize));
+    }
+    if(Y.size() < 1){
+        cout << "Error! 0 Y Files read in!" << endl;
+        exit(-1);
+    }
+    return Y;
+}
 void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
-    ofstream plot;
+    std::ofstream plot;
     string csvFile = fileName + ".csv";
 	plot.open(csvFile);
 
@@ -164,7 +193,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
 
 // Reads PSO Parameters File
 int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt){
-    ifstream input("../PSO.csv");
+    std::ifstream input("../PSO.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
         return EXIT_FAILURE;
@@ -197,7 +226,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
 
 // Reads Input Data Parameters.
 int readCsvDataParam(int &nSpecies, int &nRates, int &xSize, int &ySize){
-    ifstream input("../system_parameters.csv");
+    std::ifstream input("../system_parameters.csv");
     cout << "csvData" << endl;
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
@@ -225,7 +254,7 @@ int readCsvDataParam(int &nSpecies, int &nRates, int &xSize, int &ySize){
 // Reads Time Step Parameters.
 VectorXd readCsvTimeParam(){
 
-    ifstream input("../time_steps.csv");
+    std::ifstream input("../time_steps.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         exit;

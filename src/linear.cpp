@@ -38,7 +38,6 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
         }
     }
     return moments;
-
 }
 
 
@@ -106,10 +105,8 @@ IMPORTANT NOTE FOR FUTURE CHANGES! -> Y0 will turn into Yt as Y0 technically doe
 for pseudo-tests as this project is still in its infancy.
 */
 
-MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, MatrixXd &Y_0, int nRates, int nMoments) {
+MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt) {
   
-    /* Variables (global) */
-    VectorXd times = readCsvTimeParam();
     cout << "times:" << times.transpose() << endl << endl;
     cout << "nparts:" << nParts << endl;
     int midPt = times.size() / 2;
@@ -158,20 +155,19 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     VectorXd trueK = VectorXd::Zero(Npars);
     trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
     cout << "truk:" << trueK.transpose() << endl;
-    /* basic test */
-    VectorXd localMin = trueK;
-    // localMin << 0.254887,  0.456468,  0.432326,  0.424945,  0.648363;
-    X_t = (evolutionMatrix(localMin, tf, nSpecies) * X_0.transpose()).transpose();
-    XtmVec = moment_vector(X_t, nMoments);
-    cout << "Calculating Yt!" << endl;
-    cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
-    Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
-    YtmVec = moment_vector(Y_t, nMoments);
 
-    cout << "sanity check:" << endl;
-    cout << "XtmVec:" << XtmVec.transpose() << endl;
-    cout << "YtmVec:" << YtmVec.transpose() << endl;
-    cout << "cost:" << calculate_cf2(YtmVec, XtmVec, weight) << endl;
+    if(simulateYt == 1){
+        MatrixXd Y_0 = readY("../data/Y", N)[0];
+        cout << "Calculating Yt!" << endl;
+        cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
+        Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
+        YtmVec = moment_vector(Y_t, nMoments);
+    }else{
+        Y_t = readY("../data/Y", N)[0];
+        YtmVec = moment_vector(Y_t, nMoments);
+    }
+    
+
     /* Instantiate seedk aka global costs */
     VectorXd seed;
     seed = VectorXd::Zero(Npars); 
@@ -401,8 +397,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
     }
     cout << "GBMAT after targeted PSO:" << endl << GBMAT << endl;
-    
-	matrixToCsv(GBMAT, "GBMAT");
+    cout << "true:" << trueK.transpose() << endl;
     cout << "chkpts:" << chkpts << endl;
 
     return GBMAT; // just to close the program at the end.

@@ -66,39 +66,47 @@ MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useBanks){
   
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
     
-    for(int i = 0; i < nMoments; i++){
-        wt(i,i) = variances(i);
-        for(int j = i + 1; j < nMoments; j++){
-            wt(i,j) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1); 
-            wt(j,i) = wt(i,j); // across diagonal
+    // for(int i = 0; i < nMoments; i++){
+    //     wt(i,i) = variances(i);
+    //     for(int j = i + 1; j < nMoments; j++){
+    //         wt(i,j) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1); 
+    //         wt(j,i) = wt(i,j); // across diagonal
+    //     }
+    // }
+    
+    // MatrixXd wtI = wt.inverse();
+    if(useBanks){
+        VectorXd covariances(nMoments - 1);
+        for(int i = 0; i < nMoments - 1; i++){
+            int j = i + 1;
+            covariances(i) = ( (aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
+        }
+        for(int i = 0; i < nMoments; i++){
+            wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
+        }
+        for(int i = 0; i < nMoments - 1; i++){
+            int j = i + 1;
+            wt(i,j) = covariances(i);
+            wt(j,i) = covariances(i);
+        }
+        cout << "Weights Before Inversion:" << endl << wt << endl;
+        wt = wt.llt().solve(MatrixXd::Identity(nMoments, nMoments));
+        cout << "Weights:" << endl;
+        cout << wt << endl;
+    }else{
+        for(int i = 0; i < nMoments; i++){
+            wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
         }
     }
-    wt = wt.inverse();
-    // if(useBanks){
-    //     VectorXd covariances(nMoments - 1);
-    //     for(int i = 0; i < nMoments - 1; i++){
-    //         int j = i + 1;
-    //         covariances(i) = ( (aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
-    //     }
-    //     for(int i = 0; i < nMoments; i++){
-    //         wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
-    //     }
-    //     for(int i = 0; i < nMoments - 1; i++){
-    //         int j = i + 1;
-    //         wt(i,j) = covariances(i);
-    //         wt(j,i) = covariances(i);
-    //     }
-    //     cout << "Weights Before Inversion:" << endl << wt << endl;
-    //     wt = wt.llt().solve(MatrixXd::Identity(nMoments, nMoments));
-    //     cout << "Weights:" << endl;
-    //     cout << wt << endl;
-    // }else{
-    //     for(int i = 0; i < nMoments; i++){
-    //         wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
-    //     }
-    //     cout << "Weights:"<< endl;
-    //     cout << wt << endl;
-    // }
+    
+    // cout << "wtI" << endl << wtI << endl;
+    // cout << "wt" << endl << wt << endl;
+    // cout << "hopefully identity?" << endl;
+    // cout << wtI * wt << endl;
+    // cout << "wt.det" << wt.determinant() << endl;
+    // //sanity check
+
+    // exit(0);
     return wt;
 }
 
@@ -141,7 +149,6 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         }
     }
     double cost = 0;
-    cout << "means:" << aDiff.colwise().mean().transpose() << endl;
     
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
     if(useInverse){
@@ -159,10 +166,16 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-
+        MatrixXd beforeInversion = wt;
         cout << "before inversion:" << endl << wt << endl;
-        wt = wt.completeOrthogonalDecomposition().pseudoInverse();
-        cout << "after inv wt:" << endl << wt << endl;
+        cout << "treshold:" << wt.completeOrthogonalDecomposition().threshold() << endl;
+        wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
+        cout << "after inversion:" << endl << wt << endl;
+
+        cout << "Omega:" << endl;
+        cout << wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments)) << endl;
+        cout << "cost:" << (((beforeInversion * wt) - MatrixXd::Identity(nMoments, nMoments)).norm()) / beforeInversion.norm() << endl;
+        cout << "beforeInversion * wt:" << endl <<  beforeInversion * wt << endl;
     }else{
         if(useBanks){
             VectorXd covariances(nMoments - 1);

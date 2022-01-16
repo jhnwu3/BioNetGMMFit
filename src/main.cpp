@@ -24,7 +24,7 @@ Note: main.hpp will contain the inclusion of all the needed libraries such that 
 #include "system.hpp" // user defined ode systems
 int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
-
+    cout << "Program Begin:" << endl;
     /* some default values for PSO just in case. */
     int nParts = 25; // first part PSO
     int nSteps = 50;
@@ -39,39 +39,24 @@ int main(){
     int nRates = 0;
     int nRuns = 0;
     int simulateYt = 1;
+
+    VectorXd times = readCsvTimeParam();
+    if(times.size() < 1){
+        cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
+        exit(1);
+    }
+    
     cout << "Reading in data!" << endl;
     if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt) != 0 || 
         readCsvDataParam(nSpecies, nRates, xDataSize, yDataSize) != 0){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
     }
-
-    cout << "nParts2:" << nParts2 << endl;
-    cout << "nSteps2:" << nSteps2 << endl;
+    cout << "X:" << xDataSize << endl;
+    cout << "Y:" << yDataSize << endl;
     MatrixXd X_0;
-    MatrixXd Y_0;
-    if(simulateYt == 1){
-        X_0 = csvToMatrix("../data/testXr.csv", xDataSize);
-        Y_0 = csvToMatrix("../data/testYr.csv", yDataSize);
-        cout << "X_0:" << "(" << X_0.rows() << "," << X_0.cols() << ")" << endl;
-        cout << "Y_0:" << "(" << Y_0.rows() << "," << Y_0.cols() << ")" << endl;
-    }else{
-
-    }
+    X_0 = readX("../data/X", xDataSize);
     
-    
-
-    /* Temp Initial Conditions */
-    // MatrixXd X_0(xDataSize, nSpecies);
-    // MatrixXd Y_0(yDataSize, nSpecies);
-    // X_0 = txtToMatrix("input/knewX.0.txt", xDataSize, nSpecies);
-    // Y_0 = txtToMatrix("input/knewY.0.txt", yDataSize, nSpecies);
-    
-    /* Fixed Initial Conditions */
-
-    // cout << "Using starting row of data:" << startRow << " and " << N << " data pts!" << endl;
-    // cout << "first row X0:" << X_0.row(0) << endl;
-    // cout << "final row X0:" << X_0.row(N - 1) << endl << endl << endl << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         cout << "USING NONMIXED MOMENTS!!" << endl;
@@ -85,11 +70,10 @@ int main(){
 
     MatrixXd GBMAT;
     if(useLinear == 1){
-        GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, Y_0, nRates, nMoments);
+        GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, nRates, nMoments, times, simulateYt);
     }else{
         auto t1 = std::chrono::high_resolution_clock::now();
         /*---------------------- Setup ------------------------ */
-        VectorXd times = readCsvTimeParam();
         /* Variables (global) */
         double t0 = 0, dt = 1.0; // time variables
         int nTimeSteps = times.size();
@@ -144,33 +128,42 @@ int main(){
         cout << "Calculating Yt!" << endl;
         vector<MatrixXd> Yt3Mats;
         vector<VectorXd> Yt3Vecs;
-        vector<VectorXd> Xt3Vecs;
         Controlled_RK_Stepper_N controlledStepper;
         double trukCost = 0;
-        for(int t = 0; t < nTimeSteps; t++){
-            Nonlinear_ODE6 trueSys(tru);
-            Protein_Components Yt(times(t), nMoments, N, X_0.cols());
-            Protein_Components Xt(times(t), nMoments, N, X_0.cols());
-            Moments_Mat_Obs YtObs(Yt);
-            Moments_Mat_Obs XtObs(Xt);
-            for (int i = 0; i < N; ++i) {
-                //State_N c0 = gen_multi_norm_iSub(); // Y_0 is simulated using norm dist.
-                State_N y0 = convertInit(Y_0.row(i));
-                State_N x0 = convertInit(X_0.row(i));
-                Yt.index = i;
-                Xt.index = i;
-                integrate_adaptive(controlledStepper, trueSys, y0, t0, times(t), dt, YtObs);
-                integrate_adaptive(controlledStepper, trueSys, x0, t0, times(t), dt, XtObs);
+        if(simulateYt == 1){
+            cout << "SIMULATING YT!" << endl;
+            MatrixXd Y_0 = readY("../data/Y", yDataSize)[0];
+            for(int t = 0; t < nTimeSteps; t++){
+                Nonlinear_ODE6 trueSys(tru);
+                Protein_Components Yt(times(t), nMoments, N, X_0.cols());
+                Protein_Components Xt(times(t), nMoments, N, X_0.cols());
+                Moments_Mat_Obs YtObs(Yt);
+                Moments_Mat_Obs XtObs(Xt);
+                for (int i = 0; i < N; ++i) {
+                    //State_N c0 = gen_multi_norm_iSub(); // Y_0 is simulated using norm dist.
+                    State_N y0 = convertInit(Y_0.row(i));
+                    State_N x0 = convertInit(X_0.row(i));
+                    Yt.index = i;
+                    Xt.index = i;
+                    integrate_adaptive(controlledStepper, trueSys, y0, t0, times(t), dt, YtObs);
+                    integrate_adaptive(controlledStepper, trueSys, x0, t0, times(t), dt, XtObs);
+                }
+                Yt.mVec /= N;
+                Xt.mVec /= N;
+                trukCost += calculate_cf2(Yt.mVec,Xt.mVec, weights[t]);
+                Yt3Mats.push_back(Yt.mat);
+                Yt3Vecs.push_back(Yt.mVec);
             }
-            Yt.mVec /= N;
-            Xt.mVec /= N;
-            trukCost += calculate_cf2(Yt.mVec,Xt.mVec, weights[t]);
-            Xt3Vecs.push_back(Xt.mVec);
-            Yt3Mats.push_back(Yt.mat);
-            Yt3Vecs.push_back(Yt.mVec);
+        }else{
+            Yt3Mats = readY("../data/Y", yDataSize);
+            if(Yt3Mats.size() != nTimeSteps){
+                cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
+                exit(1);
+            }
+            for(int i = 0; i < Yt3Mats.size(); i++){
+                Yt3Vecs.push_back(moment_vector(Yt3Mats[i], nMoments));
+            }
         }
-        cout << "truk cost:"<< trukCost << endl;
-
 
         /* Compute initial wolfe weights */
         for(int t = 0; t < nTimeSteps; ++t){
@@ -350,9 +343,6 @@ int main(){
             GBVECS(run, Npars) = gCost;
         }
         trukCost = 0;
-        for(int t = 0; t < nTimeSteps; t++){
-            trukCost += calculate_cf2(Yt3Vecs[t], Xt3Vecs[t], weights[t]);
-        }
 
         cout << "truk: " << tru.k.transpose() << " with trukCost with new weights:" << trukCost << endl;
         
