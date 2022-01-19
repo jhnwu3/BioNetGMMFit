@@ -3,8 +3,8 @@ Sig_GMM is a C++ software designed for rate constant estimation of CYTOF Snapsho
 It takes into account both linear and nonlinear models of evolution for estimating rate constants.
 
 ## **Important Note: Operating System**
-The program has only been compiled and tested on Linux based systems, using G++.
-
+The program has only been compiled and tested on debian Linux based systems, using G++.
+## *Getting Started*
 ## ** Prerequisites for Compiling ** ##
 
 ### *Eigen*
@@ -21,7 +21,6 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
 
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
-
 
 ## **Compilation** ##
 
