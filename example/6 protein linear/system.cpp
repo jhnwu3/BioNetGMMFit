@@ -4,8 +4,8 @@ MatrixXd interactionMatrix(int nSpecies, const VectorXd &k){
     /*--------- Define Interaction Matrix Here! (Below) ---------*/
     intMatrix << 
         -k(2), k(2), 0,
-		k(1), -k(1) - k(4), k(4),
-		k(3), k(0), -k(0) - k(3);
+	k(1), -k(1) - k(4), k(4),
+	k(3), k(0), -k(0) - k(3);
 
     /* 
         Make sure to define the matrix in the form like this with the semicolon ; at the end and make sure to have a comma between each matrix element.
@@ -13,15 +13,7 @@ MatrixXd interactionMatrix(int nSpecies, const VectorXd &k){
        -k(2), k(2), 0,
 		k(1), -k(1) - k(4), k(4),
 		k(3), k(0), -k(0) - k(3);
-        
-        observe that between each comma (",") is a component in the system of linear differential equations. 
-
-        ** IMPORTANT!!!!! **
-        C++ indexing starts from 0, so the first rate constant is represented by k(0) not k(1)!
-
-
-        <insert mathematical representation of an ode here, will ask Dr. Stewart about this, but I can almost guess>
-
+	
 
     */
     
