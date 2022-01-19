@@ -141,7 +141,7 @@ By default, the PSO runs with all moments, with means, variances, and covariance
 
     Exclude Mixed Moments?,1
 
-to use means and second moments only.
+to use means and second moments only. All boolean options such as "Use Linear Model?" are set to on with 1, and set to off with 0.
 
 ### *System Parameters*
 

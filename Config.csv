@@ -1,12 +1,12 @@
-# of particles1,1000
-# of steps1,10
-# of particles2,10
-# of steps2,1000
+Number of Particles Blind PSO,1000
+Number of Steps Blind PSO,10
+Number of Particles Targeted PSO,10
+Number of Steps Targeted PSO,1000
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
-use_linear?,1
-nRuns,1
-simulate yt?,0
-use matrix inverse?,0 
-# Rates,5
+Use Linear Model?,1
+Number of Runs,1
+Simulate Y_t?,0
+Use Matrix Inverse?,0 
+Number of Rates,5
 Sample Size,5000
