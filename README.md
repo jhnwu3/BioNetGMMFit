@@ -38,6 +38,12 @@ in order to recompile an executable.
 
 ## **Running the executable** ##
 
+To run the program, simply enter
+
+    source run.sh
+
+in your terminal. For more information about parameters and writing your own system, look below.
+
 ### *PSO Aside*
 
 Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
@@ -102,11 +108,14 @@ The default PSO parameters are listed below,
 | Number of Steps Blind PSO        | 50    |
 | Number of Particles Targeted PSO | 1     |
 | Number of Steps Targeted PSO     | 5     |
-| Using Only Second Moments?       | 0     |
-| Using Only First Moments?        | 0     |
+| Exclude Mixed Moments?           | 0     |
+| Exclude Mixed and Second Moments?| 0     |
 | Use Linear Model?                | 1     |
 | Number of Runs                   | 1     |
 | Simulate Y_t?                    | 1     |
+| Use Matrix Inverse?              | 0     |
+| Number of Rates                  | 5     |
+| Sample Size                      | 5000  |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     use_OnlySecMoments?,1
@@ -115,7 +124,7 @@ to use means + variances only.
 
 ### *System Parameters*
 
-All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants. 
+All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants as well as respective X data sizes. *(Tentative feature to be added in)*, The program will autodetect the number of protein species based on the number of columns in the data csv files. *(Tentative feature to be added in), will autodetect the total number of rows in the X/Y csv files. For now, a sample size must be defined in the Config.csv file.
 
 ## **Directory Structure** ##
 
