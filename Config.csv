@@ -6,7 +6,7 @@ Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Use Linear Model?,1
 Number of Runs,1
-Simulate Y_t?,0
+Simulate Y_t?,1
 Use Matrix Inverse?,0 
 Number of Rates,5
 Sample Size,5000

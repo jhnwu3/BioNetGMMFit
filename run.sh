@@ -1,4 +1,4 @@
 cd src
 make
-./sig
+./sig > ../out.txt
 cd ..
