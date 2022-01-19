@@ -11,6 +11,7 @@ To quickly get started with one of the simulated examples, do:
 
 1. Install Eigen and Boost C++ libraries by performing 
 
+        sudo apt update
         sudo apt install libeigen3-dev
         sudo apt-get install libboost-all-dev
 
