@@ -84,9 +84,40 @@ To run the program, simply enter
 in your terminal. For more information about parameters and writing your own system, look below.
 
 ### *PSO Aside*
-
 Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
 of the targeted to 0. 
+
+### *Data Inputs*
+All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
+
+    example
+
+provided in this repo.
+
+All data must be loaded in csv format. 
+
+## *Loading in data*
+If you want to load in X data file, make sure to delete or move any pre-existing csv file located in the 
+
+    data/X 
+
+directory and move or copy in your own X.csv file into the directory. Similarly, make sure to move
+all Y_0 or Y_t data files into the directory listed as
+
+    data/Y 
+
+after moving or removing any previous Yt/Y0 files.
+
+### *Rate Constant Inputs*
+If you decide to simulate the rate constants and therefore simulate Y_t instead of manually inputting Yt files, make sure to define your set of rate constants in the "true_rates.csv" file. For instance, by default
+
+    0.27678200
+    0.83708059
+    0.44321700
+    0.04244124
+    0.30464502
+
+is defined in the file, which defines the true set of rate constants as "0.27678, 0.837, 0.44, 0.04, 0.30".
 
 ### *Time Inputs*
 Make sure to list your the times for time evolutions in time_steps.csv rowwise. For a single time evolution, only a single time point, the time that your second comparison sample was evolved to, is needed in the file.
@@ -99,29 +130,7 @@ However, especially in the nonlinear case where multiple time points and samples
     20
     30
 
-### *Data Inputs*
-All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
-
-    example
-
-provided in this repo.
-
-All data must be loaded in csv format. Make sure to load your "base" or initial sample values into
-X_0.csv, which will be evolved using the differential equation model selected.
-
-## *Loading in data*
-If you want to load in X data file, make sure to delete or move any pre-existing csv file located in the 
-
-    data/X 
-
-directory and move or copy in your own X.csv file into the directory. Similarly, make sure to move
-all Y_0 or Y_t data files into the directory listed as
-
-    data/Y 
-
-after moving or removing any previous Yt/Y0 files
 ## *Important Caveat*
-
 One key thing to understand is every file in either the data/X or data/Y folders are read in alphabetical order. An error message and exit will output if the number of time steps do not match the number of Yt files. Make sure to label each file name in order of the time steps for proper loading.
 
 Furthermore, if one chooses to simulate Y_t instead of inputing their own, keep in mind, it will specifically only choose the first Y file listed in the directory for use as Y_0.
