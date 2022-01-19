@@ -42,7 +42,7 @@ To quickly get started with one of the simulated examples, do:
 4. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
         source run.sh
-        
+
 5. All output (final estimate of rate constants) is recorded in out.txt
 
 ## *Prerequisites for Compiling* ##
@@ -166,7 +166,9 @@ to use means and second moments only. All boolean options such as "Use Linear Mo
 
 ### *System Parameters*
 
-All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants as well as respective X data sizes. *(Tentative feature to be added in)*, The program will autodetect the number of protein species based on the number of columns in the data csv files. *(Tentative feature to be added in), will autodetect the total number of rows in the X/Y csv files. For now, a sample size must be defined in the Config.csv file.
+All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants as well as respective X data sizes. *(Tentative feature to be added in)*, The program will autodetect the number of protein species based on the number of columns in the data csv files. 
+
+(Tentative feature to be added in), will autodetect the total number of rows in the X/Y csv files. For now, a *sample size* must be defined in the Config.csv file.
 
 ## **Directory Structure** ##
 
