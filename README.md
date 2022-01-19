@@ -11,9 +11,15 @@ To quickly get started with one of the simulated examples, do:
 
 1. Install Eigen and Boost C++ libraries by performing 
 
+
+        cd /usr/local/include
+        sudo ln -sf eigen3/Eigen Eigen
+        sudo ln -sf eigen3/unsupported unsupported
         sudo apt update
         sudo apt install libeigen3-dev
         sudo apt-get install libboost-all-dev
+        
+line by line in sequential order.
 
 2. In your terminal, pick a suitable directory for your liking and input
     

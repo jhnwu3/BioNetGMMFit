@@ -1,18 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <boost/math/distributions.hpp>
-#include <boost/array.hpp>
-#include <boost/numeric/odeint.hpp>
-#include <random>
-#include <vector>
-#include <Eigen/Dense>
-#include <Eigen/Core>
-#include <unsupported/Eigen/MatrixFunctions>
-#include <cmath>
-#include <chrono>
-#include <omp.h>
-#include <Eigen/StdVector>
-#include <boost/numeric/odeint/external/openmp/openmp.hpp>
 #include "fileIO.hpp"
 
 using namespace std;
