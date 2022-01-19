@@ -11,18 +11,18 @@ To quickly get started with one of the simulated examples, do:
 
 1. Install Eigen and Boost C++ libraries by performing 
 
-    sudo apt install libeigen3-dev
-    sudo apt-get install libboost-all-dev
+        sudo apt install libeigen3-dev
+        sudo apt-get install libboost-all-dev
 
 2. In your terminal, pick a suitable directory for your liking and input
     
-    git clone https://github.com/jhnwu3/Sig_GMM.git
+        git clone https://github.com/jhnwu3/Sig_GMM.git
 
 to quickly download the directory to a specified directory. 
 
 3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
-    source run.sh
+        source run.sh
 
 ## *Prerequisites for Compiling* ##
 
