@@ -152,8 +152,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
     /* Solve for Y_t (mu). */
     cout << "Loading in Truk!" << endl;
-    VectorXd trueK = VectorXd::Zero(Npars);
-    trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
+    VectorXd trueK = readRates(nRates);
+    // trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
     cout << "truk:" << trueK.transpose() << endl;
 
     if(simulateYt == 1){

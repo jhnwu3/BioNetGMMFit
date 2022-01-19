@@ -33,13 +33,12 @@ int main(){
     int useOnlySecMom = 1;
     int useOnlyFirstMom = 1;
     int useLinear = 0;
-    int xDataSize = 0;
-    int yDataSize = 0;
+    int sampleSize = 0;
     int nSpecies = 0;
     int nRates = 0;
     int nRuns = 0;
     int simulateYt = 1;
-
+    int useInverse = 0; // currently just inverse only occurs in linear model.
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
         cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
@@ -47,16 +46,14 @@ int main(){
     }
     
     cout << "Reading in data!" << endl;
-    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt) != 0 || 
-        readCsvDataParam(nSpecies, nRates, xDataSize, yDataSize) != 0){
+    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, sampleSize) !=0 ){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
     }
-    cout << "X:" << xDataSize << endl;
-    cout << "Y:" << yDataSize << endl;
+
     MatrixXd X_0;
-    X_0 = readX("../data/X", xDataSize);
-    
+    X_0 = readX("../data/X", sampleSize);
+    cout << "X:" << X_0.rows() << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         cout << "USING NONMIXED MOMENTS!!" << endl;
@@ -132,7 +129,7 @@ int main(){
         double trukCost = 0;
         if(simulateYt == 1){
             cout << "SIMULATING YT!" << endl;
-            MatrixXd Y_0 = readY("../data/Y", yDataSize)[0];
+            MatrixXd Y_0 = readY("../data/Y", sampleSize)[0];
             for(int t = 0; t < nTimeSteps; t++){
                 Nonlinear_ODE6 trueSys(tru);
                 Protein_Components Yt(times(t), nMoments, N, X_0.cols());
@@ -155,7 +152,7 @@ int main(){
                 Yt3Vecs.push_back(Yt.mVec);
             }
         }else{
-            Yt3Mats = readY("../data/Y", yDataSize);
+            Yt3Mats = readY("../data/Y", sampleSize);
             if(Yt3Mats.size() != nTimeSteps){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);

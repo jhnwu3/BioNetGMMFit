@@ -24,7 +24,7 @@ bool isNumber(const std::string& s)
     int it = 0;
     bool allDigits = true;
     while (it < s.length()){
-        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0')){ // check for control characters to check for numbers correctly.
+        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it)==' ')){ // check for control characters to check for numbers correctly.
             allDigits = false;
         }
         ++it; 
@@ -46,7 +46,7 @@ bool isDouble(const std::string& s)
         return false;
     }
      while (it < s.length()){
-        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it) == '.')){ // check for control characters to check for numbers correctly.
+        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it) == '.')  && !(s.at(it)==' ')){ // check for control characters to check for numbers correctly.
             allDigits = false;
         }
         ++it; 
@@ -192,8 +192,8 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
 }
 
 // Reads PSO Parameters File
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt){
-    std::ifstream input("../PSO.csv");
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize){
+    std::ifstream input("../Config.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
         return EXIT_FAILURE;
@@ -220,6 +220,9 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
     useLinear = params.at(6);
     nRuns = params.at(7);
     simulateYt = params.at(8);
+    useInverse = params.at(9);
+    nRates = params.at(10);
+    sampleSize = params.at(11);
     input.close();
     return 0;
 }
@@ -276,4 +279,33 @@ VectorXd readCsvTimeParam(){
     }
     input.close();
     return times;
+}
+
+VectorXd readRates(int nRates){
+    std::ifstream input("../true_rates.csv");
+    if(!input.is_open()){
+        throw std::runtime_error("Could not open data parameters file");
+        exit;
+    }
+    vector<double> params;
+    string line;
+    while(std::getline(input, line)){
+        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
+        string col;
+        while(std::getline(ss, col, ',')){
+            if(isNumber(col) || isDouble(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stod(col)); 
+            }
+        }
+    }
+    VectorXd rates(params.size());
+    for(int i = 0; i < params.size(); i++){
+        rates(i) = params.at(i);
+    }
+    input.close();
+    if(rates.size() < nRates){
+        cout << "Error, number of rates in parameters do not match number of true rates simulated!" << endl;
+        exit(1);
+    }
+    return rates;
 }
