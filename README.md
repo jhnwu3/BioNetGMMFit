@@ -20,10 +20,14 @@ To quickly get started with one of the simulated examples, do:
 
 to quickly download the directory to a specified directory. 
 
-3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
+3. Navigate to the newly created program folder
+
+        cd Sig_GMM
+
+4. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
         source run.sh
-4. All output (final estimate of rate constants) is recorded in out.txt
+5. All output (final estimate of rate constants) is recorded in out.txt
 
 ## *Prerequisites for Compiling* ##
 
