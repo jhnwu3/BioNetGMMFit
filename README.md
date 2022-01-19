@@ -3,8 +3,27 @@ Sig_GMM is a C++ software designed for rate constant estimation of CYTOF Snapsho
 It takes into account both linear and nonlinear models of evolution for estimating rate constants.
 
 ## **Important Note: Operating System**
-The program has only been compiled and tested on debian Linux based systems, using G++.
+The program has only been compiled and tested on debian Linux based systems, specifically Ubuntu, using G++.
 # *Getting Started*
+
+## *Quickstart*
+To quickly get started with one of the simulated examples, do:
+
+1. Install Eigen and Boost C++ libraries by performing 
+
+    sudo apt install libeigen3-dev
+    sudo apt-get install libboost-all-dev
+
+2. In your terminal, pick a suitable directory for your liking and input
+    
+    git clone https://github.com/jhnwu3/Sig_GMM.git
+
+to quickly download the directory to a specified directory. 
+
+3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
+
+    source run.sh
+
 ## *Prerequisites for Compiling* ##
 
 ### *Eigen*
@@ -127,7 +146,7 @@ All ODE system parameters such as the number of protein species and rate constan
 
 ## **Directory Structure** ##
 
-## *sig_gmm*
+### *sig_gmm*
 The default directory contains all configuration csv files needed to run the program. 
 
 ### *src*
