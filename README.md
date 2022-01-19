@@ -105,9 +105,12 @@ One key thing to understand is every file in either the data/X or data/Y folders
 
 Furthermore, if one chooses to simulate Y_t instead of inputing their own, keep in mind, it will specifically only choose the first Y file listed in the directory for use as Y_0.
 
-### *PSO Inputs*
-To set the parameters you want for your estimation run, open up PSO.csv
-and change the respective values. For instance, through excel 
+### *Configuration Inputs*
+To set the parameters you want for your estimation run, double click or open the
+
+    Config.csv
+
+files and change the respective values. For instance, through excel 
 
 | n_particles1 | 15 |
 |--------------|----|
