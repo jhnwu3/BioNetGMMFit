@@ -4,8 +4,8 @@ It takes into account both linear and nonlinear models of evolution for estimati
 
 ## **Important Note: Operating System**
 The program has only been compiled and tested on debian Linux based systems, using G++.
-## *Getting Started*
-## ** Prerequisites for Compiling ** ##
+# *Getting Started*
+## *Prerequisites for Compiling* ##
 
 ### *Eigen*
 Snapshot uses the Eigen 3.3.9 C++ linear algebra library for matrix computations. If on Ubuntu, you can do a quick install using:
