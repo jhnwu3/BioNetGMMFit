@@ -9,7 +9,14 @@ The program has only been compiled and tested on debian Linux based systems, spe
 ## *Quickstart*
 To quickly get started with one of the simulated examples, do:
 
-1. Install Eigen and Boost C++ libraries by performing 
+1. In your terminal, pick a suitable directory for your liking and input
+    
+        git clone https://github.com/jhnwu3/Sig_GMM.git
+
+    to quickly download the program to a specified directory. 
+
+
+2. Install Eigen and Boost C++ libraries by performing 
 
 
         cd /usr/local/include
@@ -27,12 +34,6 @@ To quickly get started with one of the simulated examples, do:
         source install.sh
 
     which should run all the previous install commands shown above before. Just make sure you have admin access.
-
-2. In your terminal, pick a suitable directory for your liking and input
-    
-        git clone https://github.com/jhnwu3/Sig_GMM.git
-
-to quickly download the directory to a specified directory. 
 
 3. Navigate to the newly created program folder
 
