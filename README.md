@@ -35,13 +35,14 @@ To quickly get started with one of the simulated examples, do:
 
     which should run all the previous install commands shown above before. Just make sure you have admin access.
 
-3. Navigate to the newly created program folder
+3. Then, navigate to the previously created program folder
 
         cd Sig_GMM
 
 4. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
         source run.sh
+        
 5. All output (final estimate of rate constants) is recorded in out.txt
 
 ## *Prerequisites for Compiling* ##
