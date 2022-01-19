@@ -110,7 +110,7 @@ To set the parameters you want for your estimation run, double click or open the
 
     Config.csv
 
-files and change the respective values. For instance, through excel 
+file and change the respective values. For instance, through excel 
 
 | n_particles1 | 15 |
 |--------------|----|
@@ -125,10 +125,10 @@ The default PSO parameters are listed below,
 
 | Parameter                        | Value |
 |----------------------------------|-------|
-| Number of Particles Blind PSO    | 15    |
-| Number of Steps Blind PSO        | 50    |
-| Number of Particles Targeted PSO | 1     |
-| Number of Steps Targeted PSO     | 5     |
+| Number of Particles Blind PSO    | 1000  |
+| Number of Steps Blind PSO        | 10    |
+| Number of Particles Targeted PSO | 10    |
+| Number of Steps Targeted PSO     | 1000  |
 | Exclude Mixed Moments?           | 0     |
 | Exclude Mixed and Second Moments?| 0     |
 | Use Linear Model?                | 1     |
