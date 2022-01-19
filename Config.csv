@@ -2,8 +2,8 @@
 # of steps1,10
 # of particles2,10
 # of steps2,1000
-Exclude Mixed Moments,0
-Exclude Mixed and Second Moments,0
+Exclude Mixed Moments?,0
+Exclude Mixed and Second Moments?,0
 use_linear?,1
 nRuns,1
 simulate yt?,0

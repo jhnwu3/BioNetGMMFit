@@ -139,7 +139,7 @@ The default PSO parameters are listed below,
 | Sample Size                      | 5000  |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
-    use_OnlySecMoments?,1
+    Exclude Mixed Moments?,1
 
 to use means + variances only.
 
