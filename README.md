@@ -1,5 +1,5 @@
 # **CyGMM**
-Sig_GMM is a C++ software designed for rate constant estimation of CYTOF Snapshot Data. 
+CyGMM is a C++ software designed for rate constant estimation of CYTOF Snapshot Data. 
 It takes into account both linear and nonlinear models of evolution for estimating rate constants.
 
 ## **Important Note: Operating System**
