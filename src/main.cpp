@@ -119,8 +119,8 @@ int main(){
         /* Solve for Y_t (mu). */
         cout << "Loading in Truk!" << endl;
         struct K tru;
-        tru.k = VectorXd::Zero(Npars);
-        tru.k << 0.1, 0.1, 0.95, 0.17, 0.05, 0.18;
+        tru.k = readRates(nRates);
+        // tru.k << 0.1, 0.1, 0.95, 0.17, 0.05, 0.18;
 
         cout << "Calculating Yt!" << endl;
         vector<MatrixXd> Yt3Mats;
