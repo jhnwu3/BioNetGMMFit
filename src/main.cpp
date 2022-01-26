@@ -165,8 +165,6 @@ int main(){
         /* Compute initial wolfe weights */
         for(int t = 0; t < nTimeSteps; ++t){
             weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
-            cout << "wt:" << endl;
-            cout << weights[t] << endl << endl;
         }
 
         MatrixXd GBVECS = MatrixXd::Zero(nRuns, Npars + 1);
