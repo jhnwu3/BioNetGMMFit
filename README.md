@@ -168,11 +168,16 @@ By default, the PSO runs with all moments, with means, variances, and covariance
 to use means and second moments only. All boolean options such as "Use Linear Model?" are set to on with 1, and set to off with 0.
 
 ### *Defining Your Own Linear or Nonlinear System*
-
+Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
 
 #### *Linear*
+Navigate to the 
 
+    system.cpp
 
+C++ file and you'll notice that there's a single function called interaction matrix and it should have a variable called intMatrix with numerous comments surrounding it. It should look something like this: 
+
+    ![Step 1](/img/intMat.png)
 
 #### *Nonlinear*
 
