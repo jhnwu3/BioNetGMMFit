@@ -1,9 +1,15 @@
 # **CyGMM**
 CyGMM is a C++ software designed for rate constant estimation of CYTOF Snapshot Data. 
-It takes into account both linear and nonlinear models of evolution for estimating rate constants.
+It takes into account both linear and nonlinear models of evolution for estimating rate constants. 
 
 ## **Important Note: Operating System**
-The program has only been compiled and tested on debian Linux based systems, specifically Ubuntu, using G++.
+The program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
+
+Keep in mind, should you still want to pursue this on Windows 10, there is a Windows Linux Subsystem that runs at approximately 90% performance that you can enable in the operating system. 
+A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake or Chocolatey to get this C++ code/program up and running on Windows.
+
+Mac's Unix based system should feasibly still work well with this repo, but has been untested at this current moment.
+
 # *Getting Started*
 
 ## *Quickstart*
@@ -13,8 +19,9 @@ To quickly get started with one of the simulated examples, do:
     
         git clone https://github.com/jhnwu3/CyGMM.git
 
-    to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click.
-
+    to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click to download the zipfile.
+    ![Step 1](/img/REPO.png)
+    ![Step 2](/img/DLST.png)
 
 2. Install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
 
@@ -24,13 +31,13 @@ To quickly get started with one of the simulated examples, do:
 
 3. Then, navigate to the previously created program folder
 
-        cd Sig_GMM
+        cd CyGMM
 
 4. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
         source run.sh
 
-5. All output (final estimate of rate constants) is recorded in out.txt
+5. All output (final estimate of rate constants) is recorded in **out.txt**
 
 ## *Prerequisites for Compiling* ##
 
