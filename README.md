@@ -16,24 +16,11 @@ To quickly get started with one of the simulated examples, do:
     to quickly download the program to a specified directory. 
 
 
-2. Install Eigen and Boost C++ libraries by performing 
-
-
-        cd /usr/local/include
-        sudo ln -sf eigen3/Eigen Eigen
-        sudo ln -sf eigen3/unsupported unsupported
-        cd /usr/include
-        sudo ln -sf eigen3/Eigen Eigen
-        sudo ln -sf eigen3/unsupported unsupported
-        sudo apt update
-        sudo apt install libeigen3-dev
-        sudo apt-get install libboost-all-dev
-
-    or simply run the install script provided by running
+2. Install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
 
         source install.sh
 
-    which should run all the previous install commands shown above before. Just make sure you run with admin access.
+    Make sure you run it with admin access.
 
 3. Then, navigate to the previously created program folder
 
