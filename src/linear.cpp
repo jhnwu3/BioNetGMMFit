@@ -107,9 +107,7 @@ for pseudo-tests as this project is still in its infancy.
 
 MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt) {
   
-    cout << "times:" << times.transpose() << endl << endl;
-    cout << "nparts:" << nParts << endl;
-    int midPt = times.size() / 2;
+    int midPt = times.size() / 2; // take only the midpoint of all listed time points for now for evolution
     double tf = times(midPt);
     double t0 = 0, dt = 1.0; // time variables
     int Npars = nRates, nSpecies = X_0.cols();
@@ -126,34 +124,23 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
     double alpha = 0.2;
     int N = X_0.rows();
-    // int nParts = 5000; // first part PSO
-    // int nSteps = 5;
-    // int nParts2 = 5; // second part PSO
-    // int nSteps2 = 5000;
     int hone = 4;
-    //nMoments = 2*N_SPECIES; // mean + var only!
     VectorXd wmatup(4);
     wmatup << 0.15, 0.30, 0.45, 0.60;
     double uniLowBound = 0.0, uniHiBound = 1.0;
     random_device RanDev;
     mt19937 gen(RanDev());
     uniform_real_distribution<double> unifDist(uniLowBound, uniHiBound);
-    
     MatrixXd weight = MatrixXd::Identity(nMoments, nMoments);
-
     MatrixXd GBMAT(0, 0); // iterations of global best vectors
     MatrixXd PBMAT(nParts, Npars + 1); // particle best matrix + 1 for cost component
     MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
-    MatrixXd X_t = MatrixXd::Zero(X_0.rows(), X_0.cols());
     MatrixXd Y_t = MatrixXd::Zero(Y_t.rows(), Y_t.cols());
     VectorXd YtmVec(nMoments);
-    VectorXd XtmVec(nMoments);
-
-
+    
     /* Solve for Y_t (mu). */
     cout << "Loading in Truk!" << endl;
     VectorXd trueK = readRates(nRates);
-    // trueK <<  0.27678200, 0.83708059, 0.44321700, 0.04244124, 0.30464502; // Bill k
     cout << "truk:" << trueK.transpose() << endl;
 
     if(simulateYt == 1){
@@ -176,16 +163,15 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     }
 
     double costSeedK = 0;
-    X_t = (evolutionMatrix(seed, tf, nSpecies) * X_0.transpose()).transpose();
-    XtmVec = moment_vector(X_t, nMoments);
-    costSeedK = calculate_cf2(YtmVec, XtmVec, weight);
+    MatrixXd seedXt = (evolutionMatrix(seed, tf, nSpecies) * X_0.transpose()).transpose();
+    VectorXd seedMoms = moment_vector(seedXt, nMoments);
+    costSeedK = calculate_cf2(YtmVec, seedMoms, weight);
     cout << "seedk:"<< seed.transpose()<< "| cost:" << costSeedK << endl;
-    cout << "XtmVec:" << XtmVec.transpose() << endl;
+    cout << "Seed Moments:" << seedMoms.transpose() << endl;
     cout << "YtmVec:" << YtmVec.transpose() << endl;
-    double gCost = costSeedK; //initialize costs and GBMAT
-    // global values
+    /* Initialize the start of the global best matrix */
+    double gCost = costSeedK; 
     VectorXd GBVEC = seed;
-    
     GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
     for (int i = 0; i < Npars; i++) {
         GBMAT(GBMAT.rows() - 1, i) = seed(i);
@@ -195,7 +181,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Blind PSO begins */
     cout << "PSO begins!" << endl;
     for(int step = 0; step < nSteps; step++){
-    // #pragma omp parallel for 
+    #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
@@ -213,9 +199,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                     pos(i) = POSMAT(particle, i);
                 }
                 double cost = 0;
-                X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                XtmVec = moment_vector(X_t, nMoments);
-                cost = calculate_cf2(YtmVec, XtmVec, weight);
+                MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
+                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
                 /* instantiate PBMAT */
                 for(int i = 0; i < Npars; i++){
                     PBMAT(particle, i) = POSMAT(particle, i);
@@ -241,13 +226,12 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 POSMAT.row(particle) = pos;
 
                 double cost = 0;
-                X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                XtmVec = moment_vector(X_t, nMoments);
-                cost = calculate_cf2(YtmVec, XtmVec, weight);
+                MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
+                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
                
                 /* update gBest and pBest */
-            //     #pragma omp critical
-            //    {
+                #pragma omp critical
+               {
                 if(cost < PBMAT(particle, Npars)){ // particle best cost
                     for(int i = 0; i < Npars; i++){
                         PBMAT(particle, i) = pos(i);
@@ -258,7 +242,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                         GBVEC = pos;
                     }   
                 }
-            //   }
+              }
             }
         }
         GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after resizing
@@ -288,20 +272,18 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             nearby = squeeze * nearby;
             /* reinstantiate gCost */
             VectorXd gPos = GBVEC;
-            
             double cost = 0;
-            X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
-            XtmVec = moment_vector(X_t, nMoments);
+            MatrixXd X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             weight = customWtMat(Y_t, X_t, nMoments, N, false);
             cout << "Updated Weight Matrix!" << endl;
-            cost = calculate_cf2(YtmVec, XtmVec, weight);
+            cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
             gCost = cost;
             hone += 4;
             GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
             for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = gPos(i);}
             GBMAT(GBMAT.rows() - 1, Npars) = gCost;
         }
-    // #pragma omp parallel for 
+    #pragma omp parallel for 
         for(int particle = 0; particle < nParts2; particle++){
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
@@ -312,17 +294,19 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 for(int edim = 0; edim < Npars; edim++){
                     int wasflipped = 0;
                     double tmean = GBVEC(edim);
+                    /* If we hit a boundary (close to 1), flip the mean back towards the center of the beta distribution */
                     if (GBVEC(edim) > 0.5) {
                         tmean = 1 - GBVEC(edim);
                         wasflipped = 1;
                     }
+                    /* Compute Specific parameters for beta dist */
                     double myc = (1 - tmean) / tmean;
                     double alpha = myc / ((1 + myc) * (1 + myc) * (1 + myc)*nearby*nearby);
                     double beta = myc * alpha;
 
                     std::gamma_distribution<double> aDist(alpha, 1);
                     std::gamma_distribution<double> bDist(beta, 1);
-
+                    /* analytic solution for beta distribution */
                     double x = aDist(pGenerator);
                     double y = bDist(pGenerator);
                     double myg = x / (x + y);
@@ -331,6 +315,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                         wasflipped = 0;
                         myg = 1 - myg;
                     }
+                    /* set new particle starting position for targeted PSO */
                     POSMAT(particle, edim) = myg;
                 }
 
@@ -341,9 +326,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 }
                 //VectorXd XtPSO3 = VectorXd::Zero(nMoments);
                 double cost = 0;
-                X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                XtmVec = moment_vector(X_t, nMoments);
-                cost = calculate_cf2(YtmVec, XtmVec, weight);
+                MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
+                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
                 
                 /* initialize PBMAT */
                 for(int i = 0; i < Npars; i++){
@@ -368,13 +352,12 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 
                 double cost = 0;
                 /* solve ODEs with new system and recompute cost */
-                X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                XtmVec = moment_vector(X_t, nMoments);
-                cost = calculate_cf2(YtmVec, XtmVec, weight);
+                MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
+                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
                 
                 /* update pBest and gBest */
-                // #pragma omp critical
-                // {
+                #pragma omp critical
+                {
                 if(cost < PBMAT(particle, Npars)){ // update particle best 
                     for(int i = 0; i < Npars; i++){
                         PBMAT(particle, i) = pos(i);
@@ -385,7 +368,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                         GBVEC = pos;
                     }   
                 }
-                // }
+                }
             }
         }
         GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after each step.
@@ -397,9 +380,10 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
     }
     cout << "GBMAT after targeted PSO:" << endl << GBMAT << endl;
-    cout << "true:" << trueK.transpose() << endl;
-    cout << "chkpts:" << chkpts << endl;
-
+    if(simulateYt == 1){
+        cout << "Simulation Inputted Truth:" << trueK.transpose() << endl;
+    }
+    cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl; 
     return GBMAT; // just to close the program at the end.
 }
 

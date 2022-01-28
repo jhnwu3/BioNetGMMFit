@@ -11,7 +11,7 @@ To quickly get started with one of the simulated examples, do:
 
 1. In your terminal, pick a suitable directory for your liking and input
     
-        git clone https://github.com/jhnwu3/Sig_GMM.git
+        git clone https://github.com/jhnwu3/CyGMM.git
 
     to quickly download the program to a specified directory. 
 
@@ -33,7 +33,7 @@ To quickly get started with one of the simulated examples, do:
 
         source install.sh
 
-    which should run all the previous install commands shown above before. Just make sure you have admin access.
+    which should run all the previous install commands shown above before. Just make sure you run with admin access.
 
 3. Then, navigate to the previously created program folder
 
@@ -106,7 +106,7 @@ all Y_0 or Y_t data files into the directory listed as
 
     data/Y 
 
-after moving or removing any previous Yt/Y0 files.
+after moving or removing any previous Yt/Y0 files. Keep in mind, that the number of species of proteins you wish to simulate will correspond to the number of columns in each input X/Y file.
 
 ### *Rate Constant Inputs*
 If you decide to simulate the rate constants and therefore simulate Y_t instead of manually inputting Yt files, make sure to define your set of rate constants in the "true_rates.csv" file. For instance, by default
