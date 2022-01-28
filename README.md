@@ -13,7 +13,7 @@ To quickly get started with one of the simulated examples, do:
     
         git clone https://github.com/jhnwu3/CyGMM.git
 
-    to quickly download the program to a specified directory. 
+    to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click.
 
 
 2. Install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
@@ -160,22 +160,31 @@ By default, the PSO runs with all moments, with means, variances, and covariance
 
 to use means and second moments only. All boolean options such as "Use Linear Model?" are set to on with 1, and set to off with 0.
 
-### *System Parameters*
+### *Defining Your Own Linear or Nonlinear System*
 
-All ODE system parameters such as the number of protein species and rate constants are listed in system_parameters.csv. By default, the program runs with 3 protein species and 5 rate constants as well as respective X data sizes. *(Tentative feature to be added in)*, The program will autodetect the number of protein species based on the number of columns in the data csv files. 
 
-(Tentative feature to be added in), will autodetect the total number of rows in the X/Y csv files. For now, a *sample size* must be defined in the Config.csv file.
+#### *Linear*
+
+
+
+#### *Nonlinear*
+
+
 
 ## **Directory Structure** ##
 
-### *sig_gmm*
-The default directory contains all configuration csv files needed to run the program. 
+### *CyGMM*
+Main Directory with general configuration files and system.cpp code files.
 
 ### *src*
-Contains all C++ files needed to recompile the program.
+Contains all C++ source and header files needed to recompile the program.
 
 ### *data*
-This is where all the protein data is. The simulated data is provided as default for those wanting to use it based on the paper.
+This is where protein input data is read in from the program. Example data (used in the paper) is provided in the example folder.
+
+### *example*
+Contains various examples for use with the linear and nonlinear system provided by default in the program / code. There is a system.pdf that gives a brief summary explanation of the nonlinear ODE system used.
+
 
 
 
