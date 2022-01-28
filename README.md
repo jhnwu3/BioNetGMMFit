@@ -23,13 +23,13 @@ To quickly get started with one of the simulated examples, do:
     ![Step 1](/img/REPO.png)
     ![Step 2](/img/DLST.png)
 
-2. Install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
+2. Open the default (or WSL) terminal in the directory and install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
 
         source install.sh
 
     Make sure you run it with admin access.
 
-3. Then, navigate to the previously created program folder
+3. Then, make sure you're still in the newly created repo directory
 
         cd CyGMM
 
