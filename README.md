@@ -177,7 +177,7 @@ Navigate to the
 
 C++ file and you'll notice that there's a single function called interaction matrix and it should have a variable called intMatrix with numerous comments surrounding it. It should look something like this: 
 
-    ![Step 1](/img/intMat.png)
+![Step 1](/img/intMat.png)
 
 #### *Nonlinear*
 
