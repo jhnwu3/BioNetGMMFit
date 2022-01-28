@@ -179,6 +179,62 @@ C++ file and you'll notice that there's a single function called interaction mat
 
 ![Step 1](/img/intMat.png)
 
+In order to define your own linear system, observe that we are assigning a matrix with specific values in code written as:
+
+    intMatrix << 
+        -k(2), k(2), 0,
+		k(1), -k(1) - k(4), k(4),
+		k(3), k(0), -k(0) - k(3);
+
+now the only part you should be concerned about changing is 
+
+    -k(2), k(2), 0,
+		k(1), -k(1) - k(4), k(4),
+		k(3), k(0), -k(0) - k(3);
+
+on the next line after the << assignment operator. In this current iteration (possibly changed later on), you must pre-define the number of rates you're estimating or simulating in Config.csv.
+In the example case of this linear system, we have 5 rate constants defined, hence
+
+    Number of Rates, 5
+
+Now, observe from above, we have a 3x3 interaction matrix for the 3 species linear system. Each element in the matrix is separated by a comma. In this case, we have 3 elements per row, hence we have 
+
+    -k(2), k(2), 0,
+
+3 commas, each comma right after every matrix element. Now, also notice that there is a k defined. This *k* is your rate constant vector that you are estimating. Understand that in C++, indexing starts at 0 instead of 1, hence the
+
+    k(2)
+
+inside the row
+
+    -k(2), k(2), 0,
+
+is the second matrix element of the first row referring to a positive rate constant k3 or put simply the third element in the k rate vector. Similarly,
+
+    k(0)
+
+and is equivalent to
+
+    k1
+
+Now let's take a look at forming compound expressions in an interaction matrix element, this row
+
+    k(3), k(0), -k(0) - k(3);
+
+with the element
+
+    -k(0) - k(3)
+
+is equivalent to 
+
+    -k1 - k4
+
+as an aside:
+    - the + sign is not needed to denote positive values and is only needed for arithmetic operations i.e -k(0) + -k(3)
+    - whitespace is not a concern
+    - the compiler will take care of negative values such as -k(0) 
+
+
 #### *Nonlinear*
 
 
