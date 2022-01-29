@@ -60,7 +60,6 @@ int main(){
         /*---------------------- Nonlinear Setup ------------------------ */
         /* Variables (global) */
         double t0 = 0, dt = 1.0; // time variables
-        int Npars = nRates;
         double squeeze = 0.500, sdbeta = 0.10; 
         double boundary = 0.001;
         /* SETUP */
@@ -98,8 +97,8 @@ int main(){
         // cout << "wt:" << endl << wt << endl;
 
         MatrixXd GBMAT(0, 0); // iterations of global best vectors
-        MatrixXd PBMAT(nParts, Npars + 1); // particle best matrix + 1 for cost component
-        MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
+        MatrixXd PBMAT(nParts, nRates + 1); // particle best matrix + 1 for cost component
+        MatrixXd POSMAT(nParts, nRates); // Position matrix as it goees through it in parallel
 
         /* Solve for Y_t (mu). */
         cout << "Loading in Truk!" << endl;
@@ -117,11 +116,11 @@ int main(){
             MatrixXd Y_0 = readY("../data/Y", sampleSize)[0];
             for(int t = 0; t < times.size(); t++){
                 Nonlinear_ODE6 trueSys(tru);
-                Protein_Components Yt(times(t), nMoments, N, X_0.cols());
-                Protein_Components Xt(times(t), nMoments, N, X_0.cols());
+                Protein_Components Yt(times(t), nMoments, Y_0.rows(), X_0.cols());
+                Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs YtObs(Yt);
                 Moments_Mat_Obs XtObs(Xt);
-                for (int i = 0; i < N; ++i) {
+                for (int i = 0; i < sampleSize; ++i) {
                     State_N y0 = convertInit(Y_0.row(i));
                     State_N x0 = convertInit(X_0.row(i));
                     Yt.index = i;
@@ -129,8 +128,8 @@ int main(){
                     integrate_adaptive(controlledStepper, trueSys, y0, t0, times(t), dt, YtObs);
                     integrate_adaptive(controlledStepper, trueSys, x0, t0, times(t), dt, XtObs);
                 }
-                Yt.mVec /= N;
-                Xt.mVec /= N;
+                Yt.mVec /= Y_0.rows();
+                Xt.mVec /= X_0.rows();
                 trukCost += calculate_cf2(Yt.mVec,Xt.mVec, weights[t]);
                 Yt3Mats.push_back(Yt.mat);
                 Yt3Vecs.push_back(Yt.mVec);
@@ -151,35 +150,34 @@ int main(){
             weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
         }
 
-        MatrixXd GBVECS = MatrixXd::Zero(nRuns, Npars + 1);
+        MatrixXd GBVECS = MatrixXd::Zero(nRuns, nRates + 1);
         for(int run = 0; run < nRuns; ++run){
             // make sure to reset GBMAT, POSMAT, AND PBMAT every run
             double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
-            MatrixXd GBMAT = MatrixXd::Zero(0,0); // iterations of global best vectors
-            MatrixXd PBMAT = MatrixXd::Zero(nParts, Npars + 1); // particle best matrix + 1 for cost component
-            MatrixXd POSMAT = MatrixXd::Zero(nParts, Npars); // Position matrix as it goees through it in parallel
+            GBMAT = MatrixXd::Zero(0,0); // iterations of global best vectors
+            MatrixXd PBMAT = MatrixXd::Zero(nParts, nRates + 1); // particle best matrix + 1 for cost component
+            MatrixXd POSMAT = MatrixXd::Zero(nParts, nRates); // Position matrix as it goees through it in parallel
             
             /* Instantiate seedk aka global costs */
             double holdTheta2 = 0.1;
             struct K seed;
-            seed.k = VectorXd::Zero(Npars); 
+            seed.k = VectorXd::Zero(nRates); 
             //seed.k = testVec;
-            for (int i = 0; i < Npars; i++) { 
+            for (int i = 0; i < nRates; i++) { 
                 seed.k(i) = unifDist(gen);
             }
             seed.k(1) = holdTheta2;
             double costSeedK = 0;
             for(int t = 0; t < times.size(); t++){
-                Protein_Components Xt(times(t), nMoments, N, X_0.cols());
+                Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs XtObs(Xt);
                 Nonlinear_ODE6 sys(seed);
-                for (int i = 0; i < N; ++i) {
-                    //State_N c0 = gen_multi_norm_iSub();
+                for (int i = 0; i < X_0.rows(); ++i) {
                     State_N c0 = convertInit(X_0.row(i));
                     Xt.index = i;
                     integrate_adaptive(controlledStepper, sys, c0, t0, times(t), dt, XtObs);
                 }
-                Xt.mVec /= N;  
+                Xt.mVec /= X_0.rows();  
                 cout << "XtmVec:" << Xt.mVec.transpose() << endl;
                 costSeedK += calculate_cf2(Yt3Vecs[t], Xt.mVec, weights[t]);
             }
@@ -190,11 +188,11 @@ int main(){
             // global values
             VectorXd GBVEC = seed.k;
             
-            GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
-            for (int i = 0; i < Npars; i++) {
+            GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1);
+            for (int i = 0; i < nRates; i++) {
                 GBMAT(GBMAT.rows() - 1, i) = seed.k(i);
             }
-            GBMAT(GBMAT.rows() - 1, Npars) = gCost;
+            GBMAT(GBMAT.rows() - 1, nRates) = gCost;
             double probabilityToTeleport = 3.0/4.0; 
             /* Blind PSO begins */
             cout << "PSO begins!" << endl;
@@ -207,52 +205,49 @@ int main(){
                     /* instantiate all particle rate constants with unifDist */
                     if(step == 0){
                         /* temporarily assign specified k constants */
-                        for(int i = 0; i < Npars; i++){
+                        for(int i = 0; i < nRates; i++){
                             POSMAT(particle, i) = pUnifDist(pGenerator);
                         }
-                        // POSMAT(particle, 4) = 0.05;
                         POSMAT(particle, 1) = holdTheta2;
-                        // POSMAT.row(particle) = seed.k;
                         struct K pos;
-                        pos.k = VectorXd::Zero(Npars);
-                        for(int i = 0; i < Npars; i++){
+                        pos.k = VectorXd::Zero(nRates);
+                        for(int i = 0; i < nRates; i++){
                             pos.k(i) = POSMAT(particle, i);
                         }
                         
                         double cost = 0;
-                        for(int t = 0; t < times.size(); t++){
+                        for(int t = 0; t < times.size(); ++t){
                             Nonlinear_ODE6 initSys(pos);
-                            Protein_Components XtPSO(times(t), nMoments, N, X_0.cols());
+                            Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO(XtPSO);
-                            for(int i = 0; i < N; i++){
+                            for(int i = 0; i < X_0.rows(); ++i){
                                 //State_N c0 = gen_multi_norm_iSub();
                                 State_N c0 = convertInit(X_0.row(i));
                                 XtPSO.index = i;
                                 integrate_adaptive(controlledStepper, initSys, c0, t0, times(t), dt, XtObsPSO);
                             }
-                            XtPSO.mVec/=N;
+                            XtPSO.mVec/= X_0.rows();
                             cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                         
                         
                         /* instantiate PBMAT */
-                        for(int i = 0; i < Npars; i++){
+                        for(int i = 0; i < nRates; i++){
                             PBMAT(particle, i) = POSMAT(particle, i);
                         }
-                        PBMAT(particle, Npars) = cost; // add cost to final column
+                        PBMAT(particle, nRates) = cost; // add cost to final column
                     }else{ 
                         /* using new rate constants, instantiate particle best values */
                         /* step into PSO */
                         double w1 = sfi * pUnifDist(pGenerator)/ sf2, w2 = sfc * pUnifDist(pGenerator) / sf2, w3 = sfs * pUnifDist(pGenerator)/ sf2;
                         double sumw = w1 + w2 + w3; //w1 = inertial, w2 = pbest, w3 = gbest
                         w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
-                        //w1 = 0.05; w2 = 0.90; w3 = 0.05;
                         struct K pos;
-                        pos.k = VectorXd::Zero(Npars);
+                        pos.k = VectorXd::Zero(nRates);
                         pos.k = POSMAT.row(particle);
                         VectorXd rpoint = adaptVelocity(pos.k, particle, epsi, nan, hone);
-                        VectorXd PBVEC(Npars);
-                        for(int i = 0; i < Npars; i++){
+                        VectorXd PBVEC(nRates);
+                        for(int i = 0; i < nRates; i++){
                             PBVEC(i) = PBMAT(particle, i);
                         }
                         
@@ -269,26 +264,26 @@ int main(){
                         double cost = 0;
                         for(int t = 0; t < times.size(); t++){
                             /*solve ODEs and recompute cost */
-                            Protein_Components XtPSO(times(t), nMoments, N, X_0.cols());
+                            Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO1(XtPSO);
                             Nonlinear_ODE6 stepSys(pos);
-                            for(int i = 0; i < N; i++){
+                            for(int i = 0; i < X_0.rows(); i++){
                                 State_N c0 = convertInit(X_0.row(i));
                                 XtPSO.index = i;
                                 integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                             }
-                            XtPSO.mVec/=N;
+                            XtPSO.mVec/=X_0.rows();
                             cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                     
                         /* update gBest and pBest */
                     #pragma omp critical
                     {
-                        if(cost < PBMAT(particle, Npars)){ // particle best cost
-                            for(int i = 0; i < Npars; i++){
+                        if(cost < PBMAT(particle, nRates)){ // particle best cost
+                            for(int i = 0; i < nRates; i++){
                                 PBMAT(particle, i) = pos.k(i);
                             }
-                            PBMAT(particle, Npars) = cost;
+                            PBMAT(particle, nRates) = cost;
                             if(cost < gCost){
                                 gCost = cost;
                                 GBVEC = pos.k;
@@ -297,34 +292,20 @@ int main(){
                     }
                     }
                 }
-                GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1); // Add to GBMAT after resizing
-                for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
-                GBMAT(GBMAT.rows() - 1, Npars) = gCost;
+                GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1); // Add to GBMAT after resizing
+                for (int i = 0; i < nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
+                GBMAT(GBMAT.rows() - 1, nRates) = gCost;
                 sfi = sfi - (sfe - sfg) / nSteps;   // reduce the inertial weight after each step 
                 sfs = sfs + (sfe - sfg) / nSteps;
-                cout << "current:" << GBVEC.transpose()<<" "<< gCost << endl;
             }
 
-            cout << "GBMAT from blind PSO:" << endl << endl;
-            cout << GBMAT << endl << endl;
-            cout <<"truk:" << tru.k.transpose() << endl;
-            auto tB = std::chrono::high_resolution_clock::now();
-            auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
-            cout << "blind PSO FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
-        
-            for(int i = 0; i < Npars; i++){
+            for(int i = 0; i < nRates; i++){
                 GBVECS(run, i) = GBVEC(i);
             }
-            GBVECS(run, Npars) = gCost;
+            GBVECS(run, nRates) = gCost;
         }
         trukCost = 0;
-
-        cout << "truk: " << tru.k.transpose() << " with trukCost with new weights:" << trukCost << endl;
-        
     }
-
-    auto t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
-    cout << "CODE FINISHED RUNNING IN " << duration << " s TIME!" << endl;
+    cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl;
     return 0;
 }
