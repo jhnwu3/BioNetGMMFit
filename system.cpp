@@ -1,4 +1,8 @@
 #include "src/system.hpp"
+/*
+Author: John Wu
+Summary: Interaction Matrix used in the linear system.
+ */
 MatrixXd interactionMatrix(int nSpecies, const VectorXd &k){
     MatrixXd intMatrix = MatrixXd::Zero(nSpecies, nSpecies);
     /*--------- Define Interaction Matrix Here! (Below) ---------*/

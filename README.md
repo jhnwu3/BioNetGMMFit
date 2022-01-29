@@ -147,25 +147,32 @@ sets the number of particles in blind pso to 15.
 
 The default PSO parameters are listed below,
 
-| Parameter                        | Value |
-|----------------------------------|-------|
-| Number of Particles Blind PSO    | 1000  |
-| Number of Steps Blind PSO        | 10    |
-| Number of Particles Targeted PSO | 10    |
-| Number of Steps Targeted PSO     | 1000  |
-| Exclude Mixed Moments?           | 0     |
-| Exclude Mixed and Second Moments?| 0     |
-| Use Linear Model?                | 1     |
-| Number of Runs                   | 1     |
-| Simulate Y_t?                    | 1     |
-| Use Matrix Inverse?              | 0     |
-| Number of Rates                  | 5     |
-| Sample Size                      | 5000  |
+| Parameter                        | Value | Explanation                                                              |
+|----------------------------------|-------|--------------------------------------------------------------------------|
+| Number of Particles Blind PSO    | 1000  | Sets number of particles in first stage PSO                              |
+| Number of Steps Blind PSO        | 10    | Sets number of steps for first stage PSO                                 |
+| Number of Particles Targeted PSO | 10    | Sets number of particles in second stage PSO                             |
+| Number of Steps Targeted PSO     | 1000  | Sets number of steps for second stage PSO                                |
+| Exclude Mixed Moments?           | 0     | 1 to use only means and variances, 0 otherwise                           |
+| Exclude Mixed and Second Moments?| 0     | 1 to use only means, 0 otherwise                                         |
+| Use Linear Model?                | 1     | 1 to use linear model, 0 to use nonlinear                                |
+| Number of Runs                   | 1     | Sets total number of PSO runs for estimation                             |
+| Simulate Y_t?                    | 1     | 1 to simulate Yt with a true rate vector, 0 to provide own Yt matrix     |
+| Use Matrix Inverse?              | 0     | 1 to use C++'s Matrix Inverse, 0 otherwise                               |
+| Number of Rates                  | 5     | Sets number of rates in rate vector                                      |
+| Sample Size                      | 5000  | Sets sample size of X and Y that will be used for estimation             |
+| Index of Held Rate Constant      | -1    | -1 to not hold a rate constant, else specified theta i is held constant  |
+| Value of Held Rate Constant      | 0     | Value between 0 and 1 that a rate constant would be held at              |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1
 
-to use means and second moments only. All boolean options such as "Use Linear Model?" are set to on with 1, and set to off with 0.
+to use means and second moments only while
+
+    Exclude Mixed and Second Moments?, 1
+
+will force the program to estimate rate constants using means only. All boolean options such as "Use Linear Model?" are set to on with 1, and set to off with 0. 
+
 
 ### *Defining Your Own Linear or Nonlinear System*
 Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
