@@ -252,10 +252,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
         sfs = sfs + (sfe - sfg) / nSteps;
     }
 
-    cout << "GBMAT from blind PSO:" << endl << endl;
-    cout << GBMAT << endl << endl;
-    cout << "truk: " << trueK.transpose() << endl;
-
     /*** targeted PSO ***/
     POSMAT.conservativeResize(nParts2, Npars); // resize matrices to fit targetted PSO
     PBMAT.conservativeResize(nParts2, Npars + 1);
@@ -379,11 +375,9 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
         sfs = sfs + (sfe - sfg) / nSteps2;
 
     }
-    cout << "GBMAT after targeted PSO:" << endl << GBMAT << endl;
     if(simulateYt == 1){
         cout << "Simulation Inputted Truth:" << trueK.transpose() << endl;
     }
-    cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl; 
     return GBMAT; // just to close the program at the end.
 }
 
