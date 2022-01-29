@@ -60,7 +60,6 @@ int main(){
         /*---------------------- Nonlinear Setup ------------------------ */
         /* Variables (global) */
         double t0 = 0, dt = 1.0; // time variables
-        int nTimeSteps = times.size();
         int Npars = nRates;
         double squeeze = 0.500, sdbeta = 0.10; 
         double boundary = 0.001;
@@ -74,7 +73,6 @@ int main(){
         double sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
         double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
         double alpha = 0.2;
-        int N = X_0.rows();
         int hone = 28; 
         int startRow = 0;
         //nMoments = 2*N_SPECIES; // mean + var only!
@@ -87,11 +85,11 @@ int main(){
         
         vector<MatrixXd> weights;
 
-        for(int i = 0; i < nTimeSteps; i++){
+        for(int i = 0; i < times.size(); i++){
             weights.push_back(MatrixXd::Identity(nMoments, nMoments));
         }
         
-        cout << "Using two part PSO " << "Sample Size:" << N << " with:" << nMoments << " moments." << endl;
+        cout << "Using two part PSO " << "Sample Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
         cout << "Using Times:" << times.transpose() << endl;
         cout << "Bounds for Uniform Distribution (" << uniLowBound << "," << uniHiBound << ")"<< endl;
         cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
@@ -117,14 +115,13 @@ int main(){
         if(simulateYt == 1){
             cout << "SIMULATING YT!" << endl;
             MatrixXd Y_0 = readY("../data/Y", sampleSize)[0];
-            for(int t = 0; t < nTimeSteps; t++){
+            for(int t = 0; t < times.size(); t++){
                 Nonlinear_ODE6 trueSys(tru);
                 Protein_Components Yt(times(t), nMoments, N, X_0.cols());
                 Protein_Components Xt(times(t), nMoments, N, X_0.cols());
                 Moments_Mat_Obs YtObs(Yt);
                 Moments_Mat_Obs XtObs(Xt);
                 for (int i = 0; i < N; ++i) {
-                    //State_N c0 = gen_multi_norm_iSub(); // Y_0 is simulated using norm dist.
                     State_N y0 = convertInit(Y_0.row(i));
                     State_N x0 = convertInit(X_0.row(i));
                     Yt.index = i;
@@ -140,7 +137,7 @@ int main(){
             }
         }else{
             Yt3Mats = readY("../data/Y", sampleSize);
-            if(Yt3Mats.size() != nTimeSteps){
+            if(Yt3Mats.size() != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
             }
@@ -150,7 +147,7 @@ int main(){
         }
 
         /* Compute initial wolfe weights */
-        for(int t = 0; t < nTimeSteps; ++t){
+        for(int t = 0; t < times.size(); ++t){
             weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
         }
 
@@ -172,7 +169,7 @@ int main(){
             }
             seed.k(1) = holdTheta2;
             double costSeedK = 0;
-            for(int t = 0; t < nTimeSteps; t++){
+            for(int t = 0; t < times.size(); t++){
                 Protein_Components Xt(times(t), nMoments, N, X_0.cols());
                 Moments_Mat_Obs XtObs(Xt);
                 Nonlinear_ODE6 sys(seed);
@@ -223,7 +220,7 @@ int main(){
                         }
                         
                         double cost = 0;
-                        for(int t = 0; t < nTimeSteps; t++){
+                        for(int t = 0; t < times.size(); t++){
                             Nonlinear_ODE6 initSys(pos);
                             Protein_Components XtPSO(times(t), nMoments, N, X_0.cols());
                             Moments_Mat_Obs XtObsPSO(XtPSO);
@@ -270,7 +267,7 @@ int main(){
                         pos.k(1) = holdTheta2;
                         POSMAT.row(particle) = pos.k;
                         double cost = 0;
-                        for(int t = 0; t < nTimeSteps; t++){
+                        for(int t = 0; t < times.size(); t++){
                             /*solve ODEs and recompute cost */
                             Protein_Components XtPSO(times(t), nMoments, N, X_0.cols());
                             Moments_Mat_Obs XtObsPSO1(XtPSO);

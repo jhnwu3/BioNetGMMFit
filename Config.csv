@@ -10,3 +10,4 @@ Simulate Y_t?,1
 Use Matrix Inverse?,0 
 Number of Rates,5
 Sample Size,5000
+Index of Held Rate Constant,-1

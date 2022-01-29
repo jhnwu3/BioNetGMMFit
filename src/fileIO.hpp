@@ -4,7 +4,6 @@
 /*
 Author: John Wu
 Summary: Header file for all file input and output functions used to read in inputs from Config.csv and data/X or data/Y files.
-
  */
 
 #include "main.hpp"
