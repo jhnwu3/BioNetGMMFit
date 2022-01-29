@@ -163,6 +163,7 @@ The default PSO parameters are listed below,
 | Sample Size                      | 5000  | Sets sample size of X and Y that will be used for estimation             |
 | Index of Held Rate Constant      | -1    | -1 to not hold a rate constant, else specified theta i is held constant  |
 | Value of Held Rate Constant      | 0     | Value between 0 and 1 that a rate constant would be held at              |
+
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1
