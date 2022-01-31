@@ -1,6 +1,6 @@
 # **CyGMM**
-CyGMM is a C++ software designed for rate constant estimation of CYTOF Snapshot Data. 
-It takes into account both linear and nonlinear models of evolution for estimating rate constants. 
+CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data. 
+It takes into account both linear and nonlinear models of evolution for estimating parameters. 
 
 ## **Important Note: Operating System**
 The program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.

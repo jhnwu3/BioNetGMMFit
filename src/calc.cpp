@@ -9,6 +9,14 @@ bool isInvertible(const MatrixXd& m){
     return (m.determinant() != 0);
 }
 
+double rndNum(double low, double high){
+    random_device RanDev;
+    mt19937 gen(RanDev());
+    uniform_real_distribution<double> unifDist(low, high);
+    return unifDist(gen);
+}
+
+
 double calculate_cf2(const VectorXd& trueVec, const  VectorXd& estVec, const MatrixXd& w) {
     double cost = 0;
     VectorXd diff(trueVec.size());
