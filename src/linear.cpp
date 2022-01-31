@@ -1,5 +1,12 @@
 #include "linear.hpp"
 
+/*
+    Takes a sample in Matrix form and converts it into a nMoment x 1 moment vector.
+    Input: 
+    sample - 
+    nMoments -
+
+ */
 VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     VectorXd moments(nMoments);
     VectorXd mu = sample.colwise().mean();
@@ -77,16 +84,12 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
         int px = wcomp(smart);
         double pos = rPoint(px);
         if (pos > 1.0 - nan) {
-            cout << "overflow!" << endl;
             pos -= epsi;
         }else if (pos < nan) {
-            cout << "underflow!"<< pos << endl;
             pos += epsi;
-            cout << "pos" << posK.transpose() << endl; 
         }
         double alpha = hone * pos; // Component specific
         double beta = hone - alpha; // pos specific
-    // cout << "alpha:" << alpha << "beta:" << beta << endl;
         std::gamma_distribution<double> aDist(alpha, 1); // beta distribution consisting of gamma distributions
         std::gamma_distribution<double> bDist(beta, 1);
 
@@ -127,10 +130,10 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     int hone = 4;
     VectorXd wmatup(4);
     wmatup << 0.15, 0.30, 0.45, 0.60;
-    double uniLowBound = 0.0, uniHiBound = 1.0;
+    double low = 0.0, high = 1.0;
     random_device RanDev;
     mt19937 gen(RanDev());
-    uniform_real_distribution<double> unifDist(uniLowBound, uniHiBound);
+    uniform_real_distribution<double> unifDist(low, high);
     MatrixXd weight = MatrixXd::Identity(nMoments, nMoments);
     MatrixXd GBMAT(0, 0); // iterations of global best vectors
     MatrixXd PBMAT(nParts, Npars + 1); // particle best matrix + 1 for cost component
@@ -138,14 +141,11 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     MatrixXd Y_t = MatrixXd::Zero(Y_t.rows(), Y_t.cols());
     VectorXd YtmVec(nMoments);
     
-    /* Solve for Y_t (mu). */
-    cout << "Loading in Truk!" << endl;
-    VectorXd trueK = readRates(nRates);
-    cout << "truk:" << trueK.transpose() << endl;
-
+    /* Solve or load Y_t  */
+    VectorXd trueK = readRates(nRates); 
     if(simulateYt == 1){
         MatrixXd Y_0 = readY("../data/Y", N)[0];
-        cout << "Calculating Yt!" << endl;
+        cout << "Simulating Yt!" << endl;
         cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
         Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
         YtmVec = moment_vector(Y_t, nMoments);
@@ -155,37 +155,32 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     }
     
 
-    /* Instantiate seedk aka global costs */
+    /* Initialize seedk aka global costs */
     VectorXd seed;
     seed = VectorXd::Zero(Npars); 
     for (int i = 0; i < Npars; i++) { 
         seed(i) = unifDist(gen);
     }
-
     double costSeedK = 0;
     MatrixXd seedXt = (evolutionMatrix(seed, tf, nSpecies) * X_0.transpose()).transpose();
     VectorXd seedMoms = moment_vector(seedXt, nMoments);
     costSeedK = calculate_cf2(YtmVec, seedMoms, weight);
-    cout << "seedk:"<< seed.transpose()<< "| cost:" << costSeedK << endl;
-    cout << "Seed Moments:" << seedMoms.transpose() << endl;
-    cout << "YtmVec:" << YtmVec.transpose() << endl;
+
     /* Initialize the start of the global best matrix */
     double gCost = costSeedK; 
     VectorXd GBVEC = seed;
     GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
-    for (int i = 0; i < Npars; i++) {
-        GBMAT(GBMAT.rows() - 1, i) = seed(i);
-    }
+    for (int i = 0; i < Npars; i++) {GBMAT(GBMAT.rows() - 1, i) = seed(i);}
     GBMAT(GBMAT.rows() - 1, Npars) = gCost;
     
     /* Blind PSO begins */
-    cout << "PSO begins!" << endl;
+    cout << "PSO has begun!" << endl;
     for(int step = 0; step < nSteps; step++){
     #pragma omp parallel for 
         for(int particle = 0; particle < nParts; particle++){
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
-            uniform_real_distribution<double> pUnifDist(uniLowBound, uniHiBound);
+            uniform_real_distribution<double> pUnifDist(low, high);
             /* instantiate all particle rate constants with unifDist */
             if(step == 0){
                 /* temporarily assign specified k constants */
@@ -219,9 +214,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 pos = POSMAT.row(particle);
                 VectorXd rpoint = linearVelVec(pos, particle, epsi, nan, hone);
                 VectorXd PBVEC(Npars);
-                for(int i = 0; i < Npars; i++){
-                    PBVEC(i) = PBMAT(particle, i);
-                }
+                for(int i = 0; i < Npars; i++){PBVEC(i) = PBMAT(particle, i);}
                 pos = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                 POSMAT.row(particle) = pos;
 
@@ -263,8 +256,6 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     VectorXd chkpts = wmatup * nSteps2;
     for(int step = 0; step < nSteps2; step++){
         if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){ /* update wt   matrix || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3) */
-           
-            cout << "GBVEC AND COST:" << GBMAT.row(GBMAT.rows() - 1) << endl;
             nearby = squeeze * nearby;
             /* reinstantiate gCost */
             VectorXd gPos = GBVEC;
@@ -283,7 +274,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
         for(int particle = 0; particle < nParts2; particle++){
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
-            uniform_real_distribution<double> pUnifDist(uniLowBound, uniHiBound);
+            uniform_real_distribution<double> pUnifDist(low, high);
         
             if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){
                 /* reinitialize particles around global best */

@@ -14,7 +14,7 @@ Summary of Src File:
 int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
-    /* some default values for PSO just in case. */
+    /* Input Parameters for Program */
     int nParts = 25; // first part PSO
     int nSteps = 50;
     int nParts2 = 10; // second part PSO
@@ -27,6 +27,8 @@ int main(){
     int nRuns = 0;
     int simulateYt = 1;
     int useInverse = 0; // currently just inverse only occurs in linear model.
+    int heldTheta = -1;
+    int heldThetaVal = 0;
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
         cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
@@ -34,7 +36,7 @@ int main(){
     }
     
     cout << "Reading in data!" << endl;
-    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, sampleSize) !=0 ){
+    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, sampleSize, heldTheta, heldThetaVal) !=0 ){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
     }
@@ -58,14 +60,13 @@ int main(){
         GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, nRates, nMoments, times, simulateYt);
     }else{
         /*---------------------- Nonlinear Setup ------------------------ */
-        /* Variables (global) */
-        double t0 = 0, dt = 1.0; // time variables
-        double squeeze = 0.500, sdbeta = 0.10; 
+
+        double t0 = 0, dt = 1.0; // nonlinear time evolution variables
+        /* Explicit Boundary Parameters */
+        double squeeze = 0.500, sdbeta = 0.10; // how much to shrink PSO search over time (how much variability each position is iterated upon)
         double boundary = 0.001;
         /* SETUP */
-        int useDiag = 0;
-        int sf1 = 1;
-        int sf2 = 1;
+        double sf2 = 1; // factor that can be used to regularize particle weights (global, social, inertial)
         double epsi = 0.02;
         double nan = 0.005;
         /* PSO params */
@@ -74,14 +75,9 @@ int main(){
         double alpha = 0.2;
         int hone = 28; 
         int startRow = 0;
-        //nMoments = 2*N_SPECIES; // mean + var only!
-        VectorXd wmatup(4);
-        wmatup << 0.15, 0.35, 0.60, 0.9;
-        double uniLowBound = 0.0, uniHiBound = 1.0;
+        double low = 0.0, high = 1.0; // boundaries for PSO rate estimation, 0 to 1.0
         random_device RanDev;
         mt19937 gen(RanDev());
-        uniform_real_distribution<double> unifDist(uniLowBound, uniHiBound);
-        
         vector<MatrixXd> weights;
 
         for(int i = 0; i < times.size(); i++){
@@ -90,11 +86,10 @@ int main(){
         
         cout << "Using two part PSO " << "Sample Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
         cout << "Using Times:" << times.transpose() << endl;
-        cout << "Bounds for Uniform Distribution (" << uniLowBound << "," << uniHiBound << ")"<< endl;
+        cout << "Bounds for Uniform Distribution (" << low << "," << high << ")"<< endl;
         cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
         cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
         cout << "sdbeta:" << sdbeta << endl;
-        // cout << "wt:" << endl << wt << endl;
 
         MatrixXd GBMAT(0, 0); // iterations of global best vectors
         MatrixXd PBMAT(nParts, nRates + 1); // particle best matrix + 1 for cost component
@@ -103,8 +98,7 @@ int main(){
         /* Solve for Y_t (mu). */
         cout << "Loading in Truk!" << endl;
         struct K tru;
-        tru.k = readRates(nRates);
-        // tru.k << 0.1, 0.1, 0.95, 0.17, 0.05, 0.18;
+        tru.k = readRates(nRates); // read in rates.
 
         cout << "Calculating Yt!" << endl;
         vector<MatrixXd> Yt3Mats;
@@ -158,15 +152,14 @@ int main(){
             MatrixXd PBMAT = MatrixXd::Zero(nParts, nRates + 1); // particle best matrix + 1 for cost component
             MatrixXd POSMAT = MatrixXd::Zero(nParts, nRates); // Position matrix as it goees through it in parallel
             
-            /* Instantiate seedk aka global costs */
+            /* Initialize Global Best  */
             double holdTheta2 = 0.1;
             struct K seed;
             seed.k = VectorXd::Zero(nRates); 
-            //seed.k = testVec;
-            for (int i = 0; i < nRates; i++) { 
-                seed.k(i) = unifDist(gen);
-            }
-            seed.k(1) = holdTheta2;
+            for (int i = 0; i < nRates; i++) { seed.k(i) = rndNum(low,high);}
+            if(heldTheta > -1){seed.k(heldTheta) = heldThetaVal;}
+            
+            /* Evolve initial Global Best and Calculate a Cost*/
             double costSeedK = 0;
             for(int t = 0; t < times.size(); t++){
                 Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
@@ -181,11 +174,9 @@ int main(){
                 cout << "XtmVec:" << Xt.mVec.transpose() << endl;
                 costSeedK += calculate_cf2(Yt3Vecs[t], Xt.mVec, weights[t]);
             }
-
             cout << "seedk:"<< seed.k.transpose() << "| cost:" << costSeedK << endl;
             
             double gCost = costSeedK; //initialize costs and GBMAT
-            // global values
             VectorXd GBVEC = seed.k;
             
             GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1);
@@ -199,14 +190,11 @@ int main(){
             for(int step = 0; step < nSteps; ++step){
             #pragma omp parallel for 
                 for(int particle = 0; particle < nParts; particle++){
-                    random_device pRanDev;
-                    mt19937 pGenerator(pRanDev());
-                    uniform_real_distribution<double> pUnifDist(uniLowBound, uniHiBound);
-                    /* instantiate all particle rate constants with unifDist */
+                    /* initialize all particle rate constants with unifDist */
                     if(step == 0){
-                        /* temporarily assign specified k constants */
+                        /* initialize all particles with random rate constant positions */
                         for(int i = 0; i < nRates; i++){
-                            POSMAT(particle, i) = pUnifDist(pGenerator);
+                            POSMAT(particle, i) = rndNum(low, high);
                         }
                         POSMAT(particle, 1) = holdTheta2;
                         struct K pos;
@@ -237,9 +225,8 @@ int main(){
                         }
                         PBMAT(particle, nRates) = cost; // add cost to final column
                     }else{ 
-                        /* using new rate constants, instantiate particle best values */
                         /* step into PSO */
-                        double w1 = sfi * pUnifDist(pGenerator)/ sf2, w2 = sfc * pUnifDist(pGenerator) / sf2, w3 = sfs * pUnifDist(pGenerator)/ sf2;
+                        double w1 = sfi * rndNum(low,high) / sf2, w2 = sfc * rndNum(low,high) / sf2, w3 = sfs * rndNum(low,high) / sf2;
                         double sumw = w1 + w2 + w3; //w1 = inertial, w2 = pbest, w3 = gbest
                         w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
                         struct K pos;
@@ -247,19 +234,18 @@ int main(){
                         pos.k = POSMAT.row(particle);
                         VectorXd rpoint = adaptVelocity(pos.k, particle, epsi, nan, hone);
                         VectorXd PBVEC(nRates);
-                        for(int i = 0; i < nRates; i++){
-                            PBVEC(i) = PBMAT(particle, i);
-                        }
+                        for(int i = 0; i < nRates; i++){PBVEC(i) = PBMAT(particle, i);}
                         
                         pos.k = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                         
-                        if(pUnifDist(pGenerator) < probabilityToTeleport){ // hard coded grid re-search for an adaptive component
-                            pos.k(0) = pUnifDist(pGenerator);
-                            pos.k(1) = pUnifDist(pGenerator);
-                            pos.k(4) = pUnifDist(pGenerator);
+                        if(rndNum(low,high) < probabilityToTeleport){ // hard coded grid re-search for an adaptive component
+                            pos.k(0) = rndNum(low,high);
+                            pos.k(1) = rndNum(low,high);
+                            pos.k(4) = rndNum(low,high);
                         }
-                        // pos.k(4) = 0.05;
-                        pos.k(1) = holdTheta2;
+                        if(heldTheta > -1){
+                            pos.k(heldTheta) = heldThetaVal;
+                        }
                         POSMAT.row(particle) = pos.k;
                         double cost = 0;
                         for(int t = 0; t < times.size(); t++){
@@ -305,7 +291,13 @@ int main(){
             GBVECS(run, nRates) = gCost;
         }
         trukCost = 0;
+        if(simulateYt == 1){
+            cout << "Truth:" << tru.k.transpose() << endl;
+        }
     }
     cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl;
+    auto tB = std::chrono::high_resolution_clock::now();
+    auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
+    cout << "CODE FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
     return 0;
 }

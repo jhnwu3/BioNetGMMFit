@@ -9,7 +9,7 @@ bool isNumber(const std::string& s)
     int it = 0;
     bool allDigits = true;
     while (it < s.length()){
-        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it)==' ')){ // check for control characters to check for numbers correctly.
+        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it)==' ') && !(s.at(it)=='-')){ // check for control characters to check for numbers correctly.
             allDigits = false;
         }
         ++it; 
@@ -31,7 +31,7 @@ bool isDouble(const std::string& s)
         return false;
     }
      while (it < s.length()){
-        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it) == '.')  && !(s.at(it)==' ')){ // check for control characters to check for numbers correctly.
+        if (!(std::isdigit(s.at(it))) && !(s.at(it) == '\r') && !(s.at(it) == '\0') && !(s.at(it) == '.')  && !(s.at(it)==' ') && !(s.at(it)=='-')){ // check for control characters to check for numbers correctly.
             allDigits = false;
         }
         ++it; 
@@ -177,7 +177,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
 }
 
 // Reads PSO Parameters File
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize){
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize, int &thetaHeld, int &heldVal){
     std::ifstream input("../Config.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
@@ -208,6 +208,8 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
     useInverse = params.at(9);
     nRates = params.at(10);
     sampleSize = params.at(11);
+    thetaHeld = params.at(12);
+    heldVal = params.at(13);
     input.close();
     return 0;
 }
