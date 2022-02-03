@@ -1,13 +1,18 @@
 #include "linear.hpp"
 
 /*
-    Takes a sample in Matrix form and converts it into a nMoment x 1 moment vector.
+    Summary:
+        Takes a sample in Matrix form and converts it into a nMoment x 1 moment vector.
     Input: 
-    sample - 
-    nMoments -
+        sample - matrix of cell abundances
+        nMoments - number of moments (i.e 9 moments for 3 proteins, means, var, covars)
+    Output:
+        moment vector - nMoments x 1 size.
+
+
 
  */
-VectorXd moment_vector(const MatrixXd &sample, int nMoments){
+VectorXd momentVector(const MatrixXd &sample, int nMoments){
     VectorXd moments(nMoments);
     VectorXd mu = sample.colwise().mean();
     VectorXd variances(sample.cols());
@@ -16,11 +21,13 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
     if(nMoments < sample.cols()){
         nVar = 0;
     }
-    // dont forget to subtract mu.
+
+    // Compute sample variances
     for(int c = 0; c < nVar; c++){
         variances(c) = (sample.col(c).array() - sample.col(c).array().mean()).square().sum() / ((double) sample.col(c).array().size() - 1);
     }
 
+    // again only compute covariances, if number of moments allow for it
     int nCross = nMoments - 2*sample.cols();
     VectorXd covariances(0);
     if(nCross > 0){
@@ -34,7 +41,7 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
         }
     }
 
-    // concatenate all moment vectors needed.
+    // Now after all computations, add to moment vector
     for(int i = 0; i < nMoments; i++){
         if(i < sample.cols()){
             moments(i) = mu(i);
@@ -48,7 +55,16 @@ VectorXd moment_vector(const MatrixXd &sample, int nMoments){
 }
 
 
-/* placeholder function -> will generalize for greater proteins if we ever get a better matrix. */
+/* 
+    Summary:
+        Takes the interaction matrix and "evolves" it using the specified interaction matrix in system.cpp
+    Input:
+        k - parameter vector that is being "estimated" (i.e rate constants)
+        tf - time of evolution
+        nSpecies - number of species in the model
+
+
+ */
 MatrixXd evolutionMatrix(VectorXd &k, double tf, int nSpecies){
     MatrixXd M(nSpecies, nSpecies);
     M = interactionMatrix(nSpecies, k);
@@ -104,8 +120,20 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
 
 
 /*
-IMPORTANT NOTE FOR FUTURE CHANGES! -> Y0 will turn into Yt as Y0 technically doesn't exist, but regardless, we'll leave it here
-for pseudo-tests as this project is still in its infancy.
+    Summary:
+        Takes program parameters and computes using the described linear model in system.cpp and computes a parameter estimate.   
+    Input:
+        nParts - Number of Blind PSO particles
+        nSteps - Number of Blind PSO steps
+        nParts2 - Number of Targeted PSO particles
+        nSteps2 - Number of Targeted PSO step counts
+        X_0 - Control Matrix loaded in
+        nRates - number of rates that are being simulated
+        nMoments - number of moments, i.e 9 moments for both means + variances + covariances for 3 proteins
+        times - Vector of time steps that you'll be plugging in
+        simulateYt - integer/boolean for simulating Yt so you only need to plug in Y_0 (used to test ground truths)
+    Output:
+        GBMAT - Global Best Matrix with each row being a new "global" best parameter estimate in the PSO, the final row is the final estimate.
 */
 
 MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt) {
@@ -148,10 +176,10 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
         cout << "Simulating Yt!" << endl;
         cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
         Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
-        YtmVec = moment_vector(Y_t, nMoments);
+        YtmVec = momentVector(Y_t, nMoments);
     }else{
         Y_t = readY("../data/Y", N)[0];
-        YtmVec = moment_vector(Y_t, nMoments);
+        YtmVec = momentVector(Y_t, nMoments);
     }
     
 
@@ -163,8 +191,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     }
     double costSeedK = 0;
     MatrixXd seedXt = (evolutionMatrix(seed, tf, nSpecies) * X_0.transpose()).transpose();
-    VectorXd seedMoms = moment_vector(seedXt, nMoments);
-    costSeedK = calculate_cf2(YtmVec, seedMoms, weight);
+    VectorXd seedMoms = momentVector(seedXt, nMoments);
+    costSeedK = costFunction(YtmVec, seedMoms, weight);
 
     /* Initialize the start of the global best matrix */
     double gCost = costSeedK; 
@@ -195,7 +223,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 }
                 double cost = 0;
                 MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
+                cost = costFunction(YtmVec, momentVector(X_t, nMoments), weight);
                 /* instantiate PBMAT */
                 for(int i = 0; i < Npars; i++){
                     PBMAT(particle, i) = POSMAT(particle, i);
@@ -220,7 +248,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
                 double cost = 0;
                 MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
+                cost = costFunction(YtmVec, momentVector(X_t, nMoments), weight);
                
                 /* update gBest and pBest */
                 #pragma omp critical
@@ -263,7 +291,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             MatrixXd X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
             weight = customWtMat(Y_t, X_t, nMoments, N, false);
             cout << "Updated Weight Matrix!" << endl;
-            cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
+            cost = costFunction(YtmVec, momentVector(X_t, nMoments), weight);
             gCost = cost;
             hone += 4;
             GBMAT.conservativeResize(GBMAT.rows() + 1, Npars + 1);
@@ -314,7 +342,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 //VectorXd XtPSO3 = VectorXd::Zero(nMoments);
                 double cost = 0;
                 MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
+                cost = costFunction(YtmVec, momentVector(X_t, nMoments), weight);
                 
                 /* initialize PBMAT */
                 for(int i = 0; i < Npars; i++){
@@ -340,7 +368,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 double cost = 0;
                 /* solve ODEs with new system and recompute cost */
                 MatrixXd X_t = (evolutionMatrix(pos, tf, nSpecies) * X_0.transpose()).transpose();
-                cost = calculate_cf2(YtmVec, moment_vector(X_t, nMoments), weight);
+                cost = costFunction(YtmVec, momentVector(X_t, nMoments), weight);
                 
                 /* update pBest and gBest */
                 #pragma omp critical

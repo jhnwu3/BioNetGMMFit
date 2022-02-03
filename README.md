@@ -91,7 +91,7 @@ provided in this repo.
 All data must be loaded in csv format. 
 
 ## *Loading in data*
-If you want to load in X data file, make sure to delete or move any pre-existing csv file located in the 
+If you want to load in the X, control, or time 0 data file, make sure to delete or move any pre-existing csv file located in the 
 
     data/X 
 

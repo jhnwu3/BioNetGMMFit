@@ -124,7 +124,7 @@ int main(){
                 }
                 Yt.mVec /= Y_0.rows();
                 Xt.mVec /= X_0.rows();
-                trukCost += calculate_cf2(Yt.mVec,Xt.mVec, weights[t]);
+                trukCost += costFunction(Yt.mVec,Xt.mVec, weights[t]);
                 Yt3Mats.push_back(Yt.mat);
                 Yt3Vecs.push_back(Yt.mVec);
             }
@@ -135,7 +135,7 @@ int main(){
                 exit(1);
             }
             for(int i = 0; i < Yt3Mats.size(); i++){
-                Yt3Vecs.push_back(moment_vector(Yt3Mats[i], nMoments));
+                Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
         }
 
@@ -172,7 +172,7 @@ int main(){
                 }
                 Xt.mVec /= X_0.rows();  
                 cout << "XtmVec:" << Xt.mVec.transpose() << endl;
-                costSeedK += calculate_cf2(Yt3Vecs[t], Xt.mVec, weights[t]);
+                costSeedK += costFunction(Yt3Vecs[t], Xt.mVec, weights[t]);
             }
             cout << "seedk:"<< seed.k.transpose() << "| cost:" << costSeedK << endl;
             
@@ -215,7 +215,7 @@ int main(){
                                 integrate_adaptive(controlledStepper, initSys, c0, t0, times(t), dt, XtObsPSO);
                             }
                             XtPSO.mVec/= X_0.rows();
-                            cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
+                            cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                         
                         
@@ -259,7 +259,7 @@ int main(){
                                 integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                             }
                             XtPSO.mVec/=X_0.rows();
-                            cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
+                            cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                     
                         /* update gBest and pBest */

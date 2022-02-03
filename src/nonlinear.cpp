@@ -128,7 +128,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         }
         Yt.mVec /= N;
         Xt.mVec /= N;
-        trukCost += calculate_cf2(Yt.mVec,Xt.mVec, weights[t]);
+        trukCost += costFunction(Yt.mVec,Xt.mVec, weights[t]);
         Xt3Vecs.push_back(Xt.mVec);
         Yt3Mats.push_back(Yt.mat);
         Yt3Vecs.push_back(Yt.mVec);
@@ -177,7 +177,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
             }
             Xt.mVec /= N;  
             cout << "XtmVec:" << Xt.mVec.transpose() << endl;
-            costSeedK += calculate_cf2(Yt3Vecs[t], Xt.mVec, weights[t]);
+            costSeedK += costFunction(Yt3Vecs[t], Xt.mVec, weights[t]);
         }
 
         cout << "seedk:"<< seed.k.transpose() << "| cost:" << costSeedK << endl;
@@ -227,7 +227,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
                             integrate_adaptive(controlledStepper, initSys, c0, t0, times(t), dt, XtObsPSO);
                         }
                         XtPSO.mVec/=N;
-                        cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
+                        cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                     }
                     
                     
@@ -274,7 +274,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
                             integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                         }
                         XtPSO.mVec/=N;
-                        cost += calculate_cf2(Yt3Vecs[t], XtPSO.mVec, weights[t]);
+                        cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                     }
                 
                     /* update gBest and pBest */
@@ -315,7 +315,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     }
     trukCost = 0;
     for(int t = 0; t < nTimeSteps; t++){
-        trukCost += calculate_cf2(Yt3Vecs[t], Xt3Vecs[t], weights[t]);
+        trukCost += costFunction(Yt3Vecs[t], Xt3Vecs[t], weights[t]);
     }
 
     cout << "truk: " << tru.k.transpose() << " with trukCost with new weights:" << trukCost << endl;

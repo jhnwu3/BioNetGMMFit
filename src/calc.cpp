@@ -17,7 +17,7 @@ double rndNum(double low, double high){
 }
 
 
-double calculate_cf2(const VectorXd& trueVec, const  VectorXd& estVec, const MatrixXd& w) {
+double costFunction(const VectorXd& trueVec, const  VectorXd& estVec, const MatrixXd& w) {
     double cost = 0;
     VectorXd diff(trueVec.size());
     diff = trueVec - estVec;
