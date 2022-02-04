@@ -4,6 +4,7 @@ using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
+/* Returns true if string is an integer*/
 bool isNumber(const std::string& s)
 {
     int it = 0;
@@ -17,6 +18,7 @@ bool isNumber(const std::string& s)
     return allDigits;
 }
 
+/* Returns true if string is a Double */
 bool isDouble(const std::string& s)
 {
     bool allDigits = true;
@@ -39,6 +41,7 @@ bool isDouble(const std::string& s)
     return allDigits; // -2, 1 for null, 1 for the .
 }
 
+/* Remove whitespace from string */
 string removeWhiteSpace(string current)
 {
   string myNewString = "";
@@ -58,6 +61,7 @@ string removeWhiteSpace(string current)
   return myNewString;
 }
 
+/* Finds next double in string position */
 string findDouble(string line, int startPos) {
     string doble;
     int i = startPos;
@@ -71,6 +75,17 @@ string findDouble(string line, int startPos) {
     return doble;
 }
 
+/* 
+    Summary:
+        Takes a txt file and converts it into a matrix 
+    Input:
+        fileName - name of file (with file extension) that's being converted
+        rows - number of rows 
+        cols - No. of Cols
+    Output:
+        A matrix of rows x cols defined in inputs.
+    
+*/
 MatrixXd txtToMatrix(const string& fileName, int rows, int cols) {
     MatrixXd mat(rows, cols);
     std::ifstream in(fileName);
@@ -97,6 +112,16 @@ MatrixXd txtToMatrix(const string& fileName, int rows, int cols) {
     return mat;
 }
 
+/* 
+    Summary:
+        Same idea as above, but now can read an entire file and no longer need to specifiy number of columns.
+    Input:
+        path - file name with directory including the .csv extension
+        fileSize - number of rows of matrix being outputted
+    Output:
+        Matrix of file with only the number of rows of fileSize.
+
+*/
 MatrixXd csvToMatrix (const std::string & path, int fileSize) {
     std::ifstream indata;
     indata.open(path);
@@ -127,6 +152,16 @@ MatrixXd csvToMatrix (const std::string & path, int fileSize) {
     mat.conservativeResize(0,0); // delete previously allocated matrix
     return matResized;
 }
+
+/* 
+    Summary:
+        Reads a single file from the data/X directory into a matrix.
+    Input:
+        path - path of X directory
+        xSize - number of rows of matrix to be returned
+    Output:
+        matrix of xSize rows.
+*/
 MatrixXd readX(const std::string &path, int xSize){
     int nFile = 0;
     MatrixXd X_0;
@@ -145,6 +180,15 @@ MatrixXd readX(const std::string &path, int xSize){
     }
     return X_0;
 }
+/*
+    Summary:
+        Reads all files in data/Y directory into a list of matrices
+    Input:
+        path - path of Y directory
+        ySize - number of rows of matrices to be returned
+    Output:
+        vector of matrices of ySize. note: vector == list.
+*/
 vector<MatrixXd> readY(const std::string & path, int ySize){
     vector<MatrixXd> Y;
     cout << "Reading data/Y directory!" << endl;
@@ -158,6 +202,10 @@ vector<MatrixXd> readY(const std::string & path, int ySize){
     }
     return Y;
 }
+/* 
+    Summary:
+        Converts a matrix mat into a csv file, defined by the string variable fileName.
+ */
 void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix to csv
     std::ofstream plot;
     string csvFile = fileName + ".csv";
@@ -176,7 +224,10 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
     plot.close();
 }
 
-// Reads PSO Parameters File
+/*
+    Read all Config.csv parameters into a set of parameters (as shown in the function parameters)
+
+ */
 int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize, int &thetaHeld, int &heldVal){
     std::ifstream input("../Config.csv");
     if(!input.is_open()){

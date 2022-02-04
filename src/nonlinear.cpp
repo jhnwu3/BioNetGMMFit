@@ -1,10 +1,14 @@
 #include "nonlinear.hpp"
+
+/* Converts an Eigen::VectorXd into a State_N aka a vector<double> v2 as we are using two different C++ libraries for computations */
 State_N convertInit(const VectorXd &v1){
     vector<double> v2;
     v2.resize(v1.size());
     VectorXd::Map(&v2[0], v1.size()) = v1;
     return v2;
 }
+
+/* Nonlinear position adaptation */
 VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone) {
     
     VectorXd rPoint;
