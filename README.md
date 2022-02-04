@@ -23,6 +23,8 @@ To quickly get started with one of the simulated examples, do:
     ![Step 1](/img/REPO.png)
     ![Step 2](/img/DLST.png)
 
+    make sure to unzip the directory before use.
+
 2. Open the default (or WSL) terminal in the directory and install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
 
         source install.sh
@@ -217,7 +219,7 @@ inside the row
 
     -k(2), k(2), 0,
 
-is the second matrix element of the first row referring to a positive rate constant k3 or put simply the third element in the k rate vector. Similarly,
+is the *second* matrix element of the first row referring to a positive rate constant k3 or put simply the third element in the k rate vector. Similarly,
 
     k(0)
 
@@ -244,7 +246,7 @@ as an aside:
 
 
 #### *Nonlinear*
-
+Currently, the nonlinear system is not very well documented. However, should one choose to go further into the code and attempt to define their own nonlinear system.
 
 
 ## **Directory Structure** ##
