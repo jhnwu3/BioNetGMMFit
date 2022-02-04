@@ -109,7 +109,7 @@ int main(){
             cout << "SIMULATING YT!" << endl;
             MatrixXd Y_0 = readY("../data/Y", sampleSize)[0];
             for(int t = 0; t < times.size(); t++){
-                Nonlinear_ODE6 trueSys(tru);
+                Nonlinear_ODE trueSys(tru);
                 Protein_Components Yt(times(t), nMoments, Y_0.rows(), X_0.cols());
                 Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs YtObs(Yt);
@@ -164,7 +164,7 @@ int main(){
             for(int t = 0; t < times.size(); t++){
                 Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs XtObs(Xt);
-                Nonlinear_ODE6 sys(seed);
+                Nonlinear_ODE sys(seed);
                 for (int i = 0; i < X_0.rows(); ++i) {
                     State_N c0 = convertInit(X_0.row(i));
                     Xt.index = i;
@@ -205,7 +205,7 @@ int main(){
                         
                         double cost = 0;
                         for(int t = 0; t < times.size(); ++t){
-                            Nonlinear_ODE6 initSys(pos);
+                            Nonlinear_ODE initSys(pos);
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO(XtPSO);
                             for(int i = 0; i < X_0.rows(); ++i){
@@ -252,7 +252,7 @@ int main(){
                             /*solve ODEs and recompute cost */
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO1(XtPSO);
-                            Nonlinear_ODE6 stepSys(pos);
+                            Nonlinear_ODE stepSys(pos);
                             for(int i = 0; i < X_0.rows(); i++){
                                 State_N c0 = convertInit(X_0.row(i));
                                 XtPSO.index = i;

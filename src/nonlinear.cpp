@@ -1,5 +1,6 @@
+#include "main.hpp"
 #include "nonlinear.hpp"
-
+#include "system.hpp"
 /* Converts an Eigen::VectorXd into a State_N aka a vector<double> v2 as we are using two different C++ libraries for computations */
 State_N convertInit(const VectorXd &v1){
     vector<double> v2;
@@ -8,19 +9,34 @@ State_N convertInit(const VectorXd &v1){
     return v2;
 }
 
-/* Nonlinear position adaptation */
+/* 
+Summary:
+    Nonlinear position adaptation, randomly picks rate constants to generate a random value from a beta distribution.
+Input:
+    posK - position vector in PSO
+    seed - currently unused, but was to be used to set seed for rng generator
+    epsi - value to reposition particle back into hypercube
+    nan - threshold to determine if overstepping into boundary.
+    hone - width of beta distribution of random values to be generated from for new position
+
+*/
 VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone) {
-    
+
+    std::random_device rand_dev;
+    std::mt19937 generator(rand_dev());    
+
     VectorXd rPoint;
     rPoint = posK;
-    std::random_device rand_dev;
-    std::mt19937 generator(rand_dev());
+
+    /* create random int vector */
     vector<int> rand;
     uniform_real_distribution<double> unifDist(0.0, 1.0);
     for (int i = 0; i < posK.size(); i++) {
         rand.push_back(i);
     }
     shuffle(rand.begin(), rand.end(), generator); // shuffle indices as well as possible. 
+
+    /*randomize which indiecs of position to iterate / randomly generate positions */
     int ncomp = rand.at(0);
     VectorXd wcomp(ncomp);
     shuffle(rand.begin(), rand.end(), generator);
@@ -28,20 +44,18 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
         wcomp(i) = rand.at(i);
     }
     
+    /* Now randomly generate new positions using beta distribution */
     for (int smart = 0; smart < ncomp; smart++) {
         int px = wcomp(smart);
         double pos = rPoint(px);
         if (pos > 1.0 - nan) {
-            cout << "overflow!" << endl;
             pos -= epsi;
         }else if (pos < nan) {
-            cout << "underflow!"<< pos << endl;
             pos += epsi;
-            cout << "pos" << posK.transpose() << endl; 
         }
         double alpha = hone * pos; // Component specific
         double beta = hone - alpha; // pos specific
-    // cout << "alpha:" << alpha << "beta:" << beta << endl;
+
         std::gamma_distribution<double> aDist(alpha, 1); // beta distribution consisting of gamma distributions
         std::gamma_distribution<double> bDist(beta, 1);
 
@@ -54,6 +68,7 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
     return rPoint;
 }
 
+/* Defunct nonlinear model moved into main for speed reasons. - To be debugged */
 MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd& Y_0, int nRates, int nRuns, int nMoments){
     auto t1 = std::chrono::high_resolution_clock::now();
     /*---------------------- Setup ------------------------ */
@@ -116,7 +131,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     Controlled_RK_Stepper_N controlledStepper;
     double trukCost = 0;
     for(int t = 0; t < nTimeSteps; t++){
-        Nonlinear_ODE6 trueSys(tru);
+        Nonlinear_ODE trueSys(tru);
         Protein_Components Yt(times(t), nMoments, N, X_0.cols());
         Protein_Components Xt(times(t), nMoments, N, X_0.cols());
         Moments_Mat_Obs YtObs(Yt);
@@ -172,7 +187,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         for(int t = 0; t < nTimeSteps; t++){
             Protein_Components Xt(times(t), nMoments, N, X_0.cols());
             Moments_Mat_Obs XtObs(Xt);
-            Nonlinear_ODE6 sys(seed);
+            Nonlinear_ODE sys(seed);
             for (int i = 0; i < N; ++i) {
                 //State_N c0 = gen_multi_norm_iSub();
                 State_N c0 = convertInit(X_0.row(i));
@@ -221,7 +236,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
                     
                     double cost = 0;
                     for(int t = 0; t < nTimeSteps; t++){
-                        Nonlinear_ODE6 initSys(pos);
+                        Nonlinear_ODE initSys(pos);
                         Protein_Components XtPSO(times(t), nMoments, N, X_0.cols());
                         Moments_Mat_Obs XtObsPSO(XtPSO);
                         for(int i = 0; i < N; i++){
@@ -246,7 +261,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
                     double w1 = sfi * pUnifDist(pGenerator)/ sf2, w2 = sfc * pUnifDist(pGenerator) / sf2, w3 = sfs * pUnifDist(pGenerator)/ sf2;
                     double sumw = w1 + w2 + w3; //w1 = inertial, w2 = pbest, w3 = gbest
                     w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
-                    //w1 = 0.05; w2 = 0.90; w3 = 0.05;
+         
                     struct K pos;
                     pos.k = VectorXd::Zero(Npars);
                     pos.k = POSMAT.row(particle);
@@ -263,7 +278,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
                         pos.k(1) = pUnifDist(pGenerator);
                         pos.k(4) = pUnifDist(pGenerator);
                     }
-                    // pos.k(4) = 0.05;
+          
                     pos.k(1) = holdTheta2;
                     POSMAT.row(particle) = pos.k;
                     double cost = 0;
@@ -271,7 +286,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
                         /*solve ODEs and recompute cost */
                         Protein_Components XtPSO(times(t), nMoments, N, X_0.cols());
                         Moments_Mat_Obs XtObsPSO1(XtPSO);
-                        Nonlinear_ODE6 stepSys(pos);
+                        Nonlinear_ODE stepSys(pos);
                         for(int i = 0; i < N; i++){
                             State_N c0 = convertInit(X_0.row(i));
                             XtPSO.index = i;

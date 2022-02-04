@@ -41,43 +41,7 @@ struct K
     VectorXd k;
 };
 
-
-/* Define own Nonlinear ODE system here, theoretically, one should be able to simpyl use indexing here. */
-class Nonlinear_ODE6
-{
-    struct K parameter;
-
-public:
-    Nonlinear_ODE6(struct K G) : parameter(G) {}
-
-    void operator() (const State_N& c, State_N& dcdt, double t)
-    {
-        dcdt[0] = -(parameter.k(0) * c[0] * c[1])  // Syk
-            + parameter.k(1) * c[2]
-            + parameter.k(2) * c[2];
-
-        dcdt[1] = -(parameter.k(0) * c[0] * c[1]) // Vav
-            + parameter.k(1) * c[2]
-            + parameter.k(5) * c[5];
-
-        dcdt[2] = parameter.k(0) * c[0] * c[1] // Syk-Vav
-            - parameter.k(1) * c[2]
-            - parameter.k(2) * c[2];
-
-        dcdt[3] = parameter.k(2) * c[2] //pVav
-            - parameter.k(3) * c[3] * c[4]
-            + parameter.k(4) * c[5];
-
-        dcdt[4] = -(parameter.k(3) * c[3] * c[4]) // SHP1 
-            + parameter.k(4) * c[5]
-            + parameter.k(5) * c[5];
-
-        dcdt[5] = parameter.k(3) * c[3] * c[4]  // SHP1-pVav
-            - parameter.k(4) * c[5]
-            - parameter.k(5) * c[5];
-    }
-};
-
+/* Observer structs used to observe ode solver over time. Keep in mind, there should be no reason to change this for ode-solving  */
 struct Protein_Components {
     int index;
     MatrixXd mat;
@@ -100,7 +64,6 @@ struct Moments_Mat_Obs
             int upperDiag = 2 * dComp.mat.cols();
             for (int i = 0; i < dComp.mat.cols(); i++) {
                 dComp.mVec(i) += c[i];
-                //cout << "see what's up:" << dComp.mVec.transpose() << endl;
                 dComp.mat(dComp.index, i) = c[i];
                 for (int j = i; j < dComp.mat.cols(); j++) {
                     if (i == j && (dComp.mat.cols() + i) < dComp.mVec.size()) { // diagonal elements
