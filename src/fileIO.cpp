@@ -228,7 +228,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
     Read all Config.csv parameters into a set of parameters (as shown in the function parameters)
 
  */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize, int &thetaHeld, int &heldVal){
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize, int &thetaHeld, double &heldVal){
     std::ifstream input("../Config.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
@@ -242,7 +242,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
         string col;
         while(std::getline(ss, col, ',')){
             if(isNumber(col)){ // only add into parameter vector if actually an int.
-                params.push_back(std::stoi(col)); 
+                params.push_back(std::stod(col)); 
             }
         }
     }

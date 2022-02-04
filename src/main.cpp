@@ -28,7 +28,7 @@ int main(){
     int simulateYt = 1;
     int useInverse = 0; // currently just inverse only occurs in linear model.
     int heldTheta = -1;
-    int heldThetaVal = 0;
+    double heldThetaVal = 0;
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
         cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
