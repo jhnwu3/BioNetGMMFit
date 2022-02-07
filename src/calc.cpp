@@ -24,8 +24,8 @@ double costFunction(const VectorXd& trueVec, const  VectorXd& estVec, const Matr
     cost = diff.transpose() * w * (diff.transpose()).transpose();
     return cost;
 }
-
-MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useBanks){
+/*TODO: Rename to wolfe weights */
+MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
     /* first moment differences */
     MatrixXd fmdiffs = MatrixXd::Zero(Yt.rows(), Yt.cols());
     for(int i = 0; i < Yt.cols(); i++){
@@ -83,43 +83,38 @@ MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useBanks){
     // }
     
     // MatrixXd wtI = wt.inverse();
-    if(useBanks){
-        VectorXd covariances(nMoments - 1);
-        for(int i = 0; i < nMoments - 1; i++){
-            int j = i + 1;
-            covariances(i) = ( (aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
-        }
+    if(useInverse){
+         // compute covariances for differences.
         for(int i = 0; i < nMoments; i++){
             wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
         }
-        for(int i = 0; i < nMoments - 1; i++){
-            int j = i + 1;
-            wt(i,j) = covariances(i);
-            wt(j,i) = covariances(i);
+        for(int i = 0; i < nMoments; i++){
+            for(int j = i + 1; j < nMoments; j++){
+                wt(i,j) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1); 
+                wt(j,i) = wt(i,j); // across diagonal
+            }
         }
-        cout << "Weights Before Inversion:" << endl << wt << endl;
-        wt = wt.llt().solve(MatrixXd::Identity(nMoments, nMoments));
-        cout << "Weights:" << endl;
-        cout << wt << endl;
+        MatrixXd beforeInversion = wt;
+        cout << "before inversion:" << endl << wt << endl;
+        cout << "treshold:" << wt.completeOrthogonalDecomposition().threshold() << endl;
+        wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
+        cout << "after inversion:" << endl << wt << endl;
+
+        cout << "Omega:" << endl;
+        cout << wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments)) << endl;
+        cout << "cost:" << (((beforeInversion * wt) - MatrixXd::Identity(nMoments, nMoments)).norm()) / beforeInversion.norm() << endl;
+        cout << "beforeInversion * wt:" << endl <<  beforeInversion * wt << endl;
     }else{
         for(int i = 0; i < nMoments; i++){
             wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
         }
     }
     
-    // cout << "wtI" << endl << wtI << endl;
-    // cout << "wt" << endl << wt << endl;
-    // cout << "hopefully identity?" << endl;
-    // cout << wtI * wt << endl;
-    // cout << "wt.det" << wt.determinant() << endl;
-    // //sanity check
-
-    // exit(0);
     return wt;
 }
 
-MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useBanks){
-    bool useInverse = false;
+/* TODO: Rename to Das Weights */
+MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useInverse){
     /* first moment differences */
     MatrixXd fmdiffs = Yt - Xt; 
     /* second moment difference computations - @todo make it variable later */
@@ -156,7 +151,6 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
             }
         }
     }
-    double cost = 0;
     
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
     if(useInverse){
@@ -185,39 +179,17 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
         cout << "cost:" << (((beforeInversion * wt) - MatrixXd::Identity(nMoments, nMoments)).norm()) / beforeInversion.norm() << endl;
         cout << "beforeInversion * wt:" << endl <<  beforeInversion * wt << endl;
     }else{
-        if(useBanks){
-            VectorXd covariances(nMoments - 1);
-            VectorXd variances(nMoments);
-            for(int i = 0; i < nMoments; i++){
-                variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
-            }
-            for(int i = 0; i < nMoments - 1; i++){
-                int j = i + 1;
-                covariances(i) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1);
-            }
-            for(int i = 0; i < nMoments; i++){
-                wt(i,i) = variances(i); // cleanup code and make it more vectorized later.
-            }
-            for(int i = 0; i < nMoments - 1; i++){
-                int j = i + 1;
-                wt(i,j) = covariances(i);
-                wt(j,i) = covariances(i);
-            }
-            cout << "Weights Before Inversion:" << endl << wt << endl;
-            wt = wt.llt().solve(MatrixXd::Identity(nMoments, nMoments));
-            cout << "Weights:" << endl;
-            cout << wt << endl;
-        }else{
-            VectorXd variances(nMoments);
-            for(int i = 0; i < nMoments; i++){
-                variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
-            }
-            for(int i = 0; i < nMoments; i++){
-                wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
-            }
-            cout << "Weights:"<< endl;
-            cout << wt << endl;
+        
+        VectorXd variances(nMoments);
+        for(int i = 0; i < nMoments; i++){
+            variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
         }
+        for(int i = 0; i < nMoments; i++){
+            wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
+        }
+        cout << "Weights:"<< endl;
+        cout << wt << endl;
+        
     }
     
     return wt;

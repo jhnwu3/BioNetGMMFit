@@ -218,7 +218,6 @@ int main(){
                             cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                         
-                        
                         /* instantiate PBMAT */
                         for(int i = 0; i < nRates; i++){
                             PBMAT(particle, i) = POSMAT(particle, i);

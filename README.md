@@ -247,8 +247,17 @@ as an aside:
 
 
 #### *Nonlinear*
-Currently, the nonlinear system is not very well documented. However, should one choose to go further into the code and attempt to define their own nonlinear system.
+Currently, the nonlinear system is not very well documented. However, should one choose to go further into the code and attempt to define their own nonlinear system. It is important to understand how to interact with the boost odeint library. Generally speaking, outside of understanding the nuances between ( ) and [ ] syntaxes as we are feeding in an Eigen vector into a boost ode-solver, the syntax should still be fairly close to writing out a system of equations mathematically.
 
+To get started, enter the src directory (you can also just double click) 
+
+    cd src
+
+Open the the *system.hpp* file in any text or code editor, and you'll see code lined out as shown below:
+
+![Nonlinear](/img/NonlinearSystem.png)
+
+Observe that it resembles a differential system of equations.
 
 ## **Directory Structure** ##
 
