@@ -259,11 +259,21 @@ Open the the *system.hpp* file in any text or code editor, and you'll see code l
 
 Observe that it resembles a differential system of equations. Defining a system is done within the circled region of text. You can simply ignore everything else surrounding the system of equations. 
 
-Observe that the first element of 
-dcdt[0] = -(rate.k(0) * c[0] * c[1])  // Syk = dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
-            + rate.k(1) * c[2]
-            + rate.k(2) * c[2];
+Observe that the first element is listed as
 
+    dcdt[0] = -(rate.k(0) * c[0] * c[1]) + rate.k(1) * c[2] + rate.k(2) * c[2];
+
+which, corresponds to the equation 
+
+    dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
+
+note the syntax where each equation ends with a semicolon ";" and observe that rate constant k1 is denoted by rate.k(0) where the indexing starts at 0 again. 
+
+Now, observe that all nonconstant terms, the derivative term dcdt, and its respective element c, are all indexed using [ ] instead of parenthesises. Again, indexed starting 0, we have dc1/dt and c1 respectively listed as
+
+    dcdt[0], c[0]
+
+In terms of mathematical operators, only basic, +,-,*,/ operators have been tested with the boost odeint library.
 
 ## **Directory Structure** ##
 
