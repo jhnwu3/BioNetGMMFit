@@ -257,7 +257,12 @@ Open the the *system.hpp* file in any text or code editor, and you'll see code l
 
 ![Nonlinear](/img/NonlinearSystem.png)
 
-Observe that it resembles a differential system of equations.
+Observe that it resembles a differential system of equations. Defining a system is done within the circled region of text. You can simply ignore everything else surrounding the system of equations. 
+
+dcdt[0] = -(rate.k(0) * c[0] * c[1])  // Syk = dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
+            + rate.k(1) * c[2]
+            + rate.k(2) * c[2];
+
 
 ## **Directory Structure** ##
 
