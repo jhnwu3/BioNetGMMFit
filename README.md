@@ -5,7 +5,7 @@ It takes into account both linear and nonlinear models of evolution for estimati
 ## **Important Note: Operating System**
 The program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
 
-Keep in mind, should you still want to pursue this on Windows 10, there is a Windows Linux Subsystem that runs at approximately 90% performance that you can enable in the operating system. 
+Keep in mind, should you still want to pursue this on Windows 10, there is a Windows Linux Subsystem that runs at a similar level of performance that you can enable in the operating system. 
 A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake or Chocolatey to get this C++ code/program up and running on Windows.
 
 Mac's Unix based system should feasibly still work well with this repo, but has been untested at this current moment.
@@ -259,6 +259,7 @@ Open the the *system.hpp* file in any text or code editor, and you'll see code l
 
 Observe that it resembles a differential system of equations. Defining a system is done within the circled region of text. You can simply ignore everything else surrounding the system of equations. 
 
+Observe that the first element of 
 dcdt[0] = -(rate.k(0) * c[0] * c[1])  // Syk = dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
             + rate.k(1) * c[2]
             + rate.k(2) * c[2];
