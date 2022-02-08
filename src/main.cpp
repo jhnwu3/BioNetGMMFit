@@ -90,7 +90,6 @@ int main(){
         cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
         cout << "sdbeta:" << sdbeta << endl;
 
-        MatrixXd GBMAT(0, 0); // iterations of global best vectors
         MatrixXd PBMAT(nParts, nRates + 1); // particle best matrix + 1 for cost component
         MatrixXd POSMAT(nParts, nRates); // Position matrix as it goees through it in parallel
 
@@ -179,7 +178,7 @@ int main(){
             double probabilityToTeleport = 3.0/4.0; 
             /* Blind PSO begins */
             cout << "PSO begins!" << endl;
-            for(int step = 0; step < nSteps; ++step){
+            for(int step = 0; step < nSteps; step++){
             #pragma omp parallel for 
                 for(int particle = 0; particle < nParts; particle++){
                     /* initialize all particle rate constants with unifDist */
