@@ -1,0 +1,42 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+g++ -c -std=c++17 fileIO.cpp 
+g++ main.o fileIO.o linear.o nonlinear.o calc.o system.o -o sig -fopenmp -std=c++17 -lstdc++fs
+Program Begin:
+Reading in data!
+csvPSO
+params:13
+Reading data/X directory!
+"../data/X/X.csv"
+Reading in5000 elements from X data directory
+moments:27
+Using two part PSO Sample Size:5000 with:27 moments.
+Using Times:0.5   2  10  20  30
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:30 Nsteps:1500
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+Loading in Truk!
+Calculating Yt!
+SIMULATING YT!
+Reading data/Y directory!
+"../data/Y/Y.csv"
+XtmVec:    0.12061     1798.03     209.289      10.167     151.791     59.5509    0.019356 3.48892e+06     50407.6     167.339     29476.1     3916.43     196.619     29.6496     1.54706     17.2823      8.1615      372286     17767.2      277261      106380     2565.65       30592     13969.2     1137.45     674.864     9051.27
+XtmVec:    0.13723     1679.17     209.272     49.8169     72.5685     138.773   0.0572581 3.08552e+06     50395.9     6667.34     10450.6     21182.6     196.588      35.482     11.9591     7.64623     21.0095      342852     76352.6      127876      231160     14277.5       12883       31675     1123.81      7150.4     9930.87
+XtmVec:    7.32928     1328.39      202.08     367.396     32.1712     179.171     1772.64 2.18741e+06     45902.8      305621     4172.95     35413.7     187.317     1395.75     10134.5     9.12932     1214.38      248817      315550     55068.4      240441     93466.3     5015.83     38347.3     1184.33     61557.2     5954.17
+XtmVec:    29.7295     1064.75      179.68     651.167     29.8998     181.442     6210.42 1.72606e+06     35819.2      857443     4053.51     36346.2     166.239     4218.67     48914.7      24.009     4837.24      184096      303018     51177.4      198297      126247      4559.6     35165.8     1195.24      110693     5547.67
+XtmVec:    43.9614     921.508     165.448     808.123     29.3838     181.958      8153.7 1.51274e+06     30349.1 1.23384e+06     4044.68     36560.9     154.069     5982.08     75584.3     33.1468     7223.11      152629      246288     50301.8      173435      134663     4449.43       32881     1198.21      138711     5444.72
+seedk:0.797996      0.1 0.649735 0.123689 0.286238 0.528093| cost:310924
+PSO begins!
