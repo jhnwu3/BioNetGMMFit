@@ -130,6 +130,7 @@ int main(){
             }
         }
 
+        cout << "Computing Weight Matrices!" << endl;
         /* Compute initial wolfe weights */
         for(int t = 0; t < times.size(); ++t){
             weights[t] = wolfWtMat(Yt3Mats[t], nMoments, false);
@@ -228,11 +229,11 @@ int main(){
                         
                         pos.k = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                         
-                        if(rndNum(low,high) < probabilityToTeleport){ // hard coded grid re-search for an adaptive component
-                            pos.k(0) = rndNum(low,high);
-                            pos.k(1) = rndNum(low,high);
-                            pos.k(4) = rndNum(low,high);
-                        }
+                        // if(rndNum(low,high) < probabilityToTeleport){ // hard coded grid re-search for an adaptive component
+                        //     pos.k(0) = rndNum(low,high);
+                        //     pos.k(1) = rndNum(low,high);
+                        //     pos.k(4) = rndNum(low,high);
+                        // }
                         if(heldTheta > -1){
                             pos.k(heldTheta) = heldThetaVal;
                         }
@@ -280,9 +281,9 @@ int main(){
             }
             GBVECS(run, nRates) = gCost;
         }
-
+        cout << GBMAT << endl;
         if(simulateYt == 1){
-            cout << "Truth:" << tru.k.transpose() << endl;
+            cout << "Simulated Truth:" << tru.k.transpose() << endl;
         }
     }
     cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl;
