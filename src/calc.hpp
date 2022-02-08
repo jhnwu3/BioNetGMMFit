@@ -4,6 +4,6 @@
 bool isInvertible(const MatrixXd& m);
 double rndNum(double low, double high);
 double costFunction(const VectorXd& trueVec, const  VectorXd& estVec, const MatrixXd& w);
-MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useBanks);
-MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useInverse);
+MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse);
+MatrixXd dasWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useInverse);
 #endif 

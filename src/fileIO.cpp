@@ -122,7 +122,7 @@ MatrixXd txtToMatrix(const string& fileName, int rows, int cols) {
         Matrix of file with only the number of rows of fileSize.
 
 */
-MatrixXd csvToMatrix (const std::string & path, int fileSize) {
+MatrixXd csvToMatrix (const std::string & path){
     std::ifstream indata;
     indata.open(path);
     if(!indata.is_open()){
@@ -148,9 +148,8 @@ MatrixXd csvToMatrix (const std::string & path, int fileSize) {
             i++;
         }
     }
-    MatrixXd matResized = mat.block(0, 0, fileSize, mat.cols());
-    mat.conservativeResize(0,0); // delete previously allocated matrix
-    return matResized;
+ 
+    return mat;
 }
 
 /* 
@@ -162,13 +161,13 @@ MatrixXd csvToMatrix (const std::string & path, int fileSize) {
     Output:
         matrix of xSize rows.
 */
-MatrixXd readX(const std::string &path, int xSize){
+MatrixXd readX(const std::string &path){
     int nFile = 0;
     MatrixXd X_0;
     cout << "Reading data/X directory!" << endl;
     for(const auto & entry : fs::directory_iterator(path)){
         cout << entry << endl;
-        X_0 = csvToMatrix(entry.path().string(), xSize);
+        X_0 = csvToMatrix(entry.path().string());
         ++nFile;
     }
     if(nFile < 1){
@@ -189,12 +188,12 @@ MatrixXd readX(const std::string &path, int xSize){
     Output:
         vector of matrices of ySize. note: vector == list.
 */
-vector<MatrixXd> readY(const std::string & path, int ySize){
+vector<MatrixXd> readY(const std::string & path){
     vector<MatrixXd> Y;
     cout << "Reading data/Y directory!" << endl;
     for(const auto & entry : fs::directory_iterator(path)){
         cout << entry << endl;
-        Y.push_back(csvToMatrix(entry.path().string(), ySize));
+        Y.push_back(csvToMatrix(entry.path().string()));
     }
     if(Y.size() < 1){
         cout << "Error! 0 Y Files read in!" << endl;
@@ -228,7 +227,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
     Read all Config.csv parameters into a set of parameters (as shown in the function parameters)
 
  */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize, int &thetaHeld, double &heldVal){
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal){
     std::ifstream input("../Config.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
@@ -258,9 +257,8 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
     simulateYt = params.at(8);
     useInverse = params.at(9);
     nRates = params.at(10);
-    sampleSize = params.at(11);
-    thetaHeld = params.at(12);
-    heldVal = params.at(13);
+    thetaHeld = params.at(11);
+    heldVal = params.at(12);
     input.close();
     return 0;
 }

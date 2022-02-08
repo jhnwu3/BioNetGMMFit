@@ -22,7 +22,6 @@ int main(){
     int useOnlySecMom = 1;
     int useOnlyFirstMom = 1;
     int useLinear = 0;
-    int sampleSize = 0;
     int nRates = 0;
     int nRuns = 0;
     int simulateYt = 1;
@@ -36,14 +35,14 @@ int main(){
     }
     
     cout << "Reading in data!" << endl;
-    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, sampleSize, heldTheta, heldThetaVal) !=0 ){
+    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, heldTheta, heldThetaVal) !=0 ){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
     }
 
     MatrixXd X_0;
-    X_0 = readX("../data/X", sampleSize);
-    cout << "X:" << X_0.rows() << endl;
+    X_0 = readX("../data/X");
+    cout << "Reading in" << X_0.rows() << " elements from X data directory" << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         cout << "USING NONMIXED MOMENTS!!" << endl;
@@ -57,7 +56,7 @@ int main(){
 
     MatrixXd GBMAT;
     if(useLinear == 1){
-        GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, nRates, nMoments, times, simulateYt);
+        GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, nRates, nMoments, times, simulateYt, useInverse);
     }else{
         /*---------------------- Nonlinear Setup ------------------------ */
 
@@ -107,29 +106,22 @@ int main(){
         double trukCost = 0;
         if(simulateYt == 1){
             cout << "SIMULATING YT!" << endl;
-            MatrixXd Y_0 = readY("../data/Y", sampleSize)[0];
+            MatrixXd Y_0 = readY("../data/Y")[0];
             for(int t = 0; t < times.size(); t++){
                 Nonlinear_ODE trueSys(tru);
                 Protein_Components Yt(times(t), nMoments, Y_0.rows(), X_0.cols());
-                Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs YtObs(Yt);
-                Moments_Mat_Obs XtObs(Xt);
-                for (int i = 0; i < sampleSize; ++i) {
+                for (int i = 0; i < Y_0.rows(); ++i) {
                     State_N y0 = convertInit(Y_0.row(i));
-                    State_N x0 = convertInit(X_0.row(i));
                     Yt.index = i;
-                    Xt.index = i;
                     integrate_adaptive(controlledStepper, trueSys, y0, t0, times(t), dt, YtObs);
-                    integrate_adaptive(controlledStepper, trueSys, x0, t0, times(t), dt, XtObs);
                 }
                 Yt.mVec /= Y_0.rows();
-                Xt.mVec /= X_0.rows();
-                trukCost += costFunction(Yt.mVec,Xt.mVec, weights[t]);
                 Yt3Mats.push_back(Yt.mat);
                 Yt3Vecs.push_back(Yt.mVec);
             }
         }else{
-            Yt3Mats = readY("../data/Y", sampleSize);
+            Yt3Mats = readY("../data/Y");
             if(Yt3Mats.size() != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
@@ -141,7 +133,7 @@ int main(){
 
         /* Compute initial wolfe weights */
         for(int t = 0; t < times.size(); ++t){
-            weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
+            weights[t] = wolfWtMat(Yt3Mats[t], nMoments, false);
         }
 
         MatrixXd GBVECS = MatrixXd::Zero(nRuns, nRates + 1);
@@ -289,7 +281,7 @@ int main(){
             }
             GBVECS(run, nRates) = gCost;
         }
-        trukCost = 0;
+
         if(simulateYt == 1){
             cout << "Truth:" << tru.k.transpose() << endl;
         }
