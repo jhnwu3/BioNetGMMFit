@@ -157,7 +157,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
 
     /* Compute initial wolfe weights */
     for(int t = 0; t < nTimeSteps; ++t){
-        weights[t] = ytWtMat(Yt3Mats[t], nMoments, false);
+        weights[t] = wolfWtMat(Yt3Mats[t], nMoments, false);
         cout << "wt:" << endl;
         cout << weights[t] << endl << endl;
     }
@@ -180,9 +180,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
         }
         // seed.k(4) = tru.k(4);
         seed.k(1) = holdTheta2;
-        // seed.k <<    0.094531 , 0.99 , 0.938388 , 0.170400 , 0.0517104 , 0.180564;
-        // holdTheta2 = seed.k(1);
-        // seed.k = tru.k;
+   
         double costSeedK = 0;
         for(int t = 0; t < nTimeSteps; t++){
             Protein_Components Xt(times(t), nMoments, N, X_0.cols());

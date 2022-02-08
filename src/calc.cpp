@@ -25,7 +25,7 @@ double costFunction(const VectorXd& trueVec, const  VectorXd& estVec, const Matr
     return cost;
 }
 /*TODO: Rename to wolfe weights */
-MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
+MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
     /* first moment differences */
     MatrixXd fmdiffs = MatrixXd::Zero(Yt.rows(), Yt.cols());
     for(int i = 0; i < Yt.cols(); i++){
@@ -74,15 +74,6 @@ MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
   
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
     
-    // for(int i = 0; i < nMoments; i++){
-    //     wt(i,i) = variances(i);
-    //     for(int j = i + 1; j < nMoments; j++){
-    //         wt(i,j) = ((aDiff.col(i).array() - aDiff.col(i).array().mean()).array() * (aDiff.col(j).array() - aDiff.col(j).array().mean()).array() ).sum() / ((double) aDiff.col(i).array().size() - 1); 
-    //         wt(j,i) = wt(i,j); // across diagonal
-    //     }
-    // }
-    
-    // MatrixXd wtI = wt.inverse();
     if(useInverse){
          // compute covariances for differences.
         for(int i = 0; i < nMoments; i++){
@@ -94,16 +85,9 @@ MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-        MatrixXd beforeInversion = wt;
-        cout << "before inversion:" << endl << wt << endl;
-        cout << "treshold:" << wt.completeOrthogonalDecomposition().threshold() << endl;
-        wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
-        cout << "after inversion:" << endl << wt << endl;
 
-        cout << "Omega:" << endl;
-        cout << wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments)) << endl;
-        cout << "cost:" << (((beforeInversion * wt) - MatrixXd::Identity(nMoments, nMoments)).norm()) / beforeInversion.norm() << endl;
-        cout << "beforeInversion * wt:" << endl <<  beforeInversion * wt << endl;
+        wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
+
     }else{
         for(int i = 0; i < nMoments; i++){
             wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
@@ -114,7 +98,11 @@ MatrixXd ytWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
 }
 
 /* TODO: Rename to Das Weights */
-MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useInverse){
+MatrixXd dasWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, bool useInverse){
+    if(Yt.rows() != Xt.rows() || Yt.cols() != Xt.cols()){
+        cout << "Error! Dimension mismatch between X and Y! Calculation of Das Weights cancelled!" << endl;
+        return MatrixXd::Identity(nMoments, nMoments);
+    }
     /* first moment differences */
     MatrixXd fmdiffs = Yt - Xt; 
     /* second moment difference computations - @todo make it variable later */
@@ -168,16 +156,7 @@ MatrixXd customWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-        MatrixXd beforeInversion = wt;
-        cout << "before inversion:" << endl << wt << endl;
-        cout << "treshold:" << wt.completeOrthogonalDecomposition().threshold() << endl;
         wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
-        cout << "after inversion:" << endl << wt << endl;
-
-        cout << "Omega:" << endl;
-        cout << wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments)) << endl;
-        cout << "cost:" << (((beforeInversion * wt) - MatrixXd::Identity(nMoments, nMoments)).norm()) / beforeInversion.norm() << endl;
-        cout << "beforeInversion * wt:" << endl <<  beforeInversion * wt << endl;
     }else{
         
         VectorXd variances(nMoments);

@@ -15,17 +15,17 @@ string findDouble(string line, int startPos);
 
 /* General Input File Functions*/
 MatrixXd txtToMatrix(const string& fileName, int rows, int cols);
-MatrixXd csvToMatrix(const std::string & path, int fileSize);
+MatrixXd csvToMatrix(const std::string & path);
 
 /* Specific Input File Functions for data/X and data/Y */
-MatrixXd readX(const std::string &path, int xSize);
-vector<MatrixXd> readY(const std::string & path, int ySize);
+MatrixXd readX(const std::string &path);
+vector<MatrixXd> readY(const std::string & path);
 
 /* General Output Functions*/
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
 
 /* Reading in Config.csv */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &sampleSize, int &thetaHeld, double &heldVal);
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal);
 VectorXd readCsvTimeParam();
 VectorXd readRates(int nRates);
 #endif

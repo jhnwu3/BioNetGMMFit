@@ -102,7 +102,7 @@ all Y_0 or Y_t data files into the directory listed as
 
     data/Y 
 
-after moving or removing any previous Yt/Y0 files. Keep in mind, that the number of species of proteins you wish to simulate will correspond to the number of columns in each input X/Y file.
+after moving or removing any previous Yt/Y0 files. Keep in mind, that the number of species of proteins you wish to simulate will correspond to the number of columns in each input X/Y file and the number of rows correspond to the cell count.
 
 ### *Rate Constant Inputs*
 If you decide to simulate the rate constants and therefore simulate Y_t instead of manually inputting Yt files, make sure to define your set of rate constants in the "true_rates.csv" file. For instance, by default
@@ -162,7 +162,6 @@ The default PSO parameters are listed below,
 | Simulate Y_t?                    | 1     | 1 to simulate Yt with a true rate vector, 0 to provide own Yt matrix     |
 | Use Matrix Inverse?              | 0     | 1 to use C++'s Matrix Inverse, 0 otherwise                               |
 | Number of Rates                  | 5     | Sets number of rates in rate vector                                      |
-| Sample Size                      | 5000  | Sets sample size of X and Y that will be used for estimation             |
 | Index of Held Rate Constant      | -1    | -1 to not hold a rate constant, else specified theta i is held constant  |
 | Value of Held Rate Constant      | 0     | Value between 0 and 1 that a rate constant would be held at              |
 

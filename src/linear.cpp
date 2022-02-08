@@ -136,7 +136,7 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
         GBMAT - Global Best Matrix with each row being a new "global" best parameter estimate in the PSO, the final row is the final estimate.
 */
 
-MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt) {
+MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt, int useInverse) {
   
     int midPt = times.size() / 2; // take only the midpoint of all listed time points for now for evolution
     double tf = times(midPt);
@@ -144,6 +144,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     int Npars = nRates, nSpecies = X_0.cols();
     double squeeze = 0.96, sdbeta = 0.05; 
     double boundary = 0.001;
+    bool willInvert = useInverse == 1;
     /* SETUP */
     int useDiag = 0;
     int sf1 = 1;
@@ -172,16 +173,16 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Solve or load Y_t  */
     VectorXd trueK = readRates(nRates); 
     if(simulateYt == 1){
-        MatrixXd Y_0 = readY("../data/Y", N)[0];
+        MatrixXd Y_0 = readY("../data/Y")[0];
         cout << "Simulating Yt!" << endl;
         cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
         Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
         YtmVec = momentVector(Y_t, nMoments);
     }else{
-        Y_t = readY("../data/Y", N)[0];
+        Y_t = readY("../data/Y")[0];
         YtmVec = momentVector(Y_t, nMoments);
     }
-    
+    weight = wolfWtMat(Y_t, nMoments, willInvert); // wolf weights
 
     /* Initialize seedk aka global costs */
     VectorXd seed;
@@ -289,8 +290,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             VectorXd gPos = GBVEC;
             double cost = 0;
             MatrixXd X_t = (evolutionMatrix(gPos, tf, nSpecies) * X_0.transpose()).transpose();
-            weight = customWtMat(Y_t, X_t, nMoments, N, false);
-            cout << "Updated Weight Matrix!" << endl;
+            weight = dasWtMat(Y_t, X_t, nMoments, N, willInvert);
             cost = costFunction(YtmVec, momentVector(X_t, nMoments), weight);
             gCost = cost;
             hone += 4;
@@ -395,7 +395,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
     }
     if(simulateYt == 1){
-        cout << "Simulation Inputted Truth:" << trueK.transpose() << endl;
+        cout << "Simulation Ground Truth:" << trueK.transpose() << endl;
     }
     return GBMAT; // just to close the program at the end.
 }
