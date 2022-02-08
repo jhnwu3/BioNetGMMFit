@@ -7,9 +7,9 @@ Reading data/X directory!
 Reading in5000 elements from X data directory
 moments:27
 Using two part PSO Sample Size:5000 with:27 moments.
-Using Times:1.5
+Using Times:0.5   2  10  20  30
 Bounds for Uniform Distribution (0,1)
-Blind PSO --> nParts:1 Nsteps:1
+Blind PSO --> nParts:30 Nsteps:1500
 Targeted PSO --> nParts:10 Nsteps:10
 sdbeta:0.1
 Loading in Truk!
@@ -17,9 +17,5 @@ Calculating Yt!
 SIMULATING YT!
 Reading data/Y directory!
 "../data/Y/Y.csv"
-XtmVec:  0.868614    1622.72    208.541    73.6945    39.2594    172.082    3.31759 2.9032e+06    50010.1    14312.4     5253.9    32539.3    1164.91    226.749     116.65    22.2851    158.791     328337     107272    68636.3     278255    21330.2     6285.3    38120.3    288.235    12006.9     6850.9
-seedk:0.346847 0.970186 0.968357 0.910018  0.91185 0.401345| cost:2.62868
-PSO begins!
-Truth: 0.1  0.1 0.95 0.17 0.05 0.18
-Final Estimate:0.346847 0.970186 0.968357 0.910018  0.91185 0.401345  2.62868
-CODE FINISHED RUNNING IN 1 s TIME!
+XtmVec:   0.001149     1858.12     209.408    0.334078     202.171     9.17055 1.69768e-06 3.70684e+06     50466.4    0.131822     47686.6     84.5682     1.96345    0.280174 0.000399789    0.231796   0.0106422      386987     613.274      379348     17040.1     71.8196     42648.5     1937.92       57.89     3.06765      1861.9
+XtmVec: 0.00114725     1860.78     209.408    0.251063     204.744     6.59785 1.69257e-06 3.71675e+06     50466.4   0.0756012       48740     44.1792     1.96346    0.279783 0.000310814     0.23415  0.00792148      387500     461.079      384690     12259.8     55.7845       43146     1440.38     44.2323     1.68554     1355.44
