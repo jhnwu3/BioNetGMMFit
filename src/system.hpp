@@ -15,29 +15,34 @@ public:
 
     void operator() (const State_N& c, State_N& dcdt, double t)
     {
-        dcdt[0] = -(rate.k(0) * c[0] * c[1])  // Syk = dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
-            + rate.k(1) * c[2]
-            + rate.k(2) * c[2];
+        // dcdt[0] = -(rate.k(0) * c[0] * c[1])  // Syk = dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
+        //     + rate.k(1) * c[2]
+        //     + rate.k(2) * c[2];
 
-        dcdt[1] = -(rate.k(0) * c[0] * c[1]) // Vav
-            + rate.k(1) * c[2]
-            + rate.k(5) * c[5];
+        // dcdt[1] = -(rate.k(0) * c[0] * c[1]) // Vav
+        //     + rate.k(1) * c[2]
+        //     + rate.k(5) * c[5];
 
-        dcdt[2] = rate.k(0) * c[0] * c[1] // Syk-Vav
-            - rate.k(1) * c[2]
-            - rate.k(2) * c[2];
+        // dcdt[2] = rate.k(0) * c[0] * c[1] // Syk-Vav
+        //     - rate.k(1) * c[2]
+        //     - rate.k(2) * c[2];
 
-        dcdt[3] = rate.k(2) * c[2] //pVav
-            - rate.k(3) * c[3] * c[4]
-            + rate.k(4) * c[5];
+        // dcdt[3] = rate.k(2) * c[2] //pVav
+        //     - rate.k(3) * c[3] * c[4]
+        //     + rate.k(4) * c[5];
 
-        dcdt[4] = -(rate.k(3) * c[3] * c[4]) // SHP1 
-            + rate.k(4) * c[5]
-            + rate.k(5) * c[5];
+        // dcdt[4] = -(rate.k(3) * c[3] * c[4]) // SHP1 
+        //     + rate.k(4) * c[5]
+        //     + rate.k(5) * c[5];
 
-        dcdt[5] = rate.k(3) * c[3] * c[4]  // SHP1-pVav
-            - rate.k(4) * c[5]
-            - rate.k(5) * c[5];
+        // dcdt[5] = rate.k(3) * c[3] * c[4]  // SHP1-pVav
+        //     - rate.k(4) * c[5]
+        //     - rate.k(5) * c[5];
+
+        dcdt[0] = rate.k(0) - rate.k(5) * c[0];
+        dcdt[1] = rate.k(1) * c[0] - rate.k(4) * c[1];
+        dcdt[2] = rate.k(2) * c[1] - rate.k(4) * c[2];
+        dcdt[3] = rate.k(3) * c[2] - rate.k(4) * c[3];
     }
 };
 #endif
