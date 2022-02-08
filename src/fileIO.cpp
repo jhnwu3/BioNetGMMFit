@@ -234,7 +234,7 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
         return EXIT_FAILURE;
     }
     cout << "csvPSO" << endl;
-    vector<int> params;
+    vector<double> params;
     string line;
     while(std::getline(input, line)){
         std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
