@@ -3,18 +3,23 @@ Reading in data!
 csvPSO
 params:13
 Reading data/X directory!
-"../data/X/3linX.csv"
+"../data/X/X.csv"
 Reading in5000 elements from X data directory
-moments:9
+moments:27
+Using two part PSO Sample Size:5000 with:27 moments.
+Using Times:1.5
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1 Nsteps:1
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+Loading in Truk!
+Calculating Yt!
+SIMULATING YT!
 Reading data/Y directory!
-"../data/Y/3linY.csv"
-Simulating Yt!
-with evolution matrix:
- 0.684531   0.47821  0.153436
- 0.249877  0.331688  0.181854
-0.0655926  0.190103   0.66471
-PSO has begun!
-targeted PSO has started!
-Simulation Ground Truth: 0.276782  0.837081  0.443217 0.0424412  0.304645
-Final Estimate:   0.274763    0.832944     0.44615   0.0500159    0.305213 0.000394065
-CODE FINISHED RUNNING IN 14 s TIME!
+"../data/Y/Y.csv"
+XtmVec:  0.868614    1622.72    208.541    73.6945    39.2594    172.082    3.31759 2.9032e+06    50010.1    14312.4     5253.9    32539.3    1164.91    226.749     116.65    22.2851    158.791     328337     107272    68636.3     278255    21330.2     6285.3    38120.3    288.235    12006.9     6850.9
+seedk:0.346847 0.970186 0.968357 0.910018  0.91185 0.401345| cost:2.62868
+PSO begins!
+Truth: 0.1  0.1 0.95 0.17 0.05 0.18
+Final Estimate:0.346847 0.970186 0.968357 0.910018  0.91185 0.401345  2.62868
+CODE FINISHED RUNNING IN 1 s TIME!
