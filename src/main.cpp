@@ -285,6 +285,10 @@ int main(){
         if(simulateYt == 1){
             cout << "Simulated Truth:" << tru.k.transpose() << endl;
         }
+        if(nRuns > 1){
+            cout << "All Run Results:" << endl;
+            cout << GBVECS << endl;
+        }
     }
     cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl;
     auto tB = std::chrono::high_resolution_clock::now();
