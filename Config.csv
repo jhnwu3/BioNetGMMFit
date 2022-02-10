@@ -1,11 +1,11 @@
-Number of Particles Blind PSO,1000
-Number of Steps Blind PSO,150
+Number of Particles Blind PSO,2000
+Number of Steps Blind PSO,2000
 Number of Particles Targeted PSO,10
 Number of Steps Targeted PSO,10
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Use Linear Model?,0
-Number of Runs,10
+Number of Runs,2
 Simulate Y_t?,0
 Use Matrix Inverse?,0
 Number of Rates,6
