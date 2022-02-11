@@ -164,7 +164,7 @@ MatrixXd csvToMatrix (const std::string & path){
 MatrixXd readX(const std::string &path){
     int nFile = 0;
     MatrixXd X_0;
-    cout << "Reading data/X directory!" << endl;
+    cout << "------ Reading in X_0! ------" << endl;
     for(const auto & entry : fs::directory_iterator(path)){
         cout << entry << endl;
         X_0 = csvToMatrix(entry.path().string());
@@ -177,6 +177,7 @@ MatrixXd readX(const std::string &path){
     if(nFile > 1){
         cout << "Multiple X files detected, reading only the last X file read in." << endl;
     }
+    cout << "---------------------------" << endl;
     return X_0;
 }
 /*
@@ -190,7 +191,7 @@ MatrixXd readX(const std::string &path){
 */
 vector<MatrixXd> readY(const std::string & path){
     vector<MatrixXd> Y;
-    cout << "Reading data/Y directory!" << endl;
+    cout << "------ Reading in Yt! ------" << endl;
     for(const auto & entry : fs::directory_iterator(path)){
         cout << entry << endl;
         Y.push_back(csvToMatrix(entry.path().string()));
@@ -199,6 +200,7 @@ vector<MatrixXd> readY(const std::string & path){
         cout << "Error! 0 Y Files read in!" << endl;
         exit(-1);
     }
+    cout << "---------------------------" << endl;
     return Y;
 }
 /* 

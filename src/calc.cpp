@@ -173,3 +173,42 @@ MatrixXd dasWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, b
     
     return wt;
 }
+
+MatrixXd bootStrap(const MatrixXd& sample){
+
+    MatrixXd bSample = MatrixXd::Zero(sample.rows(), sample.cols());
+    std::random_device rand_dev;
+    std::mt19937 generator(rand_dev());
+    std::uniform_int_distribution<> unif(0, sample.rows() - 1);
+
+    /* Now resample to create boostrapped data sample */
+    for(int i = 0; i < sample.rows(); ++i){
+        bSample.row(i) = sample.row(unif(generator));
+    }
+    return bSample;
+}
+
+VectorXd cwiseVar(const MatrixXd& sample){
+    VectorXd variances(sample.cols());
+    for(int c = 0; c < sample.cols(); ++c){
+        variances(c) = (sample.col(c).array() - sample.col(c).array().mean()).square().sum() / ((double) sample.col(c).array().size() - 1);
+    }
+    return variances;
+}
+
+void computeConfidenceIntervals(const MatrixXd& sample, double z, int nRates){
+    cout << "------- 95 Percent Confidence Intervals -------" << endl;
+    /* Cheap Way to Compute Means and Standard Deviation */
+    VectorXd estMu = sample.colwise().mean();
+    VectorXd estSigma = cwiseVar(sample).array().sqrt();
+    cout << "Rates | Standard Deviation" << endl;
+    for(int r = 0; r < nRates; ++r){
+        cout << estMu(r) << "   |   " << estSigma(r) << endl;
+    }
+    VectorXd delta = estSigma / sqrt(sample.rows()); 
+    cout << "Confidence Intervals for Eat Rate:" << endl;
+    for(int r = 0; r < nRates; ++r){
+        cout << "R" << r << ": [" << estMu(r) - z*delta(r) << "," <<estMu(r) + z * delta(r) << "]" << endl;
+    }
+    cout << "-----------------------------------------------" << endl;
+}

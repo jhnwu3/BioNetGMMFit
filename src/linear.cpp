@@ -84,7 +84,6 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
     std::random_device rand_dev;
     std::mt19937 generator(rand_dev());
     vector<int> rand;
-    uniform_real_distribution<double> unifDist(0.0, 1.0);
     for (int i = 0; i < posK.size(); i++) {
         rand.push_back(i);
     }
@@ -392,8 +391,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
 
         sfi = sfi - (sfe - sfg) / nSteps2;   // reduce the inertial weight after each step 
         sfs = sfs + (sfe - sfg) / nSteps2;
-
     }
+    
     if(simulateYt == 1){
         cout << "Simulation Ground Truth:" << trueK.transpose() << endl;
     }
