@@ -42,7 +42,7 @@ int main(){
 
     MatrixXd X_0;
     X_0 = readX("../data/X");
-    cout << "Reading in" << X_0.rows() << " elements from X data directory" << endl;
+    cout << "Reading in " << X_0.rows() << " elements from X data directory" << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         cout << "USING NONMIXED MOMENTS!!" << endl;
@@ -52,11 +52,15 @@ int main(){
         cout << "USING ONLY MEANS!" << endl;
         nMoments = X_0.cols();
     }
-    cout << "moments:" << nMoments << endl;
+    cout << "Moments:" << nMoments << endl;
 
     MatrixXd GBMAT;
+    MatrixXd GBVECS = MatrixXd::Zero(nRuns, nRates + 1);
     if(useLinear == 1){
-        GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, nRates, nMoments, times, simulateYt, useInverse);
+        for(int r = 0; r < nRuns; ++r){
+            GBMAT = linearModel(nParts, nSteps, nParts2, nSteps2, X_0, nRates, nMoments, times, simulateYt, useInverse);
+            GBVECS.row(r) = GBMAT.row(GBMAT.rows() - 1);
+        }
     }else{
         /*---------------------- Nonlinear Setup ------------------------ */
 
@@ -78,33 +82,28 @@ int main(){
         random_device RanDev;
         mt19937 gen(RanDev());
         vector<MatrixXd> weights;
-
-        for(int i = 0; i < times.size(); i++){
-            weights.push_back(MatrixXd::Identity(nMoments, nMoments));
-        }
-        
-        cout << "Using two part PSO " << "Sample Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
+        cout << "--------- Parameters ---------" << endl;
+        cout << "X Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
         cout << "Using Times:" << times.transpose() << endl;
         cout << "Bounds for Uniform Distribution (" << low << "," << high << ")"<< endl;
         cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
         cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
         cout << "sdbeta:" << sdbeta << endl;
+        cout << "------------------------------" << endl;
 
         MatrixXd PBMAT(nParts, nRates + 1); // particle best matrix + 1 for cost component
         MatrixXd POSMAT(nParts, nRates); // Position matrix as it goees through it in parallel
 
         /* Solve for Y_t (mu). */
-        cout << "Loading in Truk!" << endl;
         struct K tru;
         tru.k = readRates(nRates); // read in rates.
 
-        cout << "Calculating Yt!" << endl;
         vector<MatrixXd> Yt3Mats;
         vector<VectorXd> Yt3Vecs;
         Controlled_RK_Stepper_N controlledStepper;
         double trukCost = 0;
         if(simulateYt == 1){
-            cout << "SIMULATING YT!" << endl;
+            cout << "------ SIMULATING YT! ------" << endl;
             MatrixXd Y_0 = readY("../data/Y")[0];
             for(int t = 0; t < times.size(); t++){
                 Nonlinear_ODE trueSys(tru);
@@ -119,6 +118,7 @@ int main(){
                 Yt3Mats.push_back(Yt.mat);
                 Yt3Vecs.push_back(Yt.mVec);
             }
+            cout << "---------------------------" << endl;
         }else{
             Yt3Mats = readY("../data/Y");
             if(Yt3Mats.size() != times.size()){
@@ -133,11 +133,10 @@ int main(){
         cout << "Computing Weight Matrices!" << endl;
         /* Compute initial wolfe weights */
         for(int t = 0; t < times.size(); ++t){
-            weights[t] = wolfWtMat(Yt3Mats[t], nMoments, false);
+            weights.push_back(wolfWtMat(Yt3Mats[t], nMoments, false));
         }
         cout << weights[0] << endl;
         
-        MatrixXd GBVECS = MatrixXd::Zero(nRuns, nRates + 1);
         for(int run = 0; run < nRuns; ++run){
             // make sure to reset GBMAT, POSMAT, AND PBMAT every run
             double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
@@ -164,7 +163,6 @@ int main(){
                     integrate_adaptive(controlledStepper, sys, c0, t0, times(t), dt, XtObs);
                 }
                 Xt.mVec /= X_0.rows();  
-                cout << "XtmVec:" << Xt.mVec.transpose() << endl;
                 costSeedK += costFunction(Yt3Vecs[t], Xt.mVec, weights[t]);
             }
             cout << "seedk:"<< seed.k.transpose() << "| cost:" << costSeedK << endl;
@@ -179,7 +177,7 @@ int main(){
             GBMAT(GBMAT.rows() - 1, nRates) = gCost;
             double probabilityToTeleport = 3.0/4.0; 
             /* Blind PSO begins */
-            cout << "PSO begins!" << endl;
+            cout << "PSO Estimation Has Begun, This may take some time..." << endl;
             for(int step = 0; step < nSteps; step++){
             #pragma omp parallel for 
                 for(int particle = 0; particle < nParts; particle++){
@@ -226,7 +224,7 @@ int main(){
                         pos.k = POSMAT.row(particle);
                         VectorXd rpoint = adaptVelocity(pos.k, particle, epsi, nan, hone);
                         VectorXd PBVEC(nRates);
-                        for(int i = 0; i < nRates; i++){PBVEC(i) = PBMAT(particle, i);}
+                        for(int i = 0; i < nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                         
                         pos.k = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                         
@@ -240,7 +238,7 @@ int main(){
                         }
                         POSMAT.row(particle) = pos.k;
                         double cost = 0;
-                        for(int t = 0; t < times.size(); t++){
+                        for(int t = 0; t < times.size(); ++t){
                             /*solve ODEs and recompute cost */
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO1(XtPSO);
@@ -277,21 +275,27 @@ int main(){
                 sfs = sfs + (sfe - sfg) / nSteps;
             }
 
-            for(int i = 0; i < nRates; i++){
-                GBVECS(run, i) = GBVEC(i);
-            }
+            for(int i = 0; i < nRates; i++){GBVECS(run, i) = GBVEC(i);}
             GBVECS(run, nRates) = gCost;
+
+
+            /* bootstrap X0 and Y matrices if more than 1 run is specified */
+            if(nRuns > 1){
+                X_0 = bootStrap(X_0);
+                for(int t = 0; t < times.size(); ++t){
+                    Yt3Mats[t] = bootStrap(Yt3Mats[t]);
+                    Yt3Vecs[t] = momentVector(Yt3Mats[t], nMoments);
+                }
+            }
         }
-        cout << GBMAT << endl;
-        if(simulateYt == 1){
-            cout << "Simulated Truth:" << tru.k.transpose() << endl;
-        }
-        if(nRuns > 1){
-            cout << "All Run Results:" << endl;
-            cout << GBVECS << endl;
-        }
+        if(simulateYt == 1){cout << "Simulated Truth:" << tru.k.transpose() << endl;}
     }
-    cout << "Final Estimate:" << GBMAT.row(GBMAT.rows() - 1) << endl;
+    cout << "All Run Results:" << endl;
+    cout << GBVECS << endl;
+    /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
+    if(nRuns > 1){       
+        computeConfidenceIntervals(GBVECS, 1.96, nRates);
+    }
     auto tB = std::chrono::high_resolution_clock::now();
     auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
     cout << "CODE FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
