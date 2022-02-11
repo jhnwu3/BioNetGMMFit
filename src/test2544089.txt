@@ -1,0 +1,37 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+make: Nothing to be done for 'all'.
+Program Begin:
+Reading in data!
+csvPSO
+params:13
+Reading data/X directory!
+"../data/X/t30s_processed.csv"
+Reading in607 elements from X data directory
+moments:14
+Using two part PSO Sample Size:607 with:14 moments.
+Using Times:30
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+Loading in Truk!
+Calculating Yt!
+Reading data/Y directory!
+"../data/Y/t1m_processed.csv"
+Computing Weight Matrices!
+XtmVec:1.47422 2.22598  2.6728 1.64937 2.17332 4.95496 7.14388 2.72041 3.28157 3.94029 2.43153 5.94959 3.67145 4.40843
+seedk: 0.89286 0.850213 0.676078 0.347372 0.563082  0.60565| cost:1.68461
+PSO begins!

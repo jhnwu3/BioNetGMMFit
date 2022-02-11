@@ -1,0 +1,49 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+make: Nothing to be done for 'all'.
+Program Begin:
+Reading in data!
+csvPSO
+params:13
+Reading data/X directory!
+"../data/X/ctr_processed.csv"
+Reading in525 elements from X data directory
+moments:14
+Using two part PSO Sample Size:525 with:14 moments.
+Using Times:30
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+Loading in Truk!
+Calculating Yt!
+Reading data/Y directory!
+"../data/Y/t30s_processed.csv"
+Computing Weight Matrices!
+XtmVec: 1.20495 0.573092 0.385826 0.475312  1.45192 0.328435 0.148862 0.225922  0.69055 0.464903 0.572729 0.221114 0.272398 0.183388
+seedk:0.916723 0.335201 0.474481  0.86823 0.704776 0.760795| cost:2.69456
+PSO begins!
+XtmVec:0.973657  1.95284  5.13058   11.278 0.948008  3.81358   26.324  127.313   1.9014  4.99542  10.9809  10.0192  22.0246  57.8748
+seedk:0.619795 0.663665 0.864526  0.70979 0.331153 0.636564| cost:3.56228
+PSO begins!
+XtmVec: 1.88318  1.62718 0.510416 0.688556  4.67638  3.59874 0.365122 0.685114  4.10094    1.305  1.78498  1.14594  1.56837 0.500012
+seedk:0.0701352  0.515393  0.186313  0.797934  0.640525 0.0787276| cost:2.45931
+PSO begins!
+XtmVec:  0.298079   0.152413   0.272817  0.0903433  0.0888513  0.0232296  0.0744294 0.00816313   0.045431  0.0813211  0.0269295  0.0415807  0.0137695  0.0246478
+seedk:0.187674 0.233166 0.814667 0.149178   0.4561 0.629612| cost:2.90708
+PSO begins!
+XtmVec:0.509665  1.40532  3.75637  13.5963 0.259758  1.97517  14.1855   193.21 0.716241  1.91449  6.92955  5.28325  19.1529  51.8648
+seedk:   0.343 0.663215 0.606165 0.735194 0.243582 0.672992| cost:2.98198
+PSO begins!
