@@ -135,7 +135,7 @@ int main(){
         for(int t = 0; t < times.size(); ++t){
             weights[t] = wolfWtMat(Yt3Mats[t], nMoments, false);
         }
-        
+        cout << weights[0] << endl;
         MatrixXd GBVECS = MatrixXd::Zero(nRuns, nRates + 1);
         for(int run = 0; run < nRuns; ++run){
             // make sure to reset GBMAT, POSMAT, AND PBMAT every run
