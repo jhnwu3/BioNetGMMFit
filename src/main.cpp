@@ -13,6 +13,7 @@ Summary of Src File:
 #include "system.hpp" // user defined ode systems
 int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
+    double scaleFactor = 20;
     cout << "Program Begin:" << endl;
     /* Input Parameters for Program */
     int nParts = 25; // first part PSO
@@ -42,6 +43,7 @@ int main(){
 
     MatrixXd X_0;
     X_0 = readX("../data/X");
+    // X_0 = X_0 / scaleFactor;
     cout << "Reading in " << X_0.rows() << " elements from X data directory" << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
@@ -121,6 +123,7 @@ int main(){
             cout << "---------------------------" << endl;
         }else{
             Yt3Mats = readY("../data/Y");
+            // Yt3Mats[0] = Yt3Mats[0] / scaleFactor;// temporarily normalize it
             if(Yt3Mats.size() != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
