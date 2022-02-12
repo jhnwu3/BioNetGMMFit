@@ -206,9 +206,9 @@ void computeConfidenceIntervals(const MatrixXd& sample, double z, int nRates){
         cout << estMu(r) << "   |   " << estSigma(r) << endl;
     }
     VectorXd delta = estSigma / sqrt(sample.rows()); 
-    cout << "Confidence Intervals for Eat Rate:" << endl;
+    cout << "Confidence Intervals for Each Rate:" << endl;
     for(int r = 0; r < nRates; ++r){
-        cout << "R" << r << ": [" << estMu(r) - z*delta(r) << "," <<estMu(r) + z * delta(r) << "]" << endl;
+        cout << "Theta" << r << ": [" << estMu(r) - z*delta(r) << "," <<estMu(r) + z * delta(r) << "]" << endl;
     }
     cout << "-----------------------------------------------" << endl;
 }

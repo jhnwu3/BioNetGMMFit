@@ -168,7 +168,14 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
     MatrixXd Y_t = MatrixXd::Zero(Y_t.rows(), Y_t.cols());
     VectorXd YtmVec(nMoments);
-    
+     cout << "--------- Parameters ---------" << endl;
+    cout << "X Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
+    cout << "Using Times:" << times.transpose() << endl;
+    cout << "Bounds for Uniform Distribution (" << low << "," << high << ")"<< endl;
+    cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
+    cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
+    cout << "sdbeta:" << sdbeta << endl;
+    cout << "------------------------------" << endl;
     /* Solve or load Y_t  */
     VectorXd trueK = readRates(nRates); 
     if(simulateYt == 1){
@@ -277,7 +284,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     POSMAT.conservativeResize(nParts2, Npars); // resize matrices to fit targetted PSO
     PBMAT.conservativeResize(nParts2, Npars + 1);
 
-    cout << "targeted PSO has started!" << endl; 
+    cout << "Targeted PSO has started!" << endl; 
     sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
     sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
     double nearby = sdbeta;
