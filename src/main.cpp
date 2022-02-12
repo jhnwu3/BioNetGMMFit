@@ -238,6 +238,7 @@ int main(){
                         }
                         POSMAT.row(particle) = pos.k;
                         double cost = 0;
+                        VectorXd temp;
                         for(int t = 0; t < times.size(); ++t){
                             /*solve ODEs and recompute cost */
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
@@ -249,6 +250,7 @@ int main(){
                                 integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                             }
                             XtPSO.mVec/=X_0.rows();
+                            temp = XtPSO.mVec;
                             cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                     
@@ -263,6 +265,9 @@ int main(){
                             if(cost < gCost){
                                 gCost = cost;
                                 GBVEC = pos.k;
+                                
+                                cout << "Moment Estimates:" << temp.transpose() << endl;
+                                
                             }   
                         }
                     }
