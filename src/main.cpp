@@ -13,7 +13,7 @@ Summary of Src File:
 #include "system.hpp" // user defined ode systems
 int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
-    double scaleFactor = 20;
+    double scaleFactor = 100;
     cout << "Program Begin:" << endl;
     /* Input Parameters for Program */
     int nParts = 25; // first part PSO
