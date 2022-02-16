@@ -269,7 +269,10 @@ int main(){
                                 gCost = cost;
                                 GBVEC = pos.k;
                                 
-                                cout << "Moment Estimates:" << temp.transpose() << endl;
+                                if(step == nSteps - 1){
+                                    cout << "Moment Estimates:" << temp.transpose() << endl;
+                                }
+                                
                                 
                             }   
                         }
