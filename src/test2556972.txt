@@ -1,0 +1,56 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+make: Nothing to be done for 'all'.
+Program Begin:
+Reading in data!
+csvPSO
+params:13
+------ Reading in X_0! ------
+"../data/X/t2m_processed.csv"
+---------------------------
+Reading in 1431 elements from X data directory
+Moments:14
+--------- Parameters ---------
+X Size:1431 with:14 moments.
+Using Times:120
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+------------------------------
+------ Reading in Yt! ------
+"../data/Y/t4m_processed.csv"
+---------------------------
+Computing Weight Matrices!
+  0.0149235           0           0           0           0           0           0           0           0           0           0           0           0           0
+          0   0.0194869           0           0           0           0           0           0           0           0           0           0           0           0
+          0           0   0.0299509           0           0           0           0           0           0           0           0           0           0           0
+          0           0           0 0.000243127           0           0           0           0           0           0           0           0           0           0
+          0           0           0           0 7.46851e-06           0           0           0           0           0           0           0           0           0
+          0           0           0           0           0 2.02259e-05           0           0           0           0           0           0           0           0
+          0           0           0           0           0           0 3.20078e-05           0           0           0           0           0           0           0
+          0           0           0           0           0           0           0  1.5596e-09           0           0           0           0           0           0
+          0           0           0           0           0           0           0           0 7.57237e-05           0           0           0           0           0
+          0           0           0           0           0           0           0           0           0 0.000184236           0           0           0           0
+          0           0           0           0           0           0           0           0           0           0 2.21605e-06           0           0           0
+          0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
+          0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
+          0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
+seedk:0.087819 0.102491 0.512982 0.551897  0.87306 0.125121| cost:2.10167
+PSO Estimation Has Begun, This may take some time...
+seedk:0.586451 0.287357 0.157569 0.717017 0.111693 0.939506| cost:1.39257
+PSO Estimation Has Begun, This may take some time...
+seedk:  0.5131 0.122866 0.774574 0.707117 0.192218 0.345386| cost:1.34223
+PSO Estimation Has Begun, This may take some time...
