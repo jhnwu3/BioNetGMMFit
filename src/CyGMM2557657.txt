@@ -1,0 +1,71 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+g++ -c -std=c++17 nonlinear.cpp -fopenmp
+nonlinear.cpp: In function ‘Eigen::MatrixXd nonlinearModel(int, int, int, int, const MatrixXd&, const MatrixXd&, int, int, int)’:
+nonlinear.cpp:361:1: warning: no return statement in function returning non-void [-Wreturn-type]
+  361 | }
+      | ^
+g++ -c -O3 -fopenmp -std=c++17 main.cpp 
+g++ -c -std=c++17 ../system.cpp 
+g++ main.o fileIO.o linear.o nonlinear.o calc.o system.o -o sig -fopenmp -std=c++17 -lstdc++fs
+Program Begin:
+Reading in data!
+csvPSO
+params:15
+------ Reading in X_0! ------
+"../data/X/t2m_processed.csv"
+---------------------------
+Reading in 1431 elements from X data directory
+Moments:14
+--------- Parameters ---------
+X Size:1431 with:14 moments.
+Using Times:120
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+------------------------------
+------ Reading in Yt! ------
+"../data/Y/t4m_processed.csv"
+---------------------------
+Computing Weight Matrices!
+  0.0149235           0           0           0           0           0           0           0           0           0           0           0           0           0
+          0   0.0194869           0           0           0           0           0           0           0           0           0           0           0           0
+          0           0   0.0299509           0           0           0           0           0           0           0           0           0           0           0
+          0           0           0 0.000243127           0           0           0           0           0           0           0           0           0           0
+          0           0           0           0 7.46851e-06           0           0           0           0           0           0           0           0           0
+          0           0           0           0           0 2.02259e-05           0           0           0           0           0           0           0           0
+          0           0           0           0           0           0 3.20078e-05           0           0           0           0           0           0           0
+          0           0           0           0           0           0           0  1.5596e-09           0           0           0           0           0           0
+          0           0           0           0           0           0           0           0 7.57237e-05           0           0           0           0           0
+          0           0           0           0           0           0           0           0           0 0.000184236           0           0           0           0
+          0           0           0           0           0           0           0           0           0           0 2.21605e-06           0           0           0
+          0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
+          0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
+          0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
+PSO Seeded At:  0.39109  0.104342  0.370628   0.42906 0.0310875 0.0211428| cost:1.3023e+07
+PSO Estimation Has Begun, This may take some time...
+Simulated Xt Moments:5.98472 5.22717 2.40538 24.3325 35.8168 27.3233 5.78596 592.161 31.2831 14.3955 145.623 12.5734 127.191 58.5317
+
+All Run Estimates:
+ 0.461901 0.0773201 0.0407032   0.89265 0.0885477 0.0771838  0.322533
+CODE FINISHED RUNNING IN 884 s TIME!
+Job Statistics for 2557657:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2557657   rsjxw007 2022-02-17T15:11:47 2022-02-17T15:27:10   00:15:23              05:49:00  COMPLETED  0:0   r1pl-hpcf-n23     billing=30,cpu=30,mem=234360M,node=1 
+   2557657.batch            2022-02-17T15:11:47 2022-02-17T15:27:10   00:15:23     62.02M   05:49:00  COMPLETED  0:0   r1pl-hpcf-n23                                          
+  2557657.extern            2022-02-17T15:11:47 2022-02-17T15:27:10   00:15:23          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n23                                          
+CPU Efficiency: 75.62% of 07:41:30 core-walltime
