@@ -344,3 +344,4 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     return GBMAT; // just to close the program at the end.
 }
 
+
