@@ -28,7 +28,7 @@ int main(){
     int simulateYt = 1;
     int useInverse = 0; // currently just inverse only occurs in linear model.
     int heldTheta = -1;
-    int reportMeans = 1;
+    int reportMoments = 1;
     double heldThetaVal = 0;
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
@@ -293,7 +293,7 @@ int main(){
             }
         }
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.k.transpose() << endl;}
-        if(reportMeans == 1){
+        if(reportMoments == 1){
             struct K GBVEC; 
             GBVEC.k = GBVECS.colwise().mean();
             for(int t = 0; t < times.size(); ++t){
@@ -307,7 +307,7 @@ int main(){
                     integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
-                cout << "Means:" << XtPSO.mVec.transpose() << endl;
+                cout << "Moments:" << XtPSO.mVec.transpose() << endl;
             }
         }
     }
