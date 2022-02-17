@@ -8,10 +8,11 @@ MatrixXd interactionMatrix(int nSpecies, const VectorXd &k);
 /* Nonlinear ODE System to be defined for nonlinear system. Simply refer to the comments for each term. */
 class Nonlinear_ODE
 {
-    struct K rate;
+    // struct K rate;
+    VectorXd k;
 
 public:
-    Nonlinear_ODE(struct K G) : rate(G) {}
+    Nonlinear_ODE(VectorXd G) : k(G) {}
 
     void operator() (const State_N& c, State_N& dcdt, double t)
     {
@@ -39,10 +40,14 @@ public:
         //     - rate.k(4) * c[5]
         //     - rate.k(5) * c[5];
 
-        dcdt[0] = rate.k(0) - rate.k(5) * c[0];
-        dcdt[1] = rate.k(1) * c[0] - rate.k(4) * c[1];
-        dcdt[2] = rate.k(2) * c[1] - rate.k(4) * c[2];
-        dcdt[3] = rate.k(3) * c[2] - rate.k(4) * c[3];
+        // dcdt[0] = rate.k(0) - rate.k(5) * c[0];
+        // dcdt[1] = rate.k(1) * c[0] - rate.k(4) * c[1];
+        // dcdt[2] = rate.k(2) * c[1] - rate.k(4) * c[2];
+        // dcdt[3] = rate.k(3) * c[2] - rate.k(4) * c[3];
+        dcdt[0] = k(0) - k(5) * c[0];
+        dcdt[1] = k(1) * c[0] - k(4) * c[1];
+        dcdt[2] = k(2) * c[1] - k(4) * c[2];
+        dcdt[3] = k(3) * c[2] - k(4) * c[3];
     }
 };
 #endif

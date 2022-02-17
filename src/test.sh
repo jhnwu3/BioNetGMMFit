@@ -3,7 +3,7 @@
 #SBATCH --job-name=CyGMM
 #SBATCH --partition=general
 #SBATCH --nodes=1
-#SBATCH --output=test%j.txt
+#SBATCH --output=CyGMM%j.txt
 #SBATCH --cpus-per-task=30
 
 # please just load this in. :l
