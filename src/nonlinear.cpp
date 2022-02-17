@@ -130,7 +130,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     // cout << "sdbeta:" << sdbeta << endl;
     // // cout << "wt:" << endl << wt << endl;
 
-    // MatrixXd GBMAT(0, 0); // iterations of global best vectors
+    MatrixXd GBMAT(0, 0); // iterations of global best vectors
     // MatrixXd PBMAT(nParts, Npars + 1); // particle best matrix + 1 for cost component
     // MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
 
@@ -357,7 +357,7 @@ MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const 
     // auto duration = std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count();
     // cout << "CODE FINISHED RUNNING IN " << duration << " s TIME!" << endl;
 
-    // return GBMAT; // just to close the program at the end.
+    return GBMAT; // just to close the program at the end.
 }
 
 
