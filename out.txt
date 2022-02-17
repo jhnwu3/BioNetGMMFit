@@ -9,9 +9,9 @@ Reading in 1431 elements from X data directory
 Moments:14
 --------- Parameters ---------
 X Size:1431 with:14 moments.
-Using Times:120
+Using Times:240
 Bounds for Uniform Distribution (0,1)
-Blind PSO --> nParts:100 Nsteps:20
+Blind PSO --> nParts:100 Nsteps:10
 Targeted PSO --> nParts:10 Nsteps:10
 sdbeta:0.1
 ------------------------------
@@ -33,10 +33,10 @@ Computing Weight Matrices!
           0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
           0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
           0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
-PSO Seeded At: 0.514786  0.748345   0.41276  0.775706  0.133499 0.0588382| cost:43248.8
+PSO Seeded At: 0.449071 0.0374495  0.447886  0.924755  0.645221   0.81651| cost:2.14956
 PSO Estimation Has Begun, This may take some time...
-Simulated Xt Moments:6.15571 5.39544  2.5999 4.58762 37.8927 29.1107 6.75946 21.0462 33.2127 16.0042   28.24 14.0276 24.7522 11.9273
+Simulated Xt Moments: 6.3433 5.07136 2.77545 3.73759 40.2375 25.7187 7.70313 13.9695 32.1692 17.6055 23.7086 14.0753 18.9546 10.3735
 
 All Run Estimates:
-0.680751 0.402362 0.221206 0.810026 0.459058 0.110589 0.462323
-CODE FINISHED RUNNING IN 4 s TIME!
+ 0.519495  0.502053  0.343676  0.845663  0.627974 0.0818985  0.479045
+CODE FINISHED RUNNING IN 2 s TIME!

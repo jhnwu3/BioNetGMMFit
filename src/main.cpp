@@ -151,8 +151,6 @@ int main(){
             
             /* Initialize Global Best  */
             double holdTheta2 = 0.1;
-            // struct K seed;
-            // seed.k = VectorXd::Zero(nRates); 
             VectorXd seed = VectorXd::Zero(nRates);
             for (int i = 0; i < nRates; i++) { seed(i) = rndNum(low,high);}
             if(heldTheta > -1){seed(heldTheta) = heldThetaVal;}
@@ -193,17 +191,11 @@ int main(){
                         for(int i = 0; i < nRates; i++){
                             POSMAT(particle, i) = rndNum(low, high);
                         }
-                        VectorXd pos = POSMAT.row(particle);
-                        if(heldTheta > -1){pos(heldTheta) = heldThetaVal;}
-                        // struct K pos;
-                        // pos.k = VectorXd::Zero(nRates);
-                        // for(int i = 0; i < nRates; i++){
-                        //     pos(i) = POSMAT(particle, i);
-                        // }
+                        if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
                         
                         double cost = 0;
                         for(int t = 0; t < times.size(); ++t){
-                            Nonlinear_ODE initSys(pos);
+                            Nonlinear_ODE initSys(POSMAT.row(particle));
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO(XtPSO);
                             for(int i = 0; i < X_0.rows(); ++i){
@@ -226,14 +218,13 @@ int main(){
                         double w1 = sfi * rndNum(low,high) / sf2, w2 = sfc * rndNum(low,high) / sf2, w3 = sfs * rndNum(low,high) / sf2;
                         double sumw = w1 + w2 + w3; 
                         w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
-                        // struct K pos;
-                        // pos.k = VectorXd::Zero(nRates);
-                        VectorXd pos = POSMAT.row(particle);
-                        VectorXd rpoint = adaptVelocity(pos, particle, epsi, nan, hone);
+                       
+        
+                        VectorXd rpoint = adaptVelocity(POSMAT.row(particle), particle, epsi, nan, hone);
                         VectorXd PBVEC(nRates);
                         for(int i = 0; i < nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                         
-                        pos = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
+                        POSMAT.row(particle) = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                         
                         // if(rndNum(low,high) < probabilityToTeleport){ // hard coded grid re-search for an adaptive component
                         //     pos.k(0) = rndNum(low,high);
@@ -241,15 +232,14 @@ int main(){
                         //     pos.k(4) = rndNum(low,high);
                         // }
                         if(heldTheta > -1){
-                            pos(heldTheta) = heldThetaVal;
+                            POSMAT.row(particle)(heldTheta) = heldThetaVal;
                         }
-                        POSMAT.row(particle) = pos;
                         double cost = 0;
                         for(int t = 0; t < times.size(); ++t){
                             /*solve ODEs and recompute cost */
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                             Moments_Mat_Obs XtObsPSO1(XtPSO);
-                            Nonlinear_ODE stepSys(pos);
+                            Nonlinear_ODE stepSys(POSMAT.row(particle));
                             for(int i = 0; i < X_0.rows(); i++){
                                 State_N c0 = convertInit(X_0.row(i));
                                 XtPSO.index = i;
@@ -264,12 +254,12 @@ int main(){
                     {
                         if(cost < PBMAT(particle, nRates)){ // particle best cost
                             for(int i = 0; i < nRates; i++){
-                                PBMAT(particle, i) = pos(i);
+                                PBMAT(particle, i) = POSMAT.row(particle)(i);
                             }
                             PBMAT(particle, nRates) = cost;
                             if(cost < gCost){
                                 gCost = cost;
-                                GBVEC = pos;
+                                GBVEC = POSMAT.row(particle);
                             }   
                         }
                     }
