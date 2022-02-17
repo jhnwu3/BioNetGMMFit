@@ -11,7 +11,7 @@ Moments:14
 X Size:1431 with:14 moments.
 Using Times:120
 Bounds for Uniform Distribution (0,1)
-Blind PSO --> nParts:100 Nsteps:10
+Blind PSO --> nParts:1000 Nsteps:1000
 Targeted PSO --> nParts:10 Nsteps:10
 sdbeta:0.1
 ------------------------------
@@ -33,9 +33,5 @@ Computing Weight Matrices!
           0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
           0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
           0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
-PSO Seeded At: 0.836532  0.352466 0.0567255  0.843034  0.845552  0.466654| cost:1.74864
+PSO Seeded At: 0.11649 0.669008 0.596684 0.928343 0.977865 0.590383| cost:2.18805
 PSO Estimation Has Begun, This may take some time...
-Moments:6.14891 5.20869 2.67485 3.42584 37.8091 27.1305 7.15481 11.7364 32.0278 16.4474 21.0652 13.9325 17.8441  9.1636
-All Run Results:
-0.789063 0.540135 0.327449 0.816658 0.637635 0.128326 0.480579
-CODE FINISHED RUNNING IN 2 s TIME!
