@@ -12,11 +12,13 @@ or --ff-only on the command line to override the configured default per
 invocation.
 
 Already up to date.
-make: Nothing to be done for 'all'.
+g++ -c -std=c++17 nonlinear.cpp -fopenmp
+g++ -c -O3 -fopenmp -std=c++17 main.cpp 
+g++ main.o fileIO.o linear.o nonlinear.o calc.o system.o -o sig -fopenmp -std=c++17 -lstdc++fs
 Program Begin:
 Reading in data!
 csvPSO
-params:13
+params:15
 ------ Reading in X_0! ------
 "../data/X/t2m_processed.csv"
 ---------------------------
@@ -24,7 +26,7 @@ Reading in 1431 elements from X data directory
 Moments:14
 --------- Parameters ---------
 X Size:1431 with:14 moments.
-Using Times:120
+Using Times:180
 Bounds for Uniform Distribution (0,1)
 Blind PSO --> nParts:1000 Nsteps:1000
 Targeted PSO --> nParts:10 Nsteps:10
@@ -48,33 +50,17 @@ Computing Weight Matrices!
           0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
           0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
           0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
-seedk:0.087819 0.102491 0.512982 0.551897  0.87306 0.125121| cost:2.10167
+PSO Seeded At:0.369098 0.972573 0.356811 0.415333  0.87399 0.434716| cost:1.82035
 PSO Estimation Has Begun, This may take some time...
-seedk:0.586451 0.287357 0.157569 0.717017 0.111693 0.939506| cost:1.39257
-PSO Estimation Has Begun, This may take some time...
-seedk:  0.5131 0.122866 0.774574 0.707117 0.192218 0.345386| cost:1.34223
-PSO Estimation Has Begun, This may take some time...
-seedk:0.374257 0.653448 0.753386  0.40027  0.86588 0.247166| cost:1.64808
-PSO Estimation Has Begun, This may take some time...
-seedk:0.519888 0.957687 0.216025  0.26187  0.50919 0.830794| cost:1.85664
-PSO Estimation Has Begun, This may take some time...
-seedk:0.0709231  0.401733  0.720469  0.539871  0.219645  0.708638| cost:2.05141
-PSO Estimation Has Begun, This may take some time...
-seedk:0.883356 0.583673  0.42546 0.326868 0.484352 0.559492| cost:1.20251
-PSO Estimation Has Begun, This may take some time...
-seedk: 0.201143 0.0456558  0.213583  0.713719  0.545552  0.146409| cost:1.78082
-PSO Estimation Has Begun, This may take some time...
-seedk:0.872015 0.548738 0.847278 0.815947 0.889394 0.994979| cost:1.76822
-PSO Estimation Has Begun, This may take some time...
-seedk: 0.697554  0.491773  0.756207  0.733672  0.726428 0.0701369| cost:2.24155
-PSO Estimation Has Begun, This may take some time...
-seedk:0.444304 0.685558 0.261149 0.532561 0.169742 0.294495| cost:2.49414
-PSO Estimation Has Begun, This may take some time...
-seedk: 0.992249  0.476345 0.0722037  0.306006  0.441872  0.662359| cost:1.65933
-PSO Estimation Has Begun, This may take some time...
-seedk: 0.418959  0.295033  0.712605   0.95472  0.193632 0.0459924| cost:557.859
-PSO Estimation Has Begun, This may take some time...
-seedk: 0.969261 0.0274889  0.222246  0.894441  0.710182  0.965805| cost:2.09287
-PSO Estimation Has Begun, This may take some time...
-seedk: 0.765968  0.827636   0.71895  0.931453  0.048944 0.0334421| cost:2.38561e+11
-PSO Estimation Has Begun, This may take some time...
+Simulated Xt Moments:5.98456 5.22726 2.40539 24.3336  35.815 27.3244 5.78616 592.307 31.2829 14.3953 145.628 12.5738 127.203 58.5388
+
+All Run Estimates:
+ 0.381883 0.0806965 0.0424707  0.931445 0.0924352 0.0638266  0.322534
+CODE FINISHED RUNNING IN 848 s TIME!
+Job Statistics for 2559336:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2559336   rsjxw007 2022-02-17T16:16:00 2022-02-17T16:31:09   00:15:09              05:35:18  COMPLETED  0:0   r1pl-hpcf-n23     billing=30,cpu=30,mem=234360M,node=1 
+   2559336.batch            2022-02-17T16:16:00 2022-02-17T16:31:09   00:15:09     26.44M   05:35:18  COMPLETED  0:0   r1pl-hpcf-n23                                          
+  2559336.extern            2022-02-17T16:16:00 2022-02-17T16:31:09   00:15:09          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n23                                          
+CPU Efficiency: 73.77% of 07:34:30 core-walltime
