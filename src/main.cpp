@@ -28,6 +28,7 @@ int main(){
     int simulateYt = 1;
     int useInverse = 0; // currently just inverse only occurs in linear model.
     int heldTheta = -1;
+    int reportMeans = 1;
     double heldThetaVal = 0;
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
@@ -241,7 +242,6 @@ int main(){
                         }
                         POSMAT.row(particle) = pos.k;
                         double cost = 0;
-                        VectorXd temp;
                         for(int t = 0; t < times.size(); ++t){
                             /*solve ODEs and recompute cost */
                             Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
@@ -253,7 +253,6 @@ int main(){
                                 integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                             }
                             XtPSO.mVec/=X_0.rows();
-                            temp = XtPSO.mVec;
                             cost += costFunction(Yt3Vecs[t], XtPSO.mVec, weights[t]);
                         }
                     
@@ -268,12 +267,6 @@ int main(){
                             if(cost < gCost){
                                 gCost = cost;
                                 GBVEC = pos.k;
-                                
-                                if(step == nSteps - 1){
-                                    cout << "Moment Estimates:" << temp.transpose() << endl;
-                                }
-                                
-                                
                             }   
                         }
                     }
@@ -300,13 +293,29 @@ int main(){
             }
         }
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.k.transpose() << endl;}
+        if(reportMeans == 1){
+            struct K GBVEC; 
+            GBVEC.k = GBVECS.colwise().mean();
+            for(int t = 0; t < times.size(); ++t){
+                /*solve ODEs and recompute cost */
+                Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
+                Moments_Mat_Obs XtObsPSO1(XtPSO);
+                Nonlinear_ODE stepSys(GBVEC);
+                for(int i = 0; i < X_0.rows(); i++){
+                    State_N c0 = convertInit(X_0.row(i));
+                    XtPSO.index = i;
+                    integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
+                }
+                XtPSO.mVec/=X_0.rows();
+                cout << "Means:" << XtPSO.mVec << endl;
+            }
+        }
     }
     cout << "All Run Results:" << endl;
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
-    if(nRuns > 1){       
-        computeConfidenceIntervals(GBVECS, 1.96, nRates);
-    }
+    if(nRuns > 1){ computeConfidenceIntervals(GBVECS, 1.96, nRates);}
+    
     auto tB = std::chrono::high_resolution_clock::now();
     auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
     cout << "CODE FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
