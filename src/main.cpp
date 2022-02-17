@@ -307,7 +307,7 @@ int main(){
                     integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
-                cout << "Means:" << XtPSO.mVec << endl;
+                cout << "Means:" << XtPSO.mVec.transpose() << endl;
             }
         }
     }

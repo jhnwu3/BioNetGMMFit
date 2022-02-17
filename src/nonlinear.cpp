@@ -68,6 +68,22 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
     return rPoint;
 }
 
+Protein_Components evolveSystem(K &pos, const MatrixXd& X_0, int nMoments, double t, double dt, double t0){
+    Controlled_RK_Stepper_N controlledStepper;
+    /*solve ODEs*/
+    Protein_Components XtPSO(t, nMoments, X_0.rows(), X_0.cols());
+    Moments_Mat_Obs XtObsPSO1(XtPSO);
+    Nonlinear_ODE stepSys(pos);
+    for(int i = 0; i < X_0.rows(); i++){
+        State_N c0 = convertInit(X_0.row(i));
+        XtPSO.index = i;
+        integrate_adaptive(controlledStepper, stepSys, c0, t0, t, dt, XtObsPSO1);
+    }
+    XtPSO.mVec/=X_0.rows();
+
+    return XtPSO;
+}
+
 /* Defunct nonlinear model moved into main for speed reasons. - To be debugged */
 MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd& Y_0, int nRates, int nRuns, int nMoments){
     auto t1 = std::chrono::high_resolution_clock::now();
