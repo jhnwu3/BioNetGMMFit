@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=0-30:10:00 
-#SBATCH --job-name=parallelPSO
+#SBATCH --job-name=CyGMM
 #SBATCH --partition=general
 #SBATCH --nodes=1
 #SBATCH --output=test%j.txt
