@@ -1,0 +1,62 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+make: Nothing to be done for 'all'.
+Program Begin:
+Reading in data!
+csvPSO
+params:13
+------ Reading in X_0! ------
+"../data/X/t1m_processed.csv"
+---------------------------
+Reading in 1773 elements from X data directory
+Moments:14
+--------- Parameters ---------
+X Size:1773 with:14 moments.
+Using Times:60
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+------------------------------
+------ Reading in Yt! ------
+"../data/Y/t2m_processed.csv"
+---------------------------
+Computing Weight Matrices!
+  0.0107501           0           0           0           0           0           0           0           0           0           0           0           0           0
+          0  0.00907906           0           0           0           0           0           0           0           0           0           0           0           0
+          0           0   0.0199266           0           0           0           0           0           0           0           0           0           0           0
+          0           0           0  0.00140538           0           0           0           0           0           0           0           0           0           0
+          0           0           0           0 7.41118e-06           0           0           0           0           0           0           0           0           0
+          0           0           0           0           0 3.77298e-06           0           0           0           0           0           0           0           0
+          0           0           0           0           0           0 2.27202e-05           0           0           0           0           0           0           0
+          0           0           0           0           0           0           0 3.83646e-08           0           0           0           0           0           0
+          0           0           0           0           0           0           0           0 1.78421e-05           0           0           0           0           0
+          0           0           0           0           0           0           0           0           0 7.74924e-05           0           0           0           0
+          0           0           0           0           0           0           0           0           0           0 4.42496e-06           0           0           0
+          0           0           0           0           0           0           0           0           0           0           0 7.39553e-05           0           0
+          0           0           0           0           0           0           0           0           0           0           0           0 4.13828e-06           0
+          0           0           0           0           0           0           0           0           0           0           0           0           0 4.90852e-06
+seedk:  0.75624  0.524513  0.354474 0.0339287  0.150025  0.871428| cost:1.70861
+PSO Estimation Has Begun, This may take some time...
+All Run Results:
+ 0.825415  0.151406 0.0552302  0.581902  0.147457  0.103056  0.229338
+CODE FINISHED RUNNING IN 843 s TIME!
+Job Statistics for 2554638:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+         2554638   rsjxw007 2022-02-16T20:01:39 2022-02-16T20:15:45   00:14:06              05:48:49  COMPLETED  0:0   r1pl-hpcf-n22     billing=30,cpu=30,mem=234360M,node=1 
+   2554638.batch            2022-02-16T20:01:39 2022-02-16T20:15:45   00:14:06      3.89M   05:48:49  COMPLETED  0:0   r1pl-hpcf-n22                                          
+  2554638.extern            2022-02-16T20:01:39 2022-02-16T20:15:45   00:14:06          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n22                                          
+CPU Efficiency: 82.47% of 07:03:00 core-walltime
