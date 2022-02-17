@@ -67,7 +67,7 @@ int main(){
     }else{
         /*---------------------- Nonlinear Setup ------------------------ */
 
-        double t0 = 0, dt = 1.0; // nonlinear time evolution variables
+        double t0 = 60, dt = 1.0; // nonlinear time evolution variables
         /* Explicit Boundary Parameters */
         double squeeze = 0.500, sdbeta = 0.10; // how much to shrink PSO search over time (how much variability each position is iterated upon)
         double boundary = 0.001;
