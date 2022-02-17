@@ -310,11 +310,11 @@ int main(){
                     integrate_adaptive(controlledStepper, stepSys, c0, t0, times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
-                cout << "Moments:" << XtPSO.mVec.transpose() << endl;
+                cout << "Simulated Xt Moments:" << XtPSO.mVec.transpose() << endl;
             }
         }
     }
-    cout << "All Run Results:" << endl;
+    cout << endl << "All Run Estimates:" << endl;
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
     if(nRuns > 1){ computeConfidenceIntervals(GBVECS, 1.96, nRates);}
