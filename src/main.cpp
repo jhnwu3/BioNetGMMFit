@@ -1,7 +1,7 @@
 /* 
 Author: John W., Dr. Stewart
 Summary of Src File: 
-- main, main function that calls all fileIO requirements
+CyGMM -> <Insert Statement About Rate Constant Estimation>
 
 */
 
@@ -98,15 +98,16 @@ int main(){
         MatrixXd POSMAT(nParts, nRates); // Position matrix as it goees through it in parallel
 
         /* Solve for Y_t (mu). */
-        struct K tru;
-        tru.k = readRates(nRates); // read in rates.
-
+        // struct K tru;
+        // tru.k = readRates(nRates); // read in rates.
+        VectorXd tru;
         vector<MatrixXd> Yt3Mats;
         vector<VectorXd> Yt3Vecs;
         Controlled_RK_Stepper_N controlledStepper;
         double trukCost = 0;
         if(simulateYt == 1){
             cout << "------ SIMULATING YT! ------" << endl;
+            tru = readRates(nRates);
             MatrixXd Y_0 = readY("../data/Y")[0];
             for(int t = 0; t < times.size(); t++){
                 Nonlinear_ODE trueSys(tru);
@@ -150,10 +151,11 @@ int main(){
             
             /* Initialize Global Best  */
             double holdTheta2 = 0.1;
-            struct K seed;
-            seed.k = VectorXd::Zero(nRates); 
-            for (int i = 0; i < nRates; i++) { seed.k(i) = rndNum(low,high);}
-            if(heldTheta > -1){seed.k(heldTheta) = heldThetaVal;}
+            // struct K seed;
+            // seed.k = VectorXd::Zero(nRates); 
+            VectorXd seed = VectorXd::Zero(nRates);
+            for (int i = 0; i < nRates; i++) { seed(i) = rndNum(low,high);}
+            if(heldTheta > -1){seed(heldTheta) = heldThetaVal;}
             
             /* Evolve initial Global Best and Calculate a Cost*/
             double costSeedK = 0;
@@ -169,14 +171,14 @@ int main(){
                 Xt.mVec /= X_0.rows();  
                 costSeedK += costFunction(Yt3Vecs[t], Xt.mVec, weights[t]);
             }
-            cout << "seedk:"<< seed.k.transpose() << "| cost:" << costSeedK << endl;
+            cout << "PSO Seeded At:"<< seed.transpose() << "| cost:" << costSeedK << endl;
             
             double gCost = costSeedK; //initialize costs and GBMAT
-            VectorXd GBVEC = seed.k;
+            VectorXd GBVEC = seed;
             
             GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1);
             for (int i = 0; i < nRates; i++) {
-                GBMAT(GBMAT.rows() - 1, i) = seed.k(i);
+                GBMAT(GBMAT.rows() - 1, i) = seed(i);
             }
             GBMAT(GBMAT.rows() - 1, nRates) = gCost;
             double probabilityToTeleport = 3.0/4.0; 
@@ -191,12 +193,13 @@ int main(){
                         for(int i = 0; i < nRates; i++){
                             POSMAT(particle, i) = rndNum(low, high);
                         }
-                        POSMAT(particle, 1) = holdTheta2;
-                        struct K pos;
-                        pos.k = VectorXd::Zero(nRates);
-                        for(int i = 0; i < nRates; i++){
-                            pos.k(i) = POSMAT(particle, i);
-                        }
+                        VectorXd pos = POSMAT.row(particle);
+                        if(heldTheta > -1){pos(heldTheta) = heldThetaVal;}
+                        // struct K pos;
+                        // pos.k = VectorXd::Zero(nRates);
+                        // for(int i = 0; i < nRates; i++){
+                        //     pos(i) = POSMAT(particle, i);
+                        // }
                         
                         double cost = 0;
                         for(int t = 0; t < times.size(); ++t){
@@ -221,16 +224,16 @@ int main(){
                     }else{ 
                         /* step into PSO */
                         double w1 = sfi * rndNum(low,high) / sf2, w2 = sfc * rndNum(low,high) / sf2, w3 = sfs * rndNum(low,high) / sf2;
-                        double sumw = w1 + w2 + w3; //w1 = inertial, w2 = pbest, w3 = gbest
+                        double sumw = w1 + w2 + w3; 
                         w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
-                        struct K pos;
-                        pos.k = VectorXd::Zero(nRates);
-                        pos.k = POSMAT.row(particle);
-                        VectorXd rpoint = adaptVelocity(pos.k, particle, epsi, nan, hone);
+                        // struct K pos;
+                        // pos.k = VectorXd::Zero(nRates);
+                        VectorXd pos = POSMAT.row(particle);
+                        VectorXd rpoint = adaptVelocity(pos, particle, epsi, nan, hone);
                         VectorXd PBVEC(nRates);
                         for(int i = 0; i < nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                         
-                        pos.k = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
+                        pos = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                         
                         // if(rndNum(low,high) < probabilityToTeleport){ // hard coded grid re-search for an adaptive component
                         //     pos.k(0) = rndNum(low,high);
@@ -238,9 +241,9 @@ int main(){
                         //     pos.k(4) = rndNum(low,high);
                         // }
                         if(heldTheta > -1){
-                            pos.k(heldTheta) = heldThetaVal;
+                            pos(heldTheta) = heldThetaVal;
                         }
-                        POSMAT.row(particle) = pos.k;
+                        POSMAT.row(particle) = pos;
                         double cost = 0;
                         for(int t = 0; t < times.size(); ++t){
                             /*solve ODEs and recompute cost */
@@ -261,12 +264,12 @@ int main(){
                     {
                         if(cost < PBMAT(particle, nRates)){ // particle best cost
                             for(int i = 0; i < nRates; i++){
-                                PBMAT(particle, i) = pos.k(i);
+                                PBMAT(particle, i) = pos(i);
                             }
                             PBMAT(particle, nRates) = cost;
                             if(cost < gCost){
                                 gCost = cost;
-                                GBVEC = pos.k;
+                                GBVEC = pos;
                             }   
                         }
                     }
@@ -292,7 +295,7 @@ int main(){
                 }
             }
         }
-        if(simulateYt == 1){cout << "Simulated Truth:" << tru.k.transpose() << endl;}
+        if(simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(reportMoments == 1){
             struct K GBVEC; 
             GBVEC.k = GBVECS.colwise().mean();
@@ -300,7 +303,7 @@ int main(){
                 /*solve ODEs and recompute cost */
                 Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs XtObsPSO1(XtPSO);
-                Nonlinear_ODE stepSys(GBVEC);
+                Nonlinear_ODE stepSys(GBVECS.colwise().mean());
                 for(int i = 0; i < X_0.rows(); i++){
                     State_N c0 = convertInit(X_0.row(i));
                     XtPSO.index = i;
