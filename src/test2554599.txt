@@ -1,0 +1,106 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+make: Nothing to be done for 'all'.
+Program Begin:
+Reading in data!
+csvPSO
+params:13
+------ Reading in X_0! ------
+"../data/X/t2m_processed.csv"
+---------------------------
+Reading in 1431 elements from X data directory
+Moments:14
+--------- Parameters ---------
+X Size:1431 with:14 moments.
+Using Times:30
+Bounds for Uniform Distribution (0,1)
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+sdbeta:0.1
+------------------------------
+------ Reading in Yt! ------
+"../data/Y/t4m_processed.csv"
+---------------------------
+Computing Weight Matrices!
+  0.0149235           0           0           0           0           0           0           0           0           0           0           0           0           0
+          0   0.0194869           0           0           0           0           0           0           0           0           0           0           0           0
+          0           0   0.0299509           0           0           0           0           0           0           0           0           0           0           0
+          0           0           0 0.000243127           0           0           0           0           0           0           0           0           0           0
+          0           0           0           0 7.46851e-06           0           0           0           0           0           0           0           0           0
+          0           0           0           0           0 2.02259e-05           0           0           0           0           0           0           0           0
+          0           0           0           0           0           0 3.20078e-05           0           0           0           0           0           0           0
+          0           0           0           0           0           0           0  1.5596e-09           0           0           0           0           0           0
+          0           0           0           0           0           0           0           0 7.57237e-05           0           0           0           0           0
+          0           0           0           0           0           0           0           0           0 0.000184236           0           0           0           0
+          0           0           0           0           0           0           0           0           0           0 2.21605e-06           0           0           0
+          0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
+          0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
+          0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
+seedk:0.160137 0.357249 0.128495 0.274858 0.215645 0.441201| cost:1.95491
+PSO Estimation Has Begun, This may take some time...
+seedk:  0.88707 0.0641246  0.755874  0.918359  0.514854  0.220682| cost:1.3692
+PSO Estimation Has Begun, This may take some time...
+Moment Estimates:5.93999 5.37551 2.32693 23.5452 35.2874 29.3452 5.97146 711.721 31.9656 13.8545 140.282  12.973 132.992 63.6408
+seedk:0.710103 0.219083 0.968314 0.131677 0.113919 0.465671| cost:93.501
+PSO Estimation Has Begun, This may take some time...
+seedk:0.282155 0.616176 0.161184 0.776885 0.938467 0.790257| cost:2.25196
+PSO Estimation Has Begun, This may take some time...
+seedk:  0.72827  0.235267  0.172541  0.468182  0.898744 0.0724424| cost:1.01581
+PSO Estimation Has Begun, This may take some time...
+Moment Estimates:6.08444  5.7533 2.21199  22.341 37.0253 33.6428 5.41836 644.714 35.0492 13.4944  136.39 13.2205 135.269 57.6881
+Moment Estimates:6.08601  5.7532 2.21294 22.3442 37.0443 33.6416 5.42289 644.851 35.0576 13.5037 136.445 13.2259 135.286 57.7191
+seedk:0.331904  0.84234 0.223342  0.96194 0.169465 0.320983| cost:2.71927
+PSO Estimation Has Begun, This may take some time...
+seedk: 0.923687  0.235341 0.0744464  0.687845    0.2107  0.718772| cost:1.60171
+PSO Estimation Has Begun, This may take some time...
+seedk:0.892279 0.104032 0.135519 0.308661 0.869224 0.897516| cost:2.05759
+PSO Estimation Has Begun, This may take some time...
+seedk:0.917802 0.251397 0.980194 0.566147 0.287699 0.669754| cost:1.37466
+PSO Estimation Has Begun, This may take some time...
+seedk:0.203074 0.694342 0.977023 0.651805 0.909603 0.728959| cost:2.04667
+PSO Estimation Has Begun, This may take some time...
+seedk:0.915969 0.955896 0.391923  0.55744  0.41098 0.776401| cost:1.1215
+PSO Estimation Has Begun, This may take some time...
+Moment Estimates:6.57794 5.25332  1.9247 18.8998 43.2778 27.9825 4.05557 451.822 34.6049 12.6999 124.843 10.4545 104.018 41.8568
+Moment Estimates: 6.5779 5.25225 1.92372 18.8889 43.2773 27.9709 4.05134 451.295 34.5976 12.6933  124.77 10.4469 103.935 41.8104
+seedk:0.930787 0.878217 0.052844 0.378151 0.325632 0.663887| cost:1.13862
+PSO Estimation Has Begun, This may take some time...
+Moment Estimates: 6.5191 5.22163 2.05426 19.3097 42.5063 27.6181 4.59592 463.467 34.0859 13.4324   126.4 11.0718 105.467 45.2528
+seedk:0.457848 0.317018 0.172618 0.515491 0.816832 0.060596| cost:0.560846
+PSO Estimation Has Begun, This may take some time...
+seedk:  0.739647   0.819988   0.901234   0.794485   0.372604 0.00343881| cost:41732.2
+PSO Estimation Has Begun, This may take some time...
+seedk: 0.636002 0.0198224   0.99813  0.739055  0.801564  0.744945| cost:1.98624
+PSO Estimation Has Begun, This may take some time...
+seedk:0.473803 0.105613 0.281133 0.169696 0.955954 0.335038| cost:1.78067
+PSO Estimation Has Begun, This may take some time...
+Moment Estimates:6.44694 5.31477 1.76296 19.5036 41.5721 29.0041 3.60327 518.486 34.3339 11.4148 126.417  9.9436 111.762 42.2697
+seedk:0.424704 0.901384 0.571834 0.664829 0.403921 0.207825| cost:1.5096
+PSO Estimation Has Begun, This may take some time...
+seedk:  0.631764   0.397033    0.96979   0.494857 0.00443625   0.492343| cost:3.41812e+07
+PSO Estimation Has Begun, This may take some time...
+seedk: 0.16877 0.594174 0.486668 0.914577 0.997788 0.717609| cost:1.96661
+PSO Estimation Has Begun, This may take some time...
+seedk:0.167731 0.301116 0.714951 0.324038 0.133193 0.760556| cost:3.5103
+PSO Estimation Has Begun, This may take some time...
+seedk: 0.549088  0.248785  0.223046  0.774708 0.0112688  0.275857| cost:87352.7
+PSO Estimation Has Begun, This may take some time...
+seedk:0.0383724   0.81029    0.7962  0.678632  0.191761  0.995715| cost:1.72123
+PSO Estimation Has Begun, This may take some time...
+seedk:0.478286 0.831186 0.173263 0.651621 0.631828 0.289902| cost:1.31709
+PSO Estimation Has Begun, This may take some time...
+Moment Estimates:6.71189  5.1266 2.20004 17.3509 45.0627 26.5146 5.12715 351.445  34.461  14.818 117.063 11.5293 92.0373 41.8877
+seedk:0.724879 0.255941 0.961578 0.218687 0.697209 0.459826| cost:1.75239
+PSO Estimation Has Begun, This may take some time...
