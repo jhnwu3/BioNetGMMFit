@@ -116,10 +116,10 @@ If you decide to simulate the rate constants and therefore simulate Y_t instead 
 is defined in the file, which defines the true set of rate constants as "0.27678, 0.837, 0.44, 0.04, 0.30".
 
 ### *Time Inputs*
-Make sure to list your the times for time evolutions in time_steps.csv rowwise. For a single time evolution, only a single time point, the time that your second comparison sample was evolved to, is needed in the file.
+Make sure to list your the times for time evolutions in time_steps.csv rowwise. For a single time evolution, only two time points, the end and start time of your evolution interval, is needed in the file.
 
-However, especially in the nonlinear case where multiple time points and samples may be beneficial, simply list out the times that each sample was evolved to, as shown below.
-
+However, especially in the nonlinear case where multiple time points and samples may be beneficial, simply list out each of the times evolved for, as shown below.
+    0
     0.5
     2
     10
