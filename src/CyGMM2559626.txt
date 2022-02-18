@@ -1,0 +1,64 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+make: Nothing to be done for 'all'.
+Program Begin:
+Reading in Parameters from Configuration File!
+csvPSO
+------ Reading in X_0! ------
+"../data/X/t2m_processed.csv"
+Reading in 1431 rows or cells from X data directory
+---------------------------
+--------- Parameters ---------
+Total Number of Runs:30
+Number of Moments:14
+Hyper Cube Width:1
+Using Times:120 240
+Blind PSO --> nParts:1000 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+Number of Rates:6
+------------------------------
+------ Reading in Yt! ------
+"../data/Y/t4m_processed.csv"
+Read in 2437 rows!
+---------------------------
+Computing Weight Matrices!
+  0.0149235           0           0           0           0           0           0           0           0           0           0           0           0           0
+          0   0.0194869           0           0           0           0           0           0           0           0           0           0           0           0
+          0           0   0.0299509           0           0           0           0           0           0           0           0           0           0           0
+          0           0           0 0.000243127           0           0           0           0           0           0           0           0           0           0
+          0           0           0           0 7.46851e-06           0           0           0           0           0           0           0           0           0
+          0           0           0           0           0 2.02259e-05           0           0           0           0           0           0           0           0
+          0           0           0           0           0           0 3.20078e-05           0           0           0           0           0           0           0
+          0           0           0           0           0           0           0  1.5596e-09           0           0           0           0           0           0
+          0           0           0           0           0           0           0           0 7.57237e-05           0           0           0           0           0
+          0           0           0           0           0           0           0           0           0 0.000184236           0           0           0           0
+          0           0           0           0           0           0           0           0           0           0 2.21605e-06           0           0           0
+          0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
+          0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
+          0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
+PSO Seeded At:0.689993 0.396951 0.492533 0.662818 0.850966 0.744848| cost:1.93757
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At: 0.890006   0.20162  0.714847   0.83883 0.0431216  0.663678| cost:60540.4
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At: 0.857339  0.198663 0.0812432  0.406424 0.0934155 0.0384174| cost:1463.88
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:0.464404 0.797293 0.146149 0.269903 0.858794 0.477128| cost:1.92715
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:0.0568856  0.933406  0.996195  0.404953  0.180919 0.0294347| cost:841.563
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:0.410628 0.838011 0.882483 0.727085 0.409721 0.464135| cost:1.43957
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At: 0.07512 0.504648 0.560369 0.446921  0.68537 0.125485| cost:2.23236
+PSO Estimation Has Begun, This may take some time...
