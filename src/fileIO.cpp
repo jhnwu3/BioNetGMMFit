@@ -177,6 +177,7 @@ MatrixXd readX(const std::string &path){
     if(nFile > 1){
         cout << "Multiple X files detected, reading only the last X file read in." << endl;
     }
+    cout << "Reading in " << X_0.rows() << " rows or cells from X data directory" << endl;
     cout << "---------------------------" << endl;
     return X_0;
 }
@@ -195,6 +196,7 @@ vector<MatrixXd> readY(const std::string & path){
     for(const auto & entry : fs::directory_iterator(path)){
         cout << entry << endl;
         Y.push_back(csvToMatrix(entry.path().string()));
+        cout << "Read in " <<Y[Y.size() - 1].rows() << " rows!" << endl;
     }
     if(Y.size() < 1){
         cout << "Error! 0 Y Files read in!" << endl;
@@ -229,7 +231,8 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
     Read all Config.csv parameters into a set of parameters (as shown in the function parameters)
 
  */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal){
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube){
+    cout << "Reading in Parameters from Configuration File!" << endl;
     std::ifstream input("../Config.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open PSO file");
@@ -247,7 +250,6 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
             }
         }
     }
-    cout << "params:" << params.size() << endl;
     nPart1 = params.at(0);
     nSteps1 = params.at(1);
     nPart2 = params.at(2);
@@ -261,6 +263,8 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
     nRates = params.at(10);
     thetaHeld = params.at(11);
     heldVal = params.at(12);
+    hyperCube = params.at(13);
+    reportMoments = params.at(14);
     input.close();
     return 0;
 }
@@ -346,4 +350,27 @@ VectorXd readRates(int nRates){
         exit(1);
     }
     return rates;
+}
+
+void printParameters(int nParts, int nSteps, int nParts2, int nSteps2, int useOnlySecMom, int useOnlyFirstMom, int useLinear, int nRuns, int simulateYt, int useInverse, int nRates, int thetaHeld, double heldVal, int reportMoments, double hyperCube, const VectorXd &times, int nMoments){
+    cout << "--------- Parameters ---------" << endl;
+    if(useLinear){
+        cout << "Using Matrix Interaction Model Instead of Runge Kutta Solvers!" << endl;
+    }
+    cout << "Total Number of Runs:" << nRuns << endl;
+    cout << "Number of Moments:" << nMoments << endl;
+    if(useOnlyFirstMom){
+        cout << "Using Only Means!" << endl;
+    }else if(useOnlySecMom){
+        cout << "Using Only Means and Second Moments!" << endl;
+    }
+    if(thetaHeld > - 1){
+        cout << "Theta Held Index:" << thetaHeld << " held value:" << heldVal << endl;
+    }
+    cout << "Hyper Cube Width:" << hyperCube << endl;
+    cout << "Using Times:" << times.transpose() << endl;
+    cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
+    cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
+    cout << "Number of Rates:" << nRates << endl;
+    cout << "------------------------------" << endl;
 }
