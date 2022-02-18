@@ -1,22 +1,22 @@
 Program Begin:
-Reading in data!
+Reading in Parameters from Configuration File!
 csvPSO
-params:15
 ------ Reading in X_0! ------
 "../data/X/t2m_processed.csv"
+Reading in 1431 rows or cells from X data directory
 ---------------------------
-Reading in 1431 elements from X data directory
-Moments:14
 --------- Parameters ---------
-X Size:1431 with:14 moments.
-Using Times:240
-Bounds for Uniform Distribution (0,1)
+Total Number of Runs:1
+Number of Moments:14
+Hyper Cube Width:1
+Using Times:  0 240
 Blind PSO --> nParts:100 Nsteps:10
 Targeted PSO --> nParts:10 Nsteps:10
-sdbeta:0.1
+Number of Rates:6
 ------------------------------
 ------ Reading in Yt! ------
 "../data/Y/t4m_processed.csv"
+Read in 2437 rows!
 ---------------------------
 Computing Weight Matrices!
   0.0149235           0           0           0           0           0           0           0           0           0           0           0           0           0
@@ -33,10 +33,10 @@ Computing Weight Matrices!
           0           0           0           0           0           0           0           0           0           0           0 0.000223477           0           0
           0           0           0           0           0           0           0           0           0           0           0           0 1.53756e-06           0
           0           0           0           0           0           0           0           0           0           0           0           0           0 4.91262e-07
-PSO Seeded At: 0.449071 0.0374495  0.447886  0.924755  0.645221   0.81651| cost:2.14956
+PSO Seeded At:0.493876 0.799292  0.75652 0.677704 0.343048 0.811087| cost:1.4337
 PSO Estimation Has Begun, This may take some time...
-Simulated Xt Moments: 6.3433 5.07136 2.77545 3.73759 40.2375 25.7187 7.70313 13.9695 32.1692 17.6055 23.7086 14.0753 18.9546 10.3735
+Simulated Xt Moments:5.47777 4.40081 2.47738 4.93006  30.006 19.3672 6.13742 24.3055 24.1067 13.5705 27.0058 10.9025 21.6963 12.2136
 
 All Run Estimates:
- 0.519495  0.502053  0.343676  0.845663  0.627974 0.0818985  0.479045
-CODE FINISHED RUNNING IN 2 s TIME!
+0.838374 0.301839 0.211498 0.747662 0.375704  0.15305  0.49388
+CODE FINISHED RUNNING IN 3 s TIME!
