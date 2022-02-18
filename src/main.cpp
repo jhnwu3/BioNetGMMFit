@@ -3,6 +3,11 @@ Author: John W., Dr. Stewart
 Summary of Src File: 
 CyGMM -> <Insert Statement About Rate Constant Estimation>
 
+Coder's Note:
+If you're wondering why the nonlinear/approximate solution method is all in main and not segmented in nonlinear.cpp is because currently
+the way in how Boost's ODE struct/class system for solving ODEs results in major performance decreases when inside a function, very possibly
+due to something with memory or how functions work from the compiler.
+
 */
 
 #include "main.hpp" // all necessary libraries
