@@ -283,14 +283,15 @@ int main(){
                     integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
-                cout << "Simulated Xt Moments:" << XtPSO.mVec.transpose() << endl;
+                cout << "Simulated Xt Moments for time" << " " <<times(t) << ":" << XtPSO.mVec.transpose() << endl;
+                cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
             }
         }
     }
     cout << endl << "All Run Estimates:" << endl;
     cout << hyperCubeScale * GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
-    if(nRuns > 1){ computeConfidenceIntervals(GBVECS, 1.96, nRates);}
+    if(nRuns > 1){ computeConfidenceIntervals(hyperCubeScale*GBVECS, 1.96, nRates);}
     
     auto tB = std::chrono::high_resolution_clock::now();
     auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
