@@ -289,7 +289,7 @@ int main(){
                     integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
-                cout << "Simulated Xt Moments for time" << " " <<times(t) << ":" << XtPSO.mVec.transpose() << endl;
+                cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
                 cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
             }
         }
