@@ -48,6 +48,7 @@ int main(){
 
     MatrixXd X_0;
     X_0 = readX("../data/X");
+    cout << "X0:" << endl << X_0 << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         nMoments = 2 * X_0.cols();
