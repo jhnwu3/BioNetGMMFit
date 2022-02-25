@@ -212,3 +212,24 @@ void computeConfidenceIntervals(const MatrixXd& sample, double z, int nRates){
     }
     cout << "-----------------------------------------------" << endl;
 }
+
+bool rowIsAllPositive(const VectorXd &x){
+    bool allPos = true;
+    for(int i = 0; i < x.size(); i++){
+        if (x(i) <  0 ){
+            return false;
+        }
+    }
+    return allPos;
+}
+
+MatrixXd filterZeros(const MatrixXd &X){
+    MatrixXd x_filtered = MatrixXd::Zero(0,0);
+    for(int i = 0; i < X.rows(); i++){
+        if(rowIsAllPositive(X.row(i))){
+            x_filtered.conservativeResize(x_filtered.rows() + 1, X.cols());
+            x_filtered.row(x_filtered.rows() - 1) = X.row(i);
+        }
+    }
+    return x_filtered;
+}

@@ -48,7 +48,8 @@ int main(){
 
     MatrixXd X_0;
     X_0 = readX("../data/X");
-    cout << "X0:" << endl << X_0 << endl;
+    X_0 = filterZeros(X_0);
+    cout << "After removing all negative rows, X has " << X_0.rows() << " rows." << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         nMoments = 2 * X_0.cols();
@@ -100,6 +101,8 @@ int main(){
             cout << "------ SIMULATING YT! ------" << endl;
             tru = readRates(nRates);
             MatrixXd Y_0 = readY("../data/Y")[0];
+            Y_0 = filterZeros(Y_0);
+            cout << "After removing all negative rows, Y has " << Y_0.rows() << " rows." << endl;
             for(int t = 1; t < times.size(); t++){ // start at t1, because t0 is now in the vector
                 Nonlinear_ODE trueSys(tru);
                 Protein_Components Yt(times(t), nMoments, Y_0.rows(), X_0.cols());
@@ -116,12 +119,14 @@ int main(){
             cout << "---------------------------" << endl;
         }else{
             Yt3Mats = readY("../data/Y");
-            Yt3Mats[0] = Yt3Mats[0];// temporarily normalize it
             if(Yt3Mats.size() + 1 != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
             }
+            // filter all zeroes and compute moments vectors for cost calcs
             for(int i = 0; i < Yt3Mats.size(); i++){
+                Yt3Mats[i] = filterZeros(Yt3Mats[i]);
+                cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
         }

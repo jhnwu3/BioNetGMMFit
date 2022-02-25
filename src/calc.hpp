@@ -9,4 +9,6 @@ MatrixXd dasWtMat(const MatrixXd& Yt, const MatrixXd& Xt, int nMoments, int N, b
 MatrixXd bootStrap(const MatrixXd& sample);
 VectorXd cwiseVar(const MatrixXd& sample);
 void computeConfidenceIntervals(const MatrixXd& sample, double z, int nRates);
+bool rowIsAllPositive(const VectorXd &x);
+MatrixXd filterZeros(const MatrixXd &X);
 #endif 
