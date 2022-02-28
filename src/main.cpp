@@ -126,6 +126,7 @@ int main(){
             // filter all zeroes and compute moments vectors for cost calcs
             for(int i = 0; i < Yt3Mats.size(); i++){
                 Yt3Mats[i] = filterZeros(Yt3Mats[i]);
+                cout << "means:" << Yt3Mats[i].colwise().mean().transpose() << endl;
                 cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
