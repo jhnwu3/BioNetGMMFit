@@ -1,15 +1,15 @@
-Number of Particles Blind PSO,960
-Number of Steps Blind PSO,10000
+Number of Particles Blind PSO,96
+Number of Steps Blind PSO,2000
 Number of Particles Targeted PSO,10
 Number of Steps Targeted PSO,10
-Exclude Mixed Moments?,0
+Exclude Mixed Moments?,1
 Exclude Mixed and Second Moments?,0
 Use Linear Model?,0
 Number of Runs,1
 Simulate Y_t?,0
 Use Matrix Inverse?,0
 Number of Rates,6
-Index of Held Rate Constant,-1
-Value of Held Rate Constant,0.1
-Hypercube Dimension, 10.0
+Index of Held Rate Constant,1
+Value of Held Rate Constant,0.0415627
+Hypercube Dimension, 2.0
 Report Moments?, 1

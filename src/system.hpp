@@ -45,7 +45,7 @@ public:
         // dcdt[1] = rate.k(1) * c[0] - rate.k(4) * c[1];
         // dcdt[2] = rate.k(2) * c[1] - rate.k(4) * c[2];
         // dcdt[3] = rate.k(3) * c[2] - rate.k(4) * c[3];
-        dcdt[0] = k(0) - k(5) * c[0]; // pcd3z
+        dcdt[0] = k(0) - k(4) * c[0]; // pcd3z
         dcdt[1] = k(1) * c[0] - k(4) * c[1]; // pslp
         dcdt[2] = k(2) * c[1] - k(4) * c[2]; // perk
         dcdt[3] = k(3) * c[2] - k(4) * c[3]; //ps6

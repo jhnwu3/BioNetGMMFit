@@ -50,6 +50,7 @@ int main(){
     X_0 = readX("../data/X");
     X_0 = filterZeros(X_0);
     cout << "After removing all negative rows, X has " << X_0.rows() << " rows." << endl;
+    // cout << "---------" << endl << X_0 << endl << "--------" << endl;
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(useOnlySecMom){  // these will be added to the options sheet later.
         nMoments = 2 * X_0.cols();
@@ -126,8 +127,9 @@ int main(){
             // filter all zeroes and compute moments vectors for cost calcs
             for(int i = 0; i < Yt3Mats.size(); i++){
                 Yt3Mats[i] = filterZeros(Yt3Mats[i]);
-                cout << "means:" << Yt3Mats[i].colwise().mean().transpose() << endl;
+                cout << "means:" << Yt3Mats[i].colwise().mean() << endl;
                 cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
+                // cout << "observed:" << endl << Yt3Mats[i] << endl << "---------" << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
         }
@@ -149,7 +151,9 @@ int main(){
             /* Initialize Global Best  */
             VectorXd seed = VectorXd::Zero(nRates);
             for (int i = 0; i < nRates; i++) { seed(i) = rndNum(low,high);}
-            if(heldTheta > -1){seed(heldTheta) = heldThetaVal;}
+            if(heldTheta > -1){seed(heldTheta) = heldThetaVal / 2;
+                            seed(2) = 0.310876 / 2;
+                            seed(4) = 0.384203 / 2;}
             
             /* Evolve initial Global Best and Calculate a Cost*/
             double costSeedK = 0;
@@ -187,7 +191,11 @@ int main(){
                         for(int i = 0; i < nRates; i++){
                             POSMAT(particle, i) = rndNum(low, high);
                         }
-                        if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
+                        if(heldTheta > -1){
+                            POSMAT.row(particle)(heldTheta) = heldThetaVal / 2;
+                            POSMAT.row(particle)(2) = 0.310876 / 2;
+                            POSMAT.row(particle)(4) = 0.384203 / 2;
+                        }
                         
                         double cost = 0;
                         for(int t = 1; t < times.size(); ++t){
@@ -222,7 +230,9 @@ int main(){
                         POSMAT.row(particle) = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
                         
                         if(heldTheta > -1){
-                            POSMAT.row(particle)(heldTheta) = heldThetaVal;
+                            POSMAT.row(particle)(heldTheta) = heldThetaVal / 2;
+                            POSMAT.row(particle)(2) = 0.310876 / 2;
+                            POSMAT.row(particle)(4) = 0.384203 / 2;
                         }
                         double cost = 0;
                         for(int t = 1; t < times.size(); ++t){
@@ -277,8 +287,6 @@ int main(){
         }
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(reportMoments == 1){
-            struct K GBVEC; 
-            GBVEC.k = GBVECS.colwise().mean();
             for(int t = 1; t < times.size(); ++t){
                 /*solve ODEs and recompute cost */
                 Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
@@ -290,6 +298,7 @@ int main(){
                     integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
+                cout << "GBVEC:" << hyperCubeScale * GBVECS.colwise().mean() << endl;
                 cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
                 cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
             }
