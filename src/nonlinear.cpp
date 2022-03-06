@@ -27,10 +27,8 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
 
     VectorXd rPoint;
     rPoint = posK;
-
     /* create random int vector */
     vector<int> rand;
-    uniform_real_distribution<double> unifDist(0.0, 1.0);
     for (int i = 0; i < posK.size(); i++) {
         rand.push_back(i);
     }
@@ -61,7 +59,6 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
 
         double x = aDist(generator);
         double y = bDist(generator);
-
         rPoint(px) = (x / (x + y)); 
     }
     
