@@ -291,18 +291,8 @@ int main(){
                     sfs = sfs + (sfe - sfg) / nSteps;
                 }
 
-                for(int i = 0; i < nRates; i++){GBVECS(run, i) = GBVEC(i);}
-                GBVECS(run, nRates) = gCost;
+                
 
-
-                /* bootstrap X0 and Y matrices if more than 1 run is specified */
-                if(nRuns > 1 && bootstrap == 1){
-                    X_0 = bootStrap(X_0);
-                    for(int y = 0; y < Yt3Mats.size(); ++y){
-                        Yt3Mats[y] = bootStrap(Yt3Mats[y]);
-                        Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
-                    }
-                }
                 // double hypercube size and rescan global best vector to see what needs to be held constant.
                 if(nest > 1){
                     for(int i = 0; i < GBVEC.size(); i++){
@@ -310,7 +300,27 @@ int main(){
                             nestedHolds(i) = hyperCubeScale * GBVEC(i);
                         }
                     }
+                   
+                }
+                for(int i = 0; i < nRates; i++){
+                    if(nestedHolds(i) != 0){
+                        GBVECS(run, i) = nestedHolds(i); // GBVECS is either something that was held constant.
+                    }else{ 
+                        GBVECS(run, i) = hyperCubeScale * GBVEC(i); // or is now something scaled with GBVEC.
+                    } 
+                }
+                GBVECS(run, nRates) = gCost;
+                if(nest > 1){
                     hyperCubeScale *= 2.0;
+                }
+            } // nested loop
+
+            /* bootstrap X0 and Y matrices if more than 1 run is specified */
+            if(nRuns > 1 && bootstrap == 1){
+                X_0 = bootStrap(X_0);
+                for(int y = 0; y < Yt3Mats.size(); ++y){
+                    Yt3Mats[y] = bootStrap(Yt3Mats[y]);
+                    Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
                 }
             }
             if(nest > 1){
@@ -319,7 +329,7 @@ int main(){
                 }
             }
            
-        }
+        } // run loop
         // when done, find what the original max hypercube size was from nesting
         for(int ne = 1; ne < nest; ne++){ 
             hyperCubeScale *= 2.0;
@@ -344,10 +354,9 @@ int main(){
         }
     }
     cout << endl << "-------------- All Run Estimates: -------------------" << endl;
-    GBVECS.block(0, 0, GBVECS.rows(), GBVECS.cols() - 1) *= hyperCubeScale;
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
-    if(nRuns > 1){ computeConfidenceIntervals(hyperCubeScale*GBVECS, 1.96, nRates);}
+    if(nRuns > 1){ computeConfidenceIntervals(GBVECS, 1.96, nRates);}
     
     auto tB = std::chrono::high_resolution_clock::now();
     auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
