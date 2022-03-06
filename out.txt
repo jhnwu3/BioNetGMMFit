@@ -31,11 +31,11 @@ Computing Weight Matrices!
           0           0           0           0           0 4.70902e-06           0           0
           0           0           0           0           0           0 7.54138e-05           0
           0           0           0           0           0           0           0 2.37216e-06
-PSO Seeded At:0.600931 0.255199 0.189145 0.286538 0.996177 0.630597| cost:1.58903
+PSO Seeded At:0.257869 0.448861 0.554267 0.943013 0.981474 0.128949| cost:0.914524
 PSO Estimation Has Begun, This may take some time...
-PSO Seeded At:  1.06852 0.0415535  0.310907     1.497  0.384201  0.669947| cost:0.148439
+PSO Seeded At: 0.119876 0.0413608   0.31087   0.27638  0.384115  0.614279| cost:0.242686
 PSO Estimation Has Begun, This may take some time...
 
 -------------- All Run Estimates: -------------------
-  1.50829 0.0415535  0.310907   1.12115  0.384201  0.669947  0.124085
-CODE FINISHED RUNNING IN 29 s TIME!
+  1.55335 0.0413608   0.31087   1.11276  0.384115  0.614279  0.124108
+CODE FINISHED RUNNING IN 33 s TIME!
