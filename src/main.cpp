@@ -93,8 +93,6 @@ int main(){
         MatrixXd POSMAT(nParts, nRates); // Position matrix as it goees through it in parallel
 
         /* Solve for Y_t (mu). */
-        // struct K tru;
-        // tru.k = readRates(nRates); // read in rates.
         VectorXd tru;
         vector<MatrixXd> Yt3Mats;
         vector<VectorXd> Yt3Vecs;
