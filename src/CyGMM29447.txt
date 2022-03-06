@@ -1,0 +1,64 @@
+warning: Pulling without specifying how to reconcile divergent branches is
+discouraged. You can squelch this message by running one of the following
+commands sometime before your next pull:
+
+  git config pull.rebase false  # merge (the default strategy)
+  git config pull.rebase true   # rebase
+  git config pull.ff only       # fast-forward only
+
+You can replace "git config" with "git config --global" to set a default
+preference for all repositories. You can also pass --rebase, --no-rebase,
+or --ff-only on the command line to override the configured default per
+invocation.
+
+Already up to date.
+g++ -c -O3 -fopenmp -std=c++17 main.cpp 
+g++ main.o fileIO.o linear.o nonlinear.o calc.o system.o -o sig -fopenmp -std=c++17 -lstdc++fs
+Program Begin:
+Reading in Parameters from Configuration File!
+csvPSO
+------ Reading in X_0! ------
+"../data/X/t1m_processed.csv"
+Reading in 1773 rows or cells from X data directory
+---------------------------
+After removing all negative rows, X has 681 rows.
+--------- Parameters ---------
+Total Number of Runs:1
+Number of Moments:8
+Using Only Means and Second Moments!
+Hyper Cube Width:1
+Using Times:1 2
+Blind PSO --> nParts:96 Nsteps:1000
+Targeted PSO --> nParts:10 Nsteps:10
+Number of Rates:6
+------------------------------
+------ Reading in Yt! ------
+"../data/Y/t2m_processed.csv"
+Read in 1431 rows!
+---------------------------
+means:11.3451 11.4966 6.18595 14.0402
+After removing all negative rows, Y0 has 587 rows.
+Computing Weight Matrices!
+  0.0106423           0           0           0           0           0           0           0
+          0  0.00939776           0           0           0           0           0           0
+          0           0    0.030637           0           0           0           0           0
+          0           0           0  0.00602401           0           0           0           0
+          0           0           0           0 7.67112e-06           0           0           0
+          0           0           0           0           0 4.70902e-06           0           0
+          0           0           0           0           0           0 7.54138e-05           0
+          0           0           0           0           0           0           0 2.37216e-06
+PSO Seeded At:0.0836619  0.262424 0.0190667   0.83549  0.560898  0.841776| cost:0.849277
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:  1.48345 0.0415296  0.310843   1.95776  0.384157   0.34717| cost:0.239637
+PSO Estimation Has Begun, This may take some time...
+
+-------------- All Run Estimates: -------------------
+  1.47188 0.0415296  0.310843   1.12155  0.384157   0.34717   0.12413
+CODE FINISHED RUNNING IN 31 s TIME!
+Job Statistics for 29447:
+           JobID       User               Start                 End    Elapsed     MaxRSS   TotalCPU      State Exit        NodeList                                  ReqTRES 
+---------------- ---------- ------------------- ------------------- ---------- ---------- ---------- ---------- ---- --------------- ---------------------------------------- 
+           29447   rsjxw007 2022-03-06T11:04:55 2022-03-06T11:05:41   00:00:46             14:10.274  COMPLETED  0:0   r1pl-hpcf-n21     billing=30,cpu=30,mem=234360M,node=1 
+     29447.batch            2022-03-06T11:04:55 2022-03-06T11:05:41   00:00:46      2.95M  14:10.272  COMPLETED  0:0   r1pl-hpcf-n21                                          
+    29447.extern            2022-03-06T11:04:55 2022-03-06T11:05:41   00:00:46          0  00:00.001  COMPLETED  0:0   r1pl-hpcf-n21                                          
+CPU Efficiency: 61.59% of 00:23:00 core-walltime
