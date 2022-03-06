@@ -33,6 +33,8 @@ int main(){
     int useInverse = 0; // currently just inverse only occurs in linear model.
     int heldTheta = -1;
     int reportMoments = 1;
+    int nest = 0;
+    int bootstrap = 0;
     double heldThetaVal = 0;
     double hyperCubeScale = 1.0;
     VectorXd times = readCsvTimeParam();
@@ -41,7 +43,7 @@ int main(){
         exit(1);
     }
     
-    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, heldTheta, heldThetaVal, reportMoments, hyperCubeScale) !=0 ){
+    if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, heldTheta, heldThetaVal, reportMoments, hyperCubeScale, nest, bootstrap) !=0 ){
         cout << "failed to effectively read in parameters!" << endl;
         return EXIT_FAILURE;
     }
@@ -140,150 +142,188 @@ int main(){
             weights.push_back(wolfWtMat(Yt3Mats[y], nMoments, false));
         }
         cout << weights[0] << endl;
-        
-        for(int run = 0; run < nRuns; ++run){
-            // make sure to reset GBMAT, POSMAT, AND PBMAT every run
-            double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
-            GBMAT = MatrixXd::Zero(0,0); // iterations of global best vectors
-            MatrixXd PBMAT = MatrixXd::Zero(nParts, nRates + 1); // particle best matrix + 1 for cost component
-            MatrixXd POSMAT = MatrixXd::Zero(nParts, nRates); // Position matrix as it goees through it in parallel
-            
-            /* Initialize Global Best  */
-            VectorXd seed = VectorXd::Zero(nRates);
-            for (int i = 0; i < nRates; i++) { seed(i) = rndNum(low,high);}
-            if(heldTheta > -1){seed(heldTheta) = heldThetaVal / 2;
-                            seed(2) = 0.310876 / 2;
-                            seed(4) = 0.384203 / 2;}
-            
-            /* Evolve initial Global Best and Calculate a Cost*/
-            double costSeedK = 0;
-            for(int t = 1; t < times.size(); t++){
-                Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
-                Moments_Mat_Obs XtObs(Xt);
-                Nonlinear_ODE sys(hyperCubeScale * seed);
-                for (int i = 0; i < X_0.rows(); ++i) {
-                    State_N c0 = convertInit(X_0.row(i));
-                    Xt.index = i;
-                    integrate_adaptive(controlledStepper, sys, c0, times(0), times(t), dt, XtObs);
+       
+        for(int run = 0; run < nRuns; ++run){ // for multiple runs aka bootstrapping (for now)
+            VectorXd nestedHolds = VectorXd::Zero(nRates);
+            if (run > 0 && bootstrap == 1){
+                for(int y = 0; y < Yt3Mats.size(); ++y){ 
+                    weights[y] = wolfWtMat(Yt3Mats[y], nMoments, false);
                 }
-                Xt.mVec /= X_0.rows();  
-                costSeedK += costFunction(Yt3Vecs[t - 1], Xt.mVec, weights[t - 1]); // indexed one off for each weight matrix.
             }
-            cout << "PSO Seeded At:"<< seed.transpose() << "| cost:" << costSeedK << endl;
-            
-            double gCost = costSeedK; //initialize costs and GBMAT
-            VectorXd GBVEC = seed;
-            
-            GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1);
-            for (int i = 0; i < nRates; i++) {
-                GBMAT(GBMAT.rows() - 1, i) = seed(i);
-            }
-            GBMAT(GBMAT.rows() - 1, nRates) = gCost;
-            double probabilityToTeleport = 3.0/4.0; 
-            /* Blind PSO begins */
-            cout << "PSO Estimation Has Begun, This may take some time..." << endl;
-            for(int step = 0; step < nSteps; step++){
-            #pragma omp parallel for 
-                for(int particle = 0; particle < nParts; particle++){
-                    /* initialize all particle rate constants with unifDist */
-                    if(step == 0){
-                        /* initialize all particles with random rate constant positions */
-                        for(int i = 0; i < nRates; i++){
-                            POSMAT(particle, i) = rndNum(low, high);
-                        }
-                        if(heldTheta > -1){
-                            POSMAT.row(particle)(heldTheta) = heldThetaVal / 2;
-                            POSMAT.row(particle)(2) = 0.310876 / 2;
-                            POSMAT.row(particle)(4) = 0.384203 / 2;
-                        }
-                        
-                        double cost = 0;
-                        for(int t = 1; t < times.size(); ++t){
-                            Nonlinear_ODE initSys(hyperCubeScale * POSMAT.row(particle));
-                            Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
-                            Moments_Mat_Obs XtObsPSO(XtPSO);
-                            for(int i = 0; i < X_0.rows(); ++i){
-                                //State_N c0 = gen_multi_norm_iSub();
-                                State_N c0 = convertInit(X_0.row(i));
-                                XtPSO.index = i;
-                                integrate_adaptive(controlledStepper, initSys, c0, times(0), times(t), dt, XtObsPSO);
-                            }
-                            XtPSO.mVec /= X_0.rows();
-                            cost += costFunction(Yt3Vecs[t - 1], XtPSO.mVec, weights[t - 1]);
-                        }
-                        
-                        /* instantiate PBMAT */
-                        for(int i = 0; i < nRates; i++){
-                            PBMAT(particle, i) = POSMAT(particle, i);
-                        }
-                        PBMAT(particle, nRates) = cost; // add cost to final column
-                    }else{ 
-                        /* step into PSO */
-                        double w1 = sfi * rndNum(low,high) / sf2, w2 = sfc * rndNum(low,high) / sf2, w3 = sfs * rndNum(low,high) / sf2;
-                        double sumw = w1 + w2 + w3; 
-                        w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
+            for(int ne = 0; ne < nest; ne++){ // now we will include the ability to nest hypercubes. Every nested hypercube doubles the hypercube width.
+                // make sure to reset GBMAT, POSMAT, AND PBMAT every run
+                double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
+                GBMAT = MatrixXd::Zero(0,0); // iterations of global best vectors
+                MatrixXd PBMAT = MatrixXd::Zero(nParts, nRates + 1); // particle best matrix + 1 for cost component
+                MatrixXd POSMAT = MatrixXd::Zero(nParts, nRates); // Position matrix as it goees through it in parallel
                 
-                        VectorXd rpoint = adaptVelocity(POSMAT.row(particle), particle, epsi, nan, hone);
-                        VectorXd PBVEC(nRates);
-                        for(int i = 0; i < nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
-                        
-                        POSMAT.row(particle) = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
-                        
-                        if(heldTheta > -1){
-                            POSMAT.row(particle)(heldTheta) = heldThetaVal / 2;
-                            POSMAT.row(particle)(2) = 0.310876 / 2;
-                            POSMAT.row(particle)(4) = 0.384203 / 2;
+                /* Initialize Global Best  */
+                VectorXd seed = VectorXd::Zero(nRates);
+                for (int i = 0; i < nRates; i++) {seed(i) = rndNum(low,high);}
+                if(heldTheta > -1){seed(heldTheta) = heldThetaVal;}
+                
+                /* Evolve initial Global Best and Calculate a Cost*/
+                double costSeedK = 0;
+                
+                if(ne > 0){
+                    seed = hyperCubeScale * seed;
+                    for(int i = 0; i < nRates; i++){
+                        if(nestedHolds(i)  != 0){
+                            seed(i) = nestedHolds(i);
                         }
-                        double cost = 0;
-                        for(int t = 1; t < times.size(); ++t){
-                            /*solve ODEs and recompute cost */
-                            Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
-                            Moments_Mat_Obs XtObsPSO1(XtPSO);
-                            Nonlinear_ODE stepSys(hyperCubeScale * POSMAT.row(particle));
-                            for(int i = 0; i < X_0.rows(); ++i){
-                                State_N c0 = convertInit(X_0.row(i));
-                                XtPSO.index = i;
-                                integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
-                            }
-                            XtPSO.mVec /= X_0.rows();
-                            cost += costFunction(Yt3Vecs[t - 1], XtPSO.mVec, weights[t - 1]);
-                        }
-                    
-                        /* update gBest and pBest */
-                    #pragma omp critical
-                    {
-                        if(cost < PBMAT(particle, nRates)){ // particle best cost
-                            for(int i = 0; i < nRates; i++){
-                                PBMAT(particle, i) = POSMAT.row(particle)(i);
-                            }
-                            PBMAT(particle, nRates) = cost;
-                            if(cost < gCost){
-                                gCost = cost;
-                                GBVEC = POSMAT.row(particle);
-                            }   
-                        }
-                    }
                     }
                 }
-                GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1); // Add to GBMAT after resizing
-                for (int i = 0; i < nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
+                for(int t = 1; t < times.size(); t++){
+                    Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
+                    Moments_Mat_Obs XtObs(Xt);
+                    Nonlinear_ODE sys(seed);
+                    for (int i = 0; i < X_0.rows(); ++i) {
+                        State_N c0 = convertInit(X_0.row(i));
+                        Xt.index = i;
+                        integrate_adaptive(controlledStepper, sys, c0, times(0), times(t), dt, XtObs);
+                    }
+                    Xt.mVec /= X_0.rows();  
+                    costSeedK += costFunction(Yt3Vecs[t - 1], Xt.mVec, weights[t - 1]); // indexed one off for each weight matrix.
+                }
+                cout << "PSO Seeded At:"<< seed.transpose() << "| cost:" << costSeedK << endl;
+                
+                double gCost = costSeedK; //initialize costs and GBMAT
+                VectorXd GBVEC = seed;
+                
+                GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1);
+                for (int i = 0; i < nRates; i++) {
+                    GBMAT(GBMAT.rows() - 1, i) = seed(i);
+                }
                 GBMAT(GBMAT.rows() - 1, nRates) = gCost;
-                sfi = sfi - (sfe - sfg) / nSteps;   // reduce the inertial weight after each step 
-                sfs = sfs + (sfe - sfg) / nSteps;
-            }
+                double probabilityToTeleport = 3.0/4.0; 
+                /* Blind PSO begins */
+                cout << "PSO Estimation Has Begun, This may take some time..." << endl;
+                for(int step = 0; step < nSteps; step++){
+                #pragma omp parallel for 
+                    for(int particle = 0; particle < nParts; particle++){
+                        /* initialize all particle rate constants with unifDist */
+                        if(step == 0){
+                            /* initialize all particles with random rate constant positions */
+                            for(int i = 0; i < nRates; i++){
+                                POSMAT(particle, i) = rndNum(low, high);
+                            }
+                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
+                            
+                            double cost = 0;    
+                            if(step == 0 && ne > 0){
+                                for(int i = 0 ; i < nRates; i++){
+                                    if(nestedHolds(i) != 0){
+                                        POSMAT.row(particle)(i) = nestedHolds(i) / hyperCubeScale; 
+                                    }
+                                }
+                            }
+                            
+                            for(int t = 1; t < times.size(); ++t){
+                                Nonlinear_ODE initSys(POSMAT.row(particle) * hyperCubeScale);
+                                Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
+                                Moments_Mat_Obs XtObsPSO(XtPSO);
+                                for(int i = 0; i < X_0.rows(); ++i){
+                                    State_N c0 = convertInit(X_0.row(i));
+                                    XtPSO.index = i;
+                                    integrate_adaptive(controlledStepper, initSys, c0, times(0), times(t), dt, XtObsPSO);
+                                }
+                                XtPSO.mVec /= X_0.rows();
+                                cost += costFunction(Yt3Vecs[t - 1], XtPSO.mVec, weights[t - 1]);
+                            }
+                            
+                            /* instantiate PBMAT */
+                            for(int i = 0; i < nRates; i++){
+                                PBMAT(particle, i) = POSMAT(particle, i);
+                            }
+                            PBMAT(particle, nRates) = cost; // add cost to final column
+                        }else{ 
+                            /* step into PSO */
+                            double w1 = sfi * rndNum(low,high) / sf2, w2 = sfc * rndNum(low,high) / sf2, w3 = sfs * rndNum(low,high) / sf2;
+                            double sumw = w1 + w2 + w3; 
+                            w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
+                    
+                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle) / hyperCubeScale, particle, epsi, nan, hone);
+                            VectorXd PBVEC(nRates);
+                            for(int i = 0; i < nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
+                            
+                            POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
+                        
+                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
+                            double cost = 0;
 
-            for(int i = 0; i < nRates; i++){GBVECS(run, i) = GBVEC(i);}
-            GBVECS(run, nRates) = gCost;
+                            for(int i = 0 ; i < nRates; i++){
+                                if(nestedHolds(i) != 0){
+                                    POSMAT.row(particle)(i) = nestedHolds(i) / hyperCubeScale; 
+                                }
+                            }
+                            for(int t = 1; t < times.size(); ++t){
+                                /*solve ODEs and recompute cost */
+                                Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
+                                Moments_Mat_Obs XtObsPSO1(XtPSO);
+                                Nonlinear_ODE stepSys(POSMAT.row(particle) * hyperCubeScale);
+                                for(int i = 0; i < X_0.rows(); ++i){
+                                    State_N c0 = convertInit(X_0.row(i));
+                                    XtPSO.index = i;
+                                    integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
+                                }
+                                XtPSO.mVec /= X_0.rows();
+                                cost += costFunction(Yt3Vecs[t - 1], XtPSO.mVec, weights[t - 1]);
+                            }
+                        
+                            /* update gBest and pBest */
+                        #pragma omp critical
+                        {
+                            if(cost < PBMAT(particle, nRates)){ // particle best cost
+                                for(int i = 0; i < nRates; i++){
+                                    PBMAT(particle, i) = POSMAT.row(particle)(i);
+                                }
+                                PBMAT(particle, nRates) = cost;
+                                if(cost < gCost){
+                                    gCost = cost;
+                                    GBVEC = POSMAT.row(particle);
+                                }   
+                            }
+                        }
+                        }
+                    }
+                    GBMAT.conservativeResize(GBMAT.rows() + 1, nRates + 1); // Add to GBMAT after resizing
+                    for (int i = 0; i < nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
+                    GBMAT(GBMAT.rows() - 1, nRates) = gCost;
+                    sfi = sfi - (sfe - sfg) / nSteps;   // reduce the inertial weight after each step 
+                    sfs = sfs + (sfe - sfg) / nSteps;
+                }
+
+                for(int i = 0; i < nRates; i++){GBVECS(run, i) = GBVEC(i);}
+                GBVECS(run, nRates) = gCost;
 
 
-            /* bootstrap X0 and Y matrices if more than 1 run is specified */
-            if(nRuns > 1){
-                X_0 = bootStrap(X_0);
-                for(int y = 0; y < Yt3Mats.size(); ++y){
-                    Yt3Mats[y] = bootStrap(Yt3Mats[y]);
-                    Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
+                /* bootstrap X0 and Y matrices if more than 1 run is specified */
+                if(nRuns > 1 && bootstrap == 1){
+                    X_0 = bootStrap(X_0);
+                    for(int y = 0; y < Yt3Mats.size(); ++y){
+                        Yt3Mats[y] = bootStrap(Yt3Mats[y]);
+                        Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
+                    }
+                }
+                // double hypercube size and rescan global best vector to see what needs to be held constant.
+                if(nest > 1){
+                    for(int i = 0; i < GBVEC.size(); i++){
+                        if(hyperCubeScale * GBVEC(i) < hyperCubeScale - epsi){
+                            nestedHolds(i) = hyperCubeScale * GBVEC(i);
+                        }
+                    }
+                    hyperCubeScale *= 2.0;
                 }
             }
+            if(nest > 1){
+                for(int ne = 0; ne < nest; ne++){ // reset cube for each run
+                    hyperCubeScale /= 2.0;
+                }
+            }
+           
+        }
+        for(int ne = 1; ne < nest; ne++){ // reset cube for each run
+            hyperCubeScale *= 2.0;
         }
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(reportMoments == 1){
@@ -304,8 +344,8 @@ int main(){
             }
         }
     }
-    cout << endl << "All Run Estimates:" << endl;
-    cout << hyperCubeScale * GBVECS << endl;
+    cout << endl << "-------------- All Run Estimates: -------------------" << endl;
+    cout << hyperCubeScale * GBVECS.block(0, 0, GBVECS.rows(), GBVECS.cols() - 1) << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
     if(nRuns > 1){ computeConfidenceIntervals(hyperCubeScale*GBVECS, 1.96, nRates);}
     

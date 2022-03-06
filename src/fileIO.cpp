@@ -231,7 +231,7 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
     Read all Config.csv parameters into a set of parameters (as shown in the function parameters)
 
  */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube){
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube, int &nest, int &bootstrap){
     cout << "Reading in Parameters from Configuration File!" << endl;
     std::ifstream input("../Config.csv");
     if(!input.is_open()){
@@ -265,6 +265,8 @@ int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnl
     heldVal = params.at(12);
     hyperCube = params.at(13);
     reportMoments = params.at(14);
+    nest = params.at(15);
+    bootstrap = params.at(16);
     input.close();
     return 0;
 }

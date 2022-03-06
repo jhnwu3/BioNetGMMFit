@@ -25,7 +25,7 @@ vector<MatrixXd> readY(const std::string & path);
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
 
 /* Reading in Config.csv */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube);
+int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube, int &nest, int &bootstrap);
 VectorXd readCsvTimeParam();
 VectorXd readRates(int nRates);
 void printParameters(int nParts, int nSteps, int nParts2, int nSteps2, int useOnlySecMom, int useOnlyFirstMom, int useLinear, int nRuns, int simulateYt, int useInverse, int nRates, int thetaHeld, double heldVal, int reportMoments, double hyperCube, const VectorXd &times, int nMoments);
