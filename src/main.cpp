@@ -320,7 +320,8 @@ int main(){
             }
            
         }
-        for(int ne = 1; ne < nest; ne++){ // reset cube for each run
+        // when done, find what the original max hypercube size was from nesting
+        for(int ne = 1; ne < nest; ne++){ 
             hyperCubeScale *= 2.0;
         }
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
@@ -343,7 +344,8 @@ int main(){
         }
     }
     cout << endl << "-------------- All Run Estimates: -------------------" << endl;
-    cout << hyperCubeScale * GBVECS.block(0, 0, GBVECS.rows(), GBVECS.cols() - 1) << endl;
+    GBVECS.block(0, 0, GBVECS.rows(), GBVECS.cols() - 1) *= hyperCubeScale;
+    cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
     if(nRuns > 1){ computeConfidenceIntervals(hyperCubeScale*GBVECS, 1.96, nRates);}
     
