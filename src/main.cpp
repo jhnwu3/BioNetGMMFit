@@ -324,6 +324,7 @@ int main(){
                     Yt3Mats[y] = bootStrap(ogYt3Mats[y]);
                     Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
                 }
+                cout << "bootstrap means" << endl << "X_0:" << X_0.colwise().mean() << endl << "Yt:" << Yt3Mats[0].colwise().mean() << endl;
             }
             cout << "hypercubescale before reset:" << hyperCubeScale << endl;
             if(nest > 1){
