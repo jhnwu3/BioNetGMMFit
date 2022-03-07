@@ -315,8 +315,10 @@ int main(){
 
             /* bootstrap X0 and Y matrices if more than 1 run is specified */
             if(nRuns > 1 && bootstrap == 1){
+                X_0 = readX("../data/X");
                 X_0 = bootStrap(X_0);
                 for(int y = 0; y < Yt3Mats.size(); ++y){
+                    Yt3Mats = readY("../data/Y");
                     Yt3Mats[y] = bootStrap(Yt3Mats[y]);
                     Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
                 }
