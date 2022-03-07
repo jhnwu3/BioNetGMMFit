@@ -164,17 +164,16 @@ int main(){
                 double costSeedK = 0;
                 
                 if(ne > 0){
-                    seed = hyperCubeScale * seed;
                     for(int i = 0; i < nRates; i++){
                         if(nestedHolds(i)  != 0){
-                            seed(i) = nestedHolds(i);
+                            seed(i) = nestedHolds(i) / hyperCubeScale;
                         }
                     }
                 }
                 for(int t = 1; t < times.size(); t++){
                     Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                     Moments_Mat_Obs XtObs(Xt);
-                    Nonlinear_ODE sys(seed);
+                    Nonlinear_ODE sys(hyperCubeScale * seed);
                     for (int i = 0; i < X_0.rows(); ++i) {
                         State_N c0 = convertInit(X_0.row(i));
                         Xt.index = i;
@@ -240,7 +239,7 @@ int main(){
                             double sumw = w1 + w2 + w3; 
                             w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
                     
-                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle) / hyperCubeScale, particle, epsi, nan, hone);
+                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle), particle, epsi, nan, hone);
                             VectorXd PBVEC(nRates);
                             for(int i = 0; i < nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                             
