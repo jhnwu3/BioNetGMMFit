@@ -123,7 +123,6 @@ int main(){
             cout << "---------------------------" << endl;
         }else{
             Yt3Mats = readY("../data/Y");
-            ogYt3Mats = Yt3Mats;
             if(Yt3Mats.size() + 1 != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
@@ -136,6 +135,7 @@ int main(){
                 // cout << "observed:" << endl << Yt3Mats[i] << endl << "---------" << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
+            ogYt3Mats = Yt3Mats;
         }
 
         cout << "Computing Weight Matrices!" << endl;
