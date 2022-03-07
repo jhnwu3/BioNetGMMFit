@@ -335,21 +335,21 @@ int main(){
         for(int ne = 1; ne < nest; ne++){ 
             hyperCubeScale *= 2.0;
         }
-        cout << "hypercubescale after final:" << hyperCubeScale << endl;
+        cout << "hypercubescale after final nesting:" << hyperCubeScale << endl;
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(reportMoments == 1){
             for(int t = 1; t < times.size(); ++t){
                 /*solve ODEs and recompute cost */
                 Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
                 Moments_Mat_Obs XtObsPSO1(XtPSO);
-                Nonlinear_ODE stepSys(hyperCubeScale * GBVECS.colwise().mean());
+                Nonlinear_ODE stepSys(GBVECS.colwise().mean());
                 for(int i = 0; i < X_0.rows(); ++i){
                     State_N c0 = convertInit(X_0.row(i));
                     XtPSO.index = i;
                     integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                 }
                 XtPSO.mVec/=X_0.rows();
-                cout << "GBVEC:" << hyperCubeScale * GBVECS.colwise().mean() << endl;
+                cout << "GBVEC:" << GBVECS.colwise().mean() << endl;
                 cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
                 cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
             }
