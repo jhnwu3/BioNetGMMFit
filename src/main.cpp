@@ -254,7 +254,7 @@ int main(){
 
                             for(int i = 0 ; i < nRates; i++){
                                 if(nestedHolds(i) != 0){
-                                    POSMAT.row(particle)(i) = nestedHolds(i) / hyperCubeScale; 
+                                    POSMAT(particle, i) = nestedHolds(i) / hyperCubeScale; 
                                 }
                             }
                             for(int t = 1; t < times.size(); ++t){
