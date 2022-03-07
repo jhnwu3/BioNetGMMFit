@@ -300,7 +300,6 @@ int main(){
                             nestedHolds(i) = hyperCubeScale * GBVEC(i);
                         }
                     }
-                   
                 }
                 for(int i = 0; i < nRates; i++){
                     if(nestedHolds(i) != 0){
@@ -323,17 +322,21 @@ int main(){
                     Yt3Vecs[y] = momentVector(Yt3Mats[y], nMoments);
                 }
             }
+            cout << "hypercubescale before reset:" << hyperCubeScale << endl;
             if(nest > 1){
                 for(int ne = 0; ne < nest; ne++){ // reset cube for each run
                     hyperCubeScale /= 2.0;
                 }
             }
+            cout << "hypercubescale after reset:" << hyperCubeScale << endl;
+            cout << "nested hypercubes:" << nestedHolds.transpose() << endl; 
            
         } // run loop
         // when done, find what the original max hypercube size was from nesting
         for(int ne = 1; ne < nest; ne++){ 
             hyperCubeScale *= 2.0;
         }
+        cout << "hypercubescale after final:" << hyperCubeScale << endl;
         if(simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(reportMoments == 1){
             for(int t = 1; t < times.size(); ++t){

@@ -7,12 +7,12 @@ Reading in 1773 rows or cells from X data directory
 ---------------------------
 After removing all negative rows, X has 681 rows.
 --------- Parameters ---------
-Total Number of Runs:1
+Total Number of Runs:5
 Number of Moments:8
 Using Only Means and Second Moments!
 Hyper Cube Width:1
 Using Times:1 2
-Blind PSO --> nParts:96 Nsteps:1000
+Blind PSO --> nParts:96 Nsteps:200
 Targeted PSO --> nParts:10 Nsteps:10
 Number of Rates:6
 ------------------------------
@@ -31,11 +31,63 @@ Computing Weight Matrices!
           0           0           0           0           0 4.70902e-06           0           0
           0           0           0           0           0           0 7.54138e-05           0
           0           0           0           0           0           0           0 2.37216e-06
-PSO Seeded At:0.257869 0.448861 0.554267 0.943013 0.981474 0.128949| cost:0.914524
+PSO Seeded At:0.166473 0.268452 0.285856 0.318401 0.405277 0.285224| cost:0.293357
 PSO Estimation Has Begun, This may take some time...
-PSO Seeded At: 0.119876 0.0413608   0.31087   0.27638  0.384115  0.614279| cost:0.242686
+PSO Seeded At:  1.46229 0.0407243   0.31082  0.872688  0.383606  0.227953| cost:0.133214
 PSO Estimation Has Begun, This may take some time...
+hypercubescale before reset:4
+hypercubescale after reset:1
+nested hypercubes:  1.46546 0.0407243   0.31082   1.09328  0.383606  0.227953
+PSO Seeded At: 0.035086  0.319143   0.81473  0.927346  0.956882 0.0567281| cost:0.909444
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:     1.7412 0.000731195    0.289596    0.362752    0.376753    0.159212| cost:0.198436
+PSO Estimation Has Begun, This may take some time...
+hypercubescale before reset:4
+hypercubescale after reset:1
+nested hypercubes:    1.65987 0.000731195    0.289596     1.16521    0.376753    0.159212
+PSO Seeded At: 0.160718  0.989147 0.0480923  0.326698  0.482127  0.335831| cost:1.61245
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:  0.0205348 0.000514783    0.277668    0.273886    0.395151     0.74663| cost:0.26799
+PSO Estimation Has Begun, This may take some time...
+hypercubescale before reset:4
+hypercubescale after reset:1
+nested hypercubes:    1.88728 0.000514783    0.277668     1.20745    0.395151     0.74663
+PSO Seeded At:0.0515168  0.968962  0.528099  0.756519  0.360417  0.552793| cost:5.10103
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:  0.0280313 0.000276343    0.300456    0.278945    0.456805    0.320618| cost:0.281311
+PSO Estimation Has Begun, This may take some time...
+hypercubescale before reset:4
+hypercubescale after reset:1
+nested hypercubes:     1.8059 0.000276343    0.300456     1.14318    0.456805    0.320618
+PSO Seeded At: 0.402278  0.318288 0.0441151  0.577524  0.185828 0.0732085| cost:1.19152
+PSO Estimation Has Begun, This may take some time...
+PSO Seeded At:    1.07843 0.000476088    0.290032     1.90157    0.430886    0.474306| cost:0.26264
+PSO Estimation Has Begun, This may take some time...
+hypercubescale before reset:4
+hypercubescale after reset:1
+nested hypercubes:    1.47953 0.000476088    0.290032      1.0991    0.430886    0.474306
+hypercubescale after final:2
 
 -------------- All Run Estimates: -------------------
-  1.55335 0.0413608   0.31087   1.11276  0.384115  0.614279  0.124108
-CODE FINISHED RUNNING IN 33 s TIME!
+    1.46546   0.0407243     0.31082     1.09328    0.383606    0.227953     0.12437
+    1.65987 0.000731195    0.289596     1.16521    0.376753    0.159212    0.111519
+    1.88728 0.000514783    0.277668     1.20745    0.395151     0.74663    0.105802
+     1.8059 0.000276343    0.300456     1.14318    0.456805    0.320618    0.127388
+    1.47953 0.000476088    0.290032      1.0991    0.430886    0.474306    0.131664
+------- 95 Percent Confidence Intervals -------
+Rates | Standard Deviation
+1.65961   |   0.189313
+0.00854454   |   0.0179898
+0.293715   |   0.0125108
+1.14164   |   0.0475312
+0.40864   |   0.0340591
+0.385744   |   0.23374
+Confidence Intervals for Each Rate:
+Theta0: [1.49367,1.82555]
+Theta1: [-0.00722417,0.0243133]
+Theta2: [0.282748,0.304681]
+Theta3: [1.09998,1.18331]
+Theta4: [0.378786,0.438494]
+Theta5: [0.180862,0.590626]
+-----------------------------------------------
+CODE FINISHED RUNNING IN 29 s TIME!
