@@ -268,7 +268,7 @@ Observe that the first element is listed as
 
 which, corresponds to the equation 
 
-    dc1/dt = k1 *c1*c2 + k2*c3 + k3*c3 
+    dc1/dt = -k1 *c1*c2 + k2*c3 + k3*c3 
 
 note the syntax where each equation ends with a semicolon ";" and observe that rate constant k1 is denoted by rate.k(0) where the indexing starts at 0 again. 
 
