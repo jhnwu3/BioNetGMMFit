@@ -264,7 +264,7 @@ Observe that it resembles a differential system of equations. Defining a system 
 
 Observe that the first element is listed as
 
-    dcdt[0] = -(rate.k(0) * c[0] * c[1]) + rate.k(1) * c[2] + rate.k(2) * c[2];
+    dcdt[0] = -(k(0) * c[0] * c[1]) + k(1) * c[2] + k(2) * c[2];
 
 which, corresponds to the equation 
 
