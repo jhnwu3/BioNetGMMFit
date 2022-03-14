@@ -132,7 +132,6 @@ int main(){
                 Yt3Mats[i] = filterZeros(Yt3Mats[i]);
                 cout << "means:" << Yt3Mats[i].colwise().mean() << endl;
                 cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
-                // cout << "observed:" << endl << Yt3Mats[i] << endl << "---------" << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
             ogYt3Mats = Yt3Mats;
@@ -162,7 +161,9 @@ int main(){
                 /* Initialize Global Best  */
                 VectorXd seed = VectorXd::Zero(nRates);
                 for (int i = 0; i < nRates; i++) {seed(i) = rndNum(low,high);}
-                if(heldTheta > -1){seed(heldTheta) = heldThetaVal;}
+                if(heldTheta > -1){seed(heldTheta) = heldThetaVal;
+                seed << 1.54103,	0.0417282,	0.311026,	1.1217,	0.384331,	0.425928;
+                }
                 
                 /* Evolve initial Global Best and Calculate a Cost*/
                 double costSeedK = 0;
@@ -208,7 +209,9 @@ int main(){
                             for(int i = 0; i < nRates; i++){
                                 POSMAT(particle, i) = rndNum(low, high);
                             }
-                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
+                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;
+                            POSMAT.row(particle)  << 1.54103,	0.0417282,	0.311026,	1.1217,	0.384331,	0.425928;
+                            }
                             
                             double cost = 0;    
                             if(step == 0 && ne > 0){
@@ -249,7 +252,8 @@ int main(){
                             
                             POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
                         
-                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
+                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;
+                            POSMAT.row(particle) << 1.54103,	0.0417282,	0.311026,	1.1217,	0.384331,	0.425928;}
                             double cost = 0;
 
                             for(int i = 0 ; i < nRates; i++){

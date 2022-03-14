@@ -8,7 +8,7 @@ The program has only been compiled and tested on debian Linux based systems, spe
 Keep in mind, should you still want to pursue this on Windows 10, there is a Windows Linux Subsystem that runs at a similar level of performance that you can enable in the operating system. 
 A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake or Chocolatey to get this C++ code/program up and running on Windows.
 
-Mac's Unix based system should feasibly still work well with this repo, but has been untested at this current moment.
+Mac's Unix based system should feasibly still work well with this repo, but has been untested in this current iteration.
 
 # *Getting Started*
 
@@ -164,6 +164,10 @@ The default PSO parameters are listed below,
 | Number of Rates                  | 5     | Sets number of rates in rate vector                                      |
 | Index of Held Rate Constant      | -1    | -1 to not hold a rate constant, else specified theta i is held constant  |
 | Value of Held Rate Constant      | 0     | Value between 0 and 1 that a rate constant would be held at              |
+| Hypercube Dimension              | 1.0   | Real Value Dimensions of Hypercube to be searched in PSO.                |
+| Report Moments?                  | 1     | 1 to report predicted moments in out.txt                                 |
+| Number of Nested Hypcubes        | 1     | Estimates rate constants in spaces of 2^n order, n = # of nested hypcubes|
+| Bootstrap?                       | 1     | 1 to estimate 95% CI's, 0 otherwise                                      |   
 
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
