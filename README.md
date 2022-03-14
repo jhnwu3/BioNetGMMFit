@@ -258,7 +258,7 @@ To get started, enter the src directory (you can also just double click the fold
 
 Open the the *system.hpp* file in any text or code editor, and you'll see code lined out as shown below:
 
-![Nonlinear](/img/NonlinearSystem.png)
+![Nonlinear](/img/genSystem.png)
 
 Observe that it resembles a differential system of equations. Defining a system is done within the circled region of text. You can simply ignore everything else surrounding the system of equations. 
 
