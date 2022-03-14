@@ -270,7 +270,7 @@ which, corresponds to the equation
 
     dc1/dt = -k1 *c1*c2 + k2*c3 + k3*c3 
 
-note the syntax where each equation ends with a semicolon ";" and observe that rate constant k1 is denoted by rate.k(0) where the indexing starts at 0 again. 
+note the syntax where each equation ends with a semicolon ";" and observe that rate constant k1 is denoted by k(0) where the indexing starts at 0 again. 
 
 Now, observe that all nonconstant terms, the derivative term dcdt, and its respective element c, are all indexed using [ ] instead of parenthesises. Again, indexed starting 0, we have dc1/dt and c1 respectively listed as
 
