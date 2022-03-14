@@ -118,7 +118,7 @@ is defined in the file, which defines the true set of rate constants as "0.27678
 ### *Time Inputs*
 Make sure to list your the times for time evolutions in time_steps.csv rowwise. For a single time evolution, only two time points, the end and start time of your evolution interval, is needed in the file.
 
-However, especially in the nonlinear case where multiple time points and samples may be beneficial, simply list out each of the times evolved for, as shown below.
+However, especially in the nonlinear case where multiple time points and samples may be beneficial, simply list out each of the times evolved for rowwise, as shown below.
     0
     0.5
     2
@@ -157,7 +157,7 @@ The default PSO parameters are listed below,
 | Number of Steps Targeted PSO     | 1000  | Sets number of steps for second stage PSO                                |
 | Exclude Mixed Moments?           | 0     | 1 to use only means and variances, 0 otherwise                           |
 | Exclude Mixed and Second Moments?| 0     | 1 to use only means, 0 otherwise                                         |
-| Use Linear Model?                | 1     | 1 to use linear model, 0 to use nonlinear                                |
+| Use Matrix Exp Model?            | 1     | 1 to use a matrix system, 0 to use nonlinear                             |
 | Number of Runs                   | 1     | Sets total number of PSO runs for estimation                             |
 | Simulate Y_t?                    | 1     | 1 to simulate Yt with a true rate vector, 0 to provide own Yt matrix     |
 | Use Matrix Inverse?              | 0     | 1 to use C++'s Matrix Inverse, 0 otherwise                               |
@@ -184,7 +184,7 @@ Finally, regarding holding parameter or rate constant values, these are currentl
 ### *Defining Your Own Linear or Nonlinear System*
 Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
 
-#### *Linear*
+#### *Interaction Matrices*
 Navigate to the 
 
     system.cpp
@@ -193,7 +193,7 @@ C++ file and you'll notice that there's a single function called interaction mat
 
 ![Step 1](/img/intMat.png)
 
-In order to define your own linear system, observe that we are assigning a matrix with specific values in code written as:
+In order to define your own linear matrix system, observe that we are assigning a matrix with specific values in code written as:
 
     intMatrix << 
         -k(2), k(2), 0,
@@ -249,10 +249,10 @@ as an aside:
     - the compiler will take care of negative values such as -k(0) 
 
 
-#### *Nonlinear*
+#### *Default System*
 Currently, the nonlinear system is not very well documented. However, should one choose to go further into the code and attempt to define their own nonlinear system. It is important to understand how to interact with the boost odeint library. Generally speaking, outside of understanding the nuances between ( ) and [ ] syntaxes as we are feeding in an Eigen vector into a boost ode-solver, the syntax should still be fairly close to writing out a system of equations mathematically.
 
-To get started, enter the src directory (you can also just double click) 
+To get started, enter the src directory (you can also just double click the folder) 
 
     cd src
 
@@ -276,7 +276,7 @@ Now, observe that all nonconstant terms, the derivative term dcdt, and its respe
 
     dcdt[0], c[0]
 
-In terms of mathematical operators, only basic, +,-,*,/ operators have been tested with the boost odeint library.
+In terms of mathematical operators, only basic, +,-,*,/ operators have been tested with the boost odeint library, but in theory math.exp(a) and other standard math libraries should work.
 
 ## **Directory Structure** ##
 
