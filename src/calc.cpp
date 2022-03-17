@@ -216,7 +216,7 @@ void computeConfidenceIntervals(const MatrixXd& sample, double z, int nRates){
 bool rowIsAllPositive(const VectorXd &x){
     bool allPos = true;
     for(int i = 0; i < x.size(); i++){
-        if (x(i) <  0 || x(0) > 60 || x(1) > 70 || x(2) > 25 || x(3) > 70){
+        if (x(i) <  0){ //|| x(0) > 60 || x(1) > 70 || x(2) > 25 || x(3) > 70
             return false;
         }
     }

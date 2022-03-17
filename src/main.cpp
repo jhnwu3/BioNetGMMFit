@@ -130,11 +130,12 @@ int main(){
             // filter all zeroes and compute moments vectors for cost calcs
             for(int i = 0; i < Yt3Mats.size(); i++){
                 Yt3Mats[i] = filterZeros(Yt3Mats[i]);
-                cout << "means:" << Yt3Mats[i].colwise().mean() << endl;
+                cout << "Yt Means:" << Yt3Mats[i].colwise().mean() << endl;
                 cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
             ogYt3Mats = Yt3Mats;
+            // cout << "Y_0" << endl << Yt3Mats[0] << endl;
         }
 
         cout << "Computing Weight Matrices!" << endl;
@@ -252,8 +253,7 @@ int main(){
                             
                             POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
                         
-                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;
-                            POSMAT.row(particle) << 1.54103,	0.0417282,	0.311026,	1.1217,	0.384331,	0.425928;}
+                            if(heldTheta > -1){POSMAT.row(particle)(heldTheta) = heldThetaVal;}
                             double cost = 0;
 
                             for(int i = 0 ; i < nRates; i++){
