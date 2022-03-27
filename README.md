@@ -192,7 +192,7 @@ In order to minimize computation times, matrix exponentiation is commonly used t
 
 ![generalized linear system](/img/matExpSys.png)
 
-observe that we can now solve it using matrix exponentiation using
+where P denotes the protein abundances, i their respective protein types, and k the reaction rates, observe that we can now solve it using matrix exponentiation using
 
 ![generalized linear solution](/img/matExpSoln.png)
 
@@ -268,14 +268,52 @@ is equivalent to
 
 as an aside:
     - the + sign is not needed to denote positive values and is only needed for arithmetic operations i.e -k(0) + -k(3)
+    - math operators are denoted as such, multiplication(*), division(/), addition(+), subtraction(-)
     - whitespace is not a concern
     - the compiler will take care of negative values such as -k(0) 
 
 #### *Linear System*
+Now suppose, your linear system cannot be modeled using an interaction matrix. A good example of a protein system that might have this characteristic is shown below,
 
+![4 Protein Linear System](/img/linear4Sys.png)
+
+with its respective linear system
+
+![4 Protein Linear DiffEq](/img/linear4DiffEq.png)
+
+Worry not, we can still solve this system using the conventional method of runge kutta solvers. To do this, simply navigate to the 
+
+    /src/system.hpp 
+
+header file (by first double clicking the src folder, and then double clicking again the system.hpp file where you can say open with notepad/etc.), and again open it with your preferred text editor (i.e notepad). Now observe it's direct mapping in code,
+
+![linear4](/img/genSystem.png)
+
+to get a further look, let us take a deeper look at one equation in code and how it maps directly to another equation in mathematic terms. Consider the equation,
+
+    dcdt[0] = k(0) - k(4) * c[0];
+
+and how it directly maps to the first equation in the linear system
+
+    dP1/dt = k1 - k5P1
+
+in this case, first observe that k(0) maps to k1, and P1 maps to c[0]. This is a key point, because there is two extremely important pieces of this syntax.
+
+1. The code indexes from 0 not 1, hence all k1 maps to k(0), k2 maps to k(1), etc.
+2. The proteins indices are referenced through the use of [] brackets instead of () paranthesises while rate constants are referenced through () not [], hence why you see that it is c[0] not c(0) and k(0) not k[0]
+
+Now also realize that the derivative dP1/dt is mapped to the variable dcdt, hence all specific dPi/dt are mapped by dcdt[i]. Once you have finished writing the equation at hand, make sure to end each equation with a semicolon ";" as shown at the end of the equation above.
+
+###### *All arithmetic operators are the same as was defined in the Interaction Matrices Section.*
 
 #### *Nonlinear System*
-Currently, the nonlinear system is not very well documented. However, should one choose to go further into the code and attempt to define their own nonlinear system. It is important to understand how to interact with the boost odeint library. Generally speaking, outside of understanding the nuances between ( ) and [ ] syntaxes as we are feeding in an Eigen vector into a boost ode-solver, the syntax should still be fairly close to writing out a system of equations mathematically.
+Defining a nonlinear system can be done through the same process as the linear system, first consider some nonlinear protein system,
+
+![Nonlinear Proteins](/img/nonlinearSysChemEqP.png)
+
+This can be broken down into a system of differential equations as such
+
+![Nonlinear Proteins](/img/nonlinearSysDiffEq.png)
 
 To get started, enter the src directory (you can also just double click the folder) 
 
