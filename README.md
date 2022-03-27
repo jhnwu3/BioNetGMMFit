@@ -188,11 +188,31 @@ Finally, regarding holding parameter or rate constant values, these are currentl
 Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
 
 #### *Interaction Matrices*
-Navigate to the 
+In order to minimize computation times, matrix exponentiation is commonly used to quickly solve linear ode systems. Specifically, for linear systems in the form of 
+
+![generalized linear system](/img/matExpSys.png)
+
+observe that we can now solve it using matrix exponentiation using
+
+![generalized linear solution](/img/matExpSoln.png)
+
+To give an example, consider the protein system shown below,
+
+![linear 3 example protein system for mat exp](/img/lin3ExpModel.png)
+
+observe that we can model this system using a system of linear differential equations,
+
+![interaction diffeq system](/img/matExpSysEx.png)
+
+and then observe that the coefficients in this differential equation system can be easily mapped to an interaction matrix as shown below
+
+![interaction Matrix](/img/matExpEx.png)
+
+to take this into code, we can now bake this into our program. Navigate to the 
 
     system.cpp
 
-C++ file and you'll notice that there's a single function called interaction matrix and it should have a variable called intMatrix with numerous comments surrounding it. It should look something like this: 
+C++ file and open it using your preferred text editor. You'll notice that there's a single function called interaction matrix and it should have a variable called intMatrix with numerous comments surrounding it. It should look something like this: 
 
 ![Step 1](/img/intMat.png)
 
@@ -251,8 +271,10 @@ as an aside:
     - whitespace is not a concern
     - the compiler will take care of negative values such as -k(0) 
 
+#### *Linear System*
 
-#### *Default System*
+
+#### *Nonlinear System*
 Currently, the nonlinear system is not very well documented. However, should one choose to go further into the code and attempt to define their own nonlinear system. It is important to understand how to interact with the boost odeint library. Generally speaking, outside of understanding the nuances between ( ) and [ ] syntaxes as we are feeding in an Eigen vector into a boost ode-solver, the syntax should still be fairly close to writing out a system of equations mathematically.
 
 To get started, enter the src directory (you can also just double click the folder) 
