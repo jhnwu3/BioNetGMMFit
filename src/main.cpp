@@ -360,7 +360,7 @@ int main(){
                 XtPSO.mVec/=X_0.rows();
                 cout << "GBVEC:" << GBVECS.colwise().mean() << endl;
                 cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
-                cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
+                // cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
             }
         }
     }
