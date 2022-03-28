@@ -299,7 +299,7 @@ and how it directly maps to the first equation in the linear system
 
 in this case, first observe that k(0) maps to k1, and P1 maps to c[0]. This is a key point, because there is two extremely important pieces of this syntax.
 
-1. The code indexes from 0 not 1, hence all k1 maps to k(0), k2 maps to k(1), etc.
+1. The code indexes from 0 not 1, hence k1 maps to k(0), k2 maps to k(1), etc.
 2. The proteins indices are referenced through the use of [] brackets instead of () paranthesises while rate constants are referenced through () not [], hence why you see that it is c[0] not c(0) and k(0) not k[0]
 
 Now also realize that the derivative dP1/dt is mapped to the variable dcdt, hence all specific dPi/dt are mapped by dcdt[i]. Once you have finished writing the equation at hand, make sure to end each equation with a semicolon ";" as shown at the end of the equation above.
