@@ -192,7 +192,7 @@ In order to minimize computation times, matrix exponentiation is commonly used t
 
 ![generalized linear system](/img/matExpSys.png)
 
-where M=Some Matrix  the elements of the M matrix are given by zero or linear sums of
+where M = some Matrix where the elements of the M matrix are given by zero or linear sums of
 the reaction rates k. P denotes the protein abundances, i their respective protein types, and observe that we can now solve it using matrix exponentiation in
 
 ![generalized linear solution](/img/matExpSoln.png)
