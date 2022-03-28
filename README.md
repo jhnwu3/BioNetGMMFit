@@ -188,11 +188,11 @@ Finally, regarding holding parameter or rate constant values, these are currentl
 Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
 
 #### *Interaction Matrices*
-In order to minimize computation times, matrix exponentiation is commonly used to quickly solve linear ode systems. Specifically, for linear systems in the form of 
+In order to minimize computation times, matrix exponentiation is commonly used to quickly solve a system of coupled linear odes, specifically in the form of 
 
 ![generalized linear system](/img/matExpSys.png)
 
-where P denotes the protein abundances, i their respective protein types, and k the reaction rates, observe that we can now solve it using matrix exponentiation using
+where M= Some Interaction Matrix, P denotes the protein abundances, i their respective protein types, and k the reaction rates, observe that we can now solve it using matrix exponentiation in
 
 ![generalized linear solution](/img/matExpSoln.png)
 
