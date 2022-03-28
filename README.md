@@ -200,11 +200,11 @@ To give an example, consider the protein system shown below,
 
 ![linear 3 example protein system for mat exp](/img/lin3ExpModel.png)
 
-observe that we can model this system using a system of linear differential equations,
+observe that we can model this system, substituting theta for k, using a system of linear differential equations,
 
 ![interaction diffeq system](/img/matExpSysEx.png)
 
-and then observe that the coefficients in this differential equation system can be easily mapped to an interaction matrix as shown below
+and then observe that the coefficients in this differential equation system can be easily mapped to an interaction matrix M as shown below
 
 ![interaction Matrix](/img/matExpEx.png)
 
