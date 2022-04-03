@@ -3,10 +3,20 @@ CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data
 It takes into account both linear and nonlinear models of evolution for estimating parameters. 
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
-2. [Some paragraph](#paragraph1)
-    1. [Sub paragraph](#subparagraph1)
-3. [Another paragraph](#paragraph2)
-
+2. [Prerequisites](#paragraph1)
+    1. [Eigen](#eig)
+    2. [Boost](#bst)
+3. [Compilation](#compilation)
+4. [Execution](#exe)
+5. [Program Inputs](#pin)
+    1. [Loading in Data](#indat)
+    2. [Simulated Rate Constants](#rcons)
+    3. [Time Inputs](#tim)
+    4. [Program Configuration](#config)
+6. [Defining Your Own System](#sys)
+    1. [Interaction Matrices](#intmat)
+    2. [Linear System](#linsys)
+    3. [Nonlinear System](#nonlinsys)
 ## **Important Note: Operating System**
 The program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
 
@@ -44,16 +54,16 @@ To quickly get started with one of the simulated examples, do:
 
 5. All output (final estimate of rate constants) is recorded in **out.txt**
 
-## Prequisites
+## Prequisites <a name="prq"></a>
 
-### *Eigen*
+### *Eigen* <a name="eig"></a>
 Snapshot uses the Eigen 3.3.9 C++ linear algebra library for matrix computations. If on Ubuntu, you can do a quick install using:
 
     sudo apt install libeigen3-dev
 
 otherwise you can see more detailed install instructions [here](https://eigen.tuxfamily.org/dox/GettingStarted.html)
 
-### *Boost*
+### *Boost* <a name="bst"></a>
 Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonlinear systems. To install the whole boost C++ library, you can try:
 
     sudo apt-get install libboost-all-dev
@@ -61,7 +71,7 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
 
-## Compilation
+## Compilation <a name="compilation"></a>
 
 If you wish to modify the code for your own use or if the binary is not sufficient, a Makefile has been provided in the /src directory. 
 After entering the directory
@@ -74,7 +84,7 @@ Run
 
 in order to recompile an executable.
 
-## Execution 
+## Execution <a name="exe"></a>
 
 To run the program, simply enter
 
@@ -86,7 +96,7 @@ in your terminal. For more information about parameters and writing your own sys
 Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
 of the targeted to 0. 
 
-## Program Inputs
+## Program Inputs <a name="pin"></a>
 All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
 
     example
@@ -95,7 +105,7 @@ provided in this repo.
 
 All data must be loaded in csv format. 
 
-### *Loading in data*
+### *Loading in data* <a name="indat"></a>
 If you want to load in the X, control, or time 0 data file, make sure to delete or move any pre-existing csv file located in the 
 
     data/X 
@@ -110,7 +120,7 @@ after moving or removing any previous Yt/Y0 files. Keep in mind, that the number
 For more examples please take a look at the /example directory. The real data X and Y are labeled in the 4_prot_real folder. All real data was taken from 
 [here](https://dpeerlab.github.io/dpeerlab-website/dremi-data.html), specifically the first CD8, CD28, and CD3 naive time series (third column, 1st row).
 
-### *Rate Constant Inputs*
+### *Rate Constant Inputs* <a name="rcons"></a>
 If you decide to simulate the rate constants and therefore simulate Y_t instead of manually inputting Yt files, make sure to define your set of rate constants in the "true_rates.csv" file. For instance, by default
 
     0.27678200
@@ -121,7 +131,7 @@ If you decide to simulate the rate constants and therefore simulate Y_t instead 
 
 is defined in the file, which defines the true set of rate constants as "0.27678, 0.837, 0.44, 0.04, 0.30".
 
-### *Time Inputs*
+### *Time Inputs* <a name="tim"></a>
 Make sure to list your the times for time evolutions in time_steps.csv rowwise. For a single time evolution, only two time points, the end and start time of your evolution interval, is needed in the file.
 
 However, especially in the nonlinear case where multiple time points and samples may be beneficial, simply list out each of the times evolved for rowwise, as shown below.
@@ -132,12 +142,12 @@ However, especially in the nonlinear case where multiple time points and samples
     20
     30
 
-### *Important Caveat*
+### *Important Caveat* 
 One key thing to understand is every file in either the data/X or data/Y folders are read in alphabetical order. An error message and exit will output if the number of time steps do not match the number of Yt files. Make sure to label each file name in order of the time steps for proper loading.
 
 Furthermore, if one chooses to simulate Y_t instead of inputing their own, keep in mind, it will specifically only choose the first Y file listed in the directory for use as Y_0.
 
-### *Configuration Inputs*
+### *Configuration Inputs* <a name="config"></a>
 To set the parameters you want for your estimation run, double click or open the
 
     Config.csv
@@ -187,10 +197,10 @@ will force the program to estimate rate constants using means only. All boolean 
 
 Finally, regarding holding parameter or rate constant values, these are currently only enabled for the nonlinear system where it's necessary for accurate estimation. 
 
-## Defining Your Own Linear or Nonlinear System
+## Defining Your Own Linear or Nonlinear System <a name="sys"></a>
 Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
 
-### *Interaction Matrices*
+### *Interaction Matrices* <a name="intmat"></a>
 In order to minimize computation times, matrix exponentiation is commonly used to quickly solve a system of coupled linear odes, specifically in the form of 
 
 ![generalized linear system](/img/matExpSys.png)
@@ -276,7 +286,7 @@ as an aside:
     - whitespace is not a concern
     - the compiler will take care of negative values such as -k(0) 
 
-### *Linear System*
+### *Linear System* <a name="linsys"></a>
 Now suppose, your linear system cannot be modeled using an interaction matrix. A good example of a protein system that might have this characteristic is shown below,
 
 ![4 Protein Linear System](/img/linear4Sys.png)
@@ -310,7 +320,7 @@ Now also realize that the derivative dP1/dt is mapped to the variable dcdt, henc
 
 ###### *All arithmetic operators are the same as was defined in the Interaction Matrices Section.*
 
-### *Nonlinear System*
+### *Nonlinear System* <a name="nonlinsys"></a>
 Defining a nonlinear system can be done through the same process as the linear system, first consider some nonlinear protein system,
 
 ![Nonlinear Proteins](/img/nonlinearSysChemEqP.png)
@@ -345,7 +355,7 @@ Now, observe that all nonconstant terms, the derivative term dcdt, and its respe
 
 In terms of mathematical operators, only basic, +,-,*,/ operators have been tested with the boost odeint library, but in theory math.exp(a) and other standard math libraries should work.
 
-## **Directory Structure** ##
+## **Directory Structure** ## <a name="dir"></a>
 
 ### *CyGMM*
 Main Directory with general configuration files and system.cpp code files.
