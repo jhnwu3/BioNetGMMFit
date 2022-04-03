@@ -1,6 +1,11 @@
 # **CyGMM**
 CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data. 
 It takes into account both linear and nonlinear models of evolution for estimating parameters. 
+# Table of Contents
+1. [Quickstart Guide](#qstrt)
+2. [Some paragraph](#paragraph1)
+    1. [Sub paragraph](#subparagraph1)
+3. [Another paragraph](#paragraph2)
 
 ## **Important Note: Operating System**
 The program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
@@ -10,9 +15,7 @@ A Youtube video I've found helpful to get Linux up and running on Windows can be
 
 Mac's Unix based system should feasibly still work well with this repo, but has been untested in this current iteration.
 
-# *Getting Started*
-
-## *Quickstart*
+## Quickstart  <a name="qstrt"></a>
 To quickly get started with one of the simulated examples, do:
 
 1. In your terminal, pick a suitable directory for your liking and input
@@ -41,7 +44,7 @@ To quickly get started with one of the simulated examples, do:
 
 5. All output (final estimate of rate constants) is recorded in **out.txt**
 
-## *Prerequisites for Compiling* ##
+## Prequisites
 
 ### *Eigen*
 Snapshot uses the Eigen 3.3.9 C++ linear algebra library for matrix computations. If on Ubuntu, you can do a quick install using:
@@ -58,7 +61,7 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
 
-## **Compilation** ##
+## Compilation
 
 If you wish to modify the code for your own use or if the binary is not sufficient, a Makefile has been provided in the /src directory. 
 After entering the directory
@@ -71,7 +74,7 @@ Run
 
 in order to recompile an executable.
 
-## **Running the executable** ##
+## Execution 
 
 To run the program, simply enter
 
@@ -83,7 +86,7 @@ in your terminal. For more information about parameters and writing your own sys
 Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
 of the targeted to 0. 
 
-### *Data Inputs*
+## Program Inputs
 All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
 
     example
@@ -92,7 +95,7 @@ provided in this repo.
 
 All data must be loaded in csv format. 
 
-## *Loading in data*
+### *Loading in data*
 If you want to load in the X, control, or time 0 data file, make sure to delete or move any pre-existing csv file located in the 
 
     data/X 
@@ -129,7 +132,7 @@ However, especially in the nonlinear case where multiple time points and samples
     20
     30
 
-## *Important Caveat*
+### *Important Caveat*
 One key thing to understand is every file in either the data/X or data/Y folders are read in alphabetical order. An error message and exit will output if the number of time steps do not match the number of Yt files. Make sure to label each file name in order of the time steps for proper loading.
 
 Furthermore, if one chooses to simulate Y_t instead of inputing their own, keep in mind, it will specifically only choose the first Y file listed in the directory for use as Y_0.
@@ -184,10 +187,10 @@ will force the program to estimate rate constants using means only. All boolean 
 
 Finally, regarding holding parameter or rate constant values, these are currently only enabled for the nonlinear system where it's necessary for accurate estimation. 
 
-### *Defining Your Own Linear or Nonlinear System*
+## Defining Your Own Linear or Nonlinear System
 Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
 
-#### *Interaction Matrices*
+### *Interaction Matrices*
 In order to minimize computation times, matrix exponentiation is commonly used to quickly solve a system of coupled linear odes, specifically in the form of 
 
 ![generalized linear system](/img/matExpSys.png)
@@ -273,7 +276,7 @@ as an aside:
     - whitespace is not a concern
     - the compiler will take care of negative values such as -k(0) 
 
-#### *Linear System*
+### *Linear System*
 Now suppose, your linear system cannot be modeled using an interaction matrix. A good example of a protein system that might have this characteristic is shown below,
 
 ![4 Protein Linear System](/img/linear4Sys.png)
@@ -307,7 +310,7 @@ Now also realize that the derivative dP1/dt is mapped to the variable dcdt, henc
 
 ###### *All arithmetic operators are the same as was defined in the Interaction Matrices Section.*
 
-#### *Nonlinear System*
+### *Nonlinear System*
 Defining a nonlinear system can be done through the same process as the linear system, first consider some nonlinear protein system,
 
 ![Nonlinear Proteins](/img/nonlinearSysChemEqP.png)
