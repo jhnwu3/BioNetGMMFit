@@ -140,6 +140,7 @@ MatrixXd csvToMatrix (const std::string & path){
         }
         ++rows;
     }
+    indata.close();
     MatrixXd mat = MatrixXd::Zero(rows, values.size()/rows);
     int i = 0;
     for(int r = 0; r < rows; r++){
@@ -227,81 +228,10 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
     plot.close();
 }
 
-/*
-    Read all Config.csv parameters into a set of parameters (as shown in the function parameters)
-
- */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube, int &nest, int &bootstrap){
-    cout << "Reading in Parameters from Configuration File!" << endl;
-    std::ifstream input("../Config.csv");
-    if(!input.is_open()){
-        throw std::runtime_error("Could not open PSO file");
-        return EXIT_FAILURE;
-    }
-    cout << "csvPSO" << endl;
-    vector<double> params;
-    string line;
-    while(std::getline(input, line)){
-        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
-        string col;
-        while(std::getline(ss, col, ',')){
-            if(isNumber(col) || isDouble(col)){ // only add into parameter vector if actually an int.
-                params.push_back(std::stod(col)); 
-            }
-        }
-    }
-    nPart1 = params.at(0);
-    nSteps1 = params.at(1);
-    nPart2 = params.at(2);
-    nSteps2 = params.at(3);
-    useOnlySecMom = params.at(4);
-    useOnlyFirstMom = params.at(5);
-    useLinear = params.at(6);
-    nRuns = params.at(7);
-    simulateYt = params.at(8);
-    useInverse = params.at(9);
-    nRates = params.at(10);
-    thetaHeld = params.at(11);
-    heldVal = params.at(12);
-    hyperCube = params.at(13);
-    reportMoments = params.at(14);
-    nest = params.at(15);
-    bootstrap = params.at(16);
-    input.close();
-    return 0;
-}
-
-// Reads Input Data Parameters.
-int readCsvDataParam(int &nSpecies, int &nRates, int &xSize, int &ySize){
-    std::ifstream input("../system_parameters.csv");
-    cout << "csvData" << endl;
-    if(!input.is_open()){
-        throw std::runtime_error("Could not open data parameters file");
-        return EXIT_FAILURE;
-    }
-    vector<int> params;
-    string line;
-    while(std::getline(input, line)){
-        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
-        string col;
-        while(std::getline(ss, col, ',')){
-            if(isNumber(col)){ // only add into parameter vector if actually an int.
-                params.push_back(std::stoi(col)); 
-            }
-        }
-    }
-    nSpecies = params.at(0);
-    nRates = params.at(1);
-    xSize = params.at(2);
-    ySize = params.at(3);
-    input.close();
-    return 0;
-}
-
 // Reads Time Step Parameters.
 VectorXd readCsvTimeParam(){
 
-    std::ifstream input("../time_steps.csv");
+    std::ifstream input("time_steps.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         exit;
@@ -326,7 +256,7 @@ VectorXd readCsvTimeParam(){
 }
 
 VectorXd readRates(int nRates){
-    std::ifstream input("../true_rates.csv");
+    std::ifstream input("true_rates.csv");
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         exit;
@@ -352,27 +282,4 @@ VectorXd readRates(int nRates){
         exit(1);
     }
     return rates;
-}
-
-void printParameters(int nParts, int nSteps, int nParts2, int nSteps2, int useOnlySecMom, int useOnlyFirstMom, int useLinear, int nRuns, int simulateYt, int useInverse, int nRates, int thetaHeld, double heldVal, int reportMoments, double hyperCube, const VectorXd &times, int nMoments){
-    cout << "--------- Parameters ---------" << endl;
-    if(useLinear){
-        cout << "Using Matrix Interaction Model Instead of Runge Kutta Solvers!" << endl;
-    }
-    cout << "Total Number of Runs:" << nRuns << endl;
-    cout << "Number of Moments:" << nMoments << endl;
-    if(useOnlyFirstMom){
-        cout << "Using Only Means!" << endl;
-    }else if(useOnlySecMom){
-        cout << "Using Only Means and Second Moments!" << endl;
-    }
-    if(thetaHeld > - 1){
-        cout << "Theta Held Index:" << thetaHeld << " held value:" << heldVal << endl;
-    }
-    cout << "Hyper Cube Width:" << hyperCube << endl;
-    cout << "Using Times:" << times.transpose() << endl;
-    cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
-    cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
-    cout << "Number of Rates:" << nRates << endl;
-    cout << "------------------------------" << endl;
 }

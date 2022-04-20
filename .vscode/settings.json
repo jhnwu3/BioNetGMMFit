@@ -108,5 +108,5 @@
         "stop_token": "cpp",
         "charconv": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Enabled"
+    "C_Cpp.errorSquiggles": "Disabled"
 }

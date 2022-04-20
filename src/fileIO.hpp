@@ -10,6 +10,7 @@ Summary: Header file for all file input and output functions used to read in inp
 
 /* String Processing Functions */
 bool isNumber(const std::string& str); 
+bool isDouble(const std::string& s);
 string removeWhiteSpace(string current);
 string findDouble(string line, int startPos);
 
@@ -24,9 +25,8 @@ vector<MatrixXd> readY(const std::string & path);
 /* General Output Functions*/
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
 
-/* Reading in Config.csv */
-int readCsvPSO(int &nPart1, int &nSteps1, int &nPart2, int &nSteps2, int &useOnlySecMom, int &useOnlyFirstMom, int &useLinear, int &nRuns, int &simulateYt, int &useInverse, int &nRates, int &thetaHeld, double &heldVal, int &reportMoments, double &hyperCube, int &nest, int &bootstrap);
+/* Reading in time and rate parameters */
 VectorXd readCsvTimeParam();
 VectorXd readRates(int nRates);
-void printParameters(int nParts, int nSteps, int nParts2, int nSteps2, int useOnlySecMom, int useOnlyFirstMom, int useLinear, int nRuns, int simulateYt, int useInverse, int nRates, int thetaHeld, double heldVal, int reportMoments, double hyperCube, const VectorXd &times, int nMoments);
+
 #endif

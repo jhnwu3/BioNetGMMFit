@@ -1,4 +1,4 @@
-#include "src/system.hpp"
+#include "system.hpp"
 /*
 Author: John Wu
 Summary: Interaction Matrix used in the linear system.
