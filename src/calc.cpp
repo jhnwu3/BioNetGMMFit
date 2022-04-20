@@ -90,6 +90,7 @@ MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
 
     }else{
         for(int i = 0; i < nMoments; i++){
+            if(variances(i) == 0){ variances(i) = 1; } // error check for invalid variancees
             wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
         }
     }

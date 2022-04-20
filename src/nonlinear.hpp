@@ -3,7 +3,7 @@
 #include "main.hpp"
 #include "calc.hpp"
 #include "fileIO.hpp"
-
+#include "system.hpp"
 /* MVN Generator Struct, currently unused in either model, but is useful for generating values from multivariate normal distributions */
 struct Multi_Normal_Random_Variable
 {
