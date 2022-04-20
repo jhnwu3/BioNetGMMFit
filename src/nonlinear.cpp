@@ -1,6 +1,4 @@
-#include "main.hpp"
 #include "nonlinear.hpp"
-#include "system.hpp"
 /* Converts an Eigen::VectorXd into a State_N aka a vector<double> v2 as we are using two different C++ libraries for computations */
 State_N convertInit(const VectorXd &v1){
     vector<double> v2;

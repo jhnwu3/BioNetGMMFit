@@ -179,14 +179,14 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     /* Solve or load Y_t  */
     VectorXd trueK = readRates(nRates); 
     if(simulateYt == 1){
-        MatrixXd Y_0 = readY("../data/Y")[0];
+        MatrixXd Y_0 = readY("data/Y")[0];
         Y_0 = filterZeros(Y_0);
         cout << "Simulating Yt!" << endl;
         cout << "with evolution matrix:" << endl << evolutionMatrix(trueK, tf, nSpecies) << endl;
         Y_t = (evolutionMatrix(trueK, tf, nSpecies) * Y_0.transpose()).transpose();
         YtmVec = momentVector(Y_t, nMoments);
     }else{
-        Y_t = readY("../data/Y")[0];
+        Y_t = readY("data/Y")[0];
         Y_t = filterZeros(Y_t);
         YtmVec = momentVector(Y_t, nMoments);
     }
