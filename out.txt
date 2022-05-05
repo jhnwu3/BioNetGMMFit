@@ -10,9 +10,10 @@ Total Number of Runs:1
 Number of Moments:27
 Hyper Cube Width:1
 Using Times: 0 10
-Blind PSO --> nParts:8 Nsteps:4
+Blind PSO --> nParts:16 Nsteps:10
 Targeted PSO --> nParts:2 Nsteps:2
 Number of Rates:6
+Redirecting Model to SBML
 ------------------------------
 ------ Reading in Yt! ------
 "data/Y/Yt0.csv"
@@ -48,15 +49,14 @@ Computing Weight Matrices!
           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 5.15241e-06           0           0
           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0   0.0501996           0
           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 5.02594e-06
-PSO Seeded At: 0.233049   0.53028 0.0364362  0.180178  0.672103   0.29524| cost:5.59069e+07
+mVec: 76.9097  492.031  134.448  1236.95 0.527673  210.078  13150.9   294766  3835.67   256535  19.5485  6586.23 -36579.4 -5165.69  30956.8 -26.3679 -776.737  9319.22  -165087  215.998  6094.26  1753.83 -3.61724  1205.55  -368.18   -10185  81.1747
+PSO Seeded At: 0.1  0.1 0.95 0.17 0.05 0.18| cost:3.1091e+09
 PSO Estimation Has Begun, This may take some time...
 hypercubescale before reset:1
 hypercubescale after reset:1
 nested hypercubes:0 0 0 0 0 0
 hypercubescale after final nesting:1
-GBVEC:   0.233049     0.53028   0.0364362    0.180178    0.672103     0.29524 5.59069e+07
-Simulated Xt Moments for time 10:   0.304384      1836.4     211.054    0.922476     185.466     25.1391    0.119722 3.61825e+06     51174.4     1.48324     41149.9      721.25      513.23     74.8331    0.342564     55.1975        8.88      384724     1658.23      344123     45837.3     230.083     38772.8        6075     136.395     27.2079     4624.16
 
 -------------- All Run Estimates: -------------------
-   0.233049     0.53028   0.0364362    0.180178    0.672103     0.29524 5.59069e+07
-CODE FINISHED RUNNING IN 10 s TIME!
+    0.73051    0.364895     0.93689    0.626514    0.301095    0.110768 2.56658e+09
+CODE FINISHED RUNNING IN 19 s TIME!

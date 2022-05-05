@@ -21,6 +21,7 @@
 #include "rr/rrException.h"
 #include "rr/rrUtils.h"
 #include "rr/rrLogger.h"
+#include "rr/rrConfig.h"
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using namespace std;

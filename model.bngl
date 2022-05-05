@@ -12,8 +12,8 @@ begin species
    Syk() 192.7959
    Vav() 1463.265
    SykVav() 5.251
-   SHP1() 5.809538
    pVav() 435.2968
+   SHP1() 5.809538
    SHP1PVav() 6.254916
 end species
 
@@ -21,8 +21,8 @@ begin observables
     Molecules Syk Syk()
     Molecules Vav Vav()
     Molecules SykVav SykVav()
-    Molecules SHP1 SHP1()
     Molecules pVav pVav()
+    Molecules SHP1 SHP1()
     Molecules SHP1PVav SHP1PVav()
 
 end observables
