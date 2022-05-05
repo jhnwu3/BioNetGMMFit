@@ -7,7 +7,7 @@ VectorXd simulateSBML(int useDet, double ti, double tf, const VectorXd &c0, cons
     SimulateOptions opt;
     opt.start = ti;
     opt.duration = tf;
-    opt.steps = 1000;
+    opt.steps = 2;
 
     // to apparently change the values of parameters in the model, we must first feed the vector into a double array.
     double kVals[k.size()];
@@ -17,7 +17,6 @@ VectorXd simulateSBML(int useDet, double ti, double tf, const VectorXd &c0, cons
     r.getModel()->setGlobalParameterValues(k.size(),0,kVals); // set new global parameter values here.
     if(useDet > 0){
         r.setIntegrator("cvode");
-    
     }else{
         r.setIntegrator("gillespie");
     }
