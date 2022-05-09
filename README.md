@@ -1,11 +1,14 @@
 # **CyGMM**
 CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data. 
 It takes into account both linear and nonlinear models of evolution for estimating parameters. 
+Note: Repo is currently in progress to be easily deployable. Additional features such as [bionetgen](https://github.com/RuleWorld/bionetgen) and libroadrunner support are being added, so things may not easily run at the moment.
+
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
 2. [Prerequisites](#paragraph1)
     1. [Eigen](#eig)
     2. [Boost](#bst)
+    3. [BionetGen](#bngl)
 3. [Compilation](#compilation)
 4. [Execution](#exe)
 5. [Program Inputs](#pin)
@@ -70,6 +73,10 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
 
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
+
+### *BionetGen* <a name="bngl"></a>
+Currently, 
+
 
 ## Compilation <a name="compilation"></a>
 
