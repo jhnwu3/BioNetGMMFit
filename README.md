@@ -1,7 +1,7 @@
 # **CyGMM**
 CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data. 
 It takes into account both linear and nonlinear models of evolution for estimating parameters. 
-Note: Repo is currently in progress to be easily deployable. Additional features such as [bionetgen](https://github.com/RuleWorld/bionetgen) and libroadrunner support are being added, so things may not easily run at the moment.
+Note: Repo is currently in progress to be easily deployable. Additional features such as [bionetgen](https://github.com/RuleWorld/bionetgen) and libroadrunner support are being added, so things may not easily out of the box at the moment.
 
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
