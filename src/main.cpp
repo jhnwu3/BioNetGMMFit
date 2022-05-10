@@ -18,12 +18,13 @@ due to something with memory or how functions work from the compiler.
 #include "system.hpp" // user defined ode systems
 #include "sbml.hpp"
 #include "param.hpp"
-__asm__(".symver realpath,realpath@GLIBC_2.2.5");
+
 int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
     /* Input Parameters for Program */
     Parameters parameters = Parameters();
+    system("bionetgen -i model.bngl -o sbml");
 
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
