@@ -8,9 +8,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 # could be command line variables (-DROADRUNNER_INSTALL_PREFIX=...)
 
-set(ROADRUNNER_INSTALL_PREFIX "/mnt/c/buildroadrunner/roadrunner/install-Release/")
+set(ROADRUNNER_INSTALL_PREFIX "/buildroadrunner/roadrunner/install-Release/")
 
-set(LLVM_INSTALL_PREFIX "/mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel")
+set(LLVM_INSTALL_PREFIX "/buildroadrunner/llvm13-ubuntu-gcc10-rel")
 
 set(CMAKE_PREFIX_PATH
 

@@ -1,5 +1,6 @@
 #ifndef _MAIN_HPP_
 #define _MAIN_HPP_
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <boost/math/distributions.hpp>

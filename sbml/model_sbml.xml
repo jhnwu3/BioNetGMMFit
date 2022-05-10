@@ -23,7 +23,7 @@
     <listOfParameters>
       <!-- Independent variables -->
       <parameter id="k1" value="0.1"/>
-      <parameter id="k2" value="0.2"/>
+      <parameter id="k2" value="0.1"/>
       <parameter id="k3" value="0.95"/>
       <parameter id="k4" value="0.17"/>
       <parameter id="k5" value="0.05"/>

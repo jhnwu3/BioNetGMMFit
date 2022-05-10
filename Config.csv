@@ -15,5 +15,5 @@ Hypercube Dimension, 1.0
 Report Moments?, 1
 Number of Nested HyperCubes, 1
 Bootstrap?, 1
-Use BNGL?, 1
+Use BNGL?, 0
 Use Deterministic?, 1

@@ -58,5 +58,5 @@ nested hypercubes:0 0 0 0 0 0
 hypercubescale after final nesting:1
 
 -------------- All Run Estimates: -------------------
-  0.602931   0.259331   0.808312   0.507558   0.313627   0.808212 2.0199e+09
-CODE FINISHED RUNNING IN 18 s TIME!
+       0.1        0.1       0.95       0.17       0.05       0.18 3.1091e+09
+CODE FINISHED RUNNING IN 17 s TIME!

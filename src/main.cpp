@@ -18,20 +18,21 @@ due to something with memory or how functions work from the compiler.
 #include "system.hpp" // user defined ode systems
 #include "sbml.hpp"
 #include "param.hpp"
-__asm__(".symver realpath,realpath@GLIBC_2.2.8");
 int main(){
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
+    /* Run an update for bngl */
+    system("bionetgen run -i model.bngl -o sbml");
     /* Input Parameters for Program */
     Parameters parameters = Parameters();
-
+    /* Read time steps*/
     VectorXd times = readCsvTimeParam();
     if(times.size() < 1){
         cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
         exit(1);
     }
     MatrixXd X_0;
-    MatrixXd ogX_0;
+    MatrixXd ogX_0; // copy of start values if bootstrap is used.
     X_0 = readX("data/X");
     X_0 = filterZeros(X_0);
     ogX_0 = X_0;
@@ -47,6 +48,7 @@ int main(){
     parameters.printParameters(nMoments, times);
 
     /* RoadRunner Configuration and Simulation Variables*/
+    cout << "52" << endl;
     RoadRunner r = RoadRunner("sbml/model_sbml.xml");
     if(parameters.useDet > 0){
         r.setIntegrator("cvode");
