@@ -231,7 +231,7 @@ and then observe that the coefficients in this differential equation system can 
 
 to take this into code, we can now bake this into our program. Navigate to the 
 
-    system.cpp
+    src/system.cpp
 
 C++ file and open it using your preferred text editor. You'll notice that there's a single function called interaction matrix and it should have a variable called intMatrix with numerous comments surrounding it. It should look something like this: 
 
