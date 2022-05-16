@@ -1,0 +1,14 @@
+Number of Particles Blind PSO,1500
+Number of Steps Blind PSO,30
+Number of Particles Targeted PSO,10
+Number of Steps Targeted PSO,1000
+Exclude Mixed Moments?,0
+Exclude Mixed and Second Moments?,0
+Use Linear Model?,0
+Number of Runs,1
+Simulate Y_t?,0
+Use Matrix Inverse?,0
+Number of Rates,6
+Sample Size,5000
+Index of Held Rate Constant,1
+Value of Held Rate Constant,0.1
