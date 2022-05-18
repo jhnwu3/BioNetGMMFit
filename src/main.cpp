@@ -18,22 +18,31 @@ due to something with memory or how functions work from the compiler.
 #include "system.hpp" // user defined ode systems
 #include "sbml.hpp"
 #include "param.hpp"
-int main(){
+#include "cli.hpp"
+int main(int argc, char** argv){
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
-    /* Run an update for bngl */
-    system("bionetgen run -i model.bngl -o sbml");
+    const string bngl = ".bngl"; // suffixes for sbml/bngl file types
+    const string sbml = "_sbml.xml";
+    
     /* Input Parameters for Program */
-    Parameters parameters = Parameters();
+    Parameters parameters = Parameters(getConfigPath(argc, argv));
+
+    /* Run an update for bngl */
+    string sbmlModel = "./sbml/" + getModelPath(argc, argv).substr(0, getModelPath(argc, argv).find(bngl)) + sbml;
+    const string bnglCall = "bionetgen run -i" + getModelPath(argc, argv) + " -o sbml";
+    if(parameters.useSBML > 0 && system(bnglCall.c_str()) < 0){
+        cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;
+    }
     /* Read time steps*/
-    VectorXd times = readCsvTimeParam();
-    if(times.size() < 1){
-        cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
+    VectorXd times = readCsvTimeParam(getTimeStepsPath(argc, argv));
+    if(times.size() < 2){
+        cout << "Error! Unable to read in timesteps properly, need two or more time steps!" << endl;
         exit(1);
     }
     MatrixXd X_0;
     MatrixXd ogX_0; // copy of start values if bootstrap is used.
-    X_0 = readX("data/X");
+    X_0 = readX(getXPath(argc, argv));
     X_0 = filterZeros(X_0);
     ogX_0 = X_0;
     cout << "After removing all negative rows, X has " << X_0.rows() << " rows." << endl;
@@ -47,23 +56,22 @@ int main(){
     }
     parameters.printParameters(nMoments, times);
 
-    /* RoadRunner Configuration and Simulation Variables*/
-    cout << "52" << endl;
-    RoadRunner r = RoadRunner("./sbml/model_sbml.xml");
+    /* RoadRunner Configuration and Simulation Variables including a parallel vector to reduce runtime*/
+    RoadRunner r = RoadRunner(sbmlModel);
     if(parameters.useDet > 0){
         r.setIntegrator("cvode");
     }else{
         r.setIntegrator("gillespie");
     }
     SimulateOptions opt;
-    opt.steps = 100;
+    opt.steps = 10;
     double theta[parameters.nRates];// static array to be constantly used with road runner model parameters.
 
     MatrixXd GBMAT;
     MatrixXd GBVECS = MatrixXd::Zero(parameters.nRuns, parameters.nRates + 1);
     if(parameters.useLinear == 1){
         for(int r = 0; r < parameters.nRuns; ++r){
-            GBMAT = linearModel(parameters.nParts, parameters.nSteps, parameters.nParts2, parameters.nSteps2, X_0, parameters.nRates, nMoments, times, parameters.simulateYt, parameters.useInverse);
+            GBMAT = linearModel(parameters.nParts, parameters.nSteps, parameters.nParts2, parameters.nSteps2, X_0, parameters.nRates, nMoments, times, parameters.simulateYt, parameters.useInverse, argc, argv);
             GBVECS.row(r) = GBMAT.row(GBMAT.rows() - 1);
         }
     }else{
@@ -98,20 +106,18 @@ int main(){
         double trukCost = 0;
         if(parameters.simulateYt == 1){
             cout << "------ SIMULATING YT! ------" << endl;
-            tru = readRates(parameters.nRates);
-            MatrixXd Y_0 = readY("data/Y")[0];
+            tru = readRates(parameters.nRates, getTrueRatesPath(argc, argv));
+            cout << "Read in Rates:" << tru.transpose() << endl;
+            MatrixXd Y_0 = readY(getYPath(argc, argv))[0];
             Y_0 = filterZeros(Y_0);
             cout << "After removing all negative rows, Y has " << Y_0.rows() << " rows." << endl;
             for(int t = 1; t < times.size(); t++){ // start at t1, because t0 is now in the vector
                 if(parameters.useSBML > 0){
                     MatrixXd YtMat = MatrixXd::Zero(Y_0.rows(), Y_0.cols());
-                    // for(int i = 0; i < Y_0.rows(); ++i){
-                    //     YtMat.row(i) = simulateSBML(parameters.useDet, times(0), times(t), Y_0.row(i), tru);
-                    // }
                     opt.start = times(0);
                     opt.duration = times(t);
                     for(int i = 0; i < tru.size(); ++i){
-                        theta[i] = tru(i);
+                        theta[i] = tru(i);  
                     }
                     r.getModel()->setGlobalParameterValues(tru.size(), 0, theta); // set new global parameter values here.
                     for(int i = 0; i < Y_0.rows(); ++i){
@@ -139,7 +145,7 @@ int main(){
             }
             cout << "---------------------------" << endl;
         }else{
-            Yt3Mats = readY("data/Y");
+            Yt3Mats = readY(getYPath(argc, argv));
             if(Yt3Mats.size() + 1 != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
@@ -177,7 +183,7 @@ int main(){
                 /* Initialize Global Best  */
                 VectorXd seed = VectorXd::Zero(parameters.nRates);
                 for (int i = 0; i < parameters.nRates; i++) {seed(i) = rndNum(low,high);}
-                seed << 0.1,  0.1,  0.95,  0.17, 0.05,  0.18;
+                // seed << 0.1,  0.1,  0.95,  0.17, 0.05,  0.18;
                 if(parameters.heldTheta > -1){seed(parameters.heldTheta) = parameters.heldThetaVal;}
                 
                 /* Evolve initial Global Best and Calculate a Cost*/
@@ -213,7 +219,6 @@ int main(){
                         costSeedK += costFunction(Yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
                     }else{
 
-                        
                         Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                         // Xt = evolveSystem(seed, X_0, nMoments, times(t), dt, times(0));
                         Moments_Mat_Obs XtObs(Xt);

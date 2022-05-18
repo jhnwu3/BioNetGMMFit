@@ -166,10 +166,15 @@ MatrixXd readX(const std::string &path){
     int nFile = 0;
     MatrixXd X_0;
     cout << "------ Reading in X_0! ------" << endl;
-    for(const auto & entry : fs::directory_iterator(path)){
-        cout << entry << endl;
-        X_0 = csvToMatrix(entry.path().string());
-        ++nFile;
+    try{
+        for(const auto & entry : fs::directory_iterator(path)){
+            cout << entry << endl;
+            X_0 = csvToMatrix(entry.path().string());
+            ++nFile;
+        }
+    }catch(...){
+        cout << "Error with X directory path, please make sure to input a valid path, received path:" << path << endl;
+        exit(-1);
     }
     if(nFile < 1){
         cout << "Error! No X csv file detected in " << path << "!" << endl;
@@ -194,10 +199,15 @@ MatrixXd readX(const std::string &path){
 vector<MatrixXd> readY(const std::string & path){
     vector<MatrixXd> Y;
     cout << "------ Reading in Yt! ------" << endl;
-    for(const auto & entry : fs::directory_iterator(path)){
-        cout << entry << endl;
-        Y.push_back(csvToMatrix(entry.path().string()));
-        cout << "Read in " <<Y[Y.size() - 1].rows() << " rows!" << endl;
+    try{
+        for(const auto & entry : fs::directory_iterator(path)){
+            cout << entry << endl;
+            Y.push_back(csvToMatrix(entry.path().string()));
+            cout << "Read in " <<Y[Y.size() - 1].rows() << " rows!" << endl;
+        }
+    }catch(...){
+        cout << "Error! Unable to Read in values from the true Y directory. Make sure to specifiy a directory path not an explicit file name. Error with path:"<< path << endl;
+        exit(-1);
     }
     if(Y.size() < 1){
         cout << "Error! 0 Y Files read in!" << endl;
@@ -229,11 +239,11 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
 }
 
 // Reads Time Step Parameters.
-VectorXd readCsvTimeParam(){
+VectorXd readCsvTimeParam(const string &path){
 
-    std::ifstream input("time_steps.csv");
+    std::ifstream input(path);
     if(!input.is_open()){
-        throw std::runtime_error("Could not open data parameters file");
+        throw std::runtime_error("Could not open time steps csv file!");
         exit;
     }
     vector<double> params;
@@ -255,8 +265,8 @@ VectorXd readCsvTimeParam(){
     return times;
 }
 
-VectorXd readRates(int nRates){
-    std::ifstream input("true_rates.csv");
+VectorXd readRates(int nRates, const string &path){
+    std::ifstream input(path);
     if(!input.is_open()){
         throw std::runtime_error("Could not open data parameters file");
         exit;
@@ -272,8 +282,8 @@ VectorXd readRates(int nRates){
             }
         }
     }
-    VectorXd rates(params.size());
-    for(int i = 0; i < params.size(); i++){
+    VectorXd rates(nRates);
+    for(int i = 0; i < nRates; i++){
         rates(i) = params.at(i);
     }
     input.close();

@@ -26,7 +26,7 @@ vector<MatrixXd> readY(const std::string & path);
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
 
 /* Reading in time and rate parameters */
-VectorXd readCsvTimeParam();
-VectorXd readRates(int nRates);
+VectorXd readCsvTimeParam(const string &path);
+VectorXd readRates(int nRates, const string &path);
 
 #endif

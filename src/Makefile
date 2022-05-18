@@ -153,6 +153,30 @@ calc.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/calc.cpp.s
 .PHONY : calc.cpp.s
 
+cli.o: cli.cpp.o
+.PHONY : cli.o
+
+# target to build an object file
+cli.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/cli.cpp.o
+.PHONY : cli.cpp.o
+
+cli.i: cli.cpp.i
+.PHONY : cli.i
+
+# target to preprocess a source file
+cli.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/cli.cpp.i
+.PHONY : cli.cpp.i
+
+cli.s: cli.cpp.s
+.PHONY : cli.s
+
+# target to generate assembly for a file
+cli.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/cli.cpp.s
+.PHONY : cli.cpp.s
+
 fileIO.o: fileIO.cpp.o
 .PHONY : fileIO.o
 
@@ -309,6 +333,9 @@ help:
 	@echo "... calc.o"
 	@echo "... calc.i"
 	@echo "... calc.s"
+	@echo "... cli.o"
+	@echo "... cli.i"
+	@echo "... cli.s"
 	@echo "... fileIO.o"
 	@echo "... fileIO.i"
 	@echo "... fileIO.s"

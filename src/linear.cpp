@@ -135,7 +135,7 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
         GBMAT - Global Best Matrix with each row being a new "global" best parameter estimate in the PSO, the final row is the final estimate.
 */
 
-MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt, int useInverse) {
+MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt, int useInverse, int argc, char ** argv) {
   
     int midPt = times.size() / 2; // take only the midpoint of all listed time points for now for evolution
     double tf = times(midPt);
@@ -168,16 +168,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
     MatrixXd Y_t = MatrixXd::Zero(Y_t.rows(), Y_t.cols());
     VectorXd YtmVec(nMoments);
-     cout << "--------- Parameters ---------" << endl;
-    cout << "X Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
-    cout << "Using Times:" << times.transpose() << endl;
-    cout << "Bounds for Uniform Distribution (" << low << "," << high << ")"<< endl;
-    cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
-    cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
-    cout << "sdbeta:" << sdbeta << endl;
-    cout << "------------------------------" << endl;
     /* Solve or load Y_t  */
-    VectorXd trueK = readRates(nRates); 
+    VectorXd trueK = readRates(nRates, getTrueRatesPath(argc, argv)); 
     if(simulateYt == 1){
         MatrixXd Y_0 = readY("data/Y")[0];
         Y_0 = filterZeros(Y_0);
@@ -190,6 +182,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
         Y_t = filterZeros(Y_t);
         YtmVec = momentVector(Y_t, nMoments);
     }
+
     weight = wolfWtMat(Y_t, nMoments, willInvert); // wolf weights
 
     /* Initialize seedk aka global costs */

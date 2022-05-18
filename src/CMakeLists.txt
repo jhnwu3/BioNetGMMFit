@@ -23,7 +23,7 @@ set(CMAKE_PREFIX_PATH
 # for registering location of ImportRoadRunnerAndDependencies
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../) # move executable to main directory
 set(CMAKE_MODULE_PATH "${ROADRUNNER_INSTALL_PREFIX}/lib/cmake")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -std=c++17 -static-libstdc++ -lstdc++fs -g -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17  -static-libgcc -static-libstdc++ -lstdc++fs -O3")
 # Import roadrunner and all necessary dependencies for linking roadrunner.
 
 # This command is a roadrunner convenience cmake script which does all of the
@@ -41,7 +41,7 @@ include(ImportRoadrunnerAndDependencies)
 
 # add an executable
 find_package(OpenMP) # openMP for parallelization
-add_executable(${PROJECT_NAME} main.cpp main.hpp calc.cpp calc.hpp fileIO.cpp fileIO.hpp linear.cpp linear.hpp nonlinear.cpp nonlinear.hpp system.hpp system.cpp sbml.cpp sbml.hpp param.hpp)
+add_executable(${PROJECT_NAME} main.cpp main.hpp calc.cpp calc.hpp fileIO.cpp fileIO.hpp linear.cpp linear.hpp nonlinear.cpp nonlinear.hpp system.hpp system.cpp sbml.cpp sbml.hpp param.hpp cli.hpp cli.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 # link roadrunner-static. Note that we have configured roadrunner-static target (which is imported
