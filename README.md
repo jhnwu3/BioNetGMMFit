@@ -3,6 +3,7 @@ CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data
 It takes into account both linear and nonlinear models of evolution for estimating parameters. 
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
+    1. [Dockers](#docker)
 2. [Prerequisites](#paragraph1)
     1. [Eigen](#eig)
     2. [Boost](#bst)
@@ -39,21 +40,17 @@ To quickly get started with one of the simulated examples, do:
 
     make sure to unzip the directory before use.
 
-2. Open the default (or WSL) terminal in the directory and install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
-
-        source install.sh
-
-    Make sure you run it with admin access.
-
-3. Then, make sure you're still in the newly created repo directory
+2. Then, make sure you're still in the newly created repo directory
 
         cd CyGMM
 
-4. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
+3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
         source run.sh
 
-5. All output (final estimate of rate constants) is recorded in **out.txt**
+4. All output (final estimate of rate constants) is recorded in **out.txt**
+
+### Docker  <a name="docker"></a>
 
 ## Prequisites <a name="prq"></a>
 
@@ -81,7 +78,14 @@ and should you want to compile your own code from libroadrunner off of this, ple
 
 ## Compilation <a name="compilation"></a>
 
-If you wish to modify the code for your own use or if the binary is not sufficient, a Makefile has been provided in the /src directory. 
+If you wish to modify the code for your own use or if the binary is not sufficient, a cmake has been provided in the /src directory. Fair warning this can be a tedious and bug-prone
+process, that being said, assuming you have installed all of **Boost** and **Eigen** libraries through the above, then you can simply just download a fully built roadrunner + CyGMM library
+[here](). 
+
+First unzip the folder, doing
+
+    unzip 
+
 After entering the directory
 
     cd src
