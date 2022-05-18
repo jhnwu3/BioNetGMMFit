@@ -1,4 +1,4 @@
-Number of Particles Blind PSO,1000
+Number of Particles Blind PSO,500
 Number of Steps Blind PSO,30
 Number of Particles Targeted PSO, 2
 Number of Steps Targeted PSO,2
@@ -17,3 +17,5 @@ Number of Nested HyperCubes, 1
 Bootstrap?, 0
 Use BNGL?, 1
 Use Deterministic?,1
+Number of BNGL Steps, 15
+Seed, 1
