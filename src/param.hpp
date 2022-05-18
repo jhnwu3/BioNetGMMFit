@@ -21,13 +21,11 @@ class Parameters{
         int bootstrap;
         int useSBML;
         int useDet;
+        int odeSteps;
+        int seed;
         double heldThetaVal;
         double hyperCubeScale;
         Parameters(const string &path){
-            // if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, heldTheta, heldThetaVal, reportMoments, hyperCubeScale, nest, bootstrap) !=0 ){
-            //     cout << "failed to effectively read in parameters!" << endl;
-            //     return EXIT_FAILURE;
-            // }
             cout << "Reading in Parameters from Configuration File!" << endl;
             std::ifstream input(path);
             if(!input.is_open()){
@@ -64,6 +62,8 @@ class Parameters{
             bootstrap = params.at(16);
             useSBML = params.at(17);
             useDet = params.at(18);
+            odeSteps = params.at(19);
+            seed = params.at(20); 
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){

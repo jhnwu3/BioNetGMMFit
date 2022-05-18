@@ -6,6 +6,7 @@ It takes into account both linear and nonlinear models of evolution for estimati
 2. [Prerequisites](#paragraph1)
     1. [Eigen](#eig)
     2. [Boost](#bst)
+    3. [libRoadRunner/BionetGen](#rr)
 3. [Compilation](#compilation)
 4. [Execution](#exe)
 5. [Program Inputs](#pin)
@@ -70,6 +71,13 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
 
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
+
+### *libRoadRunner/bionetgen* <a name="rr"> </a>
+Please make sure to have bionetgen installed through 
+
+    pip install bionetgen
+
+and should you want to compile your own code from libroadrunner off of this, please look [here](https://libroadrunner.readthedocs.io/en/latest/Installation/installation.html)
 
 ## Compilation <a name="compilation"></a>
 

@@ -21,8 +21,10 @@ Input:
 VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone) {
 
     std::random_device rand_dev;
-    std::mt19937 generator(rand_dev());    
-
+    std::mt19937 generator(rand_dev());
+    if(seed > 0){
+        generator.seed(seed);
+    }    
     VectorXd rPoint;
     rPoint = posK;
     /* create random int vector */
