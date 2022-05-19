@@ -51,3 +51,17 @@ string getModelPath(int argc, char **argv){
     }
     return "model.bngl";
 }
+
+bool helpCall(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-h");
+    if(flag != -1){
+        cout << "To specify model path, do: ./CyGMM -m <path> i.e ./CyGMM -m model.bngl" << endl
+        << "To specify config path, do: ./CyGMM -c <path> i.e ./CyGMM -c Config.csv" << endl
+        << "To specify time steps file path, do: ./CyGMM -t <path> i.e ./CyGMM -t time_steps.csv" << endl
+        << "To specify simulation truth rate constants path, do: ./CyGMM -r <path> i.e ./CyGMM -r true_rates.csv" << endl
+        << "To specify data X directory where X data files are located, do: ./CyGMM -x <path> i.e ./CyGMM -x model.bngl" << endl
+        << "To specify data Y directory where true Y data files are located, do: ./CyGMM -y <path> i.e ./CyGMM -y model.bngl" << endl;
+        return true;
+    }
+    return false;
+}

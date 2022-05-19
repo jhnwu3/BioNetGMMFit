@@ -23,6 +23,7 @@ class Parameters{
         int useDet;
         int odeSteps;
         int seed;
+        int nThreads;
         double heldThetaVal;
         double hyperCubeScale;
         Parameters(const string &path){
@@ -63,7 +64,8 @@ class Parameters{
             useSBML = params.at(17);
             useDet = params.at(18);
             odeSteps = params.at(19);
-            seed = params.at(20); 
+            seed = params.at(20);
+            nThreads = params.at(21); 
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){
@@ -88,8 +90,10 @@ class Parameters{
             cout << "Number of Rates:" << nRates << endl;
             if(useSBML){
                 cout << "Redirecting Model to SBML" << endl;
-                  if(useDet){
+                if(useDet > 0){
                     cout << "and Modeling With Deterministic ODEs" << endl;
+                }else{
+                    cout << "using gillespie" << endl;
                 }
             }
             if(seed > 0){

@@ -20,6 +20,10 @@ due to something with memory or how functions work from the compiler.
 #include "param.hpp"
 #include "cli.hpp"
 int main(int argc, char** argv){
+    if(helpCall(argc, argv)){
+        return EXIT_SUCCESS;
+    }
+
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
     const string bngl = ".bngl"; // suffixes for sbml/bngl file types
@@ -27,6 +31,9 @@ int main(int argc, char** argv){
     
     /* Input Parameters for Program */
     Parameters parameters = Parameters(getConfigPath(argc, argv));
+
+    /* Important! Max Thread Count Test */
+    omp_set_num_threads(parameters.nThreads);
 
     /* Run an update for bngl */
     string sbmlModel = "./sbml/" + getModelPath(argc, argv).substr(0, getModelPath(argc, argv).find(bngl)) + sbml;
@@ -66,7 +73,16 @@ int main(int argc, char** argv){
     SimulateOptions opt;
     opt.steps = parameters.odeSteps;
     double theta[parameters.nRates];// static array to be constantly used with road runner model parameters.
+
     /* Create a Vector of RoadRunner objects for parallel use*/
+    vector<RoadRunner> pRRs;
+    vector<SimulateOptions> pOpts;
+    for(int i = 0; i < parameters.nThreads; ++i){
+        RoadRunner rCp = r;
+        SimulateOptions optCp = opt;
+        pRRs.push_back(rCp);
+        pOpts.push_back(optCp);
+    }
 
     MatrixXd GBMAT;
     MatrixXd GBVECS = MatrixXd::Zero(parameters.nRuns, parameters.nRates + 1);
