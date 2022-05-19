@@ -80,7 +80,7 @@ and should you want to compile your own code from libroadrunner off of this, ple
 
 If you wish to modify the code for your own use or if the binary is not sufficient, a cmake has been provided in the /src directory. Fair warning this can be a tedious and bug-prone
 process, that being said, assuming you have installed all of **Boost** and **Eigen** libraries through the above, then you can simply just download a fully built roadrunner + CyGMM library
-[here](). 
+[here](https://drive.google.com/file/d/1DDaQuXBwX1mICEJCL7HbDqE5v1kFBYSb/view?usp=sharing). 
 
 First unzip the folder, doing
 
@@ -105,8 +105,7 @@ To run the program, simply enter
 in your terminal. For more information about parameters and writing your own system, look below.
 
 ### *PSO Aside*
-Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
-of the targeted to 0. 
+Currently, targeted PSO has only been provided should a user choose to use matrix exponentiation. 
 
 ## Program Inputs <a name="pin"></a>
 All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
