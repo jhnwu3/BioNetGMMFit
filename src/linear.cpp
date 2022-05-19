@@ -83,6 +83,7 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
     rPoint = posK;
     std::random_device rand_dev;
     std::mt19937 generator(rand_dev());
+    if(seed > 0){generator.seed(seed);}
     vector<int> rand;
     for (int i = 0; i < posK.size(); i++) {
         rand.push_back(i);
@@ -135,7 +136,7 @@ VectorXd linearVelVec(const VectorXd& posK, int seed, double epsi, double nan, i
         GBMAT - Global Best Matrix with each row being a new "global" best parameter estimate in the PSO, the final row is the final estimate.
 */
 
-MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt, int useInverse) {
+MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd& X_0, int nRates, int nMoments, const VectorXd &times, int simulateYt, int useInverse, int argc, char ** argv, int rngSeed) {
   
     int midPt = times.size() / 2; // take only the midpoint of all listed time points for now for evolution
     double tf = times(midPt);
@@ -161,6 +162,9 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     double low = 0.0, high = 1.0;
     random_device RanDev;
     mt19937 gen(RanDev());
+    if(rngSeed > 0){
+        gen.seed(rngSeed);
+    }
     uniform_real_distribution<double> unifDist(low, high);
     MatrixXd weight = MatrixXd::Identity(nMoments, nMoments);
     MatrixXd GBMAT(0, 0); // iterations of global best vectors
@@ -168,16 +172,8 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     MatrixXd POSMAT(nParts, Npars); // Position matrix as it goees through it in parallel
     MatrixXd Y_t = MatrixXd::Zero(Y_t.rows(), Y_t.cols());
     VectorXd YtmVec(nMoments);
-     cout << "--------- Parameters ---------" << endl;
-    cout << "X Size:" << X_0.rows() << " with:" << nMoments << " moments." << endl;
-    cout << "Using Times:" << times.transpose() << endl;
-    cout << "Bounds for Uniform Distribution (" << low << "," << high << ")"<< endl;
-    cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
-    cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
-    cout << "sdbeta:" << sdbeta << endl;
-    cout << "------------------------------" << endl;
     /* Solve or load Y_t  */
-    VectorXd trueK = readRates(nRates); 
+    VectorXd trueK = readRates(nRates, getTrueRatesPath(argc, argv)); 
     if(simulateYt == 1){
         MatrixXd Y_0 = readY("data/Y")[0];
         Y_0 = filterZeros(Y_0);
@@ -198,6 +194,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
     for (int i = 0; i < Npars; i++) { 
         seed(i) = unifDist(gen);
     }
+    cout << "Seeded at " << seed.transpose() << endl;
     double costSeedK = 0;
     MatrixXd seedXt = (evolutionMatrix(seed, tf, nSpecies) * X_0.transpose()).transpose();
     VectorXd seedMoms = momentVector(seedXt, nMoments);
@@ -218,6 +215,11 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
             uniform_real_distribution<double> pUnifDist(low, high);
+            int pSeed = -1;
+            if(rngSeed > 0){
+                pSeed = particle + step + rngSeed;
+                pGenerator.seed(pSeed);
+            }
             /* instantiate all particle rate constants with unifDist */
             if(step == 0){
                 /* temporarily assign specified k constants */
@@ -249,7 +251,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 VectorXd pos;
                 pos = VectorXd::Zero(Npars);
                 pos = POSMAT.row(particle);
-                VectorXd rpoint = linearVelVec(pos, particle, epsi, nan, hone);
+                VectorXd rpoint = linearVelVec(pos, pSeed, epsi, nan, hone);
                 VectorXd PBVEC(Npars);
                 for(int i = 0; i < Npars; i++){PBVEC(i) = PBMAT(particle, i);}
                 pos = w1 * rpoint + w2 * PBVEC + w3 * GBVEC; // update position of particle
@@ -311,7 +313,11 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
             random_device pRanDev;
             mt19937 pGenerator(pRanDev());
             uniform_real_distribution<double> pUnifDist(low, high);
-        
+            int pSeed = -1;
+            if(rngSeed > 0){
+                pSeed = particle + step + rngSeed;
+                pGenerator.seed(pSeed);
+            }
             if(step == 0 || step == chkpts(0) || step == chkpts(1) || step == chkpts(2) || step == chkpts(3)){
                 /* reinitialize particles around global best */
                 for(int edim = 0; edim < Npars; edim++){
@@ -365,7 +371,7 @@ MatrixXd linearModel(int nParts, int nSteps, int nParts2, int nSteps2, MatrixXd&
                 w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
                 //w1 = 0.05; w2 = 0.90; w3 = 0.05;
                 VectorXd pos = POSMAT.row(particle);
-                VectorXd rpoint = linearVelVec(pos, particle, epsi, nan, hone);
+                VectorXd rpoint = linearVelVec(pos, pSeed, epsi, nan, hone);
                 VectorXd PBVEC(Npars);
                 for(int i = 0; i < Npars; i++){
                     PBVEC(i) = PBMAT(particle, i);

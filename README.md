@@ -1,14 +1,13 @@
 # **CyGMM**
 CyGMM is a C++ software designed for parameter estimation of CYTOF Snapshot Data. 
 It takes into account both linear and nonlinear models of evolution for estimating parameters. 
-Note: Repo is currently in progress to be easily deployable. Additional features such as [bionetgen](https://github.com/RuleWorld/bionetgen) and libroadrunner support are being added, so things may not easily out of the box at the moment.
-
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
+    1. [Dockers](#docker)
 2. [Prerequisites](#paragraph1)
     1. [Eigen](#eig)
     2. [Boost](#bst)
-    3. [BionetGen](#bngl)
+    3. [libRoadRunner/BionetGen](#rr)
 3. [Compilation](#compilation)
 4. [Execution](#exe)
 5. [Program Inputs](#pin)
@@ -39,23 +38,19 @@ To quickly get started with one of the simulated examples, do:
     ![Step 1](/img/REPO.png)
     ![Step 2](/img/DLST.png)
 
-    make sure to unzip the directory before use.
+    make sure to unzip the directory before use. Make sure you also have bionetgen installed, if not, look [here](https://bng-vscode-extension.readthedocs.io/en/latest/install.html).
 
-2. Open the default (or WSL) terminal in the directory and install Eigen and Boost C++ libraries by running the install shell script by typing in the terminal
-
-        source install.sh
-
-    Make sure you run it with admin access.
-
-3. Then, make sure you're still in the newly created repo directory
+2. Then, make sure you're still in the newly created repo directory
 
         cd CyGMM
 
-4. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
+3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
 
         source run.sh
 
-5. All output (final estimate of rate constants) is recorded in **out.txt**
+4. All output (final estimate of rate constants) is recorded in **out.txt**
+
+### Docker  <a name="docker"></a>
 
 ## Prequisites <a name="prq"></a>
 
@@ -74,13 +69,23 @@ Snapshot uses the Boost 1.7.2 odeint C++ library for ODE estimations for nonline
 However, Snapshot only uses the C++ odeint library, so if storage space is an explicit concern, more
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
 
-### *BionetGen* <a name="bngl"></a>
-Currently, 
+### *libRoadRunner/bionetgen* <a name="rr"> </a>
+Please make sure to have bionetgen installed through 
 
+    pip install bionetgen
+
+and should you want to compile your own code from libroadrunner off of this, please look [here](https://libroadrunner.readthedocs.io/en/latest/Installation/installation.html)
 
 ## Compilation <a name="compilation"></a>
 
-If you wish to modify the code for your own use or if the binary is not sufficient, a Makefile has been provided in the /src directory. 
+If you wish to modify the code for your own use or if the binary is not sufficient, a cmake has been provided in the /src directory. Fair warning this can be a tedious and bug-prone
+process, that being said, assuming you have installed all of **Boost** and **Eigen** libraries through the above, then you can simply just download a fully built roadrunner + CyGMM library
+[here](https://drive.google.com/file/d/1DDaQuXBwX1mICEJCL7HbDqE5v1kFBYSb/view?usp=sharing). 
+
+First unzip the folder, doing
+
+    unzip 
+
 After entering the directory
 
     cd src
@@ -100,8 +105,7 @@ To run the program, simply enter
 in your terminal. For more information about parameters and writing your own system, look below.
 
 ### *PSO Aside*
-Although currently not available for estimating nonlinear systems, there is an optional two step procedure for the linear system, which may improve estimates. If run time is a concern, one can simply turn off the second step "targeted PSO" by simply setting the number of steps
-of the targeted to 0. 
+Currently, targeted PSO has only been provided should a user choose to use matrix exponentiation. 
 
 ## Program Inputs <a name="pin"></a>
 All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
@@ -191,7 +195,10 @@ The default PSO parameters are listed below,
 | Report Moments?                  | 1     | 1 to report predicted moments in out.txt                                 |
 | Number of Nested Hypcubes        | 1     | Estimates rate constants in spaces of 2^n order, n = # of nested hypcubes|
 | Bootstrap?                       | 1     | 1 to estimate 95% CI's, 0 otherwise                                      |   
-
+| Use BNGL?                        | 1     | 1 to use bionetgen language for simulation, 0 otherwise                  |
+| Use Deterministic?               | 1     | 1 to use CVode integrators, 0 to use roadrunner gillespie simulation     |
+| Number of BNGL Steps             | 15    | Tuning Parameter for number of steps of integration                      |
+| Seed                             | -1    | Used to seed the PSO, Off when seed < 0, On when seed > 0                |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1
@@ -231,7 +238,7 @@ and then observe that the coefficients in this differential equation system can 
 
 to take this into code, we can now bake this into our program. Navigate to the 
 
-    src/system.cpp
+    system.cpp
 
 C++ file and open it using your preferred text editor. You'll notice that there's a single function called interaction matrix and it should have a variable called intMatrix with numerous comments surrounding it. It should look something like this: 
 

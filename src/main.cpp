@@ -18,26 +18,35 @@ due to something with memory or how functions work from the compiler.
 #include "system.hpp" // user defined ode systems
 #include "sbml.hpp"
 #include "param.hpp"
-
-int main(){
+#include "cli.hpp"
+int main(int argc, char** argv){
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
+    const string bngl = ".bngl"; // suffixes for sbml/bngl file types
+    const string sbml = "_sbml.xml";
+    
     /* Input Parameters for Program */
-    Parameters parameters = Parameters();
-    system("bionetgen -i model.bngl -o sbml");
+    Parameters parameters = Parameters(getConfigPath(argc, argv));
 
-    VectorXd times = readCsvTimeParam();
-    if(times.size() < 1){
-        cout << "Error! Unable to read in timesteps properly or number of time steps inputted is equal to 0" << endl;
+    /* Run an update for bngl */
+    string sbmlModel = "./sbml/" + getModelPath(argc, argv).substr(0, getModelPath(argc, argv).find(bngl)) + sbml;
+    const string bnglCall = "bionetgen run -i" + getModelPath(argc, argv) + " -o sbml";
+    if(parameters.useSBML > 0 && system(bnglCall.c_str()) < 0){
+        cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;
+    }
+    /* Read time steps*/
+    VectorXd times = readCsvTimeParam(getTimeStepsPath(argc, argv));
+    if(times.size() < 2){
+        cout << "Error! Unable to read in timesteps properly, need two or more time steps!" << endl;
         exit(1);
     }
     MatrixXd X_0;
-    MatrixXd ogX_0;
-    X_0 = readX("data/X");
+    MatrixXd ogX_0; // copy of initial X values if bootstrap is used.
+    X_0 = readX(getXPath(argc, argv));
     X_0 = filterZeros(X_0);
     ogX_0 = X_0;
     cout << "After removing all negative rows, X has " << X_0.rows() << " rows." << endl;
-    // cout << "---------" << endl << X_0 << endl << "--------" << endl;
+
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(parameters.useOnlySecMom){  // these will be added to the options sheet later.
         nMoments = 2 * X_0.cols();
@@ -47,22 +56,23 @@ int main(){
     }
     parameters.printParameters(nMoments, times);
 
-    /* RoadRunner Configuration and Simulation Variables*/
-    RoadRunner r = RoadRunner("sbml/model_sbml.xml");
+    /* RoadRunner Configuration and Simulation Variables including a parallel vector to reduce runtime*/
+    RoadRunner r = RoadRunner(sbmlModel);
     if(parameters.useDet > 0){
         r.setIntegrator("cvode");
     }else{
         r.setIntegrator("gillespie");
     }
     SimulateOptions opt;
-    opt.steps = 100;
+    opt.steps = parameters.odeSteps;
     double theta[parameters.nRates];// static array to be constantly used with road runner model parameters.
+    /* Create a Vector of RoadRunner objects for parallel use*/
 
     MatrixXd GBMAT;
     MatrixXd GBVECS = MatrixXd::Zero(parameters.nRuns, parameters.nRates + 1);
     if(parameters.useLinear == 1){
         for(int r = 0; r < parameters.nRuns; ++r){
-            GBMAT = linearModel(parameters.nParts, parameters.nSteps, parameters.nParts2, parameters.nSteps2, X_0, parameters.nRates, nMoments, times, parameters.simulateYt, parameters.useInverse);
+            GBMAT = linearModel(parameters.nParts, parameters.nSteps, parameters.nParts2, parameters.nSteps2, X_0, parameters.nRates, nMoments, times, parameters.simulateYt, parameters.useInverse, argc, argv, parameters.seed);
             GBVECS.row(r) = GBMAT.row(GBMAT.rows() - 1);
         }
     }else{
@@ -82,12 +92,17 @@ int main(){
         int hone = 28; 
         int startRow = 0;
         double low = 0.0, high = 1.0; // boundaries for PSO rate estimation, 0 to 1.0
-        random_device RanDev;
-        mt19937 gen(RanDev());
         vector<MatrixXd> weights;
         MatrixXd PBMAT(parameters.nParts, parameters.nRates + 1); // particle best matrix + 1 for cost component
         MatrixXd POSMAT(parameters.nParts, parameters.nRates); // Position matrix as it goees through it in parallel
 
+        /* RNG seeding just in case */
+        random_device RanDev;
+        mt19937 gen(RanDev());
+        uniform_real_distribution<double> unifDist(low, high);
+        if(parameters.seed > 0){
+            gen.seed(parameters.seed);
+        }
         /* Solve for Y_t (mu). */
         VectorXd tru;
         vector<MatrixXd> Yt3Mats;
@@ -97,20 +112,18 @@ int main(){
         double trukCost = 0;
         if(parameters.simulateYt == 1){
             cout << "------ SIMULATING YT! ------" << endl;
-            tru = readRates(parameters.nRates);
-            MatrixXd Y_0 = readY("data/Y")[0];
+            tru = readRates(parameters.nRates, getTrueRatesPath(argc, argv));
+            cout << "Read in Rates:" << tru.transpose() << endl;
+            MatrixXd Y_0 = readY(getYPath(argc, argv))[0];
             Y_0 = filterZeros(Y_0);
             cout << "After removing all negative rows, Y has " << Y_0.rows() << " rows." << endl;
             for(int t = 1; t < times.size(); t++){ // start at t1, because t0 is now in the vector
                 if(parameters.useSBML > 0){
                     MatrixXd YtMat = MatrixXd::Zero(Y_0.rows(), Y_0.cols());
-                    // for(int i = 0; i < Y_0.rows(); ++i){
-                    //     YtMat.row(i) = simulateSBML(parameters.useDet, times(0), times(t), Y_0.row(i), tru);
-                    // }
                     opt.start = times(0);
                     opt.duration = times(t);
                     for(int i = 0; i < tru.size(); ++i){
-                        theta[i] = tru(i);
+                        theta[i] = tru(i);  
                     }
                     r.getModel()->setGlobalParameterValues(tru.size(), 0, theta); // set new global parameter values here.
                     for(int i = 0; i < Y_0.rows(); ++i){
@@ -138,7 +151,7 @@ int main(){
             }
             cout << "---------------------------" << endl;
         }else{
-            Yt3Mats = readY("data/Y");
+            Yt3Mats = readY(getYPath(argc, argv));
             if(Yt3Mats.size() + 1 != times.size()){
                 cout << "Error, number of Y_t files read in do not match the number of timesteps!" << endl;
                 exit(1);
@@ -175,8 +188,8 @@ int main(){
                 
                 /* Initialize Global Best  */
                 VectorXd seed = VectorXd::Zero(parameters.nRates);
-                for (int i = 0; i < parameters.nRates; i++) {seed(i) = rndNum(low,high);}
-                seed << 0.1,  0.1,  0.95,  0.17, 0.05,  0.18;
+                for (int i = 0; i < parameters.nRates; i++) {seed(i) = unifDist(gen);}
+                // seed << 0.1,  0.1,  0.95,  0.17, 0.05,  0.18;
                 if(parameters.heldTheta > -1){seed(parameters.heldTheta) = parameters.heldThetaVal;}
                 
                 /* Evolve initial Global Best and Calculate a Cost*/
@@ -191,9 +204,6 @@ int main(){
                 for(int t = 1; t < times.size(); t++){
                     if(parameters.useSBML > 0){
                         MatrixXd XtMat = MatrixXd::Zero(X_0.rows(), X_0.cols());
-                        // for(int i = 0; i < X_0.rows(); ++i){
-                        //     XtMat.row(i) = simulateSBML(parameters.useDet, times(0), times(t), X_0.row(i), parameters.hyperCubeScale * seed);
-                        // }
                         for(int i = 0; i < seed.size(); ++i){
                             theta[i] = seed(i) * parameters.hyperCubeScale;
                         }
@@ -212,7 +222,6 @@ int main(){
                         costSeedK += costFunction(Yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
                     }else{
 
-                        
                         Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                         // Xt = evolveSystem(seed, X_0, nMoments, times(t), dt, times(0));
                         Moments_Mat_Obs XtObs(Xt);
@@ -244,13 +253,19 @@ int main(){
                 #pragma omp parallel for 
                     for(int particle = 0; particle < parameters.nParts; particle++){
                         /* initialize all particle rate constants with unifDist */
+                        random_device pRanDev;
+                        mt19937 pGen(pRanDev());
+                        uniform_real_distribution<double> pUnifDist(low, high);
+                        int pSeed = -1;
+                        if(parameters.seed > 0){
+                            pSeed = particle + step + parameters.seed;
+                            pGen.seed(pSeed);
+                        }
                         if(step == 0){
+
                             /* initialize all particles with random rate constant positions */
-                            for(int i = 0; i < parameters.nRates; i++){
-                                POSMAT(particle, i) = rndNum(low, high);
-                            }
-                            if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;
-                            }
+                            for(int i = 0; i < parameters.nRates; i++){POSMAT(particle, i) = pUnifDist(pGen);}
+                            if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}
                             
                             double cost = 0;    
                             if(step == 0 && ne > 0){
@@ -264,9 +279,6 @@ int main(){
                             for(int t = 1; t < times.size(); ++t){
                                 if(parameters.useSBML > 0){
                                     MatrixXd XtMat = MatrixXd::Zero(X_0.rows(), X_0.cols());
-                                    // for(int i = 0; i < X_0.rows(); i++){
-                                    //     XtMat.row(i) = simulateSBML(parameters.useDet, times(0), times(t), X_0.row(i), POSMAT.row(particle) * parameters.hyperCubeScale);
-                                    // }
                                     RoadRunner paraModel = r;
                                     double parallelTheta[parameters.nRates];
                                     for(int i = 0; i < parameters.nRates; ++i){
@@ -307,11 +319,11 @@ int main(){
                             PBMAT(particle, parameters.nRates) = cost; // add cost to final column
                         }else{ 
                             /* step into PSO */
-                            double w1 = sfi * rndNum(low,high) / sf2, w2 = sfc * rndNum(low,high) / sf2, w3 = sfs * rndNum(low,high) / sf2;
+                            double w1 = sfi * pUnifDist(pGen) / sf2, w2 = sfc * pUnifDist(pGen) / sf2, w3 = sfs * pUnifDist(pGen) / sf2;
                             double sumw = w1 + w2 + w3; 
                             w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
                     
-                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle), particle, epsi, nan, hone);
+                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle), pSeed, epsi, nan, hone);
                             VectorXd PBVEC(parameters.nRates);
                             for(int i = 0; i < parameters.nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                             POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
@@ -327,11 +339,6 @@ int main(){
                             for(int t = 1; t < times.size(); ++t){
                                 if(parameters.useSBML > 0){
                                     MatrixXd XtMat = MatrixXd::Zero(X_0.rows(), X_0.cols());
-                                    // for(int i = 0; i < X_0.rows(); i++){
-                                    //     XtMat.row(i) = simulateSBML(parameters.useDet, times(0), times(t), X_0.row(i), POSMAT.row(particle) * parameters.hyperCubeScale);
-                                    // }
-                                    // VectorXd XtmVec = momentVector(XtMat, nMoments);
-                                    // cost += costFunction(Yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
                                     RoadRunner paraModel = r;
                                     double parallelTheta[parameters.nRates];
                                     for(int i = 0; i < parameters.nRates; ++i){
@@ -444,8 +451,18 @@ int main(){
                         avgRunPos(i) = GBVECS.colwise().mean()(i);
                     }
                     MatrixXd XtMat = MatrixXd::Zero(X_0.rows(), X_0.cols());
-                    for(int i = 0; i < X_0.rows(); i++){
-                        XtMat.row(i) = simulateSBML(parameters.useDet, times(0), times(t), X_0.row(i), avgRunPos);
+                    for(int i = 0; i < avgRunPos.size(); ++i){
+                        theta[i] = avgRunPos(i);
+                    }
+                    r.getModel()->setGlobalParameterValues(avgRunPos.size(),0,theta); // set new global parameter values here.
+                    opt.start = times(0);
+                    opt.duration = times(t);
+                    for(int i = 0; i < X_0.rows(); ++i){  
+                        r.changeInitialConditions(convertInit(X_0.row(i)));
+                        const DoubleMatrix res = *r.simulate(&opt);
+                        for(int j = 0; j < X_0.cols(); ++j){
+                            XtMat(i,j) = res[res.numRows() - 1][j + 1];
+                        }
                     }
                     VectorXd XtmVec = momentVector(XtMat, nMoments);
                 }else{

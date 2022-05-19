@@ -1,5 +1,6 @@
 # Created by BioNetGen 2.8.0
 begin parameters
+<<<<<<< HEAD
     1 k1        0.1  # Constant
     2 k2        0.1  # Constant
     3 k3        0.95  # Constant
@@ -30,4 +31,28 @@ begin groups
     4 pVav                 4
     5 SHP1                 5
     6 SHP1PVav             6
+=======
+    1 k1  0.1  # Constant
+    2 k2  0.1  # Constant
+    3 k3  0.95  # Constant
+    4 k4  0.17  # Constant
+    5 k5  0.05  # Constant
+end parameters
+begin species
+    1 P1() 192.7959
+    2 P2() 1463.265
+    3 P3() 5.251
+end species
+begin reactions
+    1 1 2 k3 #_R1
+    2 2 1 k2 #_reverse__R1
+    3 2 3 k5 #_R2
+    4 3 2 k1 #_reverse__R2
+    5 3 1 k4 #_R3
+end reactions
+begin groups
+    1 P1                   1
+    2 P2                   2
+    3 P3                   3
+>>>>>>> CyGMM_docker
 end groups
