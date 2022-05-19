@@ -12,10 +12,10 @@ begin species
     3 P3() 5.251
 end species
 begin reactions
-    1 1 2 k2 #_R1
-    2 2 1 k3 #_reverse__R1
-    3 2 3 k1 #_R2
-    4 3 2 k5 #_reverse__R2
+    1 1 2 k3 #_R1
+    2 2 1 k2 #_reverse__R1
+    3 2 3 k5 #_R2
+    4 3 2 k1 #_reverse__R2
     5 3 1 k4 #_R3
 end reactions
 begin groups
