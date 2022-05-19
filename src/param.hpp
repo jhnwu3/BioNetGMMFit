@@ -21,17 +21,15 @@ class Parameters{
         int bootstrap;
         int useSBML;
         int useDet;
+        int odeSteps;
+        int seed;
         double heldThetaVal;
         double hyperCubeScale;
-        Parameters(){
-            // if(readCsvPSO(nParts, nSteps, nParts2, nSteps2, useOnlySecMom, useOnlyFirstMom, useLinear, nRuns, simulateYt, useInverse, nRates, heldTheta, heldThetaVal, reportMoments, hyperCubeScale, nest, bootstrap) !=0 ){
-            //     cout << "failed to effectively read in parameters!" << endl;
-            //     return EXIT_FAILURE;
-            // }
+        Parameters(const string &path){
             cout << "Reading in Parameters from Configuration File!" << endl;
-            std::ifstream input("Config.csv");
+            std::ifstream input(path);
             if(!input.is_open()){
-                throw std::runtime_error("Could not open PSO file");
+                throw std::runtime_error("Could Not Open Configuration file");
                 exit(EXIT_FAILURE);
             }
             vector<double> params;
@@ -64,6 +62,8 @@ class Parameters{
             bootstrap = params.at(16);
             useSBML = params.at(17);
             useDet = params.at(18);
+            odeSteps = params.at(19);
+            seed = params.at(20); 
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){
@@ -88,6 +88,12 @@ class Parameters{
             cout << "Number of Rates:" << nRates << endl;
             if(useSBML){
                 cout << "Redirecting Model to SBML" << endl;
+                  if(useDet){
+                    cout << "and Modeling With Deterministic ODEs" << endl;
+                }
+            }
+            if(seed > 0){
+                cout << "Now seeding with value " << seed << endl;
             }
             cout << "------------------------------" << endl;
         }
