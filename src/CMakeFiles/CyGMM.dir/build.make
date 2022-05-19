@@ -53,17 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< HEAD
-CMAKE_SOURCE_DIR = "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src"
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src"
-=======
 CMAKE_SOURCE_DIR = /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src
->>>>>>> CyGMM_docker
 
 # Include any dependencies generated for this target.
 include CMakeFiles/CyGMM.dir/depend.make
@@ -79,18 +72,6 @@ include CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/main.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp
 CMakeFiles/CyGMM.dir/main.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CyGMM.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/main.cpp.o -MF CMakeFiles/CyGMM.dir/main.cpp.o.d -o CMakeFiles/CyGMM.dir/main.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/main.cpp"
-
-CMakeFiles/CyGMM.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/main.cpp" > CMakeFiles/CyGMM.dir/main.cpp.i
-
-CMakeFiles/CyGMM.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/main.cpp" -o CMakeFiles/CyGMM.dir/main.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CyGMM.dir/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/main.cpp.o -MF CMakeFiles/CyGMM.dir/main.cpp.o.d -o CMakeFiles/CyGMM.dir/main.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/main.cpp
 
@@ -101,23 +82,10 @@ CMakeFiles/CyGMM.dir/main.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/main.cpp -o CMakeFiles/CyGMM.dir/main.cpp.s
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/calc.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/calc.cpp.o: calc.cpp
 CMakeFiles/CyGMM.dir/calc.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/CyGMM.dir/calc.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/calc.cpp.o -MF CMakeFiles/CyGMM.dir/calc.cpp.o.d -o CMakeFiles/CyGMM.dir/calc.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/calc.cpp"
-
-CMakeFiles/CyGMM.dir/calc.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/calc.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/calc.cpp" > CMakeFiles/CyGMM.dir/calc.cpp.i
-
-CMakeFiles/CyGMM.dir/calc.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/calc.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/calc.cpp" -o CMakeFiles/CyGMM.dir/calc.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/CyGMM.dir/calc.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/calc.cpp.o -MF CMakeFiles/CyGMM.dir/calc.cpp.o.d -o CMakeFiles/CyGMM.dir/calc.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/calc.cpp
 
@@ -128,23 +96,10 @@ CMakeFiles/CyGMM.dir/calc.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/calc.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/calc.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/calc.cpp -o CMakeFiles/CyGMM.dir/calc.cpp.s
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/fileIO.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/fileIO.cpp.o: fileIO.cpp
 CMakeFiles/CyGMM.dir/fileIO.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CyGMM.dir/fileIO.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/fileIO.cpp.o -MF CMakeFiles/CyGMM.dir/fileIO.cpp.o.d -o CMakeFiles/CyGMM.dir/fileIO.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/fileIO.cpp"
-
-CMakeFiles/CyGMM.dir/fileIO.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/fileIO.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/fileIO.cpp" > CMakeFiles/CyGMM.dir/fileIO.cpp.i
-
-CMakeFiles/CyGMM.dir/fileIO.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/fileIO.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/fileIO.cpp" -o CMakeFiles/CyGMM.dir/fileIO.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CyGMM.dir/fileIO.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/fileIO.cpp.o -MF CMakeFiles/CyGMM.dir/fileIO.cpp.o.d -o CMakeFiles/CyGMM.dir/fileIO.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/fileIO.cpp
 
@@ -155,23 +110,10 @@ CMakeFiles/CyGMM.dir/fileIO.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/fileIO.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/fileIO.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/fileIO.cpp -o CMakeFiles/CyGMM.dir/fileIO.cpp.s
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/linear.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/linear.cpp.o: linear.cpp
 CMakeFiles/CyGMM.dir/linear.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/CyGMM.dir/linear.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/linear.cpp.o -MF CMakeFiles/CyGMM.dir/linear.cpp.o.d -o CMakeFiles/CyGMM.dir/linear.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/linear.cpp"
-
-CMakeFiles/CyGMM.dir/linear.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/linear.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/linear.cpp" > CMakeFiles/CyGMM.dir/linear.cpp.i
-
-CMakeFiles/CyGMM.dir/linear.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/linear.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/linear.cpp" -o CMakeFiles/CyGMM.dir/linear.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/CyGMM.dir/linear.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/linear.cpp.o -MF CMakeFiles/CyGMM.dir/linear.cpp.o.d -o CMakeFiles/CyGMM.dir/linear.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/linear.cpp
 
@@ -182,23 +124,10 @@ CMakeFiles/CyGMM.dir/linear.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/linear.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/linear.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/linear.cpp -o CMakeFiles/CyGMM.dir/linear.cpp.s
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/nonlinear.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/nonlinear.cpp.o: nonlinear.cpp
 CMakeFiles/CyGMM.dir/nonlinear.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/CyGMM.dir/nonlinear.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/nonlinear.cpp.o -MF CMakeFiles/CyGMM.dir/nonlinear.cpp.o.d -o CMakeFiles/CyGMM.dir/nonlinear.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/nonlinear.cpp"
-
-CMakeFiles/CyGMM.dir/nonlinear.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/nonlinear.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/nonlinear.cpp" > CMakeFiles/CyGMM.dir/nonlinear.cpp.i
-
-CMakeFiles/CyGMM.dir/nonlinear.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/nonlinear.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/nonlinear.cpp" -o CMakeFiles/CyGMM.dir/nonlinear.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/CyGMM.dir/nonlinear.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/nonlinear.cpp.o -MF CMakeFiles/CyGMM.dir/nonlinear.cpp.o.d -o CMakeFiles/CyGMM.dir/nonlinear.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/nonlinear.cpp
 
@@ -209,23 +138,10 @@ CMakeFiles/CyGMM.dir/nonlinear.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/nonlinear.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/nonlinear.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/nonlinear.cpp -o CMakeFiles/CyGMM.dir/nonlinear.cpp.s
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/system.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/system.cpp.o: system.cpp
 CMakeFiles/CyGMM.dir/system.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CyGMM.dir/system.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/system.cpp.o -MF CMakeFiles/CyGMM.dir/system.cpp.o.d -o CMakeFiles/CyGMM.dir/system.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/system.cpp"
-
-CMakeFiles/CyGMM.dir/system.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/system.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/system.cpp" > CMakeFiles/CyGMM.dir/system.cpp.i
-
-CMakeFiles/CyGMM.dir/system.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/system.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/system.cpp" -o CMakeFiles/CyGMM.dir/system.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/CyGMM.dir/system.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/system.cpp.o -MF CMakeFiles/CyGMM.dir/system.cpp.o.d -o CMakeFiles/CyGMM.dir/system.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/system.cpp
 
@@ -236,23 +152,10 @@ CMakeFiles/CyGMM.dir/system.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/system.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/system.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/system.cpp -o CMakeFiles/CyGMM.dir/system.cpp.s
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/sbml.cpp.o: CMakeFiles/CyGMM.dir/flags.make
 CMakeFiles/CyGMM.dir/sbml.cpp.o: sbml.cpp
 CMakeFiles/CyGMM.dir/sbml.cpp.o: CMakeFiles/CyGMM.dir/compiler_depend.ts
-<<<<<<< HEAD
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/CyGMM.dir/sbml.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/sbml.cpp.o -MF CMakeFiles/CyGMM.dir/sbml.cpp.o.d -o CMakeFiles/CyGMM.dir/sbml.cpp.o -c "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/sbml.cpp"
-
-CMakeFiles/CyGMM.dir/sbml.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CyGMM.dir/sbml.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/sbml.cpp" > CMakeFiles/CyGMM.dir/sbml.cpp.i
-
-CMakeFiles/CyGMM.dir/sbml.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/sbml.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/sbml.cpp" -o CMakeFiles/CyGMM.dir/sbml.cpp.s
-=======
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/CyGMM.dir/sbml.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CyGMM.dir/sbml.cpp.o -MF CMakeFiles/CyGMM.dir/sbml.cpp.o.d -o CMakeFiles/CyGMM.dir/sbml.cpp.o -c /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/sbml.cpp
 
@@ -277,7 +180,6 @@ CMakeFiles/CyGMM.dir/cli.cpp.i: cmake_force
 CMakeFiles/CyGMM.dir/cli.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CyGMM.dir/cli.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/cli.cpp -o CMakeFiles/CyGMM.dir/cli.cpp.s
->>>>>>> CyGMM_docker
 
 # Object files for target CyGMM
 CyGMM_OBJECTS = \
@@ -287,171 +189,12 @@ CyGMM_OBJECTS = \
 "CMakeFiles/CyGMM.dir/linear.cpp.o" \
 "CMakeFiles/CyGMM.dir/nonlinear.cpp.o" \
 "CMakeFiles/CyGMM.dir/system.cpp.o" \
-<<<<<<< HEAD
-"CMakeFiles/CyGMM.dir/sbml.cpp.o"
-=======
 "CMakeFiles/CyGMM.dir/sbml.cpp.o" \
 "CMakeFiles/CyGMM.dir/cli.cpp.o"
->>>>>>> CyGMM_docker
 
 # External object files for target CyGMM
 CyGMM_EXTERNAL_OBJECTS =
 
-<<<<<<< HEAD
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/main.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/calc.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/fileIO.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/linear.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/nonlinear.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/system.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/sbml.cpp.o
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/build.make
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libroadrunner-static.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/x86_64-linux-gnu/libcurses.so
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/x86_64-linux-gnu/libform.so
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMOrcJIT.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMPasses.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMObjCARCOpts.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCoroutines.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMipo.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMInstrumentation.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMVectorize.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMLinker.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMIRReader.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAsmParser.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMFrontendOpenMP.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMJITLink.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86Disassembler.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86AsmParser.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86CodeGen.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCFGuard.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMGlobalISel.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86Desc.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86Info.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMCDisassembler.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMSelectionDAG.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAsmPrinter.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDebugInfoMSF.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDebugInfoDWARF.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCodeGen.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMScalarOpts.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMInstCombine.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAggressiveInstCombine.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMTransformUtils.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBitWriter.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMCJIT.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMExecutionEngine.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMTarget.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAnalysis.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMProfileData.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMRuntimeDyld.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMOrcTargetProcess.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMOrcShared.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMObject.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMTextAPI.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMCParser.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBitReader.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMC.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDebugInfoCodeView.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCore.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMRemarks.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBitstreamReader.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBinaryFormat.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMSupport.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDemangle.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/x86_64-linux-gnu/libcurses.so
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/x86_64-linux-gnu/libform.so
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMOrcJIT.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMPasses.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMObjCARCOpts.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCoroutines.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMipo.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMInstrumentation.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMVectorize.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMLinker.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMIRReader.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAsmParser.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMFrontendOpenMP.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMJITLink.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86Disassembler.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86AsmParser.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86CodeGen.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCFGuard.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMGlobalISel.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86Desc.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMX86Info.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMCDisassembler.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMSelectionDAG.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAsmPrinter.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDebugInfoMSF.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDebugInfoDWARF.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCodeGen.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMScalarOpts.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMInstCombine.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAggressiveInstCombine.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMTransformUtils.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBitWriter.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMCJIT.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMExecutionEngine.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMTarget.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMAnalysis.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMProfileData.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMRuntimeDyld.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMOrcTargetProcess.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMOrcShared.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMObject.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMTextAPI.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMCParser.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBitReader.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMMC.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDebugInfoCodeView.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMCore.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMRemarks.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBitstreamReader.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMBinaryFormat.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMSupport.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/llvm13-ubuntu-gcc10-rel/lib/libLLVMDemangle.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/librr-libstruct-static.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsbml-static.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libxml2.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libz.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libnleq2-static.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libnleq1-static.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/liblapack.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libblas.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libf2c.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_generic.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_nvecserial.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_nvecmanyvector.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunmatrixsparse.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsolband.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunmatrixband.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsoldense.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunmatrixdense.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsolpcg.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsolspbcgs.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsolspfgmr.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsolspgmr.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunlinsolsptfqmr.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunnonlinsolnewton.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_sunnonlinsolfixedpoint.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_cvodes.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libsundials_kinsol.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/lib/libPocoNet.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/lib/libPocoXML.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/lib/libPocoFoundation.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libiconv-static.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /mnt/c/buildroadrunner/roadrunner/install-Release/lib/libcharset.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/gcc/x86_64-linux-gnu/9/libstdc++fs.a
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: /usr/lib/x86_64-linux-gnu/libpthread.so
-/mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable \"/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/CyGMM\""
-	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CyGMM.dir/link.txt --verbose=$(VERBOSE)
-
-# Rule to build all files generated by this target.
-CMakeFiles/CyGMM.dir/build: /mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folder/Cpp/CyGMM/CyGMM
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/main.cpp.o
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/calc.cpp.o
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/CyGMM: CMakeFiles/CyGMM.dir/fileIO.cpp.o
@@ -606,7 +349,6 @@ CMakeFiles/CyGMM.dir/build: /mnt/c/Users/jhnwu/OneDrive/Documents/Project\ Folde
 
 # Rule to build all files generated by this target.
 CMakeFiles/CyGMM.dir/build: /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/CyGMM
->>>>>>> CyGMM_docker
 .PHONY : CMakeFiles/CyGMM.dir/build
 
 CMakeFiles/CyGMM.dir/clean:
@@ -614,10 +356,6 @@ CMakeFiles/CyGMM.dir/clean:
 .PHONY : CMakeFiles/CyGMM.dir/clean
 
 CMakeFiles/CyGMM.dir/depend:
-<<<<<<< HEAD
-	cd "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src" "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src" "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src" "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src" "/mnt/c/Users/jhnwu/OneDrive/Documents/Project Folder/Cpp/CyGMM/src/CMakeFiles/CyGMM.dir/DependInfo.cmake" --color=$(COLOR)
-=======
 	cd /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/CMakeFiles/CyGMM.dir/DependInfo.cmake --color=$(COLOR)
->>>>>>> CyGMM_docker
 .PHONY : CMakeFiles/CyGMM.dir/depend
 
