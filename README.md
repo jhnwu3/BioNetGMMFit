@@ -196,7 +196,10 @@ The default PSO parameters are listed below,
 | Report Moments?                  | 1     | 1 to report predicted moments in out.txt                                 |
 | Number of Nested Hypcubes        | 1     | Estimates rate constants in spaces of 2^n order, n = # of nested hypcubes|
 | Bootstrap?                       | 1     | 1 to estimate 95% CI's, 0 otherwise                                      |   
-
+| Use BNGL?                        | 1     | 1 to use bionetgen language for simulation, 0 otherwise                  |
+| Use Deterministic?               | 1     | 1 to use CVode integrators, 0 to use roadrunner gillespie simulation     |
+| Number of BNGL Steps             | 15    | Tuning Parameter for number of steps of integration                      |
+| Seed                             | -1    | Used to seed the PSO, Off when seed < 0, On when seed > 0                |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1

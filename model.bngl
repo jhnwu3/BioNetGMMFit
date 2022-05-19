@@ -20,8 +20,8 @@ begin observables
 end observables
 
 begin reaction rules
-    P1() <-> P2() k2,k3
-    P2() <-> P3() k1,k5
+    P1() <-> P2() k3,k2
+    P2() <-> P3() k5,k1
     P3() -> P1() k4
 end reaction rules
 

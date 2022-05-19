@@ -92,6 +92,9 @@ class Parameters{
                     cout << "and Modeling With Deterministic ODEs" << endl;
                 }
             }
+            if(seed > 0){
+                cout << "Now seeding with value " << seed << endl;
+            }
             cout << "------------------------------" << endl;
         }
 };
