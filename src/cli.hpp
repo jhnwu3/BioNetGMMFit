@@ -7,5 +7,6 @@ string getTrueRatesPath(int argc, char **argv);
 string getXPath(int argc, char **argv);
 string getYPath(int argc, char **argv);
 string getModelPath(int argc, char **argv);
+bool helpCall(int argc, char **argv);
 #endif
 
