@@ -38,7 +38,7 @@ To quickly get started with one of the simulated examples, do:
     ![Step 1](/img/REPO.png)
     ![Step 2](/img/DLST.png)
 
-    make sure to unzip the directory before use.
+    make sure to unzip the directory before use. Make sure you also have bionetgen installed, if not, look [here](https://bng-vscode-extension.readthedocs.io/en/latest/install.html).
 
 2. Then, make sure you're still in the newly created repo directory
 
