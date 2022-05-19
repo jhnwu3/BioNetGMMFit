@@ -2028,63 +2028,6 @@ CMakeFiles/CyGMM.dir/calc.cpp.o: calc.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -2140,82 +2083,10 @@ CMakeFiles/CyGMM.dir/calc.cpp.o: calc.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -2285,18 +2156,11 @@ CMakeFiles/CyGMM.dir/calc.cpp.o: calc.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
-  fileIO.hpp
-
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
   fileIO.hpp
@@ -4464,7 +4328,6 @@ CMakeFiles/CyGMM.dir/cli.cpp.o: cli.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h
 
->>>>>>> CyGMM_docker
 CMakeFiles/CyGMM.dir/fileIO.cpp.o: fileIO.cpp \
   /usr/include/stdc-predef.h \
   fileIO.hpp \
@@ -6492,63 +6355,6 @@ CMakeFiles/CyGMM.dir/fileIO.cpp.o: fileIO.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -6604,82 +6410,10 @@ CMakeFiles/CyGMM.dir/fileIO.cpp.o: fileIO.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -6749,19 +6483,13 @@ CMakeFiles/CyGMM.dir/fileIO.cpp.o: fileIO.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/linear.cpp.o: linear.cpp \
   /usr/include/stdc-predef.h \
@@ -8790,63 +8518,6 @@ CMakeFiles/CyGMM.dir/linear.cpp.o: linear.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -8902,82 +8573,10 @@ CMakeFiles/CyGMM.dir/linear.cpp.o: linear.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -9047,20 +8646,11 @@ CMakeFiles/CyGMM.dir/linear.cpp.o: linear.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
-  calc.hpp \
-  fileIO.hpp \
-  system.hpp \
-  nonlinear.hpp
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
   calc.hpp \
@@ -9068,17 +8658,12 @@ CMakeFiles/CyGMM.dir/linear.cpp.o: linear.cpp \
   system.hpp \
   nonlinear.hpp \
   cli.hpp
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/stdc-predef.h \
   main.hpp \
-<<<<<<< HEAD
-  /usr/include/c++/9/iostream \
-=======
   /usr/include/c++/9/stdlib.h \
   /usr/include/c++/9/cstdlib \
->>>>>>> CyGMM_docker
   /usr/include/x86_64-linux-gnu/c++/9/bits/c++config.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/os_defines.h \
   /usr/include/features.h \
@@ -9089,8 +8674,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/cpu_defines.h \
   /usr/include/c++/9/pstl/pstl_config.h \
-<<<<<<< HEAD
-=======
   /usr/include/stdlib.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
@@ -9133,7 +8716,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/x86_64-linux-gnu/bits/stdlib.h \
   /usr/include/c++/9/bits/std_abs.h \
   /usr/include/c++/9/iostream \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/ostream \
   /usr/include/c++/9/ios \
   /usr/include/c++/9/iosfwd \
@@ -9142,13 +8724,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/c++/9/bits/postypes.h \
   /usr/include/c++/9/cwchar \
   /usr/include/wchar.h \
-<<<<<<< HEAD
-  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
-  /usr/include/x86_64-linux-gnu/bits/floatn.h \
-  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
-  /usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h \
-=======
->>>>>>> CyGMM_docker
   /usr/lib/gcc/x86_64-linux-gnu/9/include/stdarg.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
@@ -9156,11 +8731,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
   /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
-<<<<<<< HEAD
-  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
-=======
->>>>>>> CyGMM_docker
   /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/c++/9/exception \
   /usr/include/c++/9/bits/exception.h \
@@ -9191,14 +8761,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/c++/9/cstdint \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/stdint.h \
   /usr/include/stdint.h \
-<<<<<<< HEAD
-  /usr/include/x86_64-linux-gnu/bits/types.h \
-  /usr/include/x86_64-linux-gnu/bits/timesize.h \
-  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
-  /usr/include/x86_64-linux-gnu/bits/time64.h \
-  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
-=======
->>>>>>> CyGMM_docker
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/c++/9/bits/localefwd.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/c++locale.h \
@@ -9207,44 +8769,20 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/c++/9/cctype \
   /usr/include/ctype.h \
-<<<<<<< HEAD
-  /usr/include/x86_64-linux-gnu/bits/endian.h \
-  /usr/include/x86_64-linux-gnu/bits/endianness.h \
-=======
->>>>>>> CyGMM_docker
   /usr/include/c++/9/bits/ios_base.h \
   /usr/include/c++/9/ext/atomicity.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/gthr.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-<<<<<<< HEAD
-  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
-=======
->>>>>>> CyGMM_docker
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
   /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
   /usr/include/time.h \
   /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/timex.h \
-<<<<<<< HEAD
-  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
-  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
-  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
-  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
-  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
-  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
-  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
-  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
-=======
   /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
->>>>>>> CyGMM_docker
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/c++/9/bits/atomic_word.h \
   /usr/include/c++/9/bits/locale_classes.h \
@@ -9266,27 +8804,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/c++/9/bits/functional_hash.h \
   /usr/include/c++/9/bits/string_view.tcc \
   /usr/include/c++/9/ext/string_conversions.h \
-<<<<<<< HEAD
-  /usr/include/c++/9/cstdlib \
-  /usr/include/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
-  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
-  /usr/include/x86_64-linux-gnu/sys/types.h \
-  /usr/include/endian.h \
-  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
-  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
-  /usr/include/x86_64-linux-gnu/sys/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
-  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
-  /usr/include/alloca.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/c++/9/bits/std_abs.h \
-=======
->>>>>>> CyGMM_docker
   /usr/include/c++/9/cstdio \
   /usr/include/stdio.h \
   /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
@@ -9494,10 +9011,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/local/include/boost/predef/platform/android.h \
   /usr/local/include/boost/type_traits/is_floating_point.hpp \
   /usr/lib/gcc/x86_64-linux-gnu/9/include/quadmath.h \
-<<<<<<< HEAD
-  /usr/include/c++/9/stdlib.h \
-=======
->>>>>>> CyGMM_docker
   /usr/local/include/boost/math/constants/constants.hpp \
   /usr/local/include/boost/math/tools/cxx03_warn.hpp \
   /usr/local/include/boost/config/pragma_message.hpp \
@@ -11172,63 +10685,6 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -11284,82 +10740,10 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -11429,28 +10813,19 @@ CMakeFiles/CyGMM.dir/main.cpp.o: main.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
->>>>>>> CyGMM_docker
   linear.hpp \
   calc.hpp \
   fileIO.hpp \
   system.hpp \
   nonlinear.hpp \
-<<<<<<< HEAD
-=======
   cli.hpp \
->>>>>>> CyGMM_docker
   sbml.hpp \
   param.hpp
 
@@ -13481,63 +12856,6 @@ CMakeFiles/CyGMM.dir/nonlinear.cpp.o: nonlinear.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -13593,82 +12911,10 @@ CMakeFiles/CyGMM.dir/nonlinear.cpp.o: nonlinear.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -13738,20 +12984,11 @@ CMakeFiles/CyGMM.dir/nonlinear.cpp.o: nonlinear.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
-  calc.hpp \
-  fileIO.hpp \
-  system.hpp \
-  linear.hpp
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
   calc.hpp \
@@ -13759,7 +12996,6 @@ CMakeFiles/CyGMM.dir/nonlinear.cpp.o: nonlinear.cpp \
   system.hpp \
   linear.hpp \
   cli.hpp
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/sbml.cpp.o: sbml.cpp \
   /usr/include/stdc-predef.h \
@@ -15788,63 +15024,6 @@ CMakeFiles/CyGMM.dir/sbml.cpp.o: sbml.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -15900,82 +15079,10 @@ CMakeFiles/CyGMM.dir/sbml.cpp.o: sbml.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -16045,29 +15152,19 @@ CMakeFiles/CyGMM.dir/sbml.cpp.o: sbml.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
->>>>>>> CyGMM_docker
   nonlinear.hpp \
   calc.hpp \
   fileIO.hpp \
   system.hpp \
-<<<<<<< HEAD
-  linear.hpp
-=======
   linear.hpp \
   cli.hpp
->>>>>>> CyGMM_docker
 
 CMakeFiles/CyGMM.dir/system.cpp.o: system.cpp \
   /usr/include/stdc-predef.h \
@@ -18096,63 +17193,6 @@ CMakeFiles/CyGMM.dir/system.cpp.o: system.cpp \
   /usr/include/c++/9/codecvt \
   /usr/include/c++/9/experimental/bits/fs_dir.h \
   /usr/include/c++/9/experimental/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h \
-  /usr/include/c++/9/variant \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h \
-  /usr/include/c++/9/thread \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h \
@@ -18208,82 +17248,10 @@ CMakeFiles/CyGMM.dir/system.cpp.o: system.cpp \
   /usr/include/c++/9/thread \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/set \
   /usr/include/c++/9/bits/stl_tree.h \
   /usr/include/c++/9/bits/stl_set.h \
   /usr/include/c++/9/bits/stl_multiset.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h \
-  /usr/include/c++/9/map \
-  /usr/include/c++/9/bits/stl_map.h \
-  /usr/include/c++/9/bits/stl_multimap.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h \
-  /usr/include/c++/9/deque \
-  /usr/include/c++/9/bits/stl_deque.h \
-  /usr/include/c++/9/bits/deque.tcc \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h \
@@ -18353,26 +17321,17 @@ CMakeFiles/CyGMM.dir/system.cpp.o: system.cpp \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h \
->>>>>>> CyGMM_docker
   /usr/include/c++/9/filesystem \
   /usr/include/c++/9/bits/fs_fwd.h \
   /usr/include/c++/9/bits/fs_path.h \
   /usr/include/c++/9/bits/fs_dir.h \
   /usr/include/c++/9/bits/fs_ops.h \
-<<<<<<< HEAD
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
-  /mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
-  linear.hpp \
-  calc.hpp \
-  fileIO.hpp \
-=======
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h \
   /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h \
   linear.hpp \
   calc.hpp \
   fileIO.hpp \
   cli.hpp \
->>>>>>> CyGMM_docker
   nonlinear.hpp
 
 
@@ -18386,50 +17345,12 @@ sbml.hpp:
 
 fileIO.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/fs_dir.h:
 
 /usr/include/c++/9/filesystem:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/ElementFilter.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdentifierTransformer.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3Parser.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/IdList.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/KineticLaw.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Delay.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/StoichiometryMath.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLHandler.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLInputStream.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrConstants.h:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/util/CallbackRegistry.h:
@@ -18477,73 +17398,11 @@ fileIO.hpp:
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesType.h:
->>>>>>> CyGMM_docker
 
 /usr/include/c++/9/bits/stl_deque.h:
 
 /usr/include/c++/9/deque:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLError.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLDocument.h:
-
-/usr/include/c++/9/bits/stl_multiset.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h:
-
-/usr/include/c++/9/thread:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SyntaxChecker.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/util.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/common.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTriple.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/operationReturnValues.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-common.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/RegistrationFactory.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_unordered_map.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Solver.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/setting_t.h:
-
-/usr/include/c++/9/variant:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/extension/ASTBasePlugin.h:
@@ -18609,7 +17468,6 @@ fileIO.hpp:
 /usr/include/c++/9/variant:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h:
->>>>>>> CyGMM_docker
 
 /usr/include/c++/9/experimental/bits/fs_ops.h:
 
@@ -18627,11 +17485,8 @@ fileIO.hpp:
 
 /usr/local/include/boost/preprocessor/repetition/deduce_z.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/StlSupport/details.h:
 
 /usr/local/include/Eigen/src/StlSupport/StdVector.h:
@@ -18652,22 +17507,12 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/Eigenvalues/RealQZ.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLErrorLog.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
 
 /usr/local/include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
 
 /usr/local/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/rr_memory.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
 
 /usr/local/include/Eigen/src/Eigenvalues/Tridiagonalization.h:
@@ -18686,11 +17531,7 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/SVD/SVDBase.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AlgebraicRule.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h:
->>>>>>> CyGMM_docker
 
 /usr/local/include/Eigen/src/QR/ColPivHouseholderQR.h:
 
@@ -18708,11 +17549,6 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/Core/Reverse.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBase.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/Random.h:
 
 /usr/local/include/Eigen/src/Core/VectorwiseOp.h:
@@ -18721,11 +17557,7 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/Core/BooleanRedux.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h:
->>>>>>> CyGMM_docker
 
 /usr/local/include/Eigen/src/Core/BandMatrix.h:
 
@@ -18741,11 +17573,8 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/Core/products/GeneralBlockPanelKernel.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/SelfAdjointView.h:
 
 /usr/local/include/Eigen/src/Core/TriangularMatrix.h:
@@ -18780,22 +17609,14 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/Core/CwiseBinaryOp.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/Array.h:
 
 /usr/local/include/Eigen/src/Core/Matrix.h:
 
 /usr/local/include/Eigen/src/Core/NoAlias.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/NestByValue.h:
 
 /usr/local/include/Eigen/src/Core/DenseStorage.h:
@@ -18838,11 +17659,8 @@ fileIO.hpp:
 
 /usr/local/include/Eigen/src/Core/GenericPacketMath.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/MathFunctions.h:
 
 /usr/local/include/Eigen/src/Core/util/XprHelper.h:
@@ -18895,11 +17713,6 @@ fileIO.hpp:
 
 /usr/local/include/boost/bind/mem_fn_cc.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLAttributes.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/bind/mem_fn.hpp:
 
 /usr/local/include/boost/mem_fn.hpp:
@@ -18932,11 +17745,8 @@ linear.cpp:
 
 /usr/local/include/boost/numeric/odeint/integrate/detail/integrate_adaptive.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExecutableModel.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/odeint/integrate/null_observer.hpp:
 
 /usr/local/include/boost/numeric/odeint/util/multi_array_adaption.hpp:
@@ -18951,11 +17761,6 @@ linear.cpp:
 
 /usr/local/include/boost/multi_array/subarray.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/UnitFormulaFormatter.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/multi_array/copy_array.hpp:
 
 /usr/local/include/boost/multi_array/collection_concept.hpp:
@@ -19040,11 +17845,8 @@ linear.cpp:
 
 /usr/local/include/boost/fusion/sequence/comparison/equal_to.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/odeint/stepper/modified_midpoint.hpp:
 
 /usr/local/include/boost/mpl/aux_/single_element_iter.hpp:
@@ -19053,13 +17855,10 @@ linear.cpp:
 
 /usr/local/include/boost/fusion/algorithm/transformation/flatten.hpp:
 
-<<<<<<< HEAD
-=======
 cli.cpp:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/odeint/stepper/detail/adaptive_adams_coefficients.hpp:
 
 /usr/local/include/boost/fusion/algorithm/transformation/detail/preprocessed/zip10.hpp:
@@ -19074,33 +17873,20 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/view/reverse_view/detail/begin_impl.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrSelectionRecord.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/view/reverse_view/detail/value_of_data_impl.hpp:
 
 /usr/local/include/boost/fusion/view/reverse_view/detail/deref_data_impl.hpp:
 
 /usr/local/include/boost/fusion/view/reverse_view/detail/distance_impl.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/view/reverse_view/detail/advance_impl.hpp:
 
 /usr/local/include/boost/fusion/view/reverse_view/detail/deref_impl.hpp:
 
 /usr/local/include/boost/fusion/algorithm/transformation/detail/replace_if.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/LocalParameter.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/algorithm/transformation/replace.hpp:
 
 /usr/local/include/boost/fusion/algorithm/transformation/join.hpp:
@@ -19121,29 +17907,18 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/algorithm/iteration/detail/preprocessed/iter_fold.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/EigenBase.h:
 
 /usr/local/include/boost/fusion/algorithm/iteration/iter_fold.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/algorithm/iteration/accumulate_fwd.hpp:
 
 /usr/local/include/boost/fusion/algorithm/iteration/accumulate.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLOutputStream.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/algorithm.hpp:
 
 /usr/local/include/boost/mpl/copy.hpp:
@@ -19182,11 +17957,6 @@ cli.cpp:
 
 /usr/local/include/boost/numeric/odeint/util/bind.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SpeciesReference.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/odeint/stepper/euler.hpp:
 
 /usr/local/include/boost/fusion/algorithm/query/detail/all.hpp:
@@ -19211,11 +17981,6 @@ cli.cpp:
 
 /usr/local/include/boost/blank.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config-packages.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/function_types/result_type.hpp:
 
 /usr/local/include/boost/function_types/is_callable_builtin.hpp:
@@ -19238,11 +18003,6 @@ cli.cpp:
 
 /usr/local/include/boost/function_types/detail/pp_loop.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNodeType.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/function_types/property_tags.hpp:
 
 /usr/local/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector30.hpp:
@@ -19269,11 +18029,6 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/functional/invocation/invoke.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/MathML.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/functional/generation/make_fused.hpp:
 
 /usr/local/include/boost/fusion/include/make_fused.hpp:
@@ -19302,11 +18057,6 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/view/zip_view/detail/prior_impl.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/util/BlasUtil.h:
 
 /usr/local/include/Eigen/src/Core/MathFunctionsImpl.h:
@@ -19387,11 +18137,8 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/algorithm/iteration/detail/segmented_fold.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/mpl/size.hpp:
 
 /usr/local/include/boost/mpl/aux_/push_back_impl.hpp:
@@ -19440,11 +18187,8 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/mpl/insert.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/ListOf.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Geometry/ParametrizedLine.h:
 
 /usr/local/include/boost/fusion/sequence/intrinsic/has_key.hpp:
@@ -19453,11 +18197,6 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/algorithm/query/detail/find_if.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotationParser.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/algorithm/query/find_if_fwd.hpp:
 
 /usr/local/include/boost/multi_array/extent_gen.hpp:
@@ -19512,11 +18251,6 @@ cli.cpp:
 
 /usr/local/include/boost/mpl/empty.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/adapted/mpl/detail/empty_impl.hpp:
 
 /usr/local/include/boost/preprocessor/comparison/less.hpp:
@@ -19595,11 +18329,6 @@ cli.cpp:
 
 /usr/local/include/boost/fusion/view/single_view/detail/value_at_impl.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3ParserSettings.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/view/single_view/detail/end_impl.hpp:
 
 /usr/local/include/boost/fusion/view/single_view/detail/begin_impl.hpp:
@@ -19758,20 +18487,12 @@ nonlinear.hpp:
 
 /usr/local/include/boost/fusion/iterator/detail/advance.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLTokenizer.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/iterator/detail/segmented_iterator.hpp:
 
 /usr/local/include/boost/fusion/sequence/intrinsic/segments.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/iterator/next.hpp:
 
 /usr/local/include/boost/mpl/aux_/preprocessed/gcc/bitxor.hpp:
@@ -19856,11 +18577,6 @@ nonlinear.hpp:
 
 /usr/local/include/boost/units/detail/dimensionless_unit.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ExpectedAttributes.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/units/detail/heterogeneous_conversion.hpp:
 
 /usr/local/include/boost/mpl/aux_/range_c/size.hpp:
@@ -19879,11 +18595,8 @@ nonlinear.hpp:
 
 /usr/local/include/boost/units/dim.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrExporter.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/view/reverse_view/detail/end_impl.hpp:
 
 /usr/local/include/boost/units/detail/push_front_if.hpp:
@@ -19916,22 +18629,14 @@ nonlinear.hpp:
 
 /usr/local/include/boost/mpl/list/aux_/pop_front.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/list/aux_/item.hpp:
 
 /usr/local/include/boost/mpl/list/aux_/push_front.hpp:
 
 /usr/local/include/boost/mpl/limits/list.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SimpleSpeciesReference.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/units/detail/dim_impl.hpp:
 
 /usr/local/include/boost/mpl/list.hpp:
@@ -20018,11 +18723,6 @@ nonlinear.hpp:
 
 /usr/local/include/boost/math/special_functions/detail/bessel_jy.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Registrable.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/is_arithmetic.hpp:
 
 /usr/local/include/Eigen/Dense:
@@ -20047,11 +18747,6 @@ nonlinear.hpp:
 
 /usr/local/include/boost/mpl/aux_/lambda_support.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/if.hpp:
 
 /usr/local/include/boost/range/range_fwd.hpp:
@@ -20062,11 +18757,8 @@ nonlinear.hpp:
 
 /usr/include/assert.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrException.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/adapted/mpl.hpp:
 
 /usr/local/include/boost/mpl/aux_/config/ttp.hpp:
@@ -20083,31 +18775,18 @@ calc.cpp:
 
 /usr/local/include/boost/preprocessor/tuple/detail/is_single_return.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h:
 
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
 /usr/local/include/boost/preprocessor/variadic/limits/size_64.hpp:
 
 /usr/local/include/boost/preprocessor/facilities/check_empty.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrConfig.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/facilities/overload.hpp:
 
 /usr/local/include/boost/preprocessor/logical/bitor.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/facilities/expand.hpp:
 
 /usr/local/include/boost/math/distributions/logistic.hpp:
@@ -20120,11 +18799,8 @@ calc.cpp:
 
 /usr/local/include/boost/numeric/ublas/detail/vector_assign.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/list/detail/limits/fold_left_256.hpp:
 
 /usr/local/include/boost/mpl/aux_/config/lambda.hpp:
@@ -20173,11 +18849,8 @@ calc.cpp:
 
 /usr/local/include/boost/math/tools/config.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/AssignmentRule.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/algorithm/transformation/erase_key.hpp:
 
 /usr/local/include/boost/preprocessor/arithmetic/add.hpp:
@@ -20206,11 +18879,8 @@ calc.cpp:
 
 /usr/local/include/boost/preprocessor/arithmetic/limits/inc_256.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h:
 
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /usr/local/include/boost/mpl/quote.hpp:
@@ -20243,11 +18913,6 @@ calc.cpp:
 
 /usr/include/c++/9/bits/exception.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-config.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/distributions/inverse_gaussian.hpp:
 
 /usr/local/include/boost/preprocessor/repeat.hpp:
@@ -20276,11 +18941,6 @@ calc.cpp:
 
 /usr/local/include/boost/mpl/aux_/integral_wrapper.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Constraint.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/has_apply.hpp:
 
 /usr/local/include/boost/preprocessor/seq/limits/enum_256.hpp:
@@ -20313,11 +18973,8 @@ calc.cpp:
 
 /usr/local/include/boost/mpl/aux_/config/workaround.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h:
 
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
 /usr/local/include/boost/fusion/view/filter_view/detail/value_of_data_impl.hpp:
@@ -20334,11 +18991,6 @@ calc.cpp:
 
 /usr/local/include/boost/type_traits/add_const.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/remove_cv_ref.hpp:
 
 /usr/local/include/boost/mpl/aux_/adl_barrier.hpp:
@@ -20347,11 +18999,6 @@ calc.cpp:
 
 /usr/local/include/boost/type_traits/add_lvalue_reference.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/Date.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/arithmetic/detail/maximum_number.hpp:
 
 /usr/local/include/boost/mpl/aux_/traits_lambda_spec.hpp:
@@ -20440,17 +19087,10 @@ calc.cpp:
 
 /usr/include/c++/9/string:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaFormatter.h:
-
-/usr/local/include/boost/predef/os/bsd/bsdi.h:
-
-=======
 /usr/local/include/boost/predef/os/bsd/bsdi.h:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/comparison/not_equal.hpp:
 
 /usr/local/include/boost/function_types/components.hpp:
@@ -20463,11 +19103,8 @@ calc.cpp:
 
 /usr/local/include/boost/numeric/ublas/triangular.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/is_floating_point.hpp:
 
 /usr/include/stdint.h:
@@ -20530,22 +19167,14 @@ linear.hpp:
 
 /usr/include/linux/limits.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/math.h:
 
 /usr/local/include/boost/predef/os/ios.h:
 
 /usr/local/include/boost/type_traits/conditional.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/less.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
@@ -20576,11 +19205,8 @@ linear.hpp:
 
 /usr/include/c++/9/bits/node_handle.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/sequence/intrinsic/detail/segmented_end.hpp:
 
 /usr/local/include/boost/type_traits/has_plus_assign.hpp:
@@ -20603,11 +19229,8 @@ linear.hpp:
 
 /usr/local/include/boost/mpl/next_prior.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsMatrix.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/repetition.hpp:
 
 /usr/local/include/boost/mpl/bool_fwd.hpp:
@@ -20642,11 +19265,6 @@ linear.hpp:
 
 /usr/local/include/boost/mpl/aux_/preprocessed/gcc/less.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/EventAssignment.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/is_integral.hpp:
 
 /usr/local/include/boost/mpl/assert.hpp:
@@ -20803,11 +19421,8 @@ linear.hpp:
 
 /usr/local/include/boost/mpl/empty_fwd.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Parameter.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/is_nothrow_move_assignable.hpp:
 
 /usr/local/include/Eigen/src/Core/arch/CUDA/TypeCasting.h:
@@ -20926,11 +19541,8 @@ linear.hpp:
 
 /usr/local/include/boost/noncopyable.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Reaction.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/move.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
@@ -20991,28 +19603,16 @@ linear.hpp:
 
 /usr/local/include/boost/mpl/multiplies.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/lambda_arity_param.hpp:
 
 /usr/local/include/boost/serialization/tracking_enum.hpp:
 
 /usr/include/c++/9/stdexcept:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBO.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLWriter.h:
-
-=======
-/usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
-
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/c++/9/bits/c++io.h:
 
 /usr/include/c++/9/optional:
@@ -21219,22 +19819,16 @@ system.hpp:
 
 /usr/local/include/boost/type_traits/remove_volatile.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/stl_bvector.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/x86_64-linux-gnu/c++/9/bits/gthr.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrLogger.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/support/sequence_base.hpp:
 
 /usr/local/include/boost/math/distributions/students_t.hpp:
@@ -21271,11 +19865,6 @@ system.hpp:
 
 /usr/local/include/boost/type_traits/is_scalar.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Integrator.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/conversion/udt_builtin_mixture_enum.hpp:
 
 /usr/local/include/boost/typeof/typeof.hpp:
@@ -21284,11 +19873,8 @@ system.hpp:
 
 /usr/include/c++/9/exception:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/odeint/util/same_instance.hpp:
 
 /usr/include/c++/9/bits/ios_base.h:
@@ -21305,11 +19891,6 @@ system.hpp:
 
 /usr/local/include/boost/type_traits/is_float.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Dictionary.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/O1_size_fwd.hpp:
 
 /usr/include/c++/9/bits/locale_facets.h:
@@ -21348,11 +19929,8 @@ main.hpp:
 
 /usr/include/c++/9/bits/uses_allocator.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLReader.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/range/iterator.hpp:
 
 /usr/local/include/boost/mpl/aux_/common_name_wknd.hpp:
@@ -21363,11 +19941,8 @@ main.hpp:
 
 /usr/local/include/boost/math/distributions/detail/hypergeometric_cdf.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/special_functions/erf.hpp:
 
 /usr/local/include/boost/preprocessor/list/detail/fold_right.hpp:
@@ -21384,11 +19959,8 @@ main.hpp:
 
 /usr/local/include/boost/math/tools/series.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Event.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/type_with_alignment.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
@@ -21415,11 +19987,6 @@ sbml.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-namespace.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/core/alloc_construct.hpp:
 
 /usr/local/include/boost/function_types/detail/encoding/def.hpp:
@@ -21462,31 +20029,16 @@ sbml.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Species.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/local/include/boost/preprocessor/comma_if.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrOSSpecifics.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/config/forwarding.hpp:
 
 /usr/local/include/boost/math/special_functions/detail/bessel_kn.hpp:
 
 /usr/local/include/boost/predef/os/bsd/free.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLConstructorException.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/istream.tcc:
 
 /usr/local/include/boost/mpl/aux_/msvc_type.hpp:
@@ -21503,11 +20055,8 @@ sbml.cpp:
 
 /usr/include/c++/9/bits/shared_ptr_base.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h:
 
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
@@ -21522,22 +20071,12 @@ sbml.cpp:
 
 /usr/include/c++/9/tr1/legendre_function.tcc:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/tr1proxy/cxx11_ns.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/exception_defines.h:
 
 /usr/include/c++/9/complex:
 
 /usr/local/include/boost/iterator/detail/enable_if.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLErrorLog.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/tools/cxx03_warn.hpp:
 
 /usr/local/include/boost/mpl/begin_end.hpp:
@@ -21632,17 +20171,8 @@ sbml.cpp:
 
 /usr/local/include/boost/mpl/aux_/nttp_decl.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Priority.h:
-
 /usr/include/c++/9/limits:
 
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/ASTNode.h:
-
-=======
-/usr/include/c++/9/limits:
-
->>>>>>> CyGMM_docker
 /usr/lib/gcc/x86_64-linux-gnu/9/include/omp.h:
 
 /usr/include/c++/9/bits/cxxabi_forced.h:
@@ -21681,11 +20211,8 @@ sbml.cpp:
 
 /usr/local/include/boost/preprocessor/detail/auto_rec.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypeCodes.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/fstream:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
@@ -21716,11 +20243,6 @@ sbml.cpp:
 
 /usr/include/string.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/products/SelfadjointMatrixMatrix.h:
 
 /usr/local/include/boost/fusion/algorithm/transformation/replace_if.hpp:
@@ -21741,11 +20263,8 @@ sbml.cpp:
 
 /usr/include/asm-generic/errno.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunnerOptions.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/distributions/inverse_chi_squared.hpp:
 
 /usr/local/include/boost/config/detail/select_stdlib_config.hpp:
@@ -21762,11 +20281,8 @@ sbml.cpp:
 
 /usr/local/include/boost/type_traits.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/FunctionDefinition.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/cstddef:
 
 /usr/local/include/boost/type_traits/has_greater_equal.hpp:
@@ -21777,17 +20293,9 @@ sbml.cpp:
 
 /usr/local/include/boost/assert/source_location.hpp:
 
-<<<<<<< HEAD
-/usr/local/include/boost/math/special_functions/detail/bessel_y1.hpp:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLError.h:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLNamespaces.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/common/sbmlfwd.h:
 
 /usr/local/include/boost/math/special_functions/detail/bessel_y1.hpp:
->>>>>>> CyGMM_docker
 
 /usr/local/include/boost/mpl/aux_/arity.hpp:
 
@@ -21803,11 +20311,6 @@ sbml.cpp:
 
 /usr/include/c++/9/streambuf:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/L3FormulaFormatter.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/streambuf_iterator.h:
 
 /usr/local/include/boost/math/distributions/complement.hpp:
@@ -21816,11 +20319,6 @@ sbml.cpp:
 
 /usr/include/c++/9/bits/codecvt.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/ModifierSpeciesReference.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/std_abs.h:
 
 /usr/local/include/boost/math/distributions.hpp:
@@ -21849,11 +20347,8 @@ sbml.cpp:
 
 /usr/local/include/boost/type_traits/is_compound.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTypes.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/view/zip_view/detail/distance_impl.hpp:
 
 calc.hpp:
@@ -21864,11 +20359,6 @@ calc.hpp:
 
 /usr/include/c++/9/new:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Unit.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/locale_facets_nonio.h:
 
 /usr/local/include/boost/mpl/clear_fwd.hpp:
@@ -21879,11 +20369,8 @@ calc.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/common/libsbml-version.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/locale_facets_nonio.tcc:
 
 /usr/local/include/boost/detail/call_traits.hpp:
@@ -21902,11 +20389,6 @@ calc.hpp:
 
 /usr/include/c++/9/bits/quoted_string.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/Setting.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/template_arity_fwd.hpp:
 
 /usr/include/c++/9/typeinfo:
@@ -22025,11 +20507,6 @@ calc.hpp:
 
 /usr/local/include/boost/mpl/aux_/preprocessed/gcc/apply_fwd.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/has_xxx.hpp:
 
 /usr/local/include/boost/type_traits/is_complex.hpp:
@@ -22056,11 +20533,8 @@ calc.hpp:
 
 /usr/local/include/boost/mpl/aux_/config/has_apply.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrStringUtils.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/erase_impl.hpp:
 
 /usr/local/include/boost/math/special_functions/log1p.hpp:
@@ -22075,11 +20549,8 @@ calc.hpp:
 
 /usr/local/include/boost/mpl/aux_/preprocessed/gcc/apply_wrap.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/odeint/stepper/rosenbrock4.hpp:
 
 /usr/local/include/boost/numeric/odeint/stepper/symplectic_euler.hpp:
@@ -22112,11 +20583,6 @@ calc.hpp:
 
 /usr/local/include/boost/type_traits/copy_cv.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNamespaces.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/range/size_type.hpp:
 
 /usr/local/include/boost/mpl/aux_/full_lambda.hpp:
@@ -22159,11 +20625,8 @@ calc.hpp:
 
 /usr/local/include/boost/type_traits/is_base_and_derived.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr/rrRoadRunner.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/uniform_int_dist.h:
 
 /usr/local/include/boost/type_traits/has_negate.hpp:
@@ -22174,11 +20637,8 @@ calc.hpp:
 
 /usr/local/include/boost/range/mutable_iterator.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLExtern.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/fusion/sequence/intrinsic/front.hpp:
 
 /usr/include/c++/9/chrono:
@@ -22259,11 +20719,6 @@ calc.hpp:
 
 /usr/local/include/boost/preprocessor/seq/limits/size_256.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/UnitDefinition.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/seq/detail/is_empty.hpp:
 
 /usr/local/include/boost/type_traits/has_greater.hpp:
@@ -22292,11 +20747,6 @@ calc.hpp:
 
 /usr/local/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_long_long.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/special_functions/detail/lgamma_small.hpp:
 
 /usr/include/c++/9/istream:
@@ -22323,15 +20773,9 @@ calc.hpp:
 
 /usr/local/include/boost/preprocessor/seq/transform.hpp:
 
-<<<<<<< HEAD
-/usr/local/include/boost/preprocessor/arithmetic/mod.hpp:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLVisitor.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Rule.h:
 
 /usr/local/include/boost/preprocessor/arithmetic/mod.hpp:
->>>>>>> CyGMM_docker
 
 /usr/local/include/boost/mpl/or.hpp:
 
@@ -22339,11 +20783,8 @@ calc.hpp:
 
 /usr/local/include/boost/core/noncopyable.hpp:
 
-<<<<<<< HEAD
-=======
 cli.hpp:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/iterator/distance.hpp:
 
 /usr/local/include/boost/range/empty.hpp:
@@ -22360,11 +20801,6 @@ cli.hpp:
 
 /usr/local/include/boost/range/rend.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelHistory.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/range/detail/safe_bool.hpp:
 
 /usr/local/include/boost/next_prior.hpp:
@@ -22385,11 +20821,7 @@ cli.hpp:
 
 /usr/local/include/boost/type_traits/has_minus.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/Stack.h:
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h:
->>>>>>> CyGMM_docker
 
 /usr/local/include/boost/utility/binary.hpp:
 
@@ -22435,23 +20867,12 @@ cli.hpp:
 
 /usr/local/include/boost/mpl/aux_/msvc_eti_base.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaParser.h:
-
-/usr/local/include/boost/type_traits/make_signed.hpp:
-
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/List.h:
-
-/usr/local/include/boost/mpl/aux_/is_msvc_eti_arg.hpp:
-
-=======
 /usr/local/include/boost/type_traits/make_signed.hpp:
 
 /usr/local/include/boost/mpl/aux_/is_msvc_eti_arg.hpp:
 
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/rr-libstruct/lsExporter.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Core/MapBase.h:
 
 /usr/local/include/boost/mpl/aux_/preprocessed/gcc/equal_to.hpp:
@@ -22470,11 +20891,6 @@ cli.hpp:
 
 /usr/local/include/boost/numeric/ublas/matrix.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/RDFAnnotation.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/QR:
 
 /usr/include/c++/9/ext/type_traits.h:
@@ -22589,11 +21005,6 @@ cli.hpp:
 
 /usr/local/include/boost/math/tools/atomic.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Trigger.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Eigenvalues/ComplexSchur.h:
 
 /usr/local/include/boost/math/tools/complex.hpp:
@@ -22614,11 +21025,8 @@ cli.hpp:
 
 /usr/local/include/boost/math/special_functions/sqrt1pm1.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/ublas/lu.hpp:
 
 /usr/local/include/boost/math/special_functions/lanczos.hpp:
@@ -22627,11 +21035,8 @@ cli.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/9/include/xmmintrin.h:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/RateRule.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/special_functions/hypot.hpp:
 
 /usr/local/include/boost/range/algorithm/copy.hpp:
@@ -22660,11 +21065,6 @@ cli.hpp:
 
 /usr/local/include/boost/smart_ptr/detail/lightweight_mutex.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLNode.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/include/c++/9/ratio:
 
 /usr/local/include/boost/fusion/view/iterator_range/detail/segmented_iterator_range.hpp:
@@ -22673,11 +21073,6 @@ cli.hpp:
 
 /usr/local/include/boost/mpl/aux_/preprocessed/gcc/divides.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/modulus.hpp:
 
 /usr/local/include/boost/math/special_functions/polygamma.hpp:
@@ -22690,11 +21085,8 @@ cli.hpp:
 
 /usr/local/include/boost/math/special_functions/cos_pi.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/InitialAssignment.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/special_functions/trigamma.hpp:
 
 /usr/local/include/boost/math/special_functions/next.hpp:
@@ -22753,22 +21145,14 @@ cli.hpp:
 
 /usr/include/c++/9/pstl/glue_numeric_defs.h:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/util/memory.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/range/detail/extract_optional_type.hpp:
 
 /usr/local/include/boost/math/distributions/detail/generic_quantile.hpp:
 
 /usr/local/include/boost/math/distributions/hypergeometric.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/CompartmentType.h:
 
->>>>>>> CyGMM_docker
 /usr/include/c++/9/bits/allocated_ptr.h:
 
 /usr/local/include/boost/fusion/container/vector/detail/equal_to_impl.hpp:
@@ -22839,11 +21223,6 @@ cli.hpp:
 
 /usr/local/include/boost/math/special_functions/detail/bessel_i1.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/SBMLTransforms.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/preprocessor/punctuation/paren.hpp:
 
 /usr/include/c++/9/cstdio:
@@ -22866,11 +21245,6 @@ cli.hpp:
 
 /usr/local/include/boost/math/distributions/poisson.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/units/FormulaUnitsData.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/math/distributions/rayleigh.hpp:
 
 /usr/local/include/boost/math/distributions/skew_normal.hpp:
@@ -22903,11 +21277,8 @@ cli.hpp:
 
 /usr/local/include/boost/numeric/ublas/vector.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/ModelCreator.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/numeric/ublas/storage.hpp:
 
 /usr/local/include/boost/mpl/vector/aux_/tag.hpp:
@@ -22942,11 +21313,6 @@ cli.hpp:
 
 /usr/local/include/boost/serialization/tracking.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/rr/rrUtils.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/Eigen/src/Geometry/arch/Geometry_SSE.h:
 
 /usr/local/include/boost/fusion/view/single_view/single_view_iterator.hpp:
@@ -22969,11 +21335,8 @@ cli.hpp:
 
 /usr/local/include/boost/serialization/wrapper.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/UnitKind.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/serialization/collection_size_type.hpp:
 
 /usr/local/include/boost/fusion/include/equal_to.hpp:
@@ -23014,11 +21377,6 @@ cli.hpp:
 
 /usr/local/include/boost/mpl/long_fwd.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/math/FormulaTokenizer.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/integral_constant.hpp:
 
 /usr/local/include/boost/core/checked_delete.hpp:
@@ -23093,11 +21451,8 @@ fileIO.cpp:
 
 /usr/local/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector20.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/util/StringBuffer.h:
 
->>>>>>> CyGMM_docker
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/local/include/boost/mpl/at.hpp:
@@ -23108,11 +21463,8 @@ fileIO.cpp:
 
 /usr/local/include/boost/mpl/aux_/begin_end_impl.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/Model.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/comparison_op.hpp:
 
 /usr/local/include/boost/mpl/negate.hpp:
@@ -23131,11 +21483,6 @@ fileIO.cpp:
 
 /usr/local/include/boost/type_traits/aligned_storage.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/Compartment.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/mpl/aux_/unwrap.hpp:
 
 /usr/local/include/boost/type_traits/common_type.hpp:
@@ -23190,11 +21537,8 @@ fileIO.cpp:
 
 /usr/local/include/boost/type_traits/has_complement.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/annotation/CVTerm.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/has_trivial_move_assign.hpp:
 
 /usr/local/include/boost/type_traits/has_dereference.hpp:
@@ -23271,11 +21615,8 @@ fileIO.cpp:
 
 /usr/local/include/boost/type_traits/is_member_object_pointer.hpp:
 
-<<<<<<< HEAD
-=======
 /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/sbml/common/extern.h:
 
->>>>>>> CyGMM_docker
 /usr/local/include/boost/type_traits/is_nothrow_move_constructible.hpp:
 
 /usr/local/include/boost/type_traits/is_nothrow_swappable.hpp:
@@ -23322,11 +21663,6 @@ fileIO.cpp:
 
 /usr/local/include/boost/numeric/odeint/util/unit_helper.hpp:
 
-<<<<<<< HEAD
-/mnt/c/buildroadrunner/roadrunner/install-Release/include/sbml/xml/XMLToken.h:
-
-=======
->>>>>>> CyGMM_docker
 /usr/local/include/boost/units/heterogeneous_system.hpp:
 
 /usr/local/include/boost/mpl/distance.hpp:

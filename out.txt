@@ -1,8 +1,9 @@
 Program Begin:
 Reading in Parameters from Configuration File!
 ------ Reading in X_0! ------
-<<<<<<< HEAD
+"data/X/3linX.csv"
 "data/X/X.csv"
+Multiple X files detected, reading only the last X file read in.
 Reading in 2000 rows or cells from X data directory
 ---------------------------
 After removing all negative rows, X has 2000 rows.
@@ -10,101 +11,8 @@ After removing all negative rows, X has 2000 rows.
 Total Number of Runs:1
 Number of Moments:27
 Hyper Cube Width:1
-Using Times: 0 10
-Blind PSO --> nParts:16 Nsteps:10
-Targeted PSO --> nParts:2 Nsteps:2
-Number of Rates:6
-Redirecting Model to SBML
-------------------------------
------- Reading in Yt! ------
-"data/Y/Yt0.csv"
-Read in 2000 rows!
----------------------------
-Yt Means:205.193 2062.09 5.33039 5.41566 205.103 5.33996
-After removing all negative rows, Y0 has 2000 rows.
-Computing Weight Matrices!
-0.000152325           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0 3.72823e-06           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0     2.44632           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0     5.66145           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0 0.000159368           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0     2.32739           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0 5.43899e-10           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0 1.76628e-13           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0   0.0207376           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0   0.0470109           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0  6.2116e-10           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0   0.0192743           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0 2.05763e-11           0           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0  4.9121e-06           0           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0 5.00698e-06           0           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 1.68866e-09           0           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 4.65268e-06           0           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 1.08082e-07           0           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 1.13231e-07           0           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 2.26301e-11           0           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 1.02457e-07           0           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0    0.054494           0           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 4.85454e-06           0           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0   0.0395257           0           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 5.15241e-06           0           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0   0.0501996           0
-          0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0           0 5.02594e-06
-mVec: 76.9097  492.031  134.448  1236.95 0.527673  210.078  13150.9   294766  3835.67   256535  19.5485  6586.23 -36579.4 -5165.69  30956.8 -26.3679 -776.737  9319.22  -165087  215.998  6094.26  1753.83 -3.61724  1205.55  -368.18   -10185  81.1747
-PSO Seeded At: 0.1  0.1 0.95 0.17 0.05 0.18| cost:3.1091e+09
-PSO Estimation Has Begun, This may take some time...
-hypercubescale before reset:1
-hypercubescale after reset:1
-nested hypercubes:0 0 0 0 0 0
-hypercubescale after final nesting:1
-
--------------- All Run Estimates: -------------------
-  0.602931   0.259331   0.808312   0.507558   0.313627   0.808212 2.0199e+09
-CODE FINISHED RUNNING IN 18 s TIME!
-=======
-"data/X/3linX.csv"
-Reading in 5000 rows or cells from X data directory
----------------------------
-After removing all negative rows, X has 5000 rows.
---------- Parameters ---------
-Total Number of Runs:1
-Number of Moments:9
-Hyper Cube Width:1
 Using Times:0 2
 Blind PSO --> nParts:500 Nsteps:30
 Targeted PSO --> nParts:2 Nsteps:2
 Number of Rates:5
 ------------------------------
------- SIMULATING YT! ------
-Read in Rates: 0.276782  0.837081  0.443217 0.0424412  0.304645
------- Reading in Yt! ------
-"data/Y/3linY.csv"
-Read in 5000 rows!
----------------------------
-After removing all negative rows, Y has 5000 rows.
----------------------------
-Computing Weight Matrices!
-  0.0125424           0           0           0           0           0           0           0           0
-          0   0.0315582           0           0           0           0           0           0           0
-          0           0  0.00845905           0           0           0           0           0           0
-          0           0           0 4.01855e-06           0           0           0           0           0
-          0           0           0           0 2.49645e-05           0           0           0           0
-          0           0           0           0           0 1.33923e-06           0           0           0
-          0           0           0           0           0           0 1.06534e-05           0           0
-          0           0           0           0           0           0           0 4.33887e-06           0
-          0           0           0           0           0           0           0           0 7.47181e-06
-mVec using boost: 22.8386  4.60844 0.887872  372.243  17.8153  0.83001  80.1452  16.8634  3.78781
-PSO Seeded At:0.997185 0.932557 0.128124 0.999041 0.236089| cost:4.6535
-PSO Estimation Has Begun, This may take some time...
-hypercubescale before reset:1
-hypercubescale after reset:1
-nested hypercubes:0 0 0 0 0
-hypercubescale after final nesting:1
-Simulated Truth: 0.276782  0.837081  0.443217 0.0424412  0.304645
-GBVEC:    0.25892    0.667552     0.42382    0.139894    0.411692 0.000699055
-Simulated Xt Moments for time 2:11.5081 6.94288 9.88389 211.249 80.6358 216.079 129.358 190.658 123.617
-
--------------- All Run Estimates: -------------------
-    0.25892    0.667552     0.42382    0.139894    0.411692 0.000699055
-CODE FINISHED RUNNING IN 26 s TIME!
->>>>>>> CyGMM_docker
