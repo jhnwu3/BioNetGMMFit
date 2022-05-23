@@ -292,7 +292,7 @@ with the element
 
 is equivalent to 
 
-    -k1 - k4
+    -k1 - k4   or -theta1 - theta4 (if using theta notation)
 
 as an aside:
     - the + sign is not needed to denote positive values and is only needed for arithmetic operations i.e -k(0) + -k(3)
