@@ -36,7 +36,7 @@ int main(int argc, char** argv){
     omp_set_num_threads(parameters.nThreads);
 
     /* Run an update for bngl */
-    string sbmlModel = "./sbml/" + getModelPath(argc, argv).substr(0, getModelPath(argc, argv).find(bngl)) + sbml;
+    string sbmlModel = "./sbml/model" + sbml;
     const string bnglCall = "bionetgen run -i" + getModelPath(argc, argv) + " -o sbml";
     if(parameters.useSBML > 0 && system(bnglCall.c_str()) < 0){
         cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;

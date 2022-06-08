@@ -18,7 +18,15 @@ public:
 
     void operator() (const State_N& c, State_N& dcdt, double t)
     {
-        /* WRITE YOUR SYSTEM OF DIFFERENTIAL EQUATIONS BELOW, BEWARE OF THE "()"" INDEXING FOR YOUR PARAMETERS AND "[]"" FOR YOUR PROTEINS */
+    /* Linear 3 */
+        dcdt[0] = -k(2)*c[0] + k(1) * c[1] + k(3) * c[2]; // p1
+        dcdt[1] = k(2) * c[0] + (-k(1) - k(4))*c[1] + k(0)*c[2] ; // p2
+        dcdt[2] = k(4) * c[1] + (-k(0) - k(3))*c[2]; // p3
+    }
+};
+#endif
+
+/* WRITE YOUR SYSTEM OF DIFFERENTIAL EQUATIONS BELOW, BEWARE OF THE "()"" INDEXING FOR YOUR PARAMETERS AND "[]"" FOR YOUR PROTEINS */
         // dcdt[0] = -(k(0) * c[0] * c[1])  // Syk = dc1/dt = k1 c1c2 + k2c3 + k3c3 
         //     + k(1) * c[2]
         //     + k(2) * c[2];
@@ -48,11 +56,3 @@ public:
     //     dcdt[1] = k(1) * c[0] - k(4) * c[1]; // pslp
     //     dcdt[2] = k(2) * c[1] - k(4) * c[2]; // perk
     //     dcdt[3] = k(3) * c[2] - k(4) * c[3]; //ps6
-
-    /* Linear 3 */
-        dcdt[0] = -k(2)*c[0] + k(1) * c[1] + k(3) * c[2]; // p1
-        dcdt[1] = k(2) * c[0] + (-k(1) - k(4))*c[1] + k(0)*c[2] ; // p2
-        dcdt[2] = k(4) * c[1] + (-k(0) - k(3))*c[2]; // p3
-    }
-};
-#endif
