@@ -20,7 +20,7 @@ CPU TIME: generate_network 0.00 s.
 Wrote SBML to ./model_sbml.xml.
 CPU TIME: writeSBML 0.00 s.
 Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/model.bngl.
-CPU TIME: total 0.00 s.
+CPU TIME: total 0.02 s.
 ------ Reading in X_0! ------
 "data/X/3linX.csv"
 Reading in 5000 rows or cells from X data directory
@@ -31,7 +31,7 @@ Total Number of Runs:1
 Number of Moments:9
 Hyper Cube Width:1
 Using Times:0 2
-Blind PSO --> nParts:10 Nsteps:5
+Blind PSO --> nParts:10 Nsteps:30
 Targeted PSO --> nParts:2 Nsteps:2
 Number of Rates:5
 Redirecting Model to SBML
@@ -66,5 +66,5 @@ hypercubescale after final nesting:1
 Simulated Truth: 0.276782  0.837081  0.443217 0.0424412  0.304645
 
 -------------- All Run Estimates: -------------------
-0.502524 0.542949 0.278701 0.534055 0.248483 0.826727
-CODE FINISHED RUNNING IN 2 s TIME!
+0.608869 0.524323 0.434011 0.412912 0.749688 0.184628
+CODE FINISHED RUNNING IN 11 s TIME!
