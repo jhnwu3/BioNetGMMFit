@@ -23,7 +23,7 @@ It takes into account both linear and nonlinear models of evolution for estimati
 The program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
 
 Keep in mind, should you still want to pursue this on Windows 10, there is a Windows Linux Subsystem that runs at a similar level of performance that you can enable in the operating system. 
-A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake or Chocolatey to get this C++ code/program up and running on Windows.
+A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake to get this C++ code/program up and running on Windows.
 
 Mac's Unix based system should feasibly still work well with this repo, but has been untested in this current iteration.
 
@@ -52,10 +52,10 @@ To quickly get started with one of the simulated examples, do:
 
 ### Docker  <a name="docker"></a>
 
-## Prequisites <a name="prq"></a>
+## Prequisites to Compiling <a name="prq"></a>
 
 ### *Eigen* <a name="eig"></a>
-Snapshot uses the Eigen 3.3.9 C++ linear algebra library for matrix computations. If on Ubuntu, you can do a quick install using:
+Snapshot uses the Eigen 3.3.9 C++ linear algebra library for matrix computations on Linux. If on Ubuntu, you can do a quick install using:
 
     sudo apt install libeigen3-dev
 
@@ -86,7 +86,7 @@ First unzip the folder, doing
 
     unzip 
 
-After entering the directory
+After entering the directory /src
 
     cd src
 
@@ -212,8 +212,14 @@ will force the program to estimate rate constants using means only. All boolean 
 Finally, regarding holding parameter or rate constant values, these are currently only enabled for the nonlinear system where it's necessary for accurate estimation. 
 
 ## Defining Your Own Linear or Nonlinear System <a name="sys"></a>
-Defining your own linear and nonlinear system will currently require writing a little bit of code. Unfortunately, there isn't a GUI to use, however, with enough of an understanding of interaction matrices (and how they relate to your system of equations), the syntax is fairly straightforward.
+There are two ways to define your own biological system, one is through bionetgen, by compiling bionetgen into sbml code shown in model.bngl, CyGMM is able to perform parameter estimation using bngl. For more information on bionetgen, see [here](https://webng.readthedocs.io/en/latest/). The most important caveat is to make sure the bngl file writes
 
+    writeSBML()
+
+at the end. 
+
+However, should you want to write explicit odes, look below. Although this method provides substantial performance gains, it also requires you to recompile CyGMM.
+ 
 ### *Interaction Matrices* <a name="intmat"></a>
 In order to minimize computation times, matrix exponentiation is commonly used to quickly solve a system of coupled linear odes, specifically in the form of 
 
@@ -381,7 +387,7 @@ Contains all C++ source and header files needed to recompile the program.
 This is where protein input data is read in from the program. Example data (used in the paper) is provided in the example folder.
 
 ### *example*
-Contains various examples for use with the linear and nonlinear system provided by default in the program / code. There is a system.pdf that gives a brief summary explanation of the nonlinear ODE system used.
+Contains various examples for use with the linear and nonlinear system provided by default in the program / code. There should be codes associated with them.
 
 
 
