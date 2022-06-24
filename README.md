@@ -70,7 +70,8 @@ However, Snapshot only uses the C++ odeint library, so if storage space is an ex
 detailed install intructions can be found [here](https://www.boost.org/doc/libs/1_77_0/more/getting_started/unix-variants.html)
 
 ### *libRoadRunner/bionetgen* <a name="rr"> </a>
-Please make sure to have bionetgen installed through 
+The program uses a python library called bionetgen. Please make sure you have python installed from instructions [here](https://www.python.org/downloads/).
+Please make sure to have bionetgen(https://bionetgen.org/) installed through 
 
     pip install bionetgen
 
