@@ -91,7 +91,7 @@ After entering the directory
     cd src
 
 Run
-
+    cmake .
     make
 
 in order to recompile an executable.
