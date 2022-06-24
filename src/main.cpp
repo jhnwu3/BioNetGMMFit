@@ -36,8 +36,12 @@ int main(int argc, char** argv){
     omp_set_num_threads(parameters.nThreads);
 
     /* Run an update for bngl */
-    string sbmlModel = "./sbml/model" + sbml;
-    const string bnglCall = "bionetgen run -i" + getModelPath(argc, argv) + " -o sbml";
+    string modelPath = getModelPath(argc, argv);
+    string baseModelFile = modelPath.substr(modelPath.find_last_of("/\\") + 1);
+    std::string::size_type const p(baseModelFile.find_last_of('.'));
+    std::string file_without_extension = baseModelFile.substr(0, p);
+    string sbmlModel = "sbml/"+ file_without_extension + sbml;
+    const string bnglCall = "bionetgen run -i" + modelPath + " -o sbml";
     if(parameters.useSBML > 0 && system(bnglCall.c_str()) < 0){
         cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;
     }
@@ -175,13 +179,12 @@ int main(int argc, char** argv){
             // filter all zeroes and compute moments vectors for cost calcs
             for(int i = 0; i < Yt3Mats.size(); i++){
                 Yt3Mats[i] = filterZeros(Yt3Mats[i]);
-                cout << "Yt Means:" << Yt3Mats[i].colwise().mean() << endl;
                 cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
             }
             ogYt3Mats = Yt3Mats;
         }
-
+        cout << "Yt Means For First Time Step:" << Yt3Mats[0].colwise().mean() << endl;
         cout << "Computing Weight Matrices!" << endl;
         /* Compute initial wolfe weights */
         for(int y = 0; y < Yt3Mats.size(); ++y){ 

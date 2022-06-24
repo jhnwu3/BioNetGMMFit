@@ -26,6 +26,9 @@ VectorXd momentVector(const MatrixXd &sample, int nMoments){
     for(int c = 0; c < nVar; c++){
         variances(c) = (sample.col(c).array() - sample.col(c).array().mean()).square().sum() / ((double) sample.col(c).array().size() - 1);
     }
+    if(sample.rows() < 2){
+        variances = VectorXd::Zero(sample.cols());
+    }
 
     // again only compute covariances, if number of moments allow for it
     int nCross = nMoments - 2*sample.cols();
