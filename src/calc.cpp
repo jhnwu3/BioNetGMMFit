@@ -68,8 +68,14 @@ MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
     }
     double cost = 0;
     VectorXd variances(nMoments);
-    for(int i = 0; i < nMoments; i++){
-        variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
+    if(aDiff.rows() > 1){ // are there 2 or more cells? Ok, we can compute a variance, otherwise, let's default to an identity matrix.
+        for(int i = 0; i < nMoments; i++){
+            variances(i) = (aDiff.col(i).array() - aDiff.col(i).array().mean()).square().sum() / ((double) aDiff.col(i).array().size() - 1);
+        }
+    }else{
+        for(int i = 0; i < nMoments; i++){
+            variances(i) = 0;
+        }
     }
   
     MatrixXd wt = MatrixXd::Zero(nMoments, nMoments);
@@ -85,13 +91,12 @@ MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-
         wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
 
     }else{
         for(int i = 0; i < nMoments; i++){
             if(variances(i) == 0){ variances(i) = 1; } // error check for invalid variancees
-            wt(i,i) = 1 / variances(i); // cleanup code and make it more vectorized later.
+            wt(i,i) = 1.0 / variances(i); // cleanup code and make it more vectorized later.
         }
     }
     

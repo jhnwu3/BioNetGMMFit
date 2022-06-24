@@ -20,6 +20,8 @@ set(CMAKE_PREFIX_PATH
 
         )
 
+
+
 # for registering location of ImportRoadRunnerAndDependencies
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../) # move executable to main directory
 set(CMAKE_MODULE_PATH "${ROADRUNNER_INSTALL_PREFIX}/lib/cmake")
@@ -27,7 +29,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17  -static-libgcc -static-libst
 # Import roadrunner and all necessary dependencies for linking roadrunner.
 
 # This command is a roadrunner convenience cmake script which does all of the
-
+message(STATUS "prefix paths: ${LLVM_INSTALL_PREFIX}  ${CMAKE_PREFIX_PATH}")
 # calls to find_package(xxx, CONFIG) for us. If we didn't include this
 
 # script, we would manually need to call find_package for roadrunner-static
