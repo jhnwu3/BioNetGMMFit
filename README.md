@@ -48,7 +48,7 @@ To quickly get started with one of the simulated examples, do:
 
         ./CyGMM > out.txt
 
-4. All output (final estimate of rate constants) is recorded in **out.txt** . For command line options, do
+4. All output (final estimate of rate constants) is recorded in **out.txt** . For command line options to be able to feed configuration files, please see 
 
          ./CyGMM -h
 
@@ -66,8 +66,9 @@ Should the quickstart statically compiled executable in the repository fail to r
 
 4.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
 
-    docker run -v full_path_local_directory:cygmm/home -t cygmm_run
+    docker run -v full_path_local_directory:cygmm/home -t cygmm_run -m "pathtomodel.bngl" -c "lookBelowForConfig.csv"
 
+    For more information see [here](https://docs.docker.com/storage/volumes/) on how to mount a drive to be able to input configuration and data files.
 ## Prequisites to Compiling <a name="prq"></a>
 
 ### *Eigen* <a name="eig"></a>
