@@ -44,11 +44,13 @@ To quickly get started with one of the simulated examples, do:
 
         cd CyGMM
 
-3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run shell script to begin:
+3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run executable to begin:
 
-        source run.sh
+        ./CyGMM > out.txt
 
-4. All output (final estimate of rate constants) is recorded in **out.txt**
+4. All output (final estimate of rate constants) is recorded in **out.txt** . For command line options, do
+
+         ./CyGMM -h
 
 ### Docker  <a name="docker"></a>
 Should the quickstart statically compiled executable in the repository fail to run, there is a docker image that can be easily pulled and run on any operating system. 
