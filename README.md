@@ -62,7 +62,9 @@ Should the quickstart statically compiled executable in the repository fail to r
 
     docker run -t cygmm_run
 
-4.    
+4.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
+
+    docker run -v full_path_local_directory:cygmm/home -t cygmm_run
 
 ## Prequisites to Compiling <a name="prq"></a>
 
