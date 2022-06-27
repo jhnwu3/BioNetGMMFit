@@ -51,6 +51,18 @@ To quickly get started with one of the simulated examples, do:
 4. All output (final estimate of rate constants) is recorded in **out.txt**
 
 ### Docker  <a name="docker"></a>
+Should the quickstart statically compiled executable in the repository fail to run, there is a docker image that can be easily pulled and run on any operating system. 
+
+1. Install docker or dockerhub [here](https://docs.docker.com/get-docker/) (this should be as easy as an executable)
+2. Pull image from dockerhub, in your command line (bash, terminal, etc.), input 
+
+    docker pull jhnwu3/cygmm:cygmm_run
+
+3. Run docker image which currently should already have some pre-existing (birth-death) model inside.
+
+    docker run -t cygmm_run
+
+4.    
 
 ## Prequisites to Compiling <a name="prq"></a>
 
@@ -200,6 +212,7 @@ The default PSO parameters are listed below,
 | Use Deterministic?               | 1     | 1 to use CVode integrators, 0 to use roadrunner gillespie simulation     |
 | Number of BNGL Steps             | 15    | Tuning Parameter for number of steps of integration                      |
 | Seed                             | -1    | Used to seed the PSO, Off when seed < 0, On when seed > 0                |
+| Parallel Number of Threads       | 8     | Number of threads to parallelize on.                                     |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1
