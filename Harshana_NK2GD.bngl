@@ -1,0 +1,146 @@
+begin model
+
+begin compartments
+Cyto	3	1
+ExtrCel	3	1
+Memb	2	1
+end compartments
+
+begin parameters
+
+end parameters
+
+begin molecule types
+Ligand(Site0)
+NKG2D_Dap(Lig,D10_1a~U~P,D10_1b~U~P,D10_2a~U~P,D10_2b~U~P)
+Vav1_grb(Site0,Site1,Site2~U~P)
+Lck(SH2,Tyr394~U~P,Tyr505~U~P)
+Trans_Lig_D10()
+Trans_Vav()
+CD45()
+Csk()
+PI3K(Site0,Site1)
+PLCgamma(Site0~Act~Inact)
+Erk(Site0~U~P)
+Trans_PI3K()
+end molecule types
+
+begin anchors
+Ligand(Memb)
+NKG2D_Dap(Memb)
+Vav1_grb(Memb,Cyto)
+Lck(Memb)
+Trans_Lig_D10(Memb)
+Trans_Vav(Memb,Cyto)
+CD45(Memb)
+Csk(Memb)
+PI3K(Memb,Cyto)
+PLCgamma(Memb,Cyto)
+Erk(Memb,Cyto)
+Trans_PI3K(Cyto)
+end anchors
+
+begin seed species
+1 @Memb:NKG2D_Dap(Lig,D10_1a~U,D10_1b~U,D10_2a~U,D10_2b~U) 8.0
+2 @Cyto:Vav1_grb(Site0,Site1,Site2~U) 30.0
+3 @Memb:Lck(SH2!1,Tyr394~U,Tyr505~P!1) 50.0
+4 @Memb:Lck(SH2,Tyr394~P,Tyr505~U) 50.0
+5 @Memb:Csk() 50.0
+6 @Memb:CD45() 50.0
+7 @Memb:Ligand(Site0) 4.0
+8 @Cyto:PI3K(Site0,Site1) 30.0
+9 @Memb:PLCgamma(Site0~Inact) 30.0
+10 @Cyto:Erk(Site0~U) 50.0
+end seed species
+
+begin observables
+Molecules Ligand_Bound_Mmeb @Memb:Ligand(Site0!+)
+Molecules NKG2D_Dap_Bound @Memb:NKG2D_Dap(Lig!+)
+Molecules Vav1_Memb @Memb:Vav1_grb(Site2)
+Molecules Lck_memb_activ_half_or_full @Memb:Lck(SH2,Tyr394~P,Tyr505)
+Molecules Trans_Lig_D10 @Memb:Trans_Lig_D10()
+Molecules NKG2D_Dap_Unbound @Memb:NKG2D_Dap(Lig)
+Molecules Vav1_Cyto @Cyto:Vav1_grb(Site0,Site1,Site2)
+Molecules Trans_Vav @Cyto:Trans_Vav()
+Molecules Ligand_Unbound_Cyto @Memb:Ligand(Site0)
+Molecules pVav1_Memb @Memb:Vav1_grb(Site2~P)
+Molecules Lck_memb_inact @Memb:Lck(SH2!1,Tyr394,Tyr505~P!1)
+Molecules pVav1_Cyto @Cyto:Vav1_grb(Site2~P)
+Molecules PI3K_active @Memb:PI3K(Site0!+,Site1!+)
+Molecules PLCgamma_active @Memb:PLCgamma(Site0~Act)
+Molecules pErk_phos @Cyto:Erk(Site0~P)
+Molecules Trans_PI3K_tot @Cyto:Trans_PI3K()
+end observables
+
+begin functions
+end functions
+
+begin reaction rules
+Lig_Bind:	@Memb:Ligand(Site0) + @Memb:NKG2D_Dap(Lig,D10_1a,D10_1b,D10_2a,D10_2b) <-> @Memb:Ligand(Site0!1).NKG2D_Dap(Lig!1,D10_1a,D10_1b,D10_2a,D10_2b)		0.045, 0.02
+Dap_Phospho_1:	@Memb:NKG2D_Dap(Lig!+,D10_1a~U) + @Memb:Lck(SH2,Tyr394~P,Tyr505) -> @Memb:NKG2D_Dap(Lig!+,D10_1a~P) + @Memb:Lck(SH2,Tyr394~P,Tyr505)		0.013
+Dap_Phospho_2:	@Memb:NKG2D_Dap(Lig!+,D10_1b~U) + @Memb:Lck(SH2,Tyr394~P,Tyr505) -> @Memb:NKG2D_Dap(Lig!+,D10_1b~P) + @Memb:Lck(SH2,Tyr394~P,Tyr505)		0.013
+Dap_Phospho_3:	@Memb:NKG2D_Dap(Lig!+,D10_2a~U) + @Memb:Lck(SH2,Tyr394~P,Tyr505) -> @Memb:NKG2D_Dap(Lig!+,D10_2a~P) + @Memb:Lck(SH2,Tyr394~P,Tyr505)		0.013
+Dap_Phospho_4:	@Memb:NKG2D_Dap(Lig!+,D10_2b~U) + @Memb:Lck(SH2,Tyr394~P,Tyr505) -> @Memb:NKG2D_Dap(Lig!+,D10_2b~P) + @Memb:Lck(SH2,Tyr394~P,Tyr505)		0.013
+Vav_GRb_D10_Bind_1:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P,D10_1b~P) + @Cyto:Vav1_grb(Site0,Site1,Site2) <-> @Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2).Vav1_grb(Site0!1,Site1!2,Site2)		0.05, 5.1
+Vav_GRb_D10__Bind_2:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P,D10_2a~P) + @Cyto:Vav1_grb(Site0,Site1,Site2) <-> @Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_2a~P!2).Vav1_grb(Site0!1,Site1!2,Site2)		0.05, 5.1
+Vav_GRb_D10__Bind_3:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P,D10_2b~P) + @Cyto:Vav1_grb(Site0,Site1,Site2) <-> @Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2)		0.05, 5.1
+Vav_GRb_D10__Bind_4:	@Memb:NKG2D_Dap(Lig!+,D10_1b~P,D10_2a~P) + @Cyto:Vav1_grb(Site0,Site1,Site2) <-> @Memb:NKG2D_Dap(Lig!+,D10_1b~P!1,D10_2a~P!2).Vav1_grb(Site0!1,Site1!2,Site2)		0.05, 5.1
+Vav_GRb_D10__Bind_5:	@Memb:NKG2D_Dap(Lig!+,D10_1b~P,D10_2b~P) + @Cyto:Vav1_grb(Site0,Site1,Site2) <-> @Memb:NKG2D_Dap(Lig!+,D10_1b~P!1,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2)		0.05, 5.1
+Vav_GRb_D10__Bind_6:	@Memb:NKG2D_Dap(Lig!+,D10_2a~P,D10_2b~P) + @Cyto:Vav1_grb(Site0,Site1,Site2) <-> @Memb:NKG2D_Dap(Lig!+,D10_2a~P!1,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2)		0.05, 5.1
+Kpr_Vav_GRb_D10_Bind_3a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b,D10_2a~P!2,D10_2b).Vav1_grb(Site0!1,Site1!2,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav()		5.0
+Kpr_Vav_GRb_D10_Bind_2a:	@Memb:NKG2D_Dap(Lig!+,D10_1a,D10_1b,D10_2a~P!1,D10_2b~P!3).Vav1_grb(Site0!1,Site1!3,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav()		5.0
+Kpr_Vav_GRb_D10_Bind_1a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2,D10_2a,D10_2b).Vav1_grb(Site0!1,Site1!2,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav()		5.0
+Kpr_PI3K_D10_Bind_4a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b,D10_2a,D10_2b~P!2).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_D10_Bind_5a:	@Memb:NKG2D_Dap(Lig!+,D10_1a,D10_1b~P!1,D10_2a,D10_2b~P!2).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K()		5.0
+Kpr_Lig_Bind_1:	@Memb:NKG2D_Dap(Lig!+,D10_1a,D10_1b,D10_2a,D10_2b) -> @Memb:Trans_Lig_D10()		0.02
+Kpr_Trans_Dap:	@Memb:Trans_Lig_D10() -> @Memb:Ligand(Site0) + @Memb:NKG2D_Dap(Lig,D10_1a~U,D10_1b~U,D10_2a~U,D10_2b~U)		1000000.0
+Kpr_Vav_Trans:	@Cyto:Trans_Vav() -> @Cyto:Vav1_grb(Site0,Site1,Site2~U)		1000000.0
+Vav_dePhospho:	@Memb:Vav1_grb(Site0!+,Site1!+,Site2~P) -> @Memb:Vav1_grb(Site0!+,Site1!+,Site2~U)		0.048
+Kpr_Vav_GRb_D10_Bind_6a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!3,D10_1b~P!1,D10_2a~P!2,D10_2b~P!4).Vav1_grb(Site0!1,Site1!2,Site2).PI3K(Site0!3,Site1!4) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_PI3K()		5.0
+Kpr_Vav_GRb_D10_Bind_6a_0:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!3,D10_1b~P!1,D10_2a~P!2,D10_2b~P!4).Vav1_grb(Site0!1,Site1!2,Site2).Vav1_grb(Site0!3,Site1!4,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_Vav()		5.0
+Kpr_Vav_GRb_D10_Bind_5a_0:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!3,D10_1b~P!1,D10_2a~P!4,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2).Vav1_grb(Site0!3,Site1!4,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_Vav()		5.0
+Kpr_Vav_GRb_D10_Bind_1a_0:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2,D10_2a~P!3,D10_2b~P!4).Vav1_grb(Site0!1,Site1!2,Site2).Vav1_grb(Site0!3,Site1!4,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_Vav()		5.0
+Dap_dePhospho_1:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P) -> @Memb:NKG2D_Dap(Lig!+,D10_1a~U)		0.13
+Dap_dePhospho_2:	@Memb:NKG2D_Dap(Lig!+,D10_1b~P) -> @Memb:NKG2D_Dap(Lig!+,D10_1b~U)		0.13
+Dap_dePhospho_3:	@Memb:NKG2D_Dap(Lig!+,D10_2a~P) -> @Memb:NKG2D_Dap(Lig!+,D10_2a~U)		0.13
+Dap_dePhospho_4:	@Memb:NKG2D_Dap(Lig!+,D10_2b~P) -> @Memb:NKG2D_Dap(Lig!+,D10_2b~U)		0.13
+Vav_Phosphoryl:	@Memb:Vav1_grb(Site0!+,Site1!+,Site2~U) + @Memb:Lck(SH2,Tyr394~P,Tyr505) -> @Memb:Vav1_grb(Site0!+,Site1!+,Site2~P) + @Memb:Lck(SH2,Tyr394~P,Tyr505)		0.012
+Lck_transAutoPhos_1:	@Memb:Lck(SH2,Tyr394~U,Tyr505~U)%1 + @Memb:Lck(SH2,Tyr394~P,Tyr505)%2 -> @Memb:Lck(SH2,Tyr394~P,Tyr505~U)%1 + @Memb:Lck(SH2,Tyr394~P,Tyr505)%2		0.05
+Lck_Csk_phosph:	@Memb:Lck(SH2,Tyr394,Tyr505~U) + @Memb:Csk() -> @Memb:Lck(SH2,Tyr394,Tyr505~P) + @Memb:Csk()		0.05
+Lck_CD45_Dephosh_1:	@Memb:Lck(SH2!1,Tyr394,Tyr505~P!1) + @Memb:CD45() -> @Memb:Lck(SH2,Tyr394,Tyr505~U) + @Memb:CD45()		0.01
+Lck_CD45_Dephosh_2:	@Memb:Lck(SH2,Tyr394~P,Tyr505) + @Memb:CD45() -> @Memb:Lck(SH2,Tyr394~U,Tyr505) + @Memb:CD45()		0.01
+Lck_SH2_Block:	@Memb:Lck(SH2,Tyr394,Tyr505~P) <-> @Memb:Lck(SH2!1,Tyr394,Tyr505~P!1)		0.01, 0.01
+Lck_transAutoPhos_2:	@Memb:Lck(SH2,Tyr394~U,Tyr505~P)%1 + @Memb:Lck(SH2,Tyr394~P,Tyr505)%2 -> @Memb:Lck(SH2,Tyr394~P,Tyr505~P)%1 + @Memb:Lck(SH2,Tyr394~P,Tyr505)%2		0.05
+Lck_CD45_Dephosh_3:	@Memb:Lck(SH2,Tyr394,Tyr505~P) + @Memb:CD45() -> @Memb:Lck(SH2,Tyr394,Tyr505~U) + @Memb:CD45()		0.01
+Lck_AutoPhos_dephso_1:	@Memb:Lck(SH2,Tyr394,Tyr505~U) <-> @Memb:Lck(SH2,Tyr394,Tyr505~P)		0.0, 0.0
+PLC_deactive:	@Cyto:Vav1_grb(Site0,Site1,Site2~P) -> @Cyto:Vav1_grb(Site0,Site1,Site2~U)		0.048
+PI3K_PLcgam_Bind:	@Memb:PI3K(Site0!+,Site1!+) + @Memb:PLCgamma(Site0~Inact) -> @Memb:PI3K(Site0!+,Site1!+) + @Memb:PLCgamma(Site0~Act)		0.01
+PLC_Erk_Phosphory:	@Memb:PLCgamma(Site0~Act) + @Cyto:Erk(Site0~U) -> @Memb:PLCgamma(Site0~Act) + @Cyto:Erk(Site0~P)		0.05
+PI3K_D10_Bind_1:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P,D10_1b~P) + @Cyto:PI3K(Site0,Site1) <-> @Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2).PI3K(Site0!1,Site1!2)		0.01, 5.1
+PI3K_D10_Bind_2:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P,D10_2a~P) + @Cyto:PI3K(Site0,Site1) <-> @Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_2a~P!2).PI3K(Site0!1,Site1!2)		0.01, 5.1
+PI3K_D10_Bind_3:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P,D10_2b~P) + @Cyto:PI3K(Site0,Site1) <-> @Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_2b~P!2).PI3K(Site0!1,Site1!2)		0.01, 5.1
+PI3K_D10_Bind_4:	@Memb:NKG2D_Dap(Lig!+,D10_1b~P,D10_2a~P) + @Cyto:PI3K(Site0,Site1) <-> @Memb:NKG2D_Dap(Lig!+,D10_1b~P!1,D10_2a~P!2).PI3K(Site0!1,Site1!2)		0.01, 5.1
+PI3K_D10_Bind_5:	@Memb:NKG2D_Dap(Lig!+,D10_1b~P,D10_2b~P) + @Cyto:PI3K(Site0,Site1) <-> @Memb:NKG2D_Dap(Lig!+,D10_1b~P!1,D10_2b~P!2).PI3K(Site0!1,Site1!2)		0.01, 5.1
+PI3K_D10_Bind_6:	@Memb:NKG2D_Dap(Lig!+,D10_2a~P,D10_2b~P) + @Cyto:PI3K(Site0,Site1) <-> @Memb:NKG2D_Dap(Lig!+,D10_2a~P!1,D10_2b~P!2).PI3K(Site0!1,Site1!2)		0.01, 5.1
+Kpr_PI3K_D10_Bind_6a_0:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!3,D10_1b~P!1,D10_2a~P!2,D10_2b~P!4).PI3K(Site0!3,Site1!4).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_D10_Bind_6a:	@Memb:NKG2D_Dap(Lig!+,D10_1a,D10_1b~P!1,D10_2a~P!2,D10_2b).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_D10_Bind_5a_0:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!3,D10_1b~P!1,D10_2a~P!4,D10_2b~P!2).PI3K(Site0!3,Site1!4).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_D10_Bind_1a_0:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2,D10_2a~P!3,D10_2b~P!4).PI3K(Site0!3,Site1!4).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_D10_Bind_1a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2,D10_2a,D10_2b).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K()		5.0
+Kpr_Pi3K_D10_Bind_2a:	@Memb:NKG2D_Dap(Lig!+,D10_1a,D10_1b,D10_2a~P!1,D10_2b~P!2).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_D10_Bind_3a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b,D10_2a~P!2,D10_2b).PI3K(Site0!1,Site1!2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_PI3K()		5.0
+Kpr_Vav_GRb_D10_Bind_4a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b,D10_2a,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav()		5.0
+Kpr_Vav_GRb_D10_Bind_5a:	@Memb:NKG2D_Dap(Lig!+,D10_1a,D10_1b~P!1,D10_2a,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav()		5.0
+Kpr_Vav_PI3K_D10_Bind_1a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!2,D10_2a~P!3,D10_2b~P!4).Vav1_grb(Site0!1,Site1!2,Site2).PI3K(Site0!3,Site1!4) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_PI3K()		5.0
+Kpr_Vav_PI3K_D10_Bind_2a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!2,D10_1b~P!4,D10_2a~P!1,D10_2b~P!3).Vav1_grb(Site0!1,Site1!3,Site2).PI3K(Site0!2,Site1!4) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_PI3K()		5.0
+Kpr_Vav_PI3K_D10_Bind_3a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!3,D10_2a~P!2,D10_2b~P!4).Vav1_grb(Site0!1,Site1!2,Site2).PI3K(Site0!3,Site1!4) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_PI3K()		5.0
+Kpr_Vav_PI3K_D10_Bind_4a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!1,D10_1b~P!3,D10_2a~P!4,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2).PI3K(Site0!3,Site1!4) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_PI3K()		5.0
+Kpr_Vav_PI3K_D10_Bind_5a:	@Memb:NKG2D_Dap(Lig!+,D10_1a~P!3,D10_1b~P!1,D10_2a~P!4,D10_2b~P!2).Vav1_grb(Site0!1,Site1!2,Site2).PI3K(Site0!3,Site1!4) -> @Memb:Trans_Lig_D10() + @Cyto:Trans_Vav() + @Cyto:Trans_PI3K()		5.0
+Kpr_PI3K_Trans:	@Cyto:Trans_PI3K() -> @Cyto:PI3K(Site0,Site1)		1000000.0
+PCL_ianctivation:	@Memb:PLCgamma(Site0~Act) -> @Memb:PLCgamma(Site0~Inact)		0.05
+Erk_dephospho:	@Cyto:Erk(Site0~P) -> @Cyto:Erk(Site0~U)		0.05
+end reaction rules
+
+end model
+
+generate_network({max_iter=>10000,max_agg=>10000,max_stoich=>{Ligand=>100,NKG2D_Dap=>100,Vav1_grb=>100,Lck=>100,Trans_Lig_D10=>100,Trans_Vav=>100,CD45=>100,Csk=>100,PI3K=>100,PLCgamma=>100,Erk=>100,Trans_PI3K=>100},overwrite=>1})

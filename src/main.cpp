@@ -237,10 +237,8 @@ int main(int argc, char** argv){
                             }
                         }
                         VectorXd XtmVec = momentVector(XtMat, nMoments);
-                        cout << "mVec:" << XtmVec.transpose() << endl;
                         costSeedK += costFunction(Yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
                     }else{
-
                         Protein_Components Xt(times(t), nMoments, X_0.rows(), X_0.cols());
                         // Xt = evolveSystem(seed, X_0, nMoments, times(t), dt, times(0));
                         Moments_Mat_Obs XtObs(Xt);
