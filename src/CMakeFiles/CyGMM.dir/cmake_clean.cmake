@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CyGMM.dir/sbml.cpp.o.d"
   "CMakeFiles/CyGMM.dir/system.cpp.o"
   "CMakeFiles/CyGMM.dir/system.cpp.o.d"
+  "CMakeFiles/CyGMM.dir/tinyxml2.cpp.o"
+  "CMakeFiles/CyGMM.dir/tinyxml2.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

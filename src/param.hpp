@@ -69,7 +69,7 @@ class Parameters{
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){
-            cout << "--------- Parameters ---------" << endl;
+            cout << "---------------------  Parameters  --------------------" << endl;
             if(useLinear){
                 cout << "Using Matrix Interaction Model Instead of Runge Kutta Solvers!" << endl;
             }
@@ -99,7 +99,7 @@ class Parameters{
             if(seed > 0){
                 cout << "Now seeding with value " << seed << endl;
             }
-            cout << "------------------------------" << endl;
+            cout << "--------------------------------------------------------" << endl;
         }
 };
 #endif

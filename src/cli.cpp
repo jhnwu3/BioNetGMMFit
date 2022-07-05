@@ -51,7 +51,14 @@ string getModelPath(int argc, char **argv){
     }
     return "model.bngl";
 }
-
+string getProPath(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-p");
+    return argv[flag+1];
+}
+bool proPathExists(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-p");
+    return flag != -1;
+}
 bool helpCall(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-h");
     if(flag != -1){
@@ -60,7 +67,9 @@ bool helpCall(int argc, char **argv){
         << "To specify time steps file path, do: ./CyGMM -t <path> i.e ./CyGMM -t time_steps.csv" << endl
         << "To specify simulation truth rate constants path, do: ./CyGMM -r <path> i.e ./CyGMM -r true_rates.csv" << endl
         << "To specify data X directory where X data files are located, do: ./CyGMM -x <path> i.e ./CyGMM -x model.bngl" << endl
-        << "To specify data Y directory where true Y data files are located, do: ./CyGMM -y <path> i.e ./CyGMM -y model.bngl" << endl;
+        << "To specify data Y directory where true Y data files are located, do: ./CyGMM -y <path> i.e ./CyGMM -y model.bngl" << endl
+        << "If you have more species in the system than observed protein species, then please supply a list of proteins in a .txt file." << endl
+        << "i.e ./CyGMM -p listOfObservedProteinsInOrder.txt " << endl;
         return true;
     }
     return false;

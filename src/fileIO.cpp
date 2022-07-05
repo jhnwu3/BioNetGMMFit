@@ -183,7 +183,7 @@ MatrixXd readX(const std::string &path){
     if(nFile > 1){
         cout << "Multiple X files detected, reading only the last X file read in." << endl;
     }
-    cout << "Reading in " << X_0.rows() << " rows or cells from X data directory" << endl;
+    cout << "Reading in (rows,columns): (" << X_0.rows() <<"," << X_0.cols() << ") from X data directory" << endl;
     cout << "---------------------------" << endl;
     return X_0;
 }
@@ -203,7 +203,7 @@ vector<MatrixXd> readY(const std::string & path){
         for(const auto & entry : fs::directory_iterator(path)){
             cout << entry << endl;
             Y.push_back(csvToMatrix(entry.path().string()));
-            cout << "Read in " <<Y[Y.size() - 1].rows() << " rows!" << endl;
+            cout << "Read in " <<Y[Y.size() - 1].rows() << " rows! " << Y[Y.size() - 1].cols() << " columns!"<< endl;
         }
     }catch(...){
         cout << "Error! Unable to Read in values from the true Y directory. Make sure to specifiy a directory path not an explicit file name. Error with path:"<< path << endl;

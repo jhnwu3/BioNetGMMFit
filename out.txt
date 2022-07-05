@@ -1,30 +1,31 @@
 Program Begin:
 Reading in Parameters from Configuration File!
 BioNetGen version 2.8.0
-Reading from file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/qbio_ssa_test.bngl (level 0)
-Read 2 parameters.
-Read 1 species.
-Read 1 observable(s).
-Read 2 reaction rule(s).
-ACTION: generate_network( qbio_ssa_test )
-Iteration   0:     1 species      0 rxns  0.00e+00 CPU s
-Iteration   1:     1 species      2 rxns  0.00e+00 CPU s
+Reading from file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/model.bngl (level 0)
+Read 5 parameters.
+Read 3 species.
+Read 3 observable(s).
+Read 3 reaction rule(s).
+ACTION: generate_network( model )
+Iteration   0:     3 species      0 rxns  0.00e+00 CPU s
+Iteration   1:     3 species      5 rxns  0.00e+00 CPU s
 Cumulative CPU time for each rule
-Rule   1:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
-Rule   2:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
-Total   :     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
-WARNING: writeFile(): Overwriting existing file ./qbio_ssa_test.net.
-Wrote network in net format to ./qbio_ssa_test.net.
+Rule   1:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   2:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   3:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Total   :     5 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+WARNING: writeFile(): Overwriting existing file ./model.net.
+Wrote network in net format to ./model.net.
 CPU TIME: generate_network 0.00 s.
-Wrote SBML to ./qbio_ssa_test_sbml.xml.
+Wrote SBML to ./model_sbml.xml.
 CPU TIME: writeSBML 0.00 s.
-Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/qbio_ssa_test.bngl.
+Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/model.bngl.
 CPU TIME: total 0.00 s.
 ------ Reading in X_0! ------
 "data/X/bdX.csv"
-Reading in 5 rows or cells from X data directory
+Reading in 6 rows or cells from X data directory
 ---------------------------
-After removing all negative rows, X has 5 rows.
+After removing all negative rows, X has 6 rows.
 --------- Parameters ---------
 Total Number of Runs:1
 Number of Moments:2
@@ -45,12 +46,11 @@ Read in 5 rows!
 ---------------------------
 After removing all negative rows, Y has 5 rows.
 ---------------------------
-Yt Means For First Time Step:640.8
+Yt Means For First Time Step:641.6
 Computing Weight Matrices!
- 0.00368053           0
-          0 2.23451e-09
-mVec:685.4 205.3
-PSO Seeded At:0.997185 0.932557| cost:7.32117
+ 0.00365898           0
+          0 2.21958e-09
+PSO Seeded At:0.997185 0.932557| cost:8.51246
 PSO Estimation Has Begun, This may take some time...
 hypercubescale before reset:1
 hypercubescale after reset:1
@@ -59,5 +59,6 @@ hypercubescale after final nesting:1
 Simulated Truth:0.276782 0.837081
 
 -------------- All Run Estimates: -------------------
-0.279927 0.836945        0
-CODE FINISHED RUNNING IN 5 s TIME!
+k1			k2			cost
+    0.66303    0.833173 1.62623e-05
+CODE FINISHED RUNNING IN 6 s TIME!

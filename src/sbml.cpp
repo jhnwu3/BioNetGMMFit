@@ -27,3 +27,48 @@ VectorXd simulateSBML(int useDet, double ti, double tf, const VectorXd &c0, cons
     }
     return evolved;
 }
+
+vector<string> getSpeciesNames(const string& path){
+    vector<string> listOfSpecies;
+    tinyxml2::XMLDocument doc;
+    doc.LoadFile(path.c_str());
+    tinyxml2::XMLElement* xmlModel = doc.FirstChildElement() -> FirstChildElement("model");
+    for (tinyxml2::XMLElement* child = xmlModel->FirstChildElement(); child != NULL; child = child->NextSiblingElement())
+    {
+        if(strcmp(child->Value(), "listOfSpecies") == 0){
+            for (tinyxml2::XMLElement* species = child->FirstChildElement(); species != NULL; species = species->NextSiblingElement())
+            {
+                const char* name;
+                species->QueryStringAttribute("name", &name);
+                listOfSpecies.push_back(std::string(name));
+            }
+        }
+    }
+    return listOfSpecies;
+}
+vector<int> specifySpeciesFromProteinsList(const string& path, vector<string> &species, int nObs){
+    std::ifstream input(path);
+    vector<string> pro;
+    vector<int> indices;
+    if(!input.is_open()){
+        throw std::runtime_error("Could not open proteins file!");
+        exit;
+    }
+    string line;
+    while(std::getline(input,line)){
+        pro.push_back(line);
+    }
+    for(int i = 0; i < pro.size(); i++){
+        for(int j = 0; j < species.size();j++){
+            if(pro[i] == species[j]){
+                indices.push_back(j);
+            }
+        }
+    }
+    if(nObs != indices.size()){
+        cout << "Error Mismatch in Number of Columns (Species) Provided in Data Files Versus Proteins Specified In " << path << endl;
+        exit(EXIT_FAILURE);
+    }
+    input.close();
+    return indices;
+}

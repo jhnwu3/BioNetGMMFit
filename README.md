@@ -144,7 +144,7 @@ all Y_0 or Y_t data files into the directory listed as
 
     data/Y 
 
-after moving or removing any previous Yt/Y0 files. Keep in mind, that the number of species of proteins you wish to simulate will correspond to the number of columns in each input X/Y file and the number of rows correspond to the cell count. 
+after moving or removing any previous Yt/Y0 files. Keep in mind, that the number of species of proteins you wish to simulate will correspond to the number of columns in each input X/Y file and the number of rows correspond to the cell count. Furthermore, note that if you have multiple time data, please make sure to label each time point with a "_tn" time tag such that the order of files are loaded in with the appropriate time point i.e _t2 for time point 2.
 
 For more examples please take a look at the /example directory. The real data X and Y are labeled in the 4_prot_real folder. All real data was taken from 
 [here](https://dpeerlab.github.io/dpeerlab-website/dremi-data.html), specifically the first CD8, CD28, and CD3 naive time series (third column, 1st row).
@@ -161,7 +161,7 @@ If you decide to simulate the rate constants and therefore simulate Y_t instead 
 is defined in the file, which defines the true set of rate constants as "0.27678, 0.837, 0.44, 0.04, 0.30".
 
 ### *Time Inputs* <a name="tim"></a>
-Make sure to list your the times for time evolutions in time_steps.csv rowwise. For a single time evolution, only two time points, the end and start time of your evolution interval, is needed in the file.
+Make sure to list your times for time evolutions in time_steps.csv rowwise. For a single time evolution, only two time points, the end and start time of your evolution interval, is needed in the file.
 
 However, especially in the nonlinear case where multiple time points and samples may be beneficial, simply list out each of the times evolved for rowwise, as shown below.
     0

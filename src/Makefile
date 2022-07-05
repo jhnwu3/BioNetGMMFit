@@ -321,6 +321,30 @@ system.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/system.cpp.s
 .PHONY : system.cpp.s
 
+tinyxml2.o: tinyxml2.cpp.o
+.PHONY : tinyxml2.o
+
+# target to build an object file
+tinyxml2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/tinyxml2.cpp.o
+.PHONY : tinyxml2.cpp.o
+
+tinyxml2.i: tinyxml2.cpp.i
+.PHONY : tinyxml2.i
+
+# target to preprocess a source file
+tinyxml2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/tinyxml2.cpp.i
+.PHONY : tinyxml2.cpp.i
+
+tinyxml2.s: tinyxml2.cpp.s
+.PHONY : tinyxml2.s
+
+# target to generate assembly for a file
+tinyxml2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/tinyxml2.cpp.s
+.PHONY : tinyxml2.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -354,6 +378,9 @@ help:
 	@echo "... system.o"
 	@echo "... system.i"
 	@echo "... system.s"
+	@echo "... tinyxml2.o"
+	@echo "... tinyxml2.i"
+	@echo "... tinyxml2.s"
 .PHONY : help
 
 

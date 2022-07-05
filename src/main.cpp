@@ -20,10 +20,7 @@ due to something with memory or how functions work from the compiler.
 #include "param.hpp"
 #include "cli.hpp"
 int main(int argc, char** argv){
-    if(helpCall(argc, argv)){
-        return EXIT_SUCCESS;
-    }
-
+    if(helpCall(argc, argv)){    return EXIT_SUCCESS;}
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
     const string bngl = ".bngl"; // suffixes for sbml/bngl file types
@@ -45,19 +42,23 @@ int main(int argc, char** argv){
     if(parameters.useSBML > 0 && system(bnglCall.c_str()) < 0){
         cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;
     }
+
     /* Read time steps*/
     VectorXd times = readCsvTimeParam(getTimeStepsPath(argc, argv));
     if(times.size() < 2){
         cout << "Error! Unable to read in timesteps properly, need two or more time steps!" << endl;
         exit(1);
     }
+
+    /* Read First Matrix */
     MatrixXd X_0;
     MatrixXd ogX_0; // copy of initial X values if bootstrap is used.
     X_0 = readX(getXPath(argc, argv));
     X_0 = filterZeros(X_0);
     ogX_0 = X_0;
     cout << "After removing all negative rows, X has " << X_0.rows() << " rows." << endl;
-
+    cout << "If dimensions are unexpected of input data, please make sure to check csv files contains all possible values in each row/column." << endl;
+    /* Decide Number of Moments to Use in Estimation */
     int nMoments = (X_0.cols() * (X_0.cols() + 3)) / 2;
     if(parameters.useOnlySecMom){  // these will be added to the options sheet later.
         nMoments = 2 * X_0.cols();
@@ -67,8 +68,44 @@ int main(int argc, char** argv){
     }
     parameters.printParameters(nMoments, times);
 
-    /* RoadRunner Configuration and Simulation Variables including a parallel vector to reduce runtime*/
+    /* RoadRunner Configuration and Simulation Variables */
     RoadRunner r = RoadRunner(sbmlModel);
+    vector<int> specifiedProteins;
+    vector<string> speciesNames =  getSpeciesNames(sbmlModel);
+    cout << "--------------------------------------------------------" << endl;
+    if(r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() != X_0.cols()){
+        if(X_0.cols() > r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() ){
+            cout << "Error Too Many Species/Columns in X.csv file! Please remove some before continuing!" << endl;
+            cout << "Expected:" <<  r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() << " Got:" << X_0.cols() << endl;
+            return EXIT_FAILURE;
+        }
+        cout << "Number of Species Defined in BNGL does not match number of columns in data files! Now listing all species in system and respective indices in order!" << endl;
+        cout << "Note: User can supply a \"./CyGMM -p protein_observed.txt \" to specify explicitly which proteins are observed in data. Please make sure names are in order from top to bottom matching left to right in data csv file." << endl;
+        for(int i = 0; i < speciesNames.size(); i++){
+            cout << "(" << i << ") " << speciesNames[i] << endl; 
+        }
+        if(proPathExists(argc, argv)){
+            specifiedProteins = specifySpeciesFromProteinsList(getProPath(argc,argv), speciesNames, X_0.cols());
+            if(specifiedProteins.size() < 1){
+                cout << "Error, no proteins specified!" << endl;
+                exit(EXIT_FAILURE);
+            }
+            cout << "From Above List of Indexed Proteins, We are using..." << endl;
+            for(int i = 0; i < specifiedProteins.size(); i++){
+                cout << specifiedProteins[i] <<" "<< endl;
+            }
+        }else{
+            cout << "No Proteins Specified Using Argument \"-p Proteins.txt\", Thus Using First " << X_0.cols() << " Species Listed" << endl;
+        }
+        cout << "Proteins Not Observed Will Default to Initial Values Defined in .BNGL File" << endl;
+        // check if some txt -p file has been used and use that otherwise have user manually select.
+    }else{
+        cout << "------- Matching Columns of X Data files to Ids -------" << endl;
+        for(int i = 0; i < speciesNames.size(); i++){
+            cout << speciesNames[i] << " to column:"<< i << " with first value:" << X_0(0,i) << endl;
+        }
+    }
+    cout << "--------------------------------------------------------" << endl;
     if(parameters.useDet > 0){
         r.setIntegrator("cvode");
     }else{
@@ -78,16 +115,6 @@ int main(int argc, char** argv){
     opt.steps = parameters.odeSteps;
     double theta[parameters.nRates];// static array to be constantly used with road runner model parameters.
 
-    /* Create a Vector of RoadRunner objects for parallel use*/
-    vector<RoadRunner> pRRs;
-    vector<SimulateOptions> pOpts;
-    for(int i = 0; i < parameters.nThreads; ++i){
-        RoadRunner rCp = r;
-        SimulateOptions optCp = opt;
-        pRRs.push_back(rCp);
-        pOpts.push_back(optCp);
-    }
-
     MatrixXd GBMAT;
     MatrixXd GBVECS = MatrixXd::Zero(parameters.nRuns, parameters.nRates + 1);
     if(parameters.useLinear == 1){
@@ -96,12 +123,11 @@ int main(int argc, char** argv){
             GBVECS.row(r) = GBMAT.row(GBMAT.rows() - 1);
         }
     }else{
-        /*---------------------- Nonlinear Setup ------------------------ */
+        /*---------------------- Nonlinear Setup PSO ------------------------ */
         double dt = 1.0; // nonlinear time evolution variables
         /* Explicit Boundary Parameters */
         double squeeze = 0.500, sdbeta = 0.10; // how much to shrink PSO search over time (how much variability each position is iterated upon)
         double boundary = 0.001;
-        /* SETUP */
         double sf2 = 1; // factor that can be used to regularize particle weights (global, social, inertial)
         double epsi = 0.02;
         double nan = 0.005;
@@ -147,7 +173,15 @@ int main(int argc, char** argv){
                     }
                     r.getModel()->setGlobalParameterValues(tru.size(), 0, theta); // set new global parameter values here.
                     for(int i = 0; i < Y_0.rows(); ++i){
-                        r.changeInitialConditions(convertInit(Y_0.row(i)));
+                        if(specifiedProteins.size() > 0){
+                            vector<double> init = r.getFloatingSpeciesInitialConcentrations();
+                            for(int p = 0; p < specifiedProteins.size(); p++){
+                                init[specifiedProteins[p]] = Y_0(i,p);
+                            }
+                            r.changeInitialConditions(init);
+                        }else{
+                            r.changeInitialConditions(convertInit(Y_0.row(i)));
+                        }
                         const DoubleMatrix res = *r.simulate(&opt);
                         for(int j = 0; j < Y_0.cols(); ++j){
                             YtMat(i,j) = res[res.numRows() - 1][j + 1];
@@ -169,7 +203,7 @@ int main(int argc, char** argv){
                     Yt3Vecs.push_back(Yt.mVec);
                 }
             }
-            cout << "---------------------------" << endl;
+            cout << "--------------------------------------------------------" << endl;
         }else{
             Yt3Mats = readY(getYPath(argc, argv));
             if(Yt3Mats.size() + 1 != times.size()){
@@ -187,6 +221,11 @@ int main(int argc, char** argv){
         cout << "Yt Means For First Time Step:" << Yt3Mats[0].colwise().mean() << endl;
         cout << "Computing Weight Matrices!" << endl;
         /* Compute initial wolfe weights */
+        if (Yt3Mats[0].cols() != X_0.cols()){
+            cout << "Error, mismatch in number of species/columns between X and Y!" << endl;
+            cout << "X:" << X_0.cols() << " Y:" << Yt3Mats[0].cols() << endl;
+            exit(1);
+        }
         for(int y = 0; y < Yt3Mats.size(); ++y){ 
             weights.push_back(wolfWtMat(Yt3Mats[y], nMoments, false));
         }
@@ -229,8 +268,16 @@ int main(int argc, char** argv){
                         r.getModel()->setGlobalParameterValues(seed.size(),0,theta); // set new global parameter values here.
                         opt.start = times(0);
                         opt.duration = times(t);
-                        for(int i = 0; i < X_0.rows(); ++i){  
-                            r.changeInitialConditions(convertInit(X_0.row(i)));
+                        for(int i = 0; i < X_0.rows(); ++i){
+                            if(specifiedProteins.size() > 0){
+                                vector<double> init = r.getFloatingSpeciesInitialConcentrations();
+                                for(int p = 0; p < specifiedProteins.size(); p++){
+                                    init[specifiedProteins[p]] = X_0(i,p);
+                                }
+                                r.changeInitialConditions(init);
+                            }else{  
+                                r.changeInitialConditions(convertInit(X_0.row(i)));
+                            }
                             const DoubleMatrix res = *r.simulate(&opt);
                             for(int j = 0; j < X_0.cols(); ++j){
                                 XtMat(i,j) = res[res.numRows() - 1][j + 1];
@@ -306,7 +353,15 @@ int main(int argc, char** argv){
                                     pOpt.start = times(0);
                                     pOpt.duration = times(t);                   
                                     for(int i = 0; i < X_0.rows(); ++i){
-                                        paraModel.changeInitialConditions(convertInit(X_0.row(i)));
+                                        if(specifiedProteins.size() > 0){
+                                            vector<double> init = paraModel.getFloatingSpeciesInitialConcentrations();
+                                            for(int p = 0; p < specifiedProteins.size(); p++){
+                                                init[specifiedProteins[p]] = X_0(i,p);
+                                            }
+                                            paraModel.changeInitialConditions(init);
+                                        }else{
+                                            paraModel.changeInitialConditions(convertInit(X_0.row(i)));
+                                        }
                                         const DoubleMatrix res = *paraModel.simulate(&pOpt);
                                         for(int j = 0; j < X_0.cols(); ++j){
                                             XtMat(i,j) = res[res.numRows() - 1][j + 1];
@@ -366,7 +421,15 @@ int main(int argc, char** argv){
                                     pOpt.start = times(0);
                                     pOpt.duration = times(t);                   
                                     for(int i = 0; i < X_0.rows(); ++i){
-                                        paraModel.changeInitialConditions(convertInit(X_0.row(i)));
+                                        if(specifiedProteins.size() > 0){
+                                            vector<double> init = paraModel.getFloatingSpeciesInitialConcentrations();
+                                            for(int p = 0; p < specifiedProteins.size(); p++){
+                                                init[specifiedProteins[p]] = X_0(i,p);
+                                            }
+                                            paraModel.changeInitialConditions(init);
+                                        }else{
+                                            paraModel.changeInitialConditions(convertInit(X_0.row(i)));
+                                        }
                                         const DoubleMatrix res = *paraModel.simulate(&pOpt);
                                         for(int j = 0; j < X_0.cols(); ++j){
                                             XtMat(i,j) = res[res.numRows() - 1][j + 1];
@@ -444,21 +507,19 @@ int main(int argc, char** argv){
                 }
                 cout << "bootstrap means" << endl << "X_0:" << X_0.colwise().mean() << endl << "Yt:" << Yt3Mats[0].colwise().mean() << endl;
             }
-            cout << "hypercubescale before reset:" << parameters.hyperCubeScale << endl;
             if(parameters.nest > 1){
                 for(int ne = 0; ne < parameters.nest; ne++){ // reset cube for each run
                     parameters.hyperCubeScale /= 2.0;
                 }
             }
-            cout << "hypercubescale after reset:" << parameters.hyperCubeScale << endl;
-            cout << "nested hypercubes:" << nestedHolds.transpose() << endl; 
+            cout << "Held Parameter Estimates:" << nestedHolds.transpose() << endl; 
            
         } // run loop
         // when done, find what the original max hypercube size was from nesting
         for(int ne = 1; ne < parameters.nest; ne++){ 
             parameters.hyperCubeScale *= 2.0;
         }
-        cout << "hypercubescale after final nesting:" << parameters.hyperCubeScale << endl;
+        cout << "Hypercubescale Max:" << parameters.hyperCubeScale << endl;
         if(parameters.simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(parameters.reportMoments == 1){
             for(int t = 1; t < times.size(); ++t){
@@ -474,8 +535,16 @@ int main(int argc, char** argv){
                     r.getModel()->setGlobalParameterValues(avgRunPos.size(),0,theta); // set new global parameter values here.
                     opt.start = times(0);
                     opt.duration = times(t);
-                    for(int i = 0; i < X_0.rows(); ++i){  
-                        r.changeInitialConditions(convertInit(X_0.row(i)));
+                    for(int i = 0; i < X_0.rows(); ++i){
+                        if(specifiedProteins.size() > 0){
+                            vector<double> init = r.getFloatingSpeciesInitialConcentrations();
+                            for(int p = 0; p < specifiedProteins.size(); p++){
+                                init[specifiedProteins[p]] = X_0(i,p);
+                            }
+                            r.changeInitialConditions(init);
+                        }else{    
+                            r.changeInitialConditions(convertInit(X_0.row(i)));
+                        }
                         const DoubleMatrix res = *r.simulate(&opt);
                         for(int j = 0; j < X_0.cols(); ++j){
                             XtMat(i,j) = res[res.numRows() - 1][j + 1];
@@ -493,7 +562,7 @@ int main(int argc, char** argv){
                         integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                     }
                     XtPSO.mVec/=X_0.rows();
-                    cout << "GBVEC:" << GBVECS.colwise().mean() << endl;
+                    cout << "Average Estimate:" << GBVECS.colwise().mean() << endl;
                     cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
                 }
                 // cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
@@ -501,6 +570,9 @@ int main(int argc, char** argv){
         }
     }
     cout << endl << "-------------- All Run Estimates: -------------------" << endl;
+    vector<string> parameterNames = r.getGlobalParameterIds();
+    for (int i = 0; i < GBVECS.size() - 1; i++){cout << parameterNames[i] << "\t\t";}
+    cout << "cost" << endl;
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
     if(parameters.nRuns > 1){computeConfidenceIntervals(GBVECS, 1.96, parameters.nRates);}
@@ -508,5 +580,5 @@ int main(int argc, char** argv){
     auto tB = std::chrono::high_resolution_clock::now();
     auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
     cout << "CODE FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;
-    return 0;
+    return EXIT_SUCCESS;
 }

@@ -1,0 +1,313 @@
+# Created by BioNetGen 2.8.0
+begin parameters
+    1 _rateLaw1                    0.045  # Constant
+    2 _rateLaw2                    0.02  # Constant
+    3 _rateLaw3                    0.013  # Constant
+    4 _rateLaw4                    0.013  # Constant
+    5 _rateLaw5                    0.013  # Constant
+    6 _rateLaw6                    0.013  # Constant
+    7 _rateLaw7                    0.05  # Constant
+    8 _rateLaw8                    5.1  # Constant
+    9 _rateLaw9                    0.05  # Constant
+   10 _rateLaw10                   5.1  # Constant
+   11 _rateLaw11                   0.05  # Constant
+   12 _rateLaw12                   5.1  # Constant
+   13 _rateLaw13                   0.05  # Constant
+   14 _rateLaw14                   5.1  # Constant
+   15 _rateLaw15                   0.05  # Constant
+   16 _rateLaw16                   5.1  # Constant
+   17 _rateLaw17                   0.05  # Constant
+   18 _rateLaw18                   5.1  # Constant
+   19 _rateLaw19                   5.0  # Constant
+   20 _rateLaw20                   5.0  # Constant
+   21 _rateLaw21                   5.0  # Constant
+   22 _rateLaw22                   5.0  # Constant
+   23 _rateLaw23                   5.0  # Constant
+   24 _rateLaw24                   0.02  # Constant
+   25 _rateLaw25                   1000000.0  # Constant
+   26 _rateLaw26                   1000000.0  # Constant
+   27 _rateLaw27                   0.048  # Constant
+   28 _rateLaw28                   5.0  # Constant
+   29 _rateLaw29                   5.0  # Constant
+   30 _rateLaw30                   5.0  # Constant
+   31 _rateLaw31                   5.0  # Constant
+   32 _rateLaw32                   0.13  # Constant
+   33 _rateLaw33                   0.13  # Constant
+   34 _rateLaw34                   0.13  # Constant
+   35 _rateLaw35                   0.13  # Constant
+   36 _rateLaw36                   0.012  # Constant
+   37 _rateLaw37                   0.05  # Constant
+   38 _rateLaw38                   0.05  # Constant
+   39 _rateLaw39                   0.01  # Constant
+   40 _rateLaw40                   0.01  # Constant
+   41 _rateLaw41                   0.01  # Constant
+   42 _rateLaw42                   0.01  # Constant
+   43 _rateLaw43                   0.01  # Constant
+   44 _rateLaw44                   0.0  # Constant
+   45 _rateLaw45                   0.0  # Constant
+   46 _rateLaw46                   0.048  # Constant
+   47 _rateLaw47                   0.01  # Constant
+   48 _rateLaw48                   0.05  # Constant
+   49 _rateLaw49                   0.01  # Constant
+   50 _rateLaw50                   5.1  # Constant
+   51 _rateLaw51                   0.01  # Constant
+   52 _rateLaw52                   5.1  # Constant
+   53 _rateLaw53                   0.01  # Constant
+   54 _rateLaw54                   5.1  # Constant
+   55 _rateLaw55                   0.01  # Constant
+   56 _rateLaw56                   5.1  # Constant
+   57 _rateLaw57                   0.01  # Constant
+   58 _rateLaw58                   5.1  # Constant
+   59 _rateLaw59                   0.01  # Constant
+   60 _rateLaw60                   5.1  # Constant
+   61 _rateLaw61                   5.0  # Constant
+   62 _rateLaw62                   5.0  # Constant
+   63 _rateLaw63                   5.0  # Constant
+   64 _rateLaw64                   5.0  # Constant
+   65 _rateLaw65                   5.0  # Constant
+   66 _rateLaw66                   5.0  # Constant
+   67 _rateLaw67                   5.0  # Constant
+   68 _rateLaw68                   5.0  # Constant
+   69 _rateLaw69                   5.0  # Constant
+   70 _rateLaw70                   5.0  # Constant
+   71 _rateLaw71                   5.0  # Constant
+   72 _rateLaw72                   5.0  # Constant
+   73 _rateLaw73                   5.0  # Constant
+   74 _rateLaw74                   5.0  # Constant
+   75 _rateLaw75                   1000000.0  # Constant
+   76 _rateLaw76                   0.05  # Constant
+   77 _rateLaw77                   0.05  # Constant
+end parameters
+begin species
+    1 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~U,D10_2b~U,Lig) 8.0
+    2 @Cyto::Vav1_grb(Site0,Site1,Site2~U) 30.0
+    3 @Memb::Lck(SH2!1,Tyr394~U,Tyr505~P!1) 50.0
+    4 @Memb::Lck(SH2,Tyr394~P,Tyr505~U) 50.0
+    5 @Memb::Csk() 50.0
+    6 @Memb::CD45() 50.0
+    7 @Memb::Ligand(Site0) 4.0
+    8 @Cyto::PI3K(Site0,Site1) 30.0
+    9 @Memb::PLCgamma(Site0~Inact) 30.0
+   10 @Cyto::Erk(Site0~U) 50.0
+   11 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~U,D10_2b~U,Lig!1) 0
+   12 @Memb::Lck(SH2,Tyr394~P,Tyr505~P) 0
+   13 @Memb::Lck(SH2,Tyr394~U,Tyr505~U) 0
+   14 @Memb::Lck(SH2,Tyr394~U,Tyr505~P) 0
+   15 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~U,D10_2b~U,Lig!1) 0
+   16 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~U,D10_2b~U,Lig!1) 0
+   17 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~P,D10_2b~U,Lig!1) 0
+   18 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~U,D10_2b~P,Lig!1) 0
+   19 @Memb::Trans_Lig_D10() 0
+   20 @Memb::Lck(SH2!1,Tyr394~P,Tyr505~P!1) 0
+   21 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~U,D10_2b~U,Lig) 0
+   22 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~U,D10_2b~U,Lig) 0
+   23 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~P,D10_2b~U,Lig) 0
+   24 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~U,D10_2b~P,Lig) 0
+   25 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~U,D10_2b~U,Lig!1) 0
+   26 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~P,D10_2b~U,Lig!1) 0
+   27 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~U,D10_2b~P,Lig!1) 0
+   28 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~P,D10_2b~U,Lig!1) 0
+   29 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~U,D10_2b~P,Lig!1) 0
+   30 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~P,D10_2b~P,Lig!1) 0
+   31 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~U,D10_2b~U,Lig) 0
+   32 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~P,D10_2b~U,Lig) 0
+   33 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~U,D10_2b~P,Lig) 0
+   34 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~P,D10_2b~U,Lig) 0
+   35 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~U,D10_2b~P,Lig) 0
+   36 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~U,D10_2a~P,D10_2b~P,Lig) 0
+   37 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~P,D10_2b~U,Lig!1) 0
+   38 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~U,D10_2b~P,Lig!1) 0
+   39 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~P,D10_2b~P,Lig!1) 0
+   40 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~P,D10_2b~P,Lig!1) 0
+   41 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~P,D10_2b~U,Lig) 0
+   42 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~U,D10_2b~P,Lig) 0
+   43 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~U,D10_2a~P,D10_2b~P,Lig) 0
+   44 @Memb::NKG2D_Dap(D10_1a~U,D10_1b~P,D10_2a~P,D10_2b~P,Lig) 0
+   45 @Memb::Ligand(Site0!1).NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~P,D10_2b~P,Lig!1) 0
+   46 @Memb::NKG2D_Dap(D10_1a~P,D10_1b~P,D10_2a~P,D10_2b~P,Lig) 0
+end species
+begin reactions
+    1 1,7 11 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+    2 4,5 5,12 1*_rateLaw38 #Lck_Csk_phosph unit_conversion=1/1
+    3 3,6 6,13 1*_rateLaw39 #Lck_CD45_Dephosh_1 unit_conversion=1/1
+    4 4,6 6,13 1*_rateLaw40 #Lck_CD45_Dephosh_2 unit_conversion=1/1
+    5 3 14 _rateLaw42 #_reverse_Lck_SH2_Block
+    6 4 12 _rateLaw44 #Lck_AutoPhos_1
+    7 11 1,7 _rateLaw2 #_reverse_Lig_Bind
+    8 4,11 4,15 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+    9 11,12 12,15 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   10 4,11 4,16 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   11 11,12 12,16 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   12 4,11 4,17 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   13 11,12 12,17 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   14 4,11 4,18 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   15 11,12 12,18 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   16 11 19 _rateLaw24 #Kpr_Lig_Bind_1
+   17 4,13 4,4 1*_rateLaw37 #Lck_transAutoPhos_1 unit_conversion=1/1
+   18 12,13 4,12 1*_rateLaw37 #Lck_transAutoPhos_1 unit_conversion=1/1
+   19 4,14 4,12 1*_rateLaw37 #Lck_transAutoPhos_1 unit_conversion=1/1
+   20 12,14 12,12 1*_rateLaw37 #Lck_transAutoPhos_1 unit_conversion=1/1
+   21 5,13 5,14 1*_rateLaw38 #Lck_Csk_phosph unit_conversion=1/1
+   22 6,12 6,14 1*_rateLaw40 #Lck_CD45_Dephosh_2 unit_conversion=1/1
+   23 12 20 _rateLaw41 #Lck_SH2_Block
+   24 14 3 _rateLaw41 #Lck_SH2_Block
+   25 6,12 4,6 1*_rateLaw43 #Lck_CD45_Dephosh_3 unit_conversion=1/1
+   26 6,14 6,13 1*_rateLaw43 #Lck_CD45_Dephosh_3 unit_conversion=1/1
+   27 13 14 _rateLaw44 #Lck_AutoPhos_1
+   28 12 4 _rateLaw45 #_reverse_Lck_AutoPhos_1
+   29 14 13 _rateLaw45 #_reverse_Lck_AutoPhos_1
+   30 15 7,21 _rateLaw2 #_reverse_Lig_Bind
+   31 16 7,22 _rateLaw2 #_reverse_Lig_Bind
+   32 17 7,23 _rateLaw2 #_reverse_Lig_Bind
+   33 18 7,24 _rateLaw2 #_reverse_Lig_Bind
+   34 4,16 4,25 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   35 12,16 12,25 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   36 4,17 4,26 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   37 12,17 12,26 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   38 4,18 4,27 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   39 12,18 12,27 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   40 4,15 4,25 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   41 12,15 12,25 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   42 4,17 4,28 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   43 12,17 12,28 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   44 4,18 4,29 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   45 12,18 12,29 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   46 4,15 4,26 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   47 12,15 12,26 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   48 4,16 4,28 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   49 12,16 12,28 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   50 4,18 4,30 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   51 12,18 12,30 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   52 4,15 4,27 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   53 12,15 12,27 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   54 4,16 4,29 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   55 12,16 12,29 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   56 4,17 4,30 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   57 12,17 12,30 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   58 15 19 _rateLaw24 #Kpr_Lig_Bind_1
+   59 16 19 _rateLaw24 #Kpr_Lig_Bind_1
+   60 17 19 _rateLaw24 #Kpr_Lig_Bind_1
+   61 18 19 _rateLaw24 #Kpr_Lig_Bind_1
+   62 19 1,7 _rateLaw25 #Kpr_Trans_Dap
+   63 15 11 _rateLaw32 #Dap_dePhospho_1
+   64 16 11 _rateLaw33 #Dap_dePhospho_2
+   65 17 11 _rateLaw34 #Dap_dePhospho_3
+   66 18 11 _rateLaw35 #Dap_dePhospho_4
+   67 6,20 4,6 1*_rateLaw39 #Lck_CD45_Dephosh_1 unit_conversion=1/1
+   68 20 12 _rateLaw42 #_reverse_Lck_SH2_Block
+   69 7,21 15 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+   70 7,22 16 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+   71 7,23 17 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+   72 7,24 18 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+   73 25 7,31 _rateLaw2 #_reverse_Lig_Bind
+   74 26 7,32 _rateLaw2 #_reverse_Lig_Bind
+   75 27 7,33 _rateLaw2 #_reverse_Lig_Bind
+   76 28 7,34 _rateLaw2 #_reverse_Lig_Bind
+   77 29 7,35 _rateLaw2 #_reverse_Lig_Bind
+   78 30 7,36 _rateLaw2 #_reverse_Lig_Bind
+   79 4,28 4,37 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   80 12,28 12,37 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   81 4,29 4,38 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   82 12,29 12,38 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   83 4,30 4,39 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   84 12,30 12,39 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+   85 4,26 4,37 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   86 12,26 12,37 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   87 4,27 4,38 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   88 12,27 12,38 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   89 4,30 4,40 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   90 12,30 12,40 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+   91 4,25 4,37 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   92 12,25 12,37 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   93 4,27 4,39 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   94 12,27 12,39 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   95 4,29 4,40 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   96 12,29 12,40 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+   97 4,25 4,38 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   98 12,25 12,38 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+   99 4,26 4,39 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+  100 12,26 12,39 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+  101 4,28 4,40 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+  102 12,28 12,40 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+  103 25 19 _rateLaw24 #Kpr_Lig_Bind_1
+  104 26 19 _rateLaw24 #Kpr_Lig_Bind_1
+  105 27 19 _rateLaw24 #Kpr_Lig_Bind_1
+  106 28 19 _rateLaw24 #Kpr_Lig_Bind_1
+  107 29 19 _rateLaw24 #Kpr_Lig_Bind_1
+  108 30 19 _rateLaw24 #Kpr_Lig_Bind_1
+  109 25 16 _rateLaw32 #Dap_dePhospho_1
+  110 26 17 _rateLaw32 #Dap_dePhospho_1
+  111 27 18 _rateLaw32 #Dap_dePhospho_1
+  112 25 15 _rateLaw33 #Dap_dePhospho_2
+  113 28 17 _rateLaw33 #Dap_dePhospho_2
+  114 29 18 _rateLaw33 #Dap_dePhospho_2
+  115 26 15 _rateLaw34 #Dap_dePhospho_3
+  116 28 16 _rateLaw34 #Dap_dePhospho_3
+  117 30 18 _rateLaw34 #Dap_dePhospho_3
+  118 27 15 _rateLaw35 #Dap_dePhospho_4
+  119 29 16 _rateLaw35 #Dap_dePhospho_4
+  120 30 17 _rateLaw35 #Dap_dePhospho_4
+  121 7,31 25 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  122 7,32 26 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  123 7,33 27 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  124 7,34 28 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  125 7,35 29 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  126 7,36 30 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  127 37 7,41 _rateLaw2 #_reverse_Lig_Bind
+  128 38 7,42 _rateLaw2 #_reverse_Lig_Bind
+  129 39 7,43 _rateLaw2 #_reverse_Lig_Bind
+  130 40 7,44 _rateLaw2 #_reverse_Lig_Bind
+  131 4,40 4,45 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+  132 12,40 12,45 1*_rateLaw3 #Dap_Phospho_1 unit_conversion=1/1
+  133 4,39 4,45 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+  134 12,39 12,45 1*_rateLaw4 #Dap_Phospho_2 unit_conversion=1/1
+  135 4,38 4,45 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+  136 12,38 12,45 1*_rateLaw5 #Dap_Phospho_3 unit_conversion=1/1
+  137 4,37 4,45 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+  138 12,37 12,45 1*_rateLaw6 #Dap_Phospho_4 unit_conversion=1/1
+  139 37 19 _rateLaw24 #Kpr_Lig_Bind_1
+  140 38 19 _rateLaw24 #Kpr_Lig_Bind_1
+  141 39 19 _rateLaw24 #Kpr_Lig_Bind_1
+  142 40 19 _rateLaw24 #Kpr_Lig_Bind_1
+  143 37 28 _rateLaw32 #Dap_dePhospho_1
+  144 38 29 _rateLaw32 #Dap_dePhospho_1
+  145 39 30 _rateLaw32 #Dap_dePhospho_1
+  146 37 26 _rateLaw33 #Dap_dePhospho_2
+  147 38 27 _rateLaw33 #Dap_dePhospho_2
+  148 40 30 _rateLaw33 #Dap_dePhospho_2
+  149 37 25 _rateLaw34 #Dap_dePhospho_3
+  150 39 27 _rateLaw34 #Dap_dePhospho_3
+  151 40 29 _rateLaw34 #Dap_dePhospho_3
+  152 38 25 _rateLaw35 #Dap_dePhospho_4
+  153 39 26 _rateLaw35 #Dap_dePhospho_4
+  154 40 28 _rateLaw35 #Dap_dePhospho_4
+  155 7,41 37 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  156 7,42 38 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  157 7,43 39 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  158 7,44 40 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+  159 45 7,46 _rateLaw2 #_reverse_Lig_Bind
+  160 45 19 _rateLaw24 #Kpr_Lig_Bind_1
+  161 45 40 _rateLaw32 #Dap_dePhospho_1
+  162 45 39 _rateLaw33 #Dap_dePhospho_2
+  163 45 38 _rateLaw34 #Dap_dePhospho_3
+  164 45 37 _rateLaw35 #Dap_dePhospho_4
+  165 7,46 45 1*_rateLaw1 #Lig_Bind unit_conversion=1/1
+end reactions
+begin groups
+    1 Ligand_Bound_Mmeb    11,15,16,17,18,25,26,27,28,29,30,37,38,39,40,45
+    2 NKG2D_Dap_Bound      11,15,16,17,18,25,26,27,28,29,30,37,38,39,40,45
+    3 Vav1_Memb            
+    4 Lck_memb_activ_half_or_full 4,12
+    5 Trans_Lig_D10        19
+    6 NKG2D_Dap_Unbound    1,21,22,23,24,31,32,33,34,35,36,41,42,43,44,46
+    7 Vav1_Cyto            2
+    8 Trans_Vav            
+    9 Ligand_Unbound_Cyto  7
+   10 pVav1_Memb           
+   11 Lck_memb_inact       3,20
+   12 pVav1_Cyto           
+   13 PI3K_active          
+   14 PLCgamma_active      
+   15 pErk_phos            
+   16 Trans_PI3K_tot       
+end groups
