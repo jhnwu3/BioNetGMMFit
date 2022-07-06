@@ -89,7 +89,7 @@ class Parameters{
             cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
             cout << "Number of Rates:" << nRates << endl;
             if(useSBML){
-                cout << "Redirecting Model to SBML" << endl;
+                cout << "Redirecting Model to SBML/BNGL" << endl;
                 if(useDet > 0){
                     cout << "and Modeling With Deterministic ODEs" << endl;
                 }else{

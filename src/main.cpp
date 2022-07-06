@@ -72,9 +72,10 @@ int main(int argc, char** argv){
     /* RoadRunner Configuration and Simulation Variables */
     RoadRunner r = RoadRunner(sbmlModel);
     vector<int> specifiedProteins;
+    vector<string> parameterNames = r.getGlobalParameterIds(); // parameter names check
     vector<string> speciesNames =  getSpeciesNames(sbmlModel);
     cout << "--------------------------------------------------------" << endl;
-    if(r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() != X_0.cols()){
+    if(r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() != X_0.cols() && parameters.useSBML > 0){
         if(X_0.cols() > r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() ){
             cout << "Error Too Many Species/Columns in X.csv file! Please remove some before continuing!" << endl;
             cout << "Expected:" <<  r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() << " Got:" << X_0.cols() << endl;
@@ -100,7 +101,7 @@ int main(int argc, char** argv){
         }
         cout << "Proteins Not Observed Will Default to Initial Values Defined in .BNGL File" << endl;
         // check if some txt -p file has been used and use that otherwise have user manually select.
-    }else{
+    }else if(parameters.useSBML > 0){
         cout << "------- Matching Columns of X Data files to Ids -------" << endl;
         for(int i = 0; i < speciesNames.size(); i++){
             cout << speciesNames[i] << " to column:"<< i << " with first value:" << X_0(0,i) << endl;
@@ -572,8 +573,7 @@ int main(int argc, char** argv){
         }
     }
     cout << endl << "-------------- All Run Estimates: -------------------" << endl;
-    vector<string> parameterNames = r.getGlobalParameterIds();
-    for (int i = 0; i < GBVECS.size() - 1; i++){cout << parameterNames[i] << "\t\t";}
+    for (int i = 0; i < GBVECS.cols() - 1; i++){cout << parameterNames[i] << "\t\t";}
     cout << "cost" << endl;
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
