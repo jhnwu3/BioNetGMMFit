@@ -59,14 +59,16 @@ vector<int> specifySpeciesFromProteinsList(const string& path, vector<string> &s
         pro.push_back(line);
     }
     for(int i = 0; i < pro.size(); i++){
-        for(int j = 0; j < species.size();j++){
-            if(pro[i] == species[j]){
+        string poi = pro[i];
+        for(int j = 0; j < species.size(); j++){
+            if(poi == species[j]){
                 indices.push_back(j);
             }
         }
     }
     if(nObs != indices.size()){
-        cout << "Error Mismatch in Number of Columns (Species) Provided in Data Files Versus Proteins Specified In " << path << endl;
+        cout << "Error Mismatch in Number of Columns (Species) Provided in Data Files Versus Proteins Specified in " << path << endl;
+        cout << "Observed:" << nObs << " Number in POI:" << indices.size() << endl; 
         exit(EXIT_FAILURE);
     }
     input.close();

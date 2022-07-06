@@ -23,6 +23,7 @@ int main(int argc, char** argv){
     if(helpCall(argc, argv)){    return EXIT_SUCCESS;}
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
+    cout << "** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! **" << endl;
     const string bngl = ".bngl"; // suffixes for sbml/bngl file types
     const string sbml = "_sbml.xml";
     
@@ -90,9 +91,9 @@ int main(int argc, char** argv){
                 cout << "Error, no proteins specified!" << endl;
                 exit(EXIT_FAILURE);
             }
-            cout << "From Above List of Indexed Proteins, We are using..." << endl;
+            cout << "From Above List of Indexed Species, We are using..." << endl;
             for(int i = 0; i < specifiedProteins.size(); i++){
-                cout << specifiedProteins[i] <<" "<< endl;
+                cout << "(" <<specifiedProteins[i] <<") "<< specifiedProteins[i] <<endl;
             }
         }else{
             cout << "No Proteins Specified Using Argument \"-p Proteins.txt\", Thus Using First " << X_0.cols() << " Species Listed" << endl;
@@ -162,6 +163,7 @@ int main(int argc, char** argv){
             cout << "Read in Rates:" << tru.transpose() << endl;
             MatrixXd Y_0 = readY(getYPath(argc, argv))[0];
             Y_0 = filterZeros(Y_0);
+            cout << "Note: We will only be using the first Yt file read in for this simulation!" << endl;
             cout << "After removing all negative rows, Y has " << Y_0.rows() << " rows." << endl;
             for(int t = 1; t < times.size(); t++){ // start at t1, because t0 is now in the vector
                 if(parameters.useSBML > 0){
