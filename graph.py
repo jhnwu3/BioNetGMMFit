@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from pathlib import Path
 import sys
 
@@ -57,12 +58,17 @@ class Graph_Writer:
         # self.moments = np.genfromtxt()
         
         
-    def plotConfidenceIntervals(self, z, simulated = False):
-        estimates = np.genfromtxt(Graph_Writer.graphingDirectory + self.name + '_estimates.csv', delimiter=',')
+    def plotConfidenceIntervals(self, z, confidenceIntervalFilePath, simulated = False):
+        df = pd.read_csv(confidenceIntervalFilePath)
+        estimates = df.to_numpy()
+        # estimates = np.genfromtxt(path, delimiter=',')
         nRates = estimates.shape[1] - 1
         categoriesNumeric = []
         categoriesLabelled = []
         for i in range(): 
+            categoriesNumeric.append(i+1)
+            categoriesLabelled.append(estimates[0,i])
+            
         plt.xticks([1, 2], ['kbirth', 'kdeath'])
         plt.title('Confidence Intervals For t=1, 6 cells, true thetas 0.24, 0.81')
         for i in range(nRates):
@@ -74,11 +80,12 @@ class Graph_Writer:
         plt.show()
         plt.savefig(self.name + '_estimates.png')
         
-    def plotMoments(self, name, t):
+    def plotMomentsWithActualEvolvedMatrices(self, name, t):
         print("workinprogress")
         return 0
     
-
+    def plotMoments(self, name):
+        
 
 try:
     existsNameToGraph = "-m" in sys.argv

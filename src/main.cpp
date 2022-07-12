@@ -120,7 +120,7 @@ int main(int argc, char** argv){
 
     MatrixXd GBMAT;
     MatrixXd GBVECS = MatrixXd::Zero(parameters.nRuns, parameters.nRates + 1);
-    if(parameters.useLinear == 1){
+    if(parameters.useLinear > 0){
         for(int r = 0; r < parameters.nRuns; ++r){
             GBMAT = linearModel(parameters.nParts, parameters.nSteps, parameters.nParts2, parameters.nSteps2, X_0, parameters.nRates, nMoments, times, parameters.simulateYt, parameters.useInverse, argc, argv, parameters.seed);
             GBVECS.row(r) = GBMAT.row(GBMAT.rows() - 1);
@@ -159,7 +159,7 @@ int main(int argc, char** argv){
         vector<VectorXd> Yt3Vecs;
         Controlled_RK_Stepper_N controlledStepper;
         double trukCost = 0;
-        if(parameters.simulateYt == 1){
+        if(parameters.simulateYt > 0){
             cout << "------ SIMULATING YT! ------" << endl;
             tru = readRates(parameters.nRates, getTrueRatesPath(argc, argv));
             cout << "Read in Rates:" << tru.transpose() << endl;
@@ -167,6 +167,7 @@ int main(int argc, char** argv){
             Y_0 = filterZeros(Y_0);
             cout << "Note: We will only be using the first Yt file read in for this simulation!" << endl;
             cout << "After removing all negative rows, Y has " << Y_0.rows() << " rows." << endl;
+            cout << "Time Point \t\t Moments" << endl;
             for(int t = 1; t < times.size(); t++){ // start at t1, because t0 is now in the vector
                 if(parameters.useSBML > 0){
                     MatrixXd YtMat = MatrixXd::Zero(Y_0.rows(), Y_0.cols());
@@ -206,6 +207,7 @@ int main(int argc, char** argv){
                     Yt3Mats.push_back(Yt.mat);
                     Yt3Vecs.push_back(Yt.mVec);
                 }
+                cout << t << " "<< Yt3Vecs[t-1].transpose() << endl;
             }
             cout << "--------------------------------------------------------" << endl;
         }else{
@@ -236,7 +238,7 @@ int main(int argc, char** argv){
         cout << weights[0] << endl;
         for(int run = 0; run < parameters.nRuns; ++run){ // for multiple runs aka bootstrapping (for now)
             VectorXd nestedHolds = VectorXd::Zero(parameters.nRates);
-            if (run > 0 && parameters.bootstrap == 1){
+            if (run > 0 && parameters.bootstrap > 0){
                 for(int y = 0; y < Yt3Mats.size(); ++y){ 
                     weights[y] = wolfWtMat(Yt3Mats[y], nMoments, false);
                 }
@@ -503,7 +505,7 @@ int main(int argc, char** argv){
             } // nested loop
 
             /* bootstrap X0 and Y matrices if more than 1 run is specified */
-            if(parameters.nRuns > 1 && parameters.bootstrap == 1){
+            if(parameters.nRuns > 1 && parameters.bootstrap > 0){
                 X_0 = bootStrap(ogX_0);
                 for(int y = 0; y < Yt3Mats.size(); ++y){
                     Yt3Mats[y] = bootStrap(ogYt3Mats[y]);
@@ -524,9 +526,10 @@ int main(int argc, char** argv){
             parameters.hyperCubeScale *= 2.0;
         }
         cout << "Hypercubescale Max:" << parameters.hyperCubeScale << endl;
-        if(parameters.simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
-        if(parameters.reportMoments == 1){
+        if(parameters.simulateYt > 0){cout << "Simulated Truth:" << tru.transpose() << endl;}
+        if(parameters.reportMoments > 0){
             cout << "Average Estimate:" << GBVECS.colwise().mean() << endl;
+            cout << "Simulated Xt Moments For Various Times:" << endl;  
             for(int t = 1; t < times.size(); ++t){
                 if(parameters.useSBML > 0){
                     VectorXd avgRunPos = VectorXd::Zero(parameters.nRates);
@@ -556,7 +559,7 @@ int main(int argc, char** argv){
                         }
                     }
                     VectorXd XtmVec = momentVector(XtMat, nMoments);
-                    cout << "Simulated Xt Moments for time " << times(t) << ":" << XtmVec.transpose() << endl;
+                    cout << times(t) << " " << XtmVec.transpose() << endl;
                 }else{
                     /*solve ODEs and recompute cost */
                     Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
@@ -568,7 +571,7 @@ int main(int argc, char** argv){
                         integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                     }
                     XtPSO.mVec/=X_0.rows();
-                    cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
+                    cout << times(t) << " " << XtPSO.mVec.transpose() << endl;
                 }
             }
         }
