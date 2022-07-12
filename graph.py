@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import os 
+from pathlib import Path
 import sys
 
 # def plot_confidence_interval(x, values, z=1.96, color='#2187bb', horizontal_line_width=0.25):
@@ -19,10 +19,16 @@ import sys
 
 #     return mean, confidence_interval
 
+def getFileName(args):
+    return args[args.index('-m') + 1]
+
+def getTime(args):
+    return args[args.index('-t') + 1]
+
+def getGraphType(args):
+    return args[args.index('-t') + 1]
 
 class Graph_Writer:
-    
-    graphingDirectory = "/frontend/graph/"
     
     def plot_confidence_interval(x, values, z=1.96, color='#2187bb', horizontal_line_width=0.25):
         mean = np.mean(values)
@@ -41,26 +47,26 @@ class Graph_Writer:
 
         return mean, confidence_interval
     
-    def getFileName(args):
-        return args[args.index('-e') + 1]
-    
-    def getTime(args):
-        return args[args.index('-t') + 1]
-    
-    def __init__(self, argv):
-        self.name = Graph_Writer.getFileName(argv)
-        self.t = Graph_Writer.getTime(argv)
-        self.estimates = np.genfromtxt(Graph_Writer.graphingDirectory + self.name + '_estimates.csv', delimiter=',')
-        print(self.estimates.shape)
+    def __init__(self, dir):
+        self.graphingDirectory = "/frontend/graph/" + dir +"/"
+        self.fileName = dir
+        # self.name = Graph_Writer.getFileName(argv)
+        # self.t = Graph_Writer.getTime(argv)
+        # self.estimates = np.genfromtxt(Graph_Writer.graphingDirectory + self.name + '_estimates.csv', delimiter=',')
+        # print(self.estimates.shape)
         # self.moments = np.genfromtxt()
         
         
     def plotConfidenceIntervals(self, z, simulated = False):
+        estimates = np.genfromtxt(Graph_Writer.graphingDirectory + self.name + '_estimates.csv', delimiter=',')
+        nRates = estimates.shape[1] - 1
+        categoriesNumeric = []
+        categoriesLabelled = []
+        for i in range(): 
         plt.xticks([1, 2], ['kbirth', 'kdeath'])
         plt.title('Confidence Intervals For t=1, 6 cells, true thetas 0.24, 0.81')
-        nRates = self.estimates.shape[1]
         for i in range(nRates):
-            Graph_Writer.plot_confidence_interval(i + 1,self.estimates[:,i], z)
+            Graph_Writer.plot_confidence_interval(i + 1, estimates[:,i], z)
         simulated = True
         if simulated:
             plt.plot(1, 0.24, 'D', color='#013220')
@@ -68,13 +74,16 @@ class Graph_Writer:
         plt.show()
         plt.savefig(self.name + '_estimates.png')
         
-    def plotMoments(self, x, y):
+    def plotMoments(self, name, t):
         print("workinprogress")
         return 0
     
 
-   
 
+try:
+    existsNameToGraph = "-m" in sys.argv
+except ValueError("Error Missing Model Name for Graphing Output") as err:
+    print(err.args)
 
-graph = Graph_Writer(sys.argv)
+graph = Graph_Writer(getFileName(sys.argv))
 graph.plotConfidenceIntervals(1.96)

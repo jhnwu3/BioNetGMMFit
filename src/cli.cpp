@@ -51,6 +51,18 @@ string getModelPath(int argc, char **argv){
     }
     return "model.bngl";
 }
+string getOutputPath(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-o");
+    if(flag != -1){
+        return argv[flag+1];
+    }
+    return "/frontend/graph";
+}
+bool outPathExists(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-o");
+    return flag != -1;
+}
+
 string getProPath(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-p");
     return argv[flag+1];
@@ -68,6 +80,7 @@ bool helpCall(int argc, char **argv){
         << "To specify simulation truth rate constants path, do: ./CyGMM -r <path> i.e ./CyGMM -r true_rates.csv" << endl
         << "To specify data X directory where X data files are located, do: ./CyGMM -x <path> i.e ./CyGMM -x model.bngl" << endl
         << "To specify data Y directory where true Y data files are located, do: ./CyGMM -y <path> i.e ./CyGMM -y model.bngl" << endl
+        << "To specify an output directory where output files such as graphing and output txt files, ./CyGMM -o <path> i.e ./CyGMM -o /frontend/graphs/6pro" << endl
         << "If you have more species in the system than observed protein species, then please supply a list of proteins in a .txt file." << endl
         << "i.e ./CyGMM -p listOfObservedProteinsInOrder.txt " << endl;
         return true;

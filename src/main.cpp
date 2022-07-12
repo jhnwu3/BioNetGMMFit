@@ -20,7 +20,8 @@ due to something with memory or how functions work from the compiler.
 #include "param.hpp"
 #include "cli.hpp"
 int main(int argc, char** argv){
-    if(helpCall(argc, argv)){    return EXIT_SUCCESS;}
+    if(helpCall(argc, argv)){return EXIT_SUCCESS;}
+
     auto t1 = std::chrono::high_resolution_clock::now();
     cout << "Program Begin:" << endl;
     cout << "** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! **" << endl;
