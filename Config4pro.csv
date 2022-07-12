@@ -1,14 +1,14 @@
-Number of Particles Blind PSO,50
-Number of Steps Blind PSO,5
+Number of Particles Blind PSO,1000
+Number of Steps Blind PSO,30
 Number of Particles Targeted PSO,2
 Number of Steps Targeted PSO,2
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Use Matrix Exponentiation Model?,0
-Number of Runs,30
-Simulate Y_t?,1
+Number of Runs,5
+Simulate Y_t?,-1
 Use Matrix Inverse?,1
-Number of Rates,6
+Number of Rates,5
 Index of Held Rate Constant,-1
 Value of Held Rate Constant,0.0415627
 Hypercube Dimension,1
@@ -19,4 +19,4 @@ Use BNGL?,1
 Use Deterministic?,-1
 Number of BNGL Steps,15
 Seed,-1
-ParallelNumberOfThreads,8
+ParallelNumberOfThreads,30

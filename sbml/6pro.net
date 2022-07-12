@@ -1,0 +1,33 @@
+# Created by BioNetGen 2.8.0
+begin parameters
+    1 k1        0.1  # Constant
+    2 k2        0.1  # Constant
+    3 k3        0.95  # Constant
+    4 k4        0.17  # Constant
+    5 k5        0.05  # Constant
+    6 k6        0.18  # Constant
+end parameters
+begin species
+    1 Syk() 192.7959
+    2 Vav() 1463.265
+    3 SykVav() 5.251
+    4 pVav() 435.2968
+    5 SHP1() 5.809538
+    6 SHP1PVav() 6.254916
+end species
+begin reactions
+    1 1,2 3 k1 #_R1
+    2 3 1,2 k2 #_reverse__R1
+    3 3 1,4 k3 #_R2
+    4 4,5 6 k4 #_R3
+    5 6 4,5 k5 #_reverse__R3
+    6 6 2,5 k6 #_R4
+end reactions
+begin groups
+    1 Syk                  1
+    2 Vav                  2
+    3 SykVav               3
+    4 pVav                 4
+    5 SHP1                 5
+    6 SHP1PVav             6
+end groups

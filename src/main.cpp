@@ -281,7 +281,7 @@ int main(int argc, char** argv){
                                     init[specifiedProteins[p]] = X_0(i,p);
                                 }
                                 r.changeInitialConditions(init);
-                            }else{  
+                            }else{ 
                                 r.changeInitialConditions(convertInit(X_0.row(i)));
                             }
                             const DoubleMatrix res = *r.simulate(&opt);
