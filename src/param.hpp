@@ -99,6 +99,9 @@ class Parameters{
             if(seed > 0){
                 cout << "Now seeding with value " << seed << endl;
             }
+            if(bootstrap > 0){
+                cout << "Enabled Bootstrapping!" << endl;
+            }
             cout << "--------------------------------------------------------" << endl;
         }
 };

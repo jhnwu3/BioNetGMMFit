@@ -1,4 +1,5 @@
 Program Begin:
+** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! **
 Reading in Parameters from Configuration File!
 BioNetGen version 2.8.0
 Reading from file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/model.bngl (level 0)
@@ -22,43 +23,84 @@ CPU TIME: writeSBML 0.00 s.
 Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/model.bngl.
 CPU TIME: total 0.00 s.
 ------ Reading in X_0! ------
-"data/X/bdX.csv"
-Reading in 6 rows or cells from X data directory
+"data/X/slp76_ps6_t0.csv"
+Reading in (rows,columns): (525,2) from X data directory
 ---------------------------
-After removing all negative rows, X has 6 rows.
---------- Parameters ---------
-Total Number of Runs:1
-Number of Moments:2
+After removing all negative rows, X has 369 rows.
+If dimensions are unexpected of input data, please make sure to check csv files contains all possible values in each row/column.
+---------------------  Parameters  --------------------
+Total Number of Runs:5
+Number of Moments:5
 Hyper Cube Width:1
-Using Times:0 2
-Blind PSO --> nParts:100 Nsteps:50
+Using Times:0 1
+Blind PSO --> nParts:100 Nsteps:30
 Targeted PSO --> nParts:2 Nsteps:2
 Number of Rates:2
-Redirecting Model to SBML
+Redirecting Model to SBML/BNGL
 using gillespie
-Now seeding with value 1
-------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
+Number of Species Defined in BNGL does not match number of columns in data files! Now listing all species in system and respective indices in order!
+Note: User can supply a "./CyGMM -p protein_observed.txt " to specify explicitly which proteins are observed in data. Please make sure names are in order from top to bottom matching left to right in data csv file.
+(0) P1()
+(1) P2()
+(2) P3()
+No Proteins Specified Using Argument "-p Proteins.txt", Thus Using First 2 Species Listed
+Proteins Not Observed Will Default to Initial Values Defined in .BNGL File
+--------------------------------------------------------
 ------ SIMULATING YT! ------
-Read in Rates:0.276782 0.837081
+Read in Rates:0.2 0.8
 ------ Reading in Yt! ------
-"data/Y/bdY.csv"
-Read in 5 rows!
+"data/Y/slp76_ps6_t1.csv"
+Read in 1773 rows! 2 columns!
+"data/Y/slp76_ps6_t2.csv"
+Read in 1431 rows! 2 columns!
+"data/Y/slp76_ps6_t4.csv"
+Read in 2437 rows! 2 columns!
+"data/Y/slp76_ps6_t8.csv"
+Read in 1776 rows! 2 columns!
 ---------------------------
-After removing all negative rows, Y has 5 rows.
----------------------------
-Yt Means For First Time Step:641.6
+Note: We will only be using the first Yt file read in for this simulation!
+After removing all negative rows, Y has 1504 rows.
+--------------------------------------------------------
+Yt Means For First Time Step:14.4281 16.4139
 Computing Weight Matrices!
- 0.00365898           0
-          0 2.21958e-09
-PSO Seeded At:0.997185 0.932557| cost:8.51246
+ 0.00355522           0           0           0           0
+          0  0.00180662           0           0           0
+          0           0 2.54198e-08           0           0
+          0           0           0 5.21901e-09           0
+          0           0           0           0   1.153e-08
+PSO Seeded At:0.636482 0.610817| cost:0.0963931
 PSO Estimation Has Begun, This may take some time...
-hypercubescale before reset:1
-hypercubescale after reset:1
-nested hypercubes:0 0
-hypercubescale after final nesting:1
-Simulated Truth:0.276782 0.837081
+Held Parameter Estimates:0 0
+PSO Seeded At:0.189824 0.649057| cost:0.116995
+PSO Estimation Has Begun, This may take some time...
+Held Parameter Estimates:0 0
+PSO Seeded At:0.797506 0.440822| cost:0.120391
+PSO Estimation Has Begun, This may take some time...
+Held Parameter Estimates:0 0
+PSO Seeded At:0.845834 0.200848| cost:0.183203
+PSO Estimation Has Begun, This may take some time...
+Held Parameter Estimates:0 0
+PSO Seeded At:0.407697 0.275375| cost:0.173167
+PSO Estimation Has Begun, This may take some time...
+Held Parameter Estimates:0 0
+Hypercubescale Max:1
+Simulated Truth:0.2 0.8
 
 -------------- All Run Estimates: -------------------
-k1			k2			cost
-    0.66303    0.833173 1.62623e-05
-CODE FINISHED RUNNING IN 6 s TIME!
+k1		k2		cost
+ 0.905668  0.896066  0.061557
+ 0.960407  0.912398  0.059988
+  0.93977  0.923978 0.0601966
+ 0.964247  0.975107 0.0593239
+ 0.983457  0.946465 0.0595053
+------- 95 Percent Confidence Intervals -------
+Rates | Standard Deviation
+0.95071   |   0.0295722
+0.930803   |   0.0308224
+Confidence Intervals for Each Rate:
+Theta0: [0.924789,0.976631]
+Theta1: [0.903786,0.95782]
+-----------------------------------------------
+CODE FINISHED RUNNING IN 14 s TIME!

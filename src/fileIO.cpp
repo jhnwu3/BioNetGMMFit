@@ -173,7 +173,7 @@ MatrixXd readX(const std::string &path){
             ++nFile;
         }
     }catch(...){
-        cout << "Error with X directory path, please make sure to input a valid path, received path:" << path << endl;
+        cout << "Error with X directory path, please make sure to input a valid path that is a DIRECTORY not a file, received path:" << path << endl;
         exit(-1);
     }
     if(nFile < 1){
@@ -232,6 +232,33 @@ void matrixToCsv(const MatrixXd& mat, const string& fileName){ // prints matrix 
             }else{
                 plot << "," << mat(i,j);
             }
+        }
+        plot << endl;
+    }
+    plot.close();
+}
+
+void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const string& fileName){ // prints matrix to csv
+    std::ofstream plot;
+    string csvFile = fileName + ".csv";
+	plot.open(csvFile);
+
+    for(int i = 0; i < mat.rows(); i++){
+        for(int j = 0; j < mat.cols(); j++){
+            if(i == 0){
+                if(j == 0){
+                    plot << labels[j];
+                }else{
+                    plot << "," << labels[j];
+                }
+            }else{
+                if(j == 0){
+                    plot << mat(i,j);
+                }else{
+                    plot << "," << mat(i,j);
+                }
+            }
+            
         }
         plot << endl;
     }

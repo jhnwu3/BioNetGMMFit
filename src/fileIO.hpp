@@ -1,4 +1,3 @@
-
 #ifndef _FILEIO_HPP_
 #define _FILEIO_HPP_
 /*
@@ -24,7 +23,7 @@ vector<MatrixXd> readY(const std::string & path);
 
 /* General Output Functions*/
 void matrixToCsv(const MatrixXd& mat, const string& fileName);
-
+void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const string& fileName);
 /* Reading in time and rate parameters */
 VectorXd readCsvTimeParam(const string &path);
 VectorXd readRates(int nRates, const string &path);

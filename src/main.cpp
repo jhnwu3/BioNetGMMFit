@@ -525,6 +525,7 @@ int main(int argc, char** argv){
         cout << "Hypercubescale Max:" << parameters.hyperCubeScale << endl;
         if(parameters.simulateYt == 1){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(parameters.reportMoments == 1){
+            cout << "Average Estimate:" << GBVECS.colwise().mean() << endl;
             for(int t = 1; t < times.size(); ++t){
                 if(parameters.useSBML > 0){
                     VectorXd avgRunPos = VectorXd::Zero(parameters.nRates);
@@ -554,6 +555,7 @@ int main(int argc, char** argv){
                         }
                     }
                     VectorXd XtmVec = momentVector(XtMat, nMoments);
+                    cout << "Simulated Xt Moments for time " << times(t) << ":" << XtmVec.transpose() << endl;
                 }else{
                     /*solve ODEs and recompute cost */
                     Protein_Components XtPSO(times(t), nMoments, X_0.rows(), X_0.cols());
@@ -565,10 +567,8 @@ int main(int argc, char** argv){
                         integrate_adaptive(controlledStepper, stepSys, c0, times(0), times(t), dt, XtObsPSO1);
                     }
                     XtPSO.mVec/=X_0.rows();
-                    cout << "Average Estimate:" << GBVECS.colwise().mean() << endl;
                     cout << "Simulated Xt Moments for time " << times(t) << ":" << XtPSO.mVec.transpose() << endl;
                 }
-                // cout << "Final Evolved Matrix" << endl << XtPSO.mat << endl;
             }
         }
     }
