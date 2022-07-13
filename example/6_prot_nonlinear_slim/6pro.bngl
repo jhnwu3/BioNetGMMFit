@@ -1,0 +1,40 @@
+begin model
+
+begin parameters
+    k1 0.1
+    k2 0.1
+    k3 0.95
+    k4 0.17
+    k5 0.05
+    k6 0.18
+end parameters
+begin species
+   Syk() 192.7959
+   Vav() 1463.265
+   SykVav() 5.251
+   pVav() 435.2968
+   SHP1() 5.809538
+   SHP1PVav() 6.254916
+end species
+
+begin observables
+    Molecules Syk Syk()
+    Molecules Vav Vav()
+    Molecules SykVav SykVav()
+    Molecules pVav pVav()
+    Molecules SHP1 SHP1()
+    Molecules SHP1PVav SHP1PVav()
+
+end observables
+
+begin reaction rules
+    Syk() + Vav() <-> SykVav k1,k2
+    SykVav() -> Syk() + pVav() k3
+    SHP1() + pVav() <-> SHP1PVav() k4,k5
+    SHP1PVav() -> SHP1() + Vav() k6
+end reaction rules
+
+end model
+
+generate_network()
+writeSBML()

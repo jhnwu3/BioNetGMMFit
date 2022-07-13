@@ -207,7 +207,7 @@ int main(int argc, char** argv){
                     Yt3Mats.push_back(Yt.mat);
                     Yt3Vecs.push_back(Yt.mVec);
                 }
-                cout << t << " "<< Yt3Vecs[t-1].transpose() << endl;
+                cout << times(t) << " "<< Yt3Vecs[t-1].transpose() << endl;
             }
             cout << "--------------------------------------------------------" << endl;
         }else{
@@ -221,6 +221,7 @@ int main(int argc, char** argv){
                 Yt3Mats[i] = filterZeros(Yt3Mats[i]);
                 cout << "After removing all negative rows, Y"<< i << " has " << Yt3Mats[i].rows() << " rows." << endl;
                 Yt3Vecs.push_back(momentVector(Yt3Mats[i], nMoments));
+                cout << times(i+1) << " "<< Yt3Vecs[i].transpose() << endl;
             }
             ogYt3Mats = Yt3Mats;
         }

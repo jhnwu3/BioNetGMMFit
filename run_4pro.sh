@@ -8,6 +8,6 @@
 
 rm -r data/X/*
 rm -r data/Y/*
-cp example/4_prot_CD3_CD4_CD28/1min_2min/X/t1m_processed.csv data/X
-cp example/4_prot_CD3_CD4_CD28/1min_2min/Y/t2m_processed.csv data/Y
+cp example/4_prot_CD3_CD8_CD28/1min_2min/X/t1m_processed.csv data/X
+cp example/4_prot_CD3_CD8_CD28/1min_2min/Y/t2m_processed.csv data/Y
 ./CyGMM -m 4pro.bngl -c Config4pro.csv -t time_steps4.csv

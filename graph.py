@@ -20,16 +20,22 @@ import sys
 
 #     return mean, confidence_interval
 
-def getFileName(args):
-    return args[args.index('-m') + 1]
+def getFile(args):
+    return args[args.index('-f') + 1]
+
+def getName(args):
+    return args[args.index('-n') + 1]
 
 def getTime(args):
     return args[args.index('-t') + 1]
 
 def getGraphType(args):
-    return args[args.index('-t') + 1]
+    return args[args.index('-g') + 1]
 
-class Graph_Writer:
+def getSimulatedRates(args):
+    return args[args.index('-g') + 1]
+
+class Graph:
     
     def plot_confidence_interval(x, values, z=1.96, color='#2187bb', horizontal_line_width=0.25):
         mean = np.mean(values)
@@ -48,49 +54,59 @@ class Graph_Writer:
 
         return mean, confidence_interval
     
-    def __init__(self, dir):
-        self.graphingDirectory = "/frontend/graph/" + dir +"/"
-        self.fileName = dir
-        # self.name = Graph_Writer.getFileName(argv)
-        # self.t = Graph_Writer.getTime(argv)
-        # self.estimates = np.genfromtxt(Graph_Writer.graphingDirectory + self.name + '_estimates.csv', delimiter=',')
-        # print(self.estimates.shape)
-        # self.moments = np.genfromtxt()
+    # def __init__(self, dir):
+    #     self.graphingDirectory = "/frontend/graph/" + dir +"/"
+    #     self.fileName = dir
+    #     # self.name = Graph_Writer.getFileName(argv)
+    #     # self.t = Graph_Writer.getTime(argv)
+    #     # self.estimates = np.genfromtxt(Graph_Writer.graphingDirectory + self.name + '_estimates.csv', delimiter=',')
+    #     # print(self.estimates.shape)
+    #     # self.moments = np.genfromtxt()
         
         
-    def plotConfidenceIntervals(self, z, confidenceIntervalFilePath, simulated = False):
-        df = pd.read_csv(confidenceIntervalFilePath)
+    def plotConfidenceIntervals(z, file, simulated = False):
+        df = pd.read_csv(file)
         estimates = df.to_numpy()
         # estimates = np.genfromtxt(path, delimiter=',')
         nRates = estimates.shape[1] - 1
         categoriesNumeric = []
-        categoriesLabelled = []
         for i in range(): 
             categoriesNumeric.append(i+1)
-            categoriesLabelled.append(estimates[0,i])
             
-        plt.xticks([1, 2], ['kbirth', 'kdeath'])
+        plt.xticks(categoriesNumeric, df.columns)
         plt.title('Confidence Intervals For t=1, 6 cells, true thetas 0.24, 0.81')
         for i in range(nRates):
-            Graph_Writer.plot_confidence_interval(i + 1, estimates[:,i], z)
-        simulated = True
+            Graph.plot_confidence_interval(i + 1, estimates[:,i], z)
         if simulated:
             plt.plot(1, 0.24, 'D', color='#013220')
             plt.plot(2, 0.81, 'D', color='#013220')
         plt.show()
-        plt.savefig(self.name + '_estimates.png')
+        plt.savefig(file + '_estimates.png')
         
-    def plotMomentsWithActualEvolvedMatrices(self, name, t):
+    def plotMomentsWithActualEvolvedMatrices(self, name, t): # this might make more sense overall actually. From here, we can get means, variances, and covariances.
         print("workinprogress")
         return 0
     
-    def plotMoments(self, name):
+    # assume data format n moments X 2 columns (for X and Y) 
+    def plotMoments(file): # get list of X, Y 
+        df = pd.read_csv(file)
+        moments = df.to_numpy()
+        plt.title(file[:-4])
+        plt.xlabel(df.columns[0])
+        plt.ylabel(df.columns[1])
+        plt.plot(moments[:,0],moments[:,1])
+        plt.savefig(file[:-4] + '.png')
         
+if "-f" not in sys.argv:
+    print("Error Need to Specify Graph Files with -f")
+    exit(0)
+    
+if "-g" not in sys.argv:
+    print("Error Need to Specify Graph Files with -g")
+    exit(0)
 
-try:
-    existsNameToGraph = "-m" in sys.argv
-except ValueError("Error Missing Model Name for Graphing Output") as err:
-    print(err.args)
-
-graph = Graph_Writer(getFileName(sys.argv))
-graph.plotConfidenceIntervals(1.96)
+# graph.plotConfidenceIntervals(1.96)
+if getGraphType(sys.argv) == 'CI':
+    Graph.plotConfidenceIntervals(getFile(sys.argv))
+else:
+    Graph.plotMoments(getFile(sys.argv))
