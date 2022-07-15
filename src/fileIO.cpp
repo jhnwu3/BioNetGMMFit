@@ -184,6 +184,9 @@ MatrixXd readX(const std::string &path){
         cout << "Multiple X files detected, reading only the last X file read in." << endl;
     }
     cout << "Reading in (rows,columns): (" << X_0.rows() <<"," << X_0.cols() << ") from X data directory" << endl;
+    X_0 = filterZeros(X_0);
+    cout << "After removing all negative rows, X has " << X_0.rows() << " rows." << endl;
+    cout << "If dimensions are unexpected of input data, please make sure to check csv files contains all possible values in each row/column." << endl;
     cout << "---------------------------" << endl;
     return X_0;
 }
@@ -289,6 +292,10 @@ VectorXd readCsvTimeParam(const string &path){
         times(i) = params.at(i);
     }
     input.close();
+    if(times.size() < 2){
+        cout << "Error! Unable to read in timesteps properly, need two or more time steps!" << endl;
+        exit(EXIT_FAILURE);
+    }
     return times;
 }
 

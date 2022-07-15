@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <boost/math/distributions.hpp>
 #include <boost/array.hpp>
 #include <boost/numeric/odeint.hpp>

@@ -6,7 +6,7 @@ Summary: Header file for all file input and output functions used to read in inp
  */
 
 #include "main.hpp"
-
+#include "calc.hpp"
 /* String Processing Functions */
 bool isNumber(const std::string& str); 
 bool isDouble(const std::string& s);
@@ -28,4 +28,12 @@ void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const s
 VectorXd readCsvTimeParam(const string &path);
 VectorXd readRates(int nRates, const string &path);
 
+template <typename T>
+std::string to_string_with_precision(const T a_value, const int n = 6)
+{
+    std::ostringstream out;
+    out.precision(n);
+    out << std::fixed << a_value;
+    return out.str();
+}
 #endif

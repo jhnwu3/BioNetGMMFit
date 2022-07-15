@@ -24,8 +24,10 @@ class Parameters{
         int odeSteps;
         int seed;
         int nThreads;
+        int nMoments;
         double heldThetaVal;
         double hyperCubeScale;
+        string outPath;
         Parameters(const string &path){
             cout << "Reading in Parameters from Configuration File!" << endl;
             std::ifstream input(path);
@@ -66,6 +68,7 @@ class Parameters{
             odeSteps = params.at(19);
             seed = params.at(20);
             nThreads = params.at(21); 
+            outPath = "";
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){
@@ -102,6 +105,7 @@ class Parameters{
             if(bootstrap > 0){
                 cout << "Enabled Bootstrapping!" << endl;
             }
+            cout << "Outputting data to:" << outPath << endl;
             cout << "--------------------------------------------------------" << endl;
         }
 };

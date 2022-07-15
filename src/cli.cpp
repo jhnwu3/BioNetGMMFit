@@ -62,6 +62,15 @@ bool outPathExists(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-o");
     return flag != -1;
 }
+bool modelPathExists(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-m");
+    return flag != -1;
+}
+
+bool graphingEnabled(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "--g");
+    return flag != -1;
+}
 
 string getProPath(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-p");

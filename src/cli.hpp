@@ -9,7 +9,9 @@ string getYPath(int argc, char **argv);
 string getModelPath(int argc, char **argv);
 string getProPath(int argc, char **argv);
 string getOutputPath(int argc, char **argv);
+bool modelPathExists(int argc, char **argv);
 bool outPathExists(int argc, char **argv);
+bool graphingEnabled(int argc, char **argv);
 bool proPathExists(int argc, char **argv);
 bool helpCall(int argc, char **argv);
 #endif

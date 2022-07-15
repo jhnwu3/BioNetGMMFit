@@ -10,5 +10,4 @@ Summary: Header file for all file input and output functions used to read in inp
 void graphMoments(const MatrixXd &X, const MatrixXd &Y, double t, const string &name);
 void graphConfidenceIntervals(const MatrixXd &estimates, vector<string> &labels, const string &name);
 
-
 #endif
