@@ -6,7 +6,7 @@ CyGMM -> <Insert Statement About Rate Constant Estimation>
 Coder's Note:
 If you're wondering why the rungekutta solution method is all in main and not segmented in nonlinear.cpp is because currently
 the way in how Boost's ODE struct/class system for solving ODEs results in major performance decreases when inside a function, very possibly
-due to something with memory or how functions work from the compiler.
+due to something with memory or how functions work from the compiler. Also libRR is substantially slower than boost ode solvers and Eigen.expm.
 
 */
 
@@ -119,6 +119,8 @@ int main(int argc, char** argv){
         RoadRunner r = RoadRunner(sbmlModel);
         vector<int> specifiedProteins;
         parameterNames = r.getGlobalParameterIds(); // parameter names check
+        parameterNames = vector<string>(parameterNames.begin(),parameterNames.begin() + parameters.nRates);
+        parameterNames.push_back("cost");
         vector<string> speciesNames =  getSpeciesNames(sbmlModel);
         cout << "--------------------------------------------------------" << endl;
         if(r.getNumberOfIndependentSpecies() +  r.getNumberOfDependentSpecies() != x0.cols()){
@@ -185,7 +187,7 @@ int main(int argc, char** argv){
                         vector<double> init = r.getFloatingSpeciesInitialConcentrations();
                         for(int p = 0; p < specifiedProteins.size(); p++){
                             init[specifiedProteins[p]] = Y_0(i,p);
-                        }
+                        } 
                         r.changeInitialConditions(init);
                     }else{
                         r.changeInitialConditions(convertInit(Y_0.row(i)));
@@ -415,8 +417,6 @@ int main(int argc, char** argv){
                     sfs = sfs + (sfe - sfg) / parameters.nSteps;
                 }
 
-                
-
                 // double hypercube size and rescan global best vector to see what needs to be held constant.
                 if(parameters.nest > 1){
                     for(int i = 0; i < GBVEC.size(); i++){
@@ -460,7 +460,6 @@ int main(int argc, char** argv){
             parameters.hyperCubeScale *= 2.0;
         }
         cout << "Hypercubescale Max:" << parameters.hyperCubeScale << endl;
-        if(parameters.simulateYt > 0){cout << "Simulated Truth:" << tru.transpose() << endl;}
         if(parameters.reportMoments > 0 || graphingEnabled(argc, argv)){
             cout << "Simulated Xt Moments (note: This Reports if Graphing Enabled) For Various Times:" << endl; 
             VectorXd leastCostRunPos = VectorXd::Zero(parameters.nRates);
@@ -761,7 +760,6 @@ int main(int argc, char** argv){
                 parameters.hyperCubeScale *= 2.0;
             }
             cout << "Hypercubescale Max:" << parameters.hyperCubeScale << endl;
-            if(parameters.simulateYt > 0){cout << "Simulated Truth:" << tru.transpose() << endl;}
             if(parameters.reportMoments > 0){
                 cout << "Average Estimate:" << GBVECS.colwise().mean() << endl;
                 cout << "Simulated Xt Moments For Various Times:" << endl;  
@@ -790,10 +788,9 @@ int main(int argc, char** argv){
     */
     cout << endl << "-------------- All Run Estimates: -------------------" << endl;
     if(parameters.useSBML > 0){
-        for (int i = 0; i < GBVECS.size(); i++){cout << parameterNames[i] << "\t\t";}
-        cout << "cost" << endl;
+        for (int i = 0; i < parameterNames.size(); i++){cout << parameterNames[i] << "\t\t";}
+        cout << endl;
     }
- 
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
     if(parameters.nRuns > 1){computeConfidenceIntervals(GBVECS, 1.96, parameters.nRates);}
