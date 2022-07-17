@@ -1,0 +1,143 @@
+Program Begin:
+** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! **
+Reading in Parameters from Configuration File!
+------ Reading in X_0! ------
+"data/X/t1m_processed.csv"
+Reading in (rows,columns): (1773,4) from X data directory
+After removing all negative rows, X has 719 rows.
+If dimensions are unexpected of input data, please make sure to check csv files contains all possible values in each row/column.
+---------------------------
+---------------------  Parameters  --------------------
+Total Number of Runs:1
+Number of Moments:14
+Hyper Cube Width:1
+Using Times:1 2
+Blind PSO --> nParts:1500 Nsteps:40
+Targeted PSO --> nParts:2 Nsteps:2
+Number of Rates:5
+Redirecting Model to SBML/BNGL
+and Modeling With Deterministic ODEs
+Outputting data to:frontend/output/
+--------------------------------------------------------
+------ Reading in Yt! ------
+"data/Y/t2m_processed.csv"
+Read in 1431 rows! 4 columns!
+---------------------------
+After removing all negative rows, Y0 has 653 rows.
+2 11.4785 11.5206 7.69268 21.0976 100.698 104.802 71.1406 1117.06 17.5912 1.01937  10.461 3.28421 17.1904 46.0558
+
+2 11.6889 11.5092 7.31394 15.1067 91.3184 87.7753 38.1993 2059.09 28.0627 9.04963 2.93607 28.7931 19.5454 38.5623
+2 11.2856 11.6929 7.15947 21.1998 77.0582 73.5547 25.1608 2611.16 35.2487 13.2862 8.65735 34.9837  34.947 45.2134
+BioNetGen version 2.8.0
+Reading from file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/4pro.bngl (level 0)
+Read 5 parameters.
+Read 4 species.
+Read 4 observable(s).
+Read 8 reaction rule(s).
+ACTION: generate_network( 4pro )
+Iteration   0:     4 species      0 rxns  0.00e+00 CPU s
+Iteration   1:     4 species      8 rxns  0.00e+00 CPU s
+Cumulative CPU time for each rule
+Rule   1:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   2:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   3:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   4:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   5:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   6:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   7:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   8:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Total   :     8 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+WARNING: writeFile(): Overwriting existing file ./4pro.net.
+Wrote network in net format to ./4pro.net.
+CPU TIME: generate_network 0.02 s.
+Wrote SBML to ./4pro_sbml.xml.
+CPU TIME: writeSBML 0.00 s.
+Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/4pro.bngl.
+CPU TIME: total 0.02 s.
+--------------------------------------------------------
+------- Matching Columns of X Data files to Ids -------
+pCD3z() to column:0 with first value:5.93
+pSLP76() to column:1 with first value:15.11
+pErk() to column:2 with first value:15.55
+pS6() to column:3 with first value:4.42
+--------------------------------------------------------
+PSO Seeded At: 0.61178 0.716015  0.66161 0.633444 0.272376| cost:1.34806
+PSO Estimation Has Begun, This may take some time...
+Held Parameter Estimates:0 0 0 0 0
+Hypercubescale Max:1
+Simulated Xt Moments (note: This Reports if Graphing Enabled) For Various Times:
+For Least Cost Estimate:  0.23875 0.0536837  0.144678 0.0142141 0.0540967
+2 11.6889 11.5092 7.31394 15.1067 91.3184 87.7753 38.1993 2059.09 28.0627 9.04963 2.93607 28.7931 19.5454 38.5623
+2 11.2856 11.6929 7.15947 21.1998 77.0582 73.5547 25.1608 2611.16 35.2487 13.2862 8.65735 34.9837  34.947 45.2134
+-------------- All Run Estimates: -------------------
+k1		k2		k3		k4		k5		cost		
+  0.23875 0.0536837  0.144678 0.0142141 0.0540967 0.0982487
+CODE FINISHED RUNNING IN 93 s TIME!
+Program Begin:
+** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! **
+Reading in Parameters from Configuration File!
+------ Reading in X_0! ------
+"data/X/t1m_processed.csv"
+Reading in (rows,columns): (1773,4) from X data directory
+After removing all negative rows, X has 719 rows.
+If dimensions are unexpected of input data, please make sure to check csv files contains all possible values in each row/column.
+---------------------------
+---------------------  Parameters  --------------------
+Total Number of Runs:1
+Number of Moments:14
+Hyper Cube Width:1
+Using Times:1 2
+Blind PSO --> nParts:1000 Nsteps:40
+Targeted PSO --> nParts:2 Nsteps:2
+Number of Rates:5
+Redirecting Model to SBML/BNGL
+and Modeling With Deterministic ODEs
+Outputting data to:frontend/output/
+--------------------------------------------------------
+------ Reading in Yt! ------
+"data/Y/t2m_processed.csv"
+Read in 1431 rows! 4 columns!
+---------------------------
+After removing all negative rows, Y0 has 653 rows.
+2 11.4785 11.5206 7.69268 21.0976 100.698 104.802 71.1406 1117.06 17.5912 1.01937  10.461 3.28421 17.1904 46.0558
+BioNetGen version 2.8.0
+Reading from file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/4pro_bidir.bngl (level 0)
+Read 5 parameters.
+Read 4 species.
+Read 4 observable(s).
+Read 4 reaction rule(s).
+ACTION: generate_network( 4pro_bidir )
+Iteration   0:     4 species      0 rxns  0.00e+00 CPU s
+Iteration   1:     4 species      8 rxns  0.00e+00 CPU s
+Cumulative CPU time for each rule
+Rule   1:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   2:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   3:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   4:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Total   :     8 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+WARNING: writeFile(): Overwriting existing file ./4pro_bidir.net.
+Wrote network in net format to ./4pro_bidir.net.
+CPU TIME: generate_network 0.00 s.
+Wrote SBML to ./4pro_bidir_sbml.xml.
+CPU TIME: writeSBML 0.00 s.
+Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/4pro_bidir.bngl.
+CPU TIME: total 0.00 s.
+--------------------------------------------------------
+------- Matching Columns of X Data files to Ids -------
+pCD3z() to column:0 with first value:5.93
+pSLP76() to column:1 with first value:15.11
+pErk() to column:2 with first value:15.55
+pS6() to column:3 with first value:4.42
+--------------------------------------------------------
+PSO Seeded At: 0.567697  0.299075  0.724963  0.549718 0.0490718| cost:0.608786
+PSO Estimation Has Begun, This may take some time...
+Held Parameter Estimates:0 0 0 0 0
+Hypercubescale Max:1
+Simulated Xt Moments (note: This Reports if Graphing Enabled) For Various Times:
+For Least Cost Estimate: 0.0378796  0.0899189   0.226963    0.24473 0.00660627
+2 11.7448 11.5814 7.48202 19.4251 96.3036 81.1078 30.2496 2543.32 34.5427 12.8951 7.12936 35.5344 30.6268 72.3664
+
+-------------- All Run Estimates: -------------------
+k1		k2		k3		k4		k5		cost		
+ 0.0378796  0.0899189   0.226963    0.24473 0.00660627   0.121731
+CODE FINISHED RUNNING IN 99 s TIME!

@@ -213,13 +213,13 @@ int main(int argc, char** argv){
             if(graphingEnabled(argc,argv)){
                 matrixToCsvWithLabels(yt3Mats[y], speciesNames, parameters.outPath + file_without_extension + "Yt" + to_string_with_precision(times(y + 1), 2));
             }
-            weights.push_back(wolfWtMat(yt3Mats[y], nMoments, false));
+            weights.push_back(wolfWtMat(yt3Mats[y], nMoments, parameters.useInverse > 0));
         }
         for(int run = 0; run < parameters.nRuns; ++run){ // for multiple runs aka bootstrapping (for now)
             VectorXd nestedHolds = VectorXd::Zero(parameters.nRates);
             if (run > 0 && parameters.bootstrap > 0){
                 for(int y = 0; y < yt3Mats.size(); ++y){ 
-                    weights[y] = wolfWtMat(yt3Mats[y], nMoments, false);
+                    weights[y] = wolfWtMat(yt3Mats[y], nMoments, parameters.useInverse > 0);
                 }
             }
             for(int ne = 0; ne < parameters.nest; ne++){ // now we will include the ability to nest hypercubes. Every nested hypercube doubles the hypercube width.
@@ -296,7 +296,6 @@ int main(int argc, char** argv){
                             pGen.seed(pSeed);
                         }
                         if(step == 0){
-
                             /* initialize all particles with random rate constant positions */
                             for(int i = 0; i < parameters.nRates; i++){POSMAT(particle, i) = pUnifDist(pGen);}
                             if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}

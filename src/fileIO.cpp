@@ -245,23 +245,20 @@ void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const s
     std::ofstream plot;
     string csvFile = fileName + ".csv";
 	plot.open(csvFile);
-
+    for(int j = 0; j < mat.cols(); j++){
+        if(j == 0){
+            plot << labels[j];
+        }else{
+            plot << "," << labels[j];
+        }
+    }
     for(int i = 0; i < mat.rows(); i++){
         for(int j = 0; j < mat.cols(); j++){
-            if(i == 0){
-                if(j == 0){
-                    plot << labels[j];
-                }else{
-                    plot << "," << labels[j];
-                }
+            if(j == 0){
+                plot << mat(i,j);
             }else{
-                if(j == 0){
-                    plot << mat(i,j);
-                }else{
-                    plot << "," << mat(i,j);
-                }
-            }
-            
+                plot << "," << mat(i,j);
+            }  
         }
         plot << endl;
     }
