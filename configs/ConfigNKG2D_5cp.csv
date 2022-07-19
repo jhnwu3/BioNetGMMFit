@@ -20,6 +20,6 @@ Use Deterministic?,1
 Number of BNGL Steps,15
 Seed,-1
 ParallelNumberOfThreads,16
-Initial Particle Best Weight, 5.0
-Initial Global Best Weight, 2.0
-Particle Inertial Weight, 10.0
+Initial Particle Best Weight, 3.0
+Initial Global Best Weight, 4.0
+Particle Inertial Weight, 3.0
