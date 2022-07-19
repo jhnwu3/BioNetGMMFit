@@ -2,7 +2,7 @@ Number of Particles Blind PSO,200
 Number of Steps Blind PSO,20
 Number of Particles Targeted PSO,2
 Number of Steps Targeted PSO,2
-Exclude Mixed Moments?,1
+Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Use Matrix Exponentiation Model?,0
 Number of Runs,30
