@@ -1,0 +1,25 @@
+Number of Particles Blind PSO,200
+Number of Steps Blind PSO,20
+Number of Particles Targeted PSO,2
+Number of Steps Targeted PSO,2
+Exclude Mixed Moments?,1
+Exclude Mixed and Second Moments?,0
+Use Matrix Exponentiation Model?,0
+Number of Runs,30
+Simulate Y_t?,-1
+Use Matrix Inverse?,-1
+Number of Rates,5
+Index of Held Rate Constant,-1
+Value of Held Rate Constant,0.0415627
+Hypercube Dimension,1
+Report Moments?,1
+Number of Nested HyperCubes,2
+Bootstrap?,0
+Use BNGL?,1
+Use Deterministic?,1
+Number of BNGL Steps,15
+Seed,-1
+ParallelNumberOfThreads,16
+Initial Particle Best Weight, 5.0
+Initial Global Best Weight, 2.0
+Particle Inertial Weight, 10.0

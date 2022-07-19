@@ -28,6 +28,9 @@ class Parameters{
         double heldThetaVal;
         double hyperCubeScale;
         string outPath;
+        double pBestWeight;
+        double globalBestWeight;
+        double pInertia;
         Parameters(const string &path){
             cout << "Reading in Parameters from Configuration File!" << endl;
             std::ifstream input(path);
@@ -69,6 +72,9 @@ class Parameters{
             seed = params.at(20);
             nThreads = params.at(21); 
             outPath = "";
+            pBestWeight = params.at(22);
+            globalBestWeight = params.at(23);
+            pInertia = params.at(24);
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){

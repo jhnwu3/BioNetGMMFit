@@ -11,7 +11,7 @@ rm -r data/Y/*
 cp example/4_prot_CD3_CD8_CD28/1min_2min/X/t1m_processed.csv data/X
 cp example/4_prot_CD3_CD8_CD28/1min_2min/Y/t2m_processed.csv data/Y
 ./CyGMM -m 4pro.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
-./CyGMM -m 4pro_bidir.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
-./CyGMM -m 4pro_ring.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
-./CyGMM -m 4pro_rand.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
-./CyGMM -m 4pro_reducedK5.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
+# ./CyGMM -m 4pro_bidir.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
+# ./CyGMM -m 4pro_ring.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
+# ./CyGMM -m 4pro_rand.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g
+# ./CyGMM -m 4pro_reducedK5.bngl -c Config4pro.csv -t time_steps4.csv -o frontend/output/ --g

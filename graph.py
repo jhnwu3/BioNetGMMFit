@@ -35,7 +35,9 @@ def getFile(args, multi=False):
     return args[args.index('-f') + 1]
 
 def getName(args):
-    return args[args.index('-n') + 1]
+    if '-n' in args:
+        return args[args.index('-n') + 1]
+    return "Confidence Intervals"
 
 def getTime(args):
     return args[args.index('-t') + 1]
@@ -74,7 +76,7 @@ class Graph:
     #     # self.moments = np.genfromtxt()
         
         
-    def plotConfidenceIntervals(z, file, simulated = False, trueRatesFile=''):
+    def plotConfidenceIntervals(z, file, simulated = False, trueRatesFile='', title=""):
         df = pd.read_csv(file)
         estimates = df.to_numpy()
         # estimates = np.genfromtxt(path, delimiter=',')
@@ -84,20 +86,18 @@ class Graph:
             categoriesNumeric.append(i+1)
             
         plt.xticks(categoriesNumeric, df.columns)
-        plt.title('Confidence Intervals For t=1, 6 cells, true thetas 0.24, 0.81')
+        plt.title(title)
         for i in range(nRates):
             Graph.plot_confidence_interval(i + 1, estimates[:,i], z)
         if simulated:
-            rDf = pd.read_csv(trueRatesFile)
-            tRates = rDf.to_numpy()
+            tRates = np.genfromtxt(trueRatesFile, delimiter=',')
+            print(tRates)
             for i in range(nRates):
-                plt.plot(i+1,tRates[i], color='#013220')
-            # plt.plot(1, 0.24, 'D', color='#013220')
-            # plt.plot(2, 0.81, 'D', color='#013220')
+                plt.plot(i+1,tRates[i], 'D', color='#013220')
         plt.show()
-        plt.savefig(file + '_estimates.png')
+        plt.savefig(file[:-4] + '_estimates.png')
         
-    def plotMomentsWithActualEvolvedMatrices(xName, yName): # this might make more sense overall actually. From here, we can get means, variances, and covariances.
+    def plotMomentsWithActualEvolvedMatrices(xName, yName, gTitle=""): # this might make more sense overall actually. From here, we can get means, variances, and covariances.
         dfX = pd.read_csv(xName)
         dfY = pd.read_csv(yName)
         x = dfX.to_numpy()
@@ -122,9 +122,9 @@ class Graph:
         plt.xlabel("Estimated Moment")
         plt.ylabel("Observed Moment")
         plt.scatter(moments[:,0],moments[:,1])
-        x123 = np.arange(0, np.max(moments))
+        x123 = np.arange(0, np.max(moments[:]))
         y123 = x123
-        plt.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='#f44336')
+        plt.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
         plt.plot(np.unique(moments[:,0]), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(moments[:,0])))
         plt.savefig(file[:-4] + '.png')
         
@@ -138,15 +138,15 @@ if "-f" not in sys.argv:
     exit(0)
     
 if "-g" not in sys.argv:
-    print("Error Need to Specify Graph Files with -g")
+    print("Error Need to Specify Graph Types with -g")
     exit(0)
 
 # graph.plotConfidenceIntervals(1.96)
 graphType = getGraphType(sys.argv)
 if graphType == 'CI':
-    Graph.plotConfidenceIntervals(1.96, getFile(sys.argv))
+    Graph.plotConfidenceIntervals(1.96, getFile(sys.argv), title=getName(sys.argv))
 elif graphType == 'CI_truth':
-    Graph.plotConfidenceIntervals(1.96, getFile(sys.argv),simulated=True, trueRatesFile=getSimulatedRates(sys.argv))
+    Graph.plotConfidenceIntervals(1.96, getFile(sys.argv),simulated=True, trueRatesFile=getSimulatedRates(sys.argv), title=getName(sys.argv))
 elif graphType == 'Moments':
     Graph.plotMoments(getFile(sys.argv))
 elif graphType == 'dMoments':

@@ -64,7 +64,7 @@ int main(int argc, char** argv){
     double epsi = 0.02;
     double nan = 0.005;
     /* PSO params */
-    double sfp = 3.0, sfg = 1.0, sfe = 6.0; // initial particle historical weight, global weight social, inertial
+    double sfp = parameters.pBestWeight, sfg = parameters.globalBestWeight, sfe = parameters.pInertia; // initial particle historical weight, global weight social, in ertial
     int hone = 28; 
     double low = 0.0, high = 1.0; // boundaries for PSO rate estimation, 0 to 1.0
     vector<MatrixXd> weights;
@@ -500,6 +500,7 @@ int main(int argc, char** argv){
                 VectorXd XtmVec = momentVector(XtMat, nMoments);
                 cout << times(t) << " " << XtmVec.transpose() << endl;
                 xt3Mats.push_back(XtMat);
+                cout << "RSS (NOT GMM) COST FROM DATASET:" << costFunction(XtmVec, yt3Vecs[t-1], MatrixXd::Identity(nMoments, nMoments)) << endl;
             }
             
         }

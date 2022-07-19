@@ -1,0 +1,32 @@
+begin model
+
+begin parameters
+    k1 0.1
+    k2 0.1
+    k3 0.95
+end parameters
+
+begin species
+   NKG2D() 192.7959
+   CD45() 1463.265
+   pErk() 5.251
+   CD107a() 435.2968
+end species
+
+begin observables
+    Molecules NKG2D NKG2D()
+    Molecules CD45 CD45()
+    Molecules pErk pErk()
+    Molecules CD107a CD107a()
+end observables
+
+begin reaction rules
+    NKG2D() -> CD45() k1
+    CD45() -> pErk() k2
+    pErk() -> CD107a() k3
+end reaction rules
+
+end model
+
+generate_network()
+writeSBML()

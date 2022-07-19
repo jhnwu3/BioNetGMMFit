@@ -252,6 +252,7 @@ void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const s
             plot << "," << labels[j];
         }
     }
+    plot << endl;
     for(int i = 0; i < mat.rows(); i++){
         for(int j = 0; j < mat.cols(); j++){
             if(j == 0){
