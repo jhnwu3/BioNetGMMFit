@@ -2,6 +2,7 @@
 #define _PARAM_HPP_
 #include "main.hpp"
 #include "fileIO.hpp"
+//
 class Parameters{
     public:
         int nParts; // first part PSO
