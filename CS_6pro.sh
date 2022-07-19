@@ -9,10 +9,10 @@
 # cp example/6_prot_nonlinear_slim/Y/Yt2slim.csv data/Y
 # cp example/6_prot_nonlinear_slim/Y/Yt3slim.csv data/Y
 # cp example/6_prot_nonlinear_slim/Y/Yt4slim.csv data/Y
-./CyGMM -m 6pro.bngl -c configs/Config6pro_1.csv -x example/6_pro_nonlin_sim_slim/X/X.csv -y example/6_pro_nonlin_sim_slim/Y/Y.csv -r true_rates6.csv -t time_steps6.csv
-./CyGMM -m 6pro.bngl -c configs/Config6pro_2.csv -x example/6_pro_nonlin_sim_slim/X/X.csv -y example/6_pro_nonlin_sim_slim/Y/Y.csv -r true_rates6.csv -t time_steps6.csv
-./CyGMM -m 6pro.bngl -c configs/Config6pro_3.csv -x example/6_pro_nonlin_sim_slim/X/X.csv -y example/6_pro_nonlin_sim_slim/Y/Y.csv -r true_rates6.csv -t time_steps6.csv
-./CyGMM -m 6pro.bngl -c configs/Config6pro_4.csv -x example/6_pro_nonlin_sim_slim/X/X.csv -y example/6_pro_nonlin_sim_slim/Y/Y.csv -r true_rates6.csv -t time_steps6.csv
-./CyGMM -m 6pro.bngl -c configs/Config6pro_5.csv -x example/6_pro_nonlin_sim_slim/X/X.csv -y example/6_pro_nonlin_sim_slim/Y/Y.csv -r true_rates6.csv -t time_steps6.csv
+./CyGMM -m 6pro.bngl -c configs/Config6pro_1.csv -x example/6_pro_nonlin_sim_slim/X -y example/6_pro_nonlin_sim_slim/Y -r true_rates6.csv -t time_steps6.csv
+./CyGMM -m 6pro.bngl -c configs/Config6pro_2.csv -x example/6_pro_nonlin_sim_slim/X -y example/6_pro_nonlin_sim_slim/Y -r true_rates6.csv -t time_steps6.csv
+./CyGMM -m 6pro.bngl -c configs/Config6pro_3.csv -x example/6_pro_nonlin_sim_slim/X -y example/6_pro_nonlin_sim_slim/Y -r true_rates6.csv -t time_steps6.csv
+./CyGMM -m 6pro.bngl -c configs/Config6pro_4.csv -x example/6_pro_nonlin_sim_slim/X -y example/6_pro_nonlin_sim_slim/Y -r true_rates6.csv -t time_steps6.csv
+./CyGMM -m 6pro.bngl -c configs/Config6pro_5.csv -x example/6_pro_nonlin_sim_slim/X -y example/6_pro_nonlin_sim_slim/Y -r true_rates6.csv -t time_steps6.csv
 
 
