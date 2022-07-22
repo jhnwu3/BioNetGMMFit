@@ -299,6 +299,12 @@ int main(int argc, char** argv){
                             /* initialize all particles with random rate constant positions */
                             for(int i = 0; i < parameters.nRates; i++){POSMAT(particle, i) = pUnifDist(pGen);}
                             if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}
+                            if(POSMAT.cols() == 6){
+                                if(pUnifDist(gen) < 0.25){
+                                    POSMAT.row(particle)(4) = tru(4);
+                                    POSMAT.row(particle)(3) = pUnifDist(gen);
+                                }
+                            }
                             
                             double cost = 0;    
                             if(step == 0 && ne > 0){
@@ -356,6 +362,12 @@ int main(int argc, char** argv){
                             POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
                         
                             if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}
+                            if(POSMAT.cols() == 6){
+                                if(pUnifDist(gen) < 0.25){
+                                    POSMAT.row(particle)(4) = tru(4);
+                                    POSMAT.row(particle)(3) = pUnifDist(gen);
+                                }
+                            }
                             double cost = 0;
 
                             for(int i = 0 ; i < parameters.nRates; i++){
