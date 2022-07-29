@@ -102,10 +102,14 @@ class Parameters{
             if(useSBML){
                 cout << "Redirecting Model to SBML/BNGL" << endl;
                 if(useDet > 0){
-                    cout << "and Modeling With Deterministic ODEs" << endl;
+                    cout << "Modeling With Deterministic ODEs" << endl;
                 }else{
-                    cout << "using gillespie" << endl;
+                    cout << "Modeling with Gillespie" << endl;
                 }
+                cout << "Number of Steps of Integration Determined:" << odeSteps << endl;
+            }
+            if(useInverse){
+                cout << "Using Matrix Inverse!" << endl;
             }
             if(seed > 0){
                 cout << "Now seeding with value " << seed << endl;

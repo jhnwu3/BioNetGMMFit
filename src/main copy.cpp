@@ -58,7 +58,6 @@ int main(int argc, char** argv){
     /*---------------------- Nonlinear Setup PSO ------------------------ */
     double dt = 1.0; // nonlinear time evolution variables
     /* Explicit Boundary Parameters */
-    double squeeze = 0.500, sdbeta = 0.10; // how much to shrink PSO search over time (how much variability each position is iterated upon)
     double sf2 = 1; // factor that can be used to regularize particle weights (global, social, inertial)
     double epsi = 0.02;
     double nan = 0.005;
@@ -230,8 +229,7 @@ int main(int argc, char** argv){
                 
                 /* Initialize Global Best  */
                 VectorXd seed = VectorXd::Zero(parameters.nRates);
-                for (int i = 0; i < parameters.nRates; i++) {seed(i) = parameters.hyperCubeScale * unifDist(gen);}
-                // seed << 0.1,  0.1,  0.95,  0.17, 0.05,  0.18;
+                for (int i = 0; i < parameters.nRates; i++) {seed(i) = unifDist(gen);}
                 if(parameters.heldTheta > -1){seed(parameters.heldTheta) = parameters.heldThetaVal;}
                 
                 /* Evolve initial Global Best and Calculate a Cost*/
@@ -239,14 +237,14 @@ int main(int argc, char** argv){
                 if(ne > 0){
                     for(int i = 0; i < parameters.nRates; i++){
                         if(nestedHolds(i)  != 0){
-                            seed(i) = nestedHolds(i);
+                            seed(i) = nestedHolds(i) / parameters.hyperCubeScale;
                         }
                     }
                 }
                 for(int t = 1; t < times.size(); t++){
                     MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
                     for(int i = 0; i < seed.size(); ++i){
-                        theta[i] = seed(i);
+                        theta[i] = seed(i) * parameters.hyperCubeScale;
                     }
                     r.getModel()->setGlobalParameterValues(seed.size(),0,theta); // set new global parameter values here.
                     opt.start = times(0);
@@ -308,7 +306,7 @@ int main(int argc, char** argv){
                             if(step == 0 && ne > 0){
                                 for(int i = 0 ; i < parameters.nRates; i++){
                                     if(nestedHolds(i) != 0){
-                                        POSMAT.row(particle)(i) = nestedHolds(i); 
+                                        POSMAT.row(particle)(i) = nestedHolds(i) / parameters.hyperCubeScale; 
                                     }
                                 }
                             }
@@ -318,7 +316,7 @@ int main(int argc, char** argv){
                                 RoadRunner paraModel = r;
                                 double parallelTheta[parameters.nRates];
                                 for(int i = 0; i < parameters.nRates; ++i){
-                                    parallelTheta[i] = POSMAT(particle, i);
+                                    parallelTheta[i] = POSMAT(particle, i) * parameters.hyperCubeScale;
                                 }
                                 paraModel.getModel()->setGlobalParameterValues(parameters.nRates,0, parallelTheta); // set new global parameter values here.
                                 SimulateOptions pOpt = opt;
@@ -354,7 +352,7 @@ int main(int argc, char** argv){
                             double sumw = w1 + w2 + w3; 
                             w1 = w1 / sumw; w2 = w2 / sumw; w3 = w3 / sumw;
                     
-                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle), pSeed, epsi, nan, hone, parameters.hyperCubeScale);
+                            VectorXd rpoint = adaptVelocity(POSMAT.row(particle), pSeed, epsi, nan, hone);
                             VectorXd PBVEC(parameters.nRates);
                             for(int i = 0; i < parameters.nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                             POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
@@ -370,7 +368,7 @@ int main(int argc, char** argv){
 
                             for(int i = 0 ; i < parameters.nRates; i++){
                                 if(nestedHolds(i) != 0){
-                                    POSMAT(particle, i) = nestedHolds(i); 
+                                    POSMAT(particle, i) = nestedHolds(i) / parameters.hyperCubeScale; 
                                 }
                             }
                             for(int t = 1; t < times.size(); ++t){ 
@@ -378,7 +376,7 @@ int main(int argc, char** argv){
                                 RoadRunner paraModel = r;
                                 double parallelTheta[parameters.nRates];
                                 for(int i = 0; i < parameters.nRates; ++i){
-                                    parallelTheta[i] = POSMAT(particle, i);
+                                    parallelTheta[i] = POSMAT(particle, i) * parameters.hyperCubeScale;
                                 }
                                 paraModel.getModel()->setGlobalParameterValues(parameters.nRates,0, parallelTheta); // set new global parameter values here.
                                 SimulateOptions pOpt = opt;
@@ -430,7 +428,7 @@ int main(int argc, char** argv){
                 if(parameters.nest > 1){
                     for(int i = 0; i < GBVEC.size(); i++){
                         if(parameters.hyperCubeScale * GBVEC(i) < parameters.hyperCubeScale - epsi){
-                            nestedHolds(i) = GBVEC(i);
+                            nestedHolds(i) = parameters.hyperCubeScale * GBVEC(i);
                         }
                     }
                 }
@@ -438,7 +436,7 @@ int main(int argc, char** argv){
                     if(nestedHolds(i) != 0){
                         GBVECS(run, i) = nestedHolds(i); // GBVECS is either something that was held constant.
                     }else{ 
-                        GBVECS(run, i) = GBVEC(i); // or is now something scaled to GBVEC.
+                        GBVECS(run, i) = parameters.hyperCubeScale * GBVEC(i); // or is now something scaled to GBVEC.
                     } 
                 }
                 GBVECS(run, parameters.nRates) = gCost;
@@ -468,7 +466,7 @@ int main(int argc, char** argv){
         for(int ne = 1; ne < parameters.nest; ne++){ 
             parameters.hyperCubeScale *= 2.0;
         }
-        cout << "Max HyperCube Width Searched:" << parameters.hyperCubeScale << endl;
+        cout << "Hypercubescale Max:" << parameters.hyperCubeScale << endl;
         if(parameters.reportMoments > 0 || graphingEnabled(argc, argv)){
             cout << "Simulated Xt Moments (note: This Reports if Graphing Enabled) For Various Times:" << endl; 
             VectorXd leastCostRunPos = VectorXd::Zero(parameters.nRates);
@@ -528,6 +526,7 @@ int main(int argc, char** argv){
     ******************************************************************************************************************************
     */
     }
+   
     /* 
     ******************************************************************************************************************************
     ************************************************************** PSO END ************************************************* 

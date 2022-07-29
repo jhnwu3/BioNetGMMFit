@@ -17,7 +17,7 @@ Number of Nested HyperCubes,2
 Bootstrap?,0
 Use BNGL?,1
 Use Deterministic?,1
-Number of BNGL Steps,15
+Number of BNGL Steps,1
 Seed,-1
 ParallelNumberOfThreads,16
 Initial Particle Best Weight, 3.0

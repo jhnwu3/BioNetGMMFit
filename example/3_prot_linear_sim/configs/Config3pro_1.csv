@@ -1,11 +1,11 @@
-Number of Particles Blind PSO,200
-Number of Steps Blind PSO,20
+Number of Particles Blind PSO,300
+Number of Steps Blind PSO,40
 Number of Particles Targeted PSO,2
 Number of Steps Targeted PSO,2
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Use Matrix Exponentiation Model?,0
-Number of Runs,30
+Number of Runs,1
 Simulate Y_t?,1
 Use Matrix Inverse?,-1
 Number of Rates,5
@@ -16,8 +16,8 @@ Report Moments?,1
 Number of Nested HyperCubes,1
 Bootstrap?,0
 Use BNGL?,1
-Use Deterministic?,1
-Number of BNGL Steps,15
+Use Deterministic?,-1
+Number of BNGL Steps,1
 Seed,-1
 ParallelNumberOfThreads,16
 Initial Particle Best Weight, 3.0

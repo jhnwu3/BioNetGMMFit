@@ -315,13 +315,13 @@ VectorXd readRates(int nRates, const string &path){
         }
     }
     VectorXd rates(nRates);
+    if(params.size() < nRates){
+        cout << "Error, number of rates in parameters do not match number of true rates simulated!" << endl;
+        exit(1);
+    }
     for(int i = 0; i < nRates; i++){
         rates(i) = params.at(i);
     }
     input.close();
-    if(rates.size() < nRates){
-        cout << "Error, number of rates in parameters do not match number of true rates simulated!" << endl;
-        exit(1);
-    }
     return rates;
 }

@@ -91,7 +91,7 @@ MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-        wt = wt.completeOrthogonalDecomposition().solve(MatrixXd::Identity(nMoments, nMoments));
+        wt = wt.inverse();
 
     }else{
         for(int i = 0; i < nMoments; i++){

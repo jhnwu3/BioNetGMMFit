@@ -18,7 +18,7 @@ Input:
     hone - width of beta distribution of random values to be generated from for new position
 
 */
-VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone) {
+VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone, double boundary) {
 
     std::random_device rand_dev;
     std::mt19937 generator(rand_dev());
@@ -46,7 +46,7 @@ VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, 
     for (int smart = 0; smart < ncomp; smart++) {
         int px = wcomp(smart);
         double pos = rPoint(px);
-        if (pos > 1.0 - nan) {
+        if (pos > boundary - nan) {
             pos -= epsi;
         }else if (pos < nan) {
             pos += epsi;

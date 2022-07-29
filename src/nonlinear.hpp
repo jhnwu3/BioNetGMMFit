@@ -80,7 +80,7 @@ struct Moments_Mat_Obs
 };
 
 State_N convertInit(const VectorXd &v1);
-VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone);
+VectorXd adaptVelocity(const VectorXd& posK, int seed, double epsi, double nan, int hone, double boundary);
 MatrixXd nonlinearModel(int nParts, int nSteps, int nParts2, int nSteps2, const MatrixXd& X_0, const MatrixXd &Y_0, int nRates, int nRuns, int nMoments);
 Protein_Components evolveSystem(const VectorXd &pos, const MatrixXd& X_0, int nMoments, double t, double dt, double t0);
 
