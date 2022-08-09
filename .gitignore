@@ -43,3 +43,5 @@
 
 # Local History for Visual Studio Code
 .history/
+# the executable name
+CyGMM
