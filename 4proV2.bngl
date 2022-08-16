@@ -1,0 +1,38 @@
+begin model
+
+begin parameters
+    k1 0.1
+    k2 0.1
+    k3 0.95
+    k4 0.17
+    k5 0.05
+end parameters
+begin species
+   pCD3z() 192.7959
+   pSLP76() 1463.265
+   pErk() 5.251
+   pS6() 435.2968
+end species
+
+begin observables
+    Molecules pCD3z pCD3z()
+    Molecules pSLP7 pSLP76()
+    Molecules pErk pErk()
+    Molecules pS6 pS6()
+end observables
+
+begin reaction rules
+    0 -> pCD3z() k1
+    pCD3z() -> pSLP76() + pCD3z() k2
+    pSLP76() -> pErk() + pSLP76() k3
+    pErk() -> pS6() + pErk() k4
+    pCD3z() -> 0 k5
+    pSLP76() -> 0 k5
+    pErk() -> 0 k5
+    pS6() -> 0 k5
+end reaction rules
+
+end model
+
+generate_network()
+writeSBML()
