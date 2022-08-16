@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 import pandas as pd
 from pathlib import Path
+from textwrap import wrap
 import sys
 
 # def plot_confidence_interval(x, values, z=1.96, color='#2187bb', horizontal_line_width=0.25):
@@ -50,7 +52,7 @@ def getSimulatedRates(args):
 
 class Graph:
     
-    def plot_confidence_interval(x, values, z=1.96, color='#2187bb', horizontal_line_width=0.25):
+    def plot_confidence_interval(x, values, axes, z=1.96, color='#2187bb', horizontal_line_width=0.25):
         mean = np.mean(values)
         stdev = np.std(values)
         confidence_interval = z * stdev / np.sqrt(len(values))
@@ -59,10 +61,10 @@ class Graph:
         top = mean - confidence_interval
         right = x + horizontal_line_width / 2
         bottom = mean + confidence_interval
-        plt.plot([x, x], [top, bottom], color=color)
-        plt.plot([left, right], [top, top], color=color)
-        plt.plot([left, right], [bottom, bottom], color=color)
-        plt.plot(x, mean, 'o', color='#f44336')
+        axes.plot([x, x], [top, bottom], color=color)
+        axes.plot([left, right], [top, top], color=color)
+        axes.plot([left, right], [bottom, bottom], color=color)
+        axes.plot(x, mean, 'o', color='#f44336')
 
         return mean, confidence_interval
     
@@ -84,17 +86,25 @@ class Graph:
         categoriesNumeric = []
         for i in range(estimates.shape[1]): 
             categoriesNumeric.append(i+1)
-            
-        plt.xticks(categoriesNumeric, df.columns)
-        plt.title(title)
+        fig, axes = plt.subplots(figsize=(5.0, 5.0))
+        axes.spines.right.set_visible(False)
+        axes.spines.top.set_visible(False)
+        axes.set_xticks(categoriesNumeric, df.columns)
+        axes.tick_params(axis='both', which='major', labelsize=12)
+        axes.set_title(title,wrap=True, fontdict = {'fontsize' : 18})
+        axes.set_ylabel("Estimate Value", fontdict = {'fontsize' : 12})
+        groundTruth = []
         for i in range(nRates):
-            Graph.plot_confidence_interval(i + 1, estimates[:,i], z)
+            Graph.plot_confidence_interval(i + 1, estimates[:,i], axes, z)
         if simulated:
             tRates = np.genfromtxt(trueRatesFile, delimiter=',')
             print(tRates)
             for i in range(nRates):
-                plt.plot(i+1,tRates[i], 'D', color='#013220')
-        plt.show()
+                groundTruth.append(axes.plot(i+1,tRates[i], 'D', color='#013220'))
+        # plt.style.use('ggplot')
+        # plt.show()
+        if simulated:
+            axes.legend(groundTruth[0],["Ground Truth"])
         plt.savefig(file[:-4] + '_estimates.png')
         
     def plotMomentsWithActualEvolvedMatrices(xName, yName, gTitle=""): # this might make more sense overall actually. From here, we can get means, variances, and covariances.
@@ -115,17 +125,28 @@ class Graph:
         plt.savefig(xName[:-7] + '.png')
     
     # assume data format n moments X 2 columns (for X and Y) 
-    def plotMoments(file): # get list of X, Y 
+    def plotMoments(file, title=""): # get list of X, Y 
         df = pd.read_csv(file)
         moments = df.to_numpy()
-        plt.title(file[:-4])
-        plt.xlabel("Estimated Moment")
-        plt.ylabel("Observed Moment")
-        plt.scatter(moments[:,0],moments[:,1])
+        if title == "":
+            title = file
+        # plt.figure(frameon=False)
+        fig, axes = plt.subplots(figsize=(6.5, 6.0))
+        axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})
+        # axes.set_title("CD8 T Cells Moments t=2 Seconds ", loc='center', wrap=True, fontdict = {'fontsize' : 20})      
+        plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
+        plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
+        axes.spines.right.set_visible(False)
+        axes.spines.top.set_visible(False)
+        # mpl.spines.Spine.set_visible(False)
+        # mpl.spines.right.set_visible(False)
+        axes.scatter(moments[:,0],moments[:,1])
+        # plt.tight_layout()
         x123 = np.arange(0, np.max(moments[:]))
         y123 = x123
-        plt.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
-        plt.plot(np.unique(moments[:,0]), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(moments[:,0])))
+        optimalLine, =axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
+        bestFit, = axes.plot(np.unique(moments[:,0]), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(moments[:,0])))
+        axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
         plt.savefig(file[:-4] + '.png')
         
 if '-h' in sys.argv:
@@ -141,14 +162,16 @@ if "-g" not in sys.argv:
     print("Error Need to Specify Graph Types with -g")
     exit(0)
 
-# graph.plotConfidenceIntervals(1.96)
+mpl.rcParams['font.family'] = 'Arial'
+plt.rcParams['figure.constrained_layout.use'] = True
+plt.tight_layout()
 graphType = getGraphType(sys.argv)
 if graphType == 'CI':
     Graph.plotConfidenceIntervals(1.96, getFile(sys.argv), title=getName(sys.argv))
 elif graphType == 'CI_truth':
     Graph.plotConfidenceIntervals(1.96, getFile(sys.argv),simulated=True, trueRatesFile=getSimulatedRates(sys.argv), title=getName(sys.argv))
 elif graphType == 'Moments':
-    Graph.plotMoments(getFile(sys.argv))
+    Graph.plotMoments(getFile(sys.argv), title=getName(sys.argv))
 elif graphType == 'dMoments':
     dataX, dataY = getFile(sys.argv, multi=True)
     Graph.plotMomentsWithActualEvolvedMatrices(dataX,dataY)

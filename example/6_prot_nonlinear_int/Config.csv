@@ -16,7 +16,7 @@ Report Moments?,1
 Number of Nested HyperCubes,1
 Bootstrap?,0
 Use BNGL?,1
-Use Deterministic?,1
+Use Deterministic?,-1
 Number of BNGL Steps,1
 Seed,-1
 ParallelNumberOfThreads,8

@@ -410,7 +410,7 @@ int main(int argc, char** argv){
                 GBVECS(run, i) = scaledGBVEC(i); // or is now something scaled to GBVEC. 
             }
             GBVECS(run, parameters.nRates) = gCost;
-
+            cout << GBVECS.row(run) << endl;
             /* bootstrap X0 and Y matrices if more than 1 run is specified */
             if(parameters.nRuns > 1 && parameters.bootstrap > 0){
                 x0 = bootStrap(ogx0);
@@ -420,7 +420,7 @@ int main(int argc, char** argv){
                 }
                 cout << "bootstrap means" << endl << "x0:" << x0.colwise().mean() << endl << "Yt:" << yt3Mats[0].colwise().mean() << endl;
             }
-          
+
         } // run loop
      
         if(parameters.reportMoments > 0 || graphingEnabled(argc, argv)){
@@ -464,6 +464,7 @@ int main(int argc, char** argv){
                 VectorXd XtmVec = momentVector(XtMat, nMoments);
                 cout << times(t) << " " << XtmVec.transpose() << endl;
                 xt3Mats.push_back(XtMat);
+                cout << "XtMat at time " << times(t) << ":" << XtMat << endl;
                 cout << "RSS (NOT GMM) COST FROM DATASET:" << costFunction(XtmVec, yt3Vecs[t-1], MatrixXd::Identity(nMoments, nMoments)) << endl;
             }
             
@@ -481,6 +482,9 @@ int main(int argc, char** argv){
     ******************************************************************************************************************************
     ******************************************************************************************************************************
     */
+    }else{
+        cout << "Error No .BNGL Model Specified! Exiting!" << endl;
+        return EXIT_FAILURE;
     }
     /* 
     ******************************************************************************************************************************

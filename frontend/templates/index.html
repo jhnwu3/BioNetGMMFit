@@ -1,0 +1,34 @@
+<html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <body>
+    <center>
+        <div>
+            {{config}}
+            {% if config %}
+            <h1> Config Submitted </h1>
+            {% else %}
+            <form action = "http://localhost:5000/config" method = "POST" 
+                enctype = "multipart/form-data">
+                <input type= "button" id="Config" value="Config" onclick="document.getElementById('file').click();" />
+                <input type = "file"  id= "file" name = "file"/> 
+                <input type = "submit" class="btn btn-primary" value="Submit" />
+            </form> 
+            {% endif %}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+            
+        </div>
+        <h1>CyGMM</h1>
+        <form method="post" action="/run">
+            <button type="submit" name="Run" value="Run" class="btn btn-primary">Run CyGMM</button>
+        </form>
+    </center>
+    </body>
+</html>
