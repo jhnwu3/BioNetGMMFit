@@ -464,7 +464,7 @@ int main(int argc, char** argv){
             VectorXd XtmVec = momentVector(XtMat, nMoments);
             cout << times(t) << " " << XtmVec.transpose() << endl;
             xt3Mats.push_back(XtMat);    
-            reportLeastCostMoments(XtmVec,yt3Vecs[t-1],times(t), parameters.outPath + file_without_extension);
+            reportLeastCostMoments(XtmVec,yt3Vecs[t-1],times(t), parameters.outPath + file_without_extension); // FIND BEST FIT.
             if(parameters.reportMoments > 0){
                 cout << "For Least Cost Estimate:" << leastCostRunPos.transpose() << endl;
                 cout << "RSS (NOT GMM) COST FROM DATASET:" << costFunction(XtmVec, yt3Vecs[t-1], MatrixXd::Identity(nMoments, nMoments)) << endl;
@@ -472,11 +472,11 @@ int main(int argc, char** argv){
             }
         }
 
-        for(int i = 0; i < GBVECS.rows(); ++i ){
+        for(int n = 0; n < GBVECS.rows(); ++n ){
             for(int t = 1; t < times.size(); ++t){
                 MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
                 for(int j = 0; j < GBVECS.cols() - 1; ++j){
-                    theta[i] = GBVECS(i,j);
+                    theta[j] = GBVECS(n,j);
                 }
                 r.getModel()->setGlobalParameterValues(leastCostRunPos.size(),0,theta); // set new global parameter values here.
                 opt.start = times(0);
@@ -497,22 +497,21 @@ int main(int argc, char** argv){
                     }
                 }
                 VectorXd XtmVec = momentVector(XtMat, nMoments);
-                allMomentsAcrossTime[t-1].row(i) = XtmVec;
+                allMomentsAcrossTime[t-1].row(n) = XtmVec;
                 cout << "All Moments Across Time?" << endl;
             }
         }
-        reportAllMoments(allMomentsAcrossTime,yt3Vecs,times, parameters.outPath + file_without_extension);
-        cout << "HERE? 505" << endl;
 
+        /* Save Data for Plotting */
+        reportAllMoments(allMomentsAcrossTime,yt3Vecs,times, parameters.outPath + file_without_extension);
         for(int y = 0; y < yt3Mats.size(); ++y){ 
             matrixToCsvWithLabels(yt3Mats[y], speciesNames, parameters.outPath + file_without_extension + "Yt" + to_string_with_precision(times(y + 1), 2));
         }
-        cout << "510" << endl;
         for(int t = 1; t < times.size(); t++){
             matrixToCsvWithLabels(xt3Mats[t-1], speciesNames, parameters.outPath + file_without_extension + "Xt" + to_string_with_precision(times(t),2));
         }
         matrixToCsvWithLabels(GBVECS, parameterNames, parameters.outPath + file_without_extension + "_estimates");
-        cout << "515" << endl;
+
         // Graphing Time
         /* Necessary Graphing Initialization */
         Grapher graph = Grapher(parameters.outPath,file_without_extension, getTrueRatesPath(argc, argv), times);

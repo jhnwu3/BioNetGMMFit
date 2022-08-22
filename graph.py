@@ -135,14 +135,11 @@ class Graph:
             title = file
         # plt.figure(frameon=False)
         fig, axes = plt.subplots(figsize=(6.5, 6.0))
-        axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})
-        # axes.set_title("CD8 T Cells Moments t=2 Seconds ", loc='center', wrap=True, fontdict = {'fontsize' : 20})      
+        axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})    
         plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
         axes.spines.right.set_visible(False)
         axes.spines.top.set_visible(False)
-        # mpl.spines.Spine.set_visible(False)
-        # mpl.spines.right.set_visible(False)
         axes.scatter(moments[:,0],moments[:,1])
         # plt.tight_layout()
         x123 = np.arange(0, np.max(moments[:]))
@@ -155,6 +152,39 @@ class Graph:
         bestFit, = axes.plot(np.unique(moments[:,0]), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(moments[:,0])))
         axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
         plt.savefig(file[:-4] + '.png')
+        
+    def plotAllMoments(xFile, yFile, z=1.96, title=""): 
+        # get data
+        dfX = pd.read_csv(xFile)
+        dfY = pd.read_csv(yFile)
+        xMoments = dfX.to_numpy()
+        yMoments = dfY.to_numpy()
+        if title == "":
+            title = xFile
+        # compute confidence intervals 
+        xAvgs = np.mean(xMoments, axis=0)
+        xStds = np.std(xMoments, axis=0)
+        nRuns = xMoments.shape[0]
+        xErrorBars = z*xStds/ (np.sqrt(nRuns)) # 95% CI's
+        # plt.figure(frameon=False)
+        fig, axes = plt.subplots(figsize=(6.5, 6.0))
+        axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})   
+        plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
+        plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
+        axes.spines.right.set_visible(False)
+        axes.spines.top.set_visible(False)
+        axes.scatter(xAvgs,yMoments)
+        x123 = np.arange(0, np.max(xAvgs))
+        y123 = x123
+        optimalLine, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red') # perfect fit
+        print(x123)
+        print(y123)
+        print(np.unique(x123))
+        print(np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)))
+        bestFit, = axes.plot(np.unique(xAvgs), np.poly1d(np.polyfit(xAvgs, yMoments, 1))(np.unique(xAvgs)))
+        axes.errorbar(xAvgs, yMoments, yerr = xErrorBars)
+        axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
+        plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
         
 if '-h' in sys.argv:
     print("Specify graphing type with -g <graph type> ")
