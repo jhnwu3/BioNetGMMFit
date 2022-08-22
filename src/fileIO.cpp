@@ -74,7 +74,19 @@ string findDouble(string line, int startPos) {
 
     return doble;
 }
-
+string vectorToString(const VectorXd & v){
+    string vec = "";
+    for(int t = 0; t < v.size(); t++){
+        vec += "_" + to_string(((int) v(t)));
+    }
+    return vec;
+}
+string getFileNameWithoutExtensions(const string & path){
+    string baseModelFile = path.substr(path.find_last_of("/\\") + 1);
+    string::size_type const p(baseModelFile.find_last_of('.'));
+    string file_without_extension = baseModelFile.substr(0, p);
+    return file_without_extension;
+}
 /* 
     Summary:
         Takes a txt file and converts it into a matrix 
@@ -265,7 +277,31 @@ void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const s
     }
     plot.close();
 }
+void vectorToCsv(const VectorXd& v, const string& fileName){
+    std::ofstream plot;
+    string csvFile = fileName + ".csv";
+	plot.open(csvFile);
+    plot << v << endl;
+    plot.close();
+}
+void reportLeastCostMoments(const VectorXd & est, const VectorXd & obs, double t, const string& fileName){
+    std::ofstream plot;
+    string csvFile = fileName + "t" + to_string_with_precision(t, 2)+ "_leastCostMoments.csv";
+	plot.open(csvFile);
+    plot << "Estimated,Observed" << endl;
+    for(int i = 0; i < est.size(); ++i){
+        plot << est(i) << "," << obs(i) << endl;
+    } 
+    plot.close();
+}
+void reportAllMoments(vector<MatrixXd> & x, vector<VectorXd> & y, const VectorXd& times, const string& fileName){
 
+    for(int t = 0; t < times.size() - 1; ++t){
+        matrixToCsv(x[t], fileName + "XtMoments" + to_string_with_precision(times(t + 1),2));
+        vectorToCsv(y[t], fileName + "YtMoments" + to_string_with_precision(times(t + 1),2));
+    } 
+
+}
 // Reads Time Step Parameters.
 VectorXd readCsvTimeParam(const string &path){
 

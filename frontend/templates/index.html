@@ -3,12 +3,18 @@
     <body>
     <center>
         <div>
-            {{config}}
+            
+            Config{{config}}
+            Bionetgen{{bngl}}
+            TimeSteps{{ts}}
+            TrueRates{{tr}}
+            xData{{xData}}
+            yData{{yData}}
             {% if config %}
             <h1> Config Submitted </h1>
             {% else %}
-            <form action = "http://localhost:5000/config" method = "POST" 
-                enctype = "multipart/form-data">
+            <form action = "http://localhost:5000/" method = "POST" 
+                enctype = "multipart/form-data" name = "config" value = "config">
                 <input type= "button" id="Config" value="Config" onclick="document.getElementById('file').click();" />
                 <input type = "file"  id= "file" name = "file"/> 
                 <input type = "submit" class="btn btn-primary" value="Submit" />

@@ -43,7 +43,7 @@ include(ImportRoadrunnerAndDependencies)
 
 # add an executable
 find_package(OpenMP) # openMP for parallelization
-add_executable(${PROJECT_NAME} main.cpp main.hpp calc.cpp calc.hpp fileIO.cpp fileIO.hpp linear.cpp linear.hpp nonlinear.cpp nonlinear.hpp system.hpp system.cpp sbml.cpp sbml.hpp param.hpp cli.hpp cli.cpp tinyxml2.h tinyxml2.cpp )
+add_executable(${PROJECT_NAME} main.cpp main.hpp calc.cpp calc.hpp fileIO.cpp fileIO.hpp linear.cpp linear.hpp nonlinear.cpp nonlinear.hpp system.hpp system.cpp sbml.cpp sbml.hpp param.hpp cli.hpp cli.cpp tinyxml2.h tinyxml2.cpp graph.hpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 # link roadrunner-static. Note that we have configured roadrunner-static target (which is imported

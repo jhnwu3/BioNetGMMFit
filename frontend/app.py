@@ -20,7 +20,11 @@ def cygmm_output(path):
 def index():
    print(request.method)
    configExists = not inputs["config"] == ""
-   # bnglExists = not inputs["bngl"] == ""
+   bnglExists = not inputs["bngl"] == ""
+   timestepsFileExists = not inputs["timesteps"] == ""
+   trueRatesFileExists = not inputs["truerates"] == ""
+   xDataExists = not inputs["xData"] == ""
+   yDataExists = not inputs["yData"] == []
    if request.method == 'POST':
       if request.form.get('Run') == 'Run':
             # pass
@@ -33,7 +37,7 @@ def index():
    elif request.method == 'GET':
       # return render_template("index.html")
       print("No Post Back Call")
-   return render_template("index.html", config=configExists)
+   return render_template("index.html", config=configExists, bngl = bnglExists, ts = timestepsFileExists, tr = trueRatesFileExists, xData = xDataExists, yData = yDataExists)
 
 # @app.route('/upload')
 # def upload_file():

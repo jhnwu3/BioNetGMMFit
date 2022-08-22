@@ -50,6 +50,9 @@ def getGraphType(args):
 def getSimulatedRates(args):
     return args[args.index('-r') + 1]
 
+def getSimulatedRates(args):
+    return args[args.index('-r') + 1]
+
 class Graph:
     
     def plot_confidence_interval(x, values, axes, z=1.96, color='#2187bb', horizontal_line_width=0.25):
@@ -145,6 +148,10 @@ class Graph:
         x123 = np.arange(0, np.max(moments[:]))
         y123 = x123
         optimalLine, =axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
+        print(x123)
+        print(y123)
+        print(np.unique(x123))
+        print(np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)))
         bestFit, = axes.plot(np.unique(moments[:,0]), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(moments[:,0])))
         axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
         plt.savefig(file[:-4] + '.png')
