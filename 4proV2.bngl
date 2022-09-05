@@ -25,7 +25,7 @@ begin reaction rules
     0 -> pCD3z() k1
     pCD3z() -> pSLP76() + pCD3z() k2
     pSLP76() -> pErk() + pSLP76() k3
-    pErk() -> pS6() + pErk() k4
+    pErk() -> pS6() + pErk() k4   
     pCD3z() -> 0 k5
     pSLP76() -> 0 k5
     pErk() -> 0 k5

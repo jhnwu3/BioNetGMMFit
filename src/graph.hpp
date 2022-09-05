@@ -32,10 +32,12 @@ class Grapher{
             trueRatesFile = trueRatesPath;
         }
 
-    void graphMoments(void){
+    void graphMoments(int nSpecies){
         int status = 0;
+        string whichMoments = " -m " + to_string(nSpecies);
+
         for(int i = 0; i < leastCostMoments.size(); ++i){
-            string cmd = "python3 graph.py -f " + leastCostMoments[i] + " -g Moments";
+            string cmd = "python3 graph.py -f " + leastCostMoments[i] + " -g Moments -n \"Fit of Estimated Moments\"" + whichMoments;
             status = system(cmd.c_str());
         }
 

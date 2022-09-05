@@ -498,7 +498,6 @@ int main(int argc, char** argv){
                 }
                 VectorXd XtmVec = momentVector(XtMat, nMoments);
                 allMomentsAcrossTime[t-1].row(n) = XtmVec;
-                cout << "All Moments Across Time?" << endl;
             }
         }
 
@@ -515,7 +514,7 @@ int main(int argc, char** argv){
         // Graphing Time
         /* Necessary Graphing Initialization */
         Grapher graph = Grapher(parameters.outPath,file_without_extension, getTrueRatesPath(argc, argv), times);
-        graph.graphMoments();
+        graph.graphMoments(xt3Mats[0].cols());
         graph.graphConfidenceIntervals(parameters.simulateYt > 0 );
 
     /* 

@@ -41,6 +41,11 @@ def getName(args):
         return args[args.index('-n') + 1]
     return "Confidence Intervals"
 
+def getMomentSubset(args):
+    if '-m' in args:
+        return args[args.index('-m') + 1]
+    return ""
+
 def getTime(args):
     return args[args.index('-t') + 1]
 
@@ -128,37 +133,55 @@ class Graph:
         plt.savefig(xName[:-7] + '.png')
     
     # assume data format n moments X 2 columns (for X and Y) 
-    def plotMoments(file, title=""): # get list of X, Y 
+    def plotMoments(file, title="", nSpecies=""): # get list of X, Y 
         df = pd.read_csv(file)
         moments = df.to_numpy()
         if title == "":
             title = file
-        # plt.figure(frameon=False)
+
         fig, axes = plt.subplots(figsize=(6.5, 6.0))
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})    
         plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
         axes.spines.right.set_visible(False)
         axes.spines.top.set_visible(False)
-        axes.scatter(moments[:,0],moments[:,1])
-        # plt.tight_layout()
+    
         x123 = np.arange(0, np.max(moments[:]))
         y123 = x123
-        optimalLine, =axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
-        print(x123)
-        print(y123)
-        print(np.unique(x123))
-        print(np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)))
-        bestFit, = axes.plot(np.unique(moments[:,0]), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(moments[:,0])))
-        axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
+        optimalLine, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
+        a, b = np.polyfit(moments[:,0], moments[:,1], 1)
+        bestFit, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(x123)))
+        
+        totMoments = moments.shape[0]
+        means = ""
+        variances = ""
+        covariances = ""
+        if(nSpecies != ""):
+            nSpecies = int(nSpecies)
+            if(nSpecies*(nSpecies + 3) / 2 == totMoments):
+                means = axes.scatter(moments[:nSpecies,0],moments[:nSpecies,1])
+                variances = axes.scatter(moments[nSpecies:2*nSpecies,0], moments[nSpecies:2*nSpecies,1])
+                covariances = axes.scatter(moments[2*nSpecies:totMoments,0], moments[2*nSpecies:totMoments,1])
+                axes.legend([optimalLine, bestFit, means, variances, covariances], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means", "Variances", "Covariances"])
+            elif(2*nSpecies == totMoments):
+                means = axes.scatter(moments[:nSpecies,0],moments[:nSpecies,1])
+                variances = axes.scatter(moments[nSpecies:2*nSpecies,0], moments[nSpecies:2*nSpecies,1])
+                axes.legend([optimalLine, bestFit, means, variances], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means", "Variances"])      
+            else:
+                means = axes.scatter(moments[:,0],moments[:,1]) 
+                axes.legend([optimalLine, bestFit, means], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means"])      
+        else:
+            axes.scatter(moments[:,0],moments[:,1])   
+            axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b)])    
+        
         plt.savefig(file[:-4] + '.png')
         
     def plotAllMoments(xFile, yFile, z=1.96, title=""): 
         # get data
         dfX = pd.read_csv(xFile)
-        dfY = pd.read_csv(yFile)
+       
         xMoments = dfX.to_numpy()
-        yMoments = dfY.to_numpy()
+        yMoments = np.genfromtxt(yFile, delimiter=',')
         if title == "":
             title = xFile
         # compute confidence intervals 
@@ -166,6 +189,7 @@ class Graph:
         xStds = np.std(xMoments, axis=0)
         nRuns = xMoments.shape[0]
         xErrorBars = z*xStds/ (np.sqrt(nRuns)) # 95% CI's
+        print(xErrorBars)
         # plt.figure(frameon=False)
         fig, axes = plt.subplots(figsize=(6.5, 6.0))
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})   
@@ -174,15 +198,12 @@ class Graph:
         axes.spines.right.set_visible(False)
         axes.spines.top.set_visible(False)
         axes.scatter(xAvgs,yMoments)
+       
         x123 = np.arange(0, np.max(xAvgs))
         y123 = x123
         optimalLine, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red') # perfect fit
-        print(x123)
-        print(y123)
-        print(np.unique(x123))
-        print(np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)))
         bestFit, = axes.plot(np.unique(xAvgs), np.poly1d(np.polyfit(xAvgs, yMoments, 1))(np.unique(xAvgs)))
-        axes.errorbar(xAvgs, yMoments, yerr = xErrorBars)
+        axes.errorbar(xAvgs, yMoments, yerr = 10, fmt='-', elinewidth = 5, capsize=10)
         axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
         
@@ -208,10 +229,13 @@ if graphType == 'CI':
 elif graphType == 'CI_truth':
     Graph.plotConfidenceIntervals(1.96, getFile(sys.argv),simulated=True, trueRatesFile=getSimulatedRates(sys.argv), title=getName(sys.argv))
 elif graphType == 'Moments':
-    Graph.plotMoments(getFile(sys.argv), title=getName(sys.argv))
+    Graph.plotMoments(getFile(sys.argv), title=getName(sys.argv), nSpecies= getMomentSubset(sys.argv))
 elif graphType == 'dMoments':
     dataX, dataY = getFile(sys.argv, multi=True)
     Graph.plotMomentsWithActualEvolvedMatrices(dataX,dataY)
+elif graphType =='allMoments':
+    dataX, dataY = getFile(sys.argv, multi=True)
+    Graph.plotAllMoments(dataX,dataY,title=getName(sys.argv))
 else:
     print("Error Invalid Graph Type Inputted:", graphType)
     print("")
