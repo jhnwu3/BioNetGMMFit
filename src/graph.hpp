@@ -37,7 +37,7 @@ class Grapher{
         string whichMoments = " -m " + to_string(nSpecies);
 
         for(int i = 0; i < leastCostMoments.size(); ++i){
-            string cmd = "python3 graph.py -f " + leastCostMoments[i] + " -g Moments -n \"Fit of Estimated Moments\"" + whichMoments;
+            string cmd = "python3 graph.py -f " + leastCostMoments[i] + " -g Moments -n \"Fit of Predicted Moments\"" + whichMoments;
             status = system(cmd.c_str());
         }
 
@@ -54,7 +54,7 @@ class Grapher{
     void graphConfidenceIntervals(bool simulated){
         string cmd = "python3 graph.py -f " + estFile + " -g CI";
         if(simulated){
-            cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r" + trueRatesFile;
+            cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r" + trueRatesFile + " -n Parameter Estimates";
         }
         int status = system(cmd.c_str());
         if (status < 0)

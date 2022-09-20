@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named CyGMM
+# Target rules for targets named BNGMM
 
 # Build rule for target.
-CyGMM: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CyGMM
-.PHONY : CyGMM
+BNGMM: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BNGMM
+.PHONY : BNGMM
 
 # fast build rule for target.
-CyGMM/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/build
-.PHONY : CyGMM/fast
+BNGMM/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/build
+.PHONY : BNGMM/fast
 
 calc.o: calc.cpp.o
 .PHONY : calc.o
 
 # target to build an object file
 calc.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/calc.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/calc.cpp.o
 .PHONY : calc.cpp.o
 
 calc.i: calc.cpp.i
@@ -142,7 +142,7 @@ calc.i: calc.cpp.i
 
 # target to preprocess a source file
 calc.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/calc.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/calc.cpp.i
 .PHONY : calc.cpp.i
 
 calc.s: calc.cpp.s
@@ -150,7 +150,7 @@ calc.s: calc.cpp.s
 
 # target to generate assembly for a file
 calc.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/calc.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/calc.cpp.s
 .PHONY : calc.cpp.s
 
 cli.o: cli.cpp.o
@@ -158,7 +158,7 @@ cli.o: cli.cpp.o
 
 # target to build an object file
 cli.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/cli.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/cli.cpp.o
 .PHONY : cli.cpp.o
 
 cli.i: cli.cpp.i
@@ -166,7 +166,7 @@ cli.i: cli.cpp.i
 
 # target to preprocess a source file
 cli.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/cli.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/cli.cpp.i
 .PHONY : cli.cpp.i
 
 cli.s: cli.cpp.s
@@ -174,7 +174,7 @@ cli.s: cli.cpp.s
 
 # target to generate assembly for a file
 cli.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/cli.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/cli.cpp.s
 .PHONY : cli.cpp.s
 
 fileIO.o: fileIO.cpp.o
@@ -182,7 +182,7 @@ fileIO.o: fileIO.cpp.o
 
 # target to build an object file
 fileIO.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/fileIO.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/fileIO.cpp.o
 .PHONY : fileIO.cpp.o
 
 fileIO.i: fileIO.cpp.i
@@ -190,7 +190,7 @@ fileIO.i: fileIO.cpp.i
 
 # target to preprocess a source file
 fileIO.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/fileIO.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/fileIO.cpp.i
 .PHONY : fileIO.cpp.i
 
 fileIO.s: fileIO.cpp.s
@@ -198,7 +198,7 @@ fileIO.s: fileIO.cpp.s
 
 # target to generate assembly for a file
 fileIO.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/fileIO.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/fileIO.cpp.s
 .PHONY : fileIO.cpp.s
 
 linear.o: linear.cpp.o
@@ -206,7 +206,7 @@ linear.o: linear.cpp.o
 
 # target to build an object file
 linear.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/linear.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/linear.cpp.o
 .PHONY : linear.cpp.o
 
 linear.i: linear.cpp.i
@@ -214,7 +214,7 @@ linear.i: linear.cpp.i
 
 # target to preprocess a source file
 linear.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/linear.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/linear.cpp.i
 .PHONY : linear.cpp.i
 
 linear.s: linear.cpp.s
@@ -222,7 +222,7 @@ linear.s: linear.cpp.s
 
 # target to generate assembly for a file
 linear.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/linear.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/linear.cpp.s
 .PHONY : linear.cpp.s
 
 main.o: main.cpp.o
@@ -230,7 +230,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -238,7 +238,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -246,7 +246,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 nonlinear.o: nonlinear.cpp.o
@@ -254,7 +254,7 @@ nonlinear.o: nonlinear.cpp.o
 
 # target to build an object file
 nonlinear.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/nonlinear.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/nonlinear.cpp.o
 .PHONY : nonlinear.cpp.o
 
 nonlinear.i: nonlinear.cpp.i
@@ -262,7 +262,7 @@ nonlinear.i: nonlinear.cpp.i
 
 # target to preprocess a source file
 nonlinear.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/nonlinear.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/nonlinear.cpp.i
 .PHONY : nonlinear.cpp.i
 
 nonlinear.s: nonlinear.cpp.s
@@ -270,7 +270,7 @@ nonlinear.s: nonlinear.cpp.s
 
 # target to generate assembly for a file
 nonlinear.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/nonlinear.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/nonlinear.cpp.s
 .PHONY : nonlinear.cpp.s
 
 sbml.o: sbml.cpp.o
@@ -278,7 +278,7 @@ sbml.o: sbml.cpp.o
 
 # target to build an object file
 sbml.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/sbml.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/sbml.cpp.o
 .PHONY : sbml.cpp.o
 
 sbml.i: sbml.cpp.i
@@ -286,7 +286,7 @@ sbml.i: sbml.cpp.i
 
 # target to preprocess a source file
 sbml.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/sbml.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/sbml.cpp.i
 .PHONY : sbml.cpp.i
 
 sbml.s: sbml.cpp.s
@@ -294,7 +294,7 @@ sbml.s: sbml.cpp.s
 
 # target to generate assembly for a file
 sbml.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/sbml.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/sbml.cpp.s
 .PHONY : sbml.cpp.s
 
 system.o: system.cpp.o
@@ -302,7 +302,7 @@ system.o: system.cpp.o
 
 # target to build an object file
 system.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/system.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/system.cpp.o
 .PHONY : system.cpp.o
 
 system.i: system.cpp.i
@@ -310,7 +310,7 @@ system.i: system.cpp.i
 
 # target to preprocess a source file
 system.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/system.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/system.cpp.i
 .PHONY : system.cpp.i
 
 system.s: system.cpp.s
@@ -318,7 +318,7 @@ system.s: system.cpp.s
 
 # target to generate assembly for a file
 system.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/system.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/system.cpp.s
 .PHONY : system.cpp.s
 
 tinyxml2.o: tinyxml2.cpp.o
@@ -326,7 +326,7 @@ tinyxml2.o: tinyxml2.cpp.o
 
 # target to build an object file
 tinyxml2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/tinyxml2.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/tinyxml2.cpp.o
 .PHONY : tinyxml2.cpp.o
 
 tinyxml2.i: tinyxml2.cpp.i
@@ -334,7 +334,7 @@ tinyxml2.i: tinyxml2.cpp.i
 
 # target to preprocess a source file
 tinyxml2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/tinyxml2.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/tinyxml2.cpp.i
 .PHONY : tinyxml2.cpp.i
 
 tinyxml2.s: tinyxml2.cpp.s
@@ -342,7 +342,7 @@ tinyxml2.s: tinyxml2.cpp.s
 
 # target to generate assembly for a file
 tinyxml2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CyGMM.dir/build.make CMakeFiles/CyGMM.dir/tinyxml2.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BNGMM.dir/build.make CMakeFiles/BNGMM.dir/tinyxml2.cpp.s
 .PHONY : tinyxml2.cpp.s
 
 # Help Target
@@ -353,7 +353,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... CyGMM"
+	@echo "... BNGMM"
 	@echo "... calc.o"
 	@echo "... calc.i"
 	@echo "... calc.s"

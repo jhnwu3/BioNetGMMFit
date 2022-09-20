@@ -39,7 +39,7 @@ def getFile(args, multi=False):
 def getName(args):
     if '-n' in args:
         return args[args.index('-n') + 1]
-    return "Confidence Intervals"
+    return ""
 
 def getMomentSubset(args):
     if '-m' in args:
@@ -121,7 +121,7 @@ class Graph:
         x = dfX.to_numpy()
         y = dfY.to_numpy()
         plt.title(xName[:-4] + " and " + yName[:-4])
-        plt.xlabel("Estimated Moment")
+        plt.xlabel("Predicted Moment")
         plt.ylabel("Observed Moment")
         xMoments = compute_moments(x)
         yMoments = compute_moments(y)
@@ -141,16 +141,16 @@ class Graph:
 
         fig, axes = plt.subplots(figsize=(6.5, 6.0))
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})    
-        plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
+        plt.xlabel("Predicted Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
         axes.spines.right.set_visible(False)
         axes.spines.top.set_visible(False)
     
-        x123 = np.arange(0, np.max(moments[:]))
+        x123 = np.arange(np.min(moments[:]), np.max(moments[:]))
         y123 = x123
-        optimalLine, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red')
+        optimalLine, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)),'--')
         a, b = np.polyfit(moments[:,0], moments[:,1], 1)
-        bestFit, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(x123)))
+        bestFit, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(moments[:,0], moments[:,1], 1))(np.unique(x123)), ':')
         
         totMoments = moments.shape[0]
         means = ""
@@ -159,20 +159,20 @@ class Graph:
         if(nSpecies != ""):
             nSpecies = int(nSpecies)
             if(nSpecies*(nSpecies + 3) / 2 == totMoments):
-                means = axes.scatter(moments[:nSpecies,0],moments[:nSpecies,1])
-                variances = axes.scatter(moments[nSpecies:2*nSpecies,0], moments[nSpecies:2*nSpecies,1])
-                covariances = axes.scatter(moments[2*nSpecies:totMoments,0], moments[2*nSpecies:totMoments,1])
-                axes.legend([optimalLine, bestFit, means, variances, covariances], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means", "Variances", "Covariances"])
+                means = axes.scatter(moments[:nSpecies,0],moments[:nSpecies,1], s=80)
+                variances = axes.scatter(moments[nSpecies:2*nSpecies,0], moments[nSpecies:2*nSpecies,1], s=80)
+                covariances = axes.scatter(moments[2*nSpecies:totMoments,0], moments[2*nSpecies:totMoments,1], s=80)
+                axes.legend([optimalLine, bestFit, means, variances, covariances], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means", "Variances", "Covariances"])
             elif(2*nSpecies == totMoments):
-                means = axes.scatter(moments[:nSpecies,0],moments[:nSpecies,1])
-                variances = axes.scatter(moments[nSpecies:2*nSpecies,0], moments[nSpecies:2*nSpecies,1])
-                axes.legend([optimalLine, bestFit, means, variances], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means", "Variances"])      
+                means = axes.scatter(moments[:nSpecies,0],moments[:nSpecies,1], s=80)
+                variances = axes.scatter(moments[nSpecies:2*nSpecies,0], moments[nSpecies:2*nSpecies,1], s=80)
+                axes.legend([optimalLine, bestFit, means, variances], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means", "Variances"])      
             else:
-                means = axes.scatter(moments[:,0],moments[:,1]) 
-                axes.legend([optimalLine, bestFit, means], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means"])      
+                means = axes.scatter(moments[:,0],moments[:,1], s=80) 
+                axes.legend([optimalLine, bestFit, means], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b), "Means"])      
         else:
-            axes.scatter(moments[:,0],moments[:,1])   
-            axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b)])    
+            axes.scatter(moments[:,0],moments[:,1] , s=80)   
+            axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line:" + " y= " + "{:.2f}".format(a) + "x + " + "{:.2f}".format(b)])    
         
         plt.savefig(file[:-4] + '.png')
         
@@ -199,12 +199,12 @@ class Graph:
         axes.spines.top.set_visible(False)
         axes.scatter(xAvgs,yMoments)
        
-        x123 = np.arange(0, np.max(xAvgs))
+        x123 = np.arange(np.min(xAvgs), np.max(xAvgs))
         y123 = x123
         optimalLine, = axes.plot(np.unique(x123), np.poly1d(np.polyfit(x123, y123, 1))(np.unique(x123)), color='red') # perfect fit
         bestFit, = axes.plot(np.unique(xAvgs), np.poly1d(np.polyfit(xAvgs, yMoments, 1))(np.unique(xAvgs)))
         axes.errorbar(xAvgs, yMoments, yerr = 10, fmt='-', elinewidth = 5, capsize=10)
-        axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Data Line"])
+        axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line"])
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
         
 if '-h' in sys.argv:
