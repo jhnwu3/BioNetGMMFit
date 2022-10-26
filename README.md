@@ -212,8 +212,6 @@ The default PSO parameters are listed below, Note that many of the hyperparamete
 |----------------------------------|-------|--------------------------------------------------------------------------|
 | Number of Particles Blind PSO    | 1000  | Sets number of particles in first stage PSO                              |
 | Number of Steps Blind PSO        | 10    | Sets number of steps for first stage PSO                                 |
-| Number of Particles Targeted PSO | 10    | Sets number of particles in second stage PSO (DEFUNCT-ignore)            |
-| Number of Steps Targeted PSO     | 1000  | Sets number of steps for second stage PSO  ((DEFUNCT-ignore))            |
 | Exclude Mixed Moments?           | 0     | 1 to use only means and variances, 0 otherwise                           |
 | Exclude Mixed and Second Moments?| 0     | 1 to use only means, 0 otherwise                                         |
 | Use Matrix Exp Model?            | 1     | 1 to use a matrix system, 0 to use nonlinear  (Defunct-Ignore)           |
@@ -225,13 +223,14 @@ The default PSO parameters are listed below, Note that many of the hyperparamete
 | Value of Held Rate Constant      | 0     | Value between 0 and 1 that a rate constant would be held at              |
 | Hypercube Dimension              | 1.0   | Real Value Dimensions of Hypercube to be searched in PSO.                |
 | Report Moments?                  | 1     | 1 to report predicted moments in out.txt                                 |
-| Number of Nested Hypcubes        | 1     | Estimates rate constants in spaces of 2^n order, (DEFUNCT-IGNORE))       |
 | Bootstrap?                       | 1     | 1 to estimate 95% CI's, 0 otherwise                                      |   
-| Use BNGL?                        | 1     | 1 to use bionetgen language for simulation, 0 otherwise                  |
 | Use Deterministic?               | 1     | 1 to use CVode integrators, 0 to use roadrunner gillespie simulation     |
 | Number of BNGL Steps             | 15    | Tuning Parameter for number of steps of integration                      |
 | Seed                             | -1    | Used to seed the PSO, Off when seed < 0, On when seed > 0                |
 | Parallel Number of Threads       | 8     | Number of threads to parallelize on.                                     |
+| Initial Particle Best Weight     | 3.0   | How much historical weight (i.e last known particle position) to affect PSO step.|
+| Global Best Weight               | 1.0   | How much weight best particle affects next PSO Step.                     |
+| Particle Inertial Weight         | 6.0   | PSO Particle Inertia Component (to avoid local minima)                   |
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1

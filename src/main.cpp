@@ -25,7 +25,7 @@ int main(int argc, char** argv){
     /* Input Parameters for Program */
     if(helpCall(argc, argv)){return EXIT_SUCCESS;}
     cout << "Program Begin:" << endl;
-    cout << "** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! **" << endl;
+    cout << "** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! To see the full list of commands with BNGMM, please do ./BNGMM -h **" << endl;
     Parameters parameters = Parameters(getConfigPath(argc, argv));
     parameters.useSBML = int(modelPathExists(argc,argv));
     if(outPathExists(argc, argv)){
@@ -133,7 +133,7 @@ int main(int argc, char** argv){
                 return EXIT_FAILURE;
             }
             cout << "Number of Species Defined in BNGL does not match number of columns in data files! Now listing all species in system and respective indices in order!" << endl;
-            cout << "Note: User can supply a \"./CyGMM -p protein_observed.txt \" to specify explicitly which proteins are observed in data. Please make sure names are in order from top to bottom matching left to right in data csv file." << endl;
+            cout << "Note: User can supply a \"./BNGMM -p protein_observed.txt \" to specify explicitly which proteins are observed in data. Please make sure names are in order from top to bottom matching left to right in data csv file." << endl;
             for(int i = 0; i < speciesNames.size(); i++){
                 cout << "(" << i << ") " << speciesNames[i] << endl; 
             }
@@ -524,7 +524,7 @@ int main(int argc, char** argv){
     ******************************************************************************************************************************
     */
     }else{
-        cout << "Error No .BNGL Model Specified! Exiting!" << endl;
+        cout << "Error No .BNGL Model Specified! Please specify a model by \"./BNGMM -m model.bngl\". To get more possible BNGMM parameters, please do \"./BNGMM -h\". Exiting!" << endl;
         return EXIT_FAILURE;
     }
     /* 

@@ -83,15 +83,15 @@ bool proPathExists(int argc, char **argv){
 bool helpCall(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-h");
     if(flag != -1){
-        cout << "To specify model path, do: ./CyGMM -m <path> i.e ./CyGMM -m model.bngl" << endl
-        << "To specify config path, do: ./CyGMM -c <path> i.e ./CyGMM -c Config.csv" << endl
-        << "To specify time steps file path, do: ./CyGMM -t <path> i.e ./CyGMM -t time_steps.csv" << endl
-        << "To specify simulation truth rate constants path, do: ./CyGMM -r <path> i.e ./CyGMM -r true_rates.csv" << endl
-        << "To specify data X directory where X data files are located, do: ./CyGMM -x <path> i.e ./CyGMM -x model.bngl" << endl
-        << "To specify data Y directory where true Y data files are located, do: ./CyGMM -y <path> i.e ./CyGMM -y model.bngl" << endl
-        << "To specify an output directory where output files such as graphing and output txt files, ./CyGMM -o <path> i.e ./CyGMM -o /frontend/graphs/6pro" << endl
+        cout << "To specify model path, do: ./BNGMM -m <path> i.e ./BNGMM -m model.bngl" << endl
+        << "To specify config path, do: ./BNGMM -c <path> i.e ./BNGMM -c Config.csv" << endl
+        << "To specify time steps file path, do: ./BNGMM -t <path> i.e ./BNGMM -t time_steps.csv" << endl
+        << "To specify simulation truth rate constants path, do: ./BNGMM -r <path> i.e ./BNGMM -r true_rates.csv" << endl
+        << "To specify data X directory where X data files are located, do: ./BNGMM -x <path> i.e ./BNGMM -x model.bngl" << endl
+        << "To specify data Y directory where true Y data files are located, do: ./BNGMM -y <path> i.e ./BNGMM -y model.bngl" << endl
+        << "To specify an output directory where output files such as graphing and output txt files, ./BNGMM -o <path> i.e ./BNGMM -o /frontend/graphs/6pro" << endl
         << "If you have more species in the system than observed protein species, then please supply a list of proteins in a .txt file." << endl
-        << "i.e ./CyGMM -p listOfObservedProteinsInOrder.txt " << endl;
+        << "i.e ./BNGMM -p listOfObservedProteinsInOrder.txt " << endl;
         return true;
     }
     return false;

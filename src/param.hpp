@@ -36,7 +36,7 @@ class Parameters{
             cout << "Reading in Parameters from Configuration File!" << endl;
             std::ifstream input(path);
             if(!input.is_open()){
-                throw std::runtime_error("Could Not Open Configuration file");
+                throw std::runtime_error("Could Not Open Configuration file! Please specify a configuration file by \"./BNGMM -c /path/to/config.csv\"! Call \"./BNGMM -h\" for more information!");
                 exit(EXIT_FAILURE);
             }
             vector<double> params;
@@ -52,30 +52,27 @@ class Parameters{
             }
             nParts = params.at(0);
             nSteps = params.at(1);
-            nParts2 = params.at(2);
-            nSteps2 = params.at(3);
-            useOnlySecMom = params.at(4);
-            useOnlyFirstMom = params.at(5);
-            useLinear = params.at(6);
-            nRuns = params.at(7);
-            simulateYt = params.at(8);
-            useInverse = params.at(9);
-            nRates = params.at(10);
-            heldTheta = params.at(11);
-            heldThetaVal = params.at(12);
-            hyperCubeScale = params.at(13);
-            reportMoments = params.at(14);
-            nest = params.at(15);
-            bootstrap = params.at(16);
-            useSBML = params.at(17);
-            useDet = params.at(18);
-            odeSteps = params.at(19);
-            seed = params.at(20);
-            nThreads = params.at(21); 
+            useOnlySecMom = params.at(2);
+            useOnlyFirstMom = params.at(3);
+            nRuns = params.at(4);
+            simulateYt = params.at(5);
+            useInverse = params.at(6);
+            nRates = params.at(7);
+            heldTheta = params.at(8);
+            heldThetaVal = params.at(9);
+            hyperCubeScale = params.at(10);
+            reportMoments = params.at(11);
+            bootstrap = params.at(12);
+            useDet = params.at(13);
+            odeSteps = params.at(14);
+            seed = params.at(15);
+            nThreads = params.at(16); 
+            pBestWeight = params.at(17);
+            globalBestWeight = params.at(18);
+            pInertia = params.at(19);
+            
+            useSBML = 0;
             outPath = "";
-            pBestWeight = params.at(22);
-            globalBestWeight = params.at(23);
-            pInertia = params.at(24);
             input.close();
         }
         void printParameters(int nMoments, const VectorXd& times){
