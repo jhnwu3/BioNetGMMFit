@@ -34,18 +34,35 @@ There are two ways to get BioNetGMMFit up and running, one if you're on Ubuntu, 
 To quickly get started with one of the simulated examples, do:
 
 ### Docker  <a name="docker"></a>
-Should the quickstart statically compiled executable in the repository fail to run, there is a docker image that can be easily pulled and run on any operating system. 
+Should the quickstart statically compiled executable in the repository fail to run, there is a docker image that can be easily pulled and run on any operating system from [here](https://hub.docker.com/r/jhnwu3/bngmm). 
 
-1. Install docker or dockerhub [here](https://docs.docker.com/get-docker/) (this should be as easy as an executable)
-2. Pull image from dockerhub, in your command line (bash, terminal, etc.), input 
+1. Install docker [here](https://docs.docker.com/get-docker/) (this should be as easy as an executable)
 
-    docker pull jhnwu3/cygmm:cygmm_run
+If you're on Windows, you will have to install WSL first, which will simply require you to open power shell as an administrator and inputting:
 
-3. Run docker image which currently should already have some pre-existing (birth-death) model inside.
+    wsl --install
 
-    docker run -t cygmm_run
+For more information for Windows Linux Subsystem, see [here](https://learn.microsoft.com/en-us/windows/wsl/install). If you're not already familiar with a terminal/console, then please do see here [here](https://www.youtube.com/watch?v=A0eqZujVfYU) for how to setup a linux kernel on Windows. Setting up a linux based terminal will allow you to perform the following steps.
 
-4.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
+2. Pull image from dockerhub, in your command line (bash, linux terminal if on Windows, etc.), input 
+
+    docker pull jhnwu3/bngmm:bngmm
+
+3. Run docker image to check, which should error on not having a configuration file specified with "-c".
+
+    docker run -t bngmm
+
+4. Create a project directory for use i.e
+
+    mkdir BNGMM
+
+5. Enter the directory i.e
+
+    cd BNGMM
+
+6. Now, let's get started with a basic example, please download the folder from [here]()
+
+7.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
 
     docker run -v full_path_local_directory:cygmm/home -t cygmm_run -m "pathtomodel.bngl" -c "lookBelowForConfig.csv"
 

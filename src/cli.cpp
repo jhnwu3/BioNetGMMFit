@@ -35,6 +35,7 @@ string getXPath(int argc, char **argv){
     if(flag != -1){
         return argv[flag+1];
     }
+    cout << "Please Make Sure to Specify \"-x <DIRECTORY>\" in call, otherwise it will default to data/X directory, which may be inside of the docker container and not on your device!" << endl;
     return "data/X";
 }
 string getYPath(int argc, char **argv){
@@ -42,6 +43,7 @@ string getYPath(int argc, char **argv){
     if(flag != -1){
         return argv[flag+1];
     }
+    cout << "Please Make Sure to Specify \"-y <DIRECTORY>\" in call, otherwise it will default to data/Y directory, which may be inside of the docker container and not on your device!" << endl;
     return "data/Y";
 }
 string getModelPath(int argc, char **argv){
@@ -87,8 +89,8 @@ bool helpCall(int argc, char **argv){
         << "To specify config path, do: ./BNGMM -c <path> i.e ./BNGMM -c Config.csv" << endl
         << "To specify time steps file path, do: ./BNGMM -t <path> i.e ./BNGMM -t time_steps.csv" << endl
         << "To specify simulation truth rate constants path, do: ./BNGMM -r <path> i.e ./BNGMM -r true_rates.csv" << endl
-        << "To specify data X directory where X data files are located, do: ./BNGMM -x <path> i.e ./BNGMM -x model.bngl" << endl
-        << "To specify data Y directory where true Y data files are located, do: ./BNGMM -y <path> i.e ./BNGMM -y model.bngl" << endl
+        << "To specify data X directory where X data files are located, do: ./BNGMM -x <DIRECTORY> i.e ./BNGMM -x to/X/dir" << endl
+        << "To specify data Y directory where true Y data files are located, do: ./BNGMM -y <DIRECTORY> i.e ./BNGMM -y to/Y/DIRECTORY" << endl
         << "To specify an output directory where output files such as graphing and output txt files, ./BNGMM -o <path> i.e ./BNGMM -o /frontend/graphs/6pro" << endl
         << "If you have more species in the system than observed protein species, then please supply a list of proteins in a .txt file." << endl
         << "i.e ./BNGMM -p listOfObservedProteinsInOrder.txt " << endl;

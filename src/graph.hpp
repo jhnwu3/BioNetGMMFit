@@ -2,7 +2,8 @@
 #define _GRAPH_HPP_
 /*
 Author: John Wu
-Summary: Header file for all file input and output functions used to read in inputs from Config.csv and data/X or data/Y files.
+Summary: Functions Used to Generate Graphs. Note that every file path is essentially a vector of strings that gets read in and outputted by a python graphing script.
+Python makes life easier.
  */
 
 #include "main.hpp"

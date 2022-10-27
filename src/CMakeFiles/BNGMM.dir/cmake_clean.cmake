@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/BNGMM"
-  "/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/BNGMM.pdb"
+  "/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/BNGMM/BNGMM"
+  "/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/BNGMM/BNGMM.pdb"
   "CMakeFiles/BNGMM.dir/calc.cpp.o"
   "CMakeFiles/BNGMM.dir/calc.cpp.o.d"
   "CMakeFiles/BNGMM.dir/cli.cpp.o"

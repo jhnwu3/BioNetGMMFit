@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src
+# Install script for directory: /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/BNGMM/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/CyGMM/src/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/BNGMM/src/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
