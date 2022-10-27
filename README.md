@@ -60,11 +60,16 @@ For more information for Windows Linux Subsystem, see [here](https://learn.micro
 
     cd BNGMM
 
-6. Now, let's get started with a basic example, please download the folder from [here]()
+6. Now, let's get started with a basic example, please download the folder from [here](https://github.com/jhnwu3/BioNetGMMFit-Example) or do
 
-7.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
+    git clone https://github.com/jhnwu3/BioNetGMMFit-Example.git
 
-    docker run -v full_path_local_directory:cygmm/home -t cygmm_run -m "pathtomodel.bngl" -c "lookBelowForConfig.csv"
+7. cd BioNetGMMFit-Example
+
+
+8.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
+
+    docker run -v $PWD:/data -t cygmm_run -m "pathtomodel.bngl" -c "lookBelowForConfig.csv"
 
     For more information see [here](https://docs.docker.com/storage/volumes/) on how to mount a drive to be able to input configuration and data files.
 
