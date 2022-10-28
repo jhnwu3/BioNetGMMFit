@@ -69,9 +69,13 @@ For more information for Windows Linux Subsystem, see [here](https://learn.micro
 
 8.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
 
-    docker run -v $PWD:/data -t cygmm_run -m "pathtomodel.bngl" -c "lookBelowForConfig.csv"
+    docker run --rm -v $PWD:/data jhnwu3/bngmm -c /data/Config4pro.csv -m /data/4proV2.bngl -t /data/time_steps4.csv -x /data/X -y /data/Y -o /data
+
+Note each directory and observe which each parameter corresponds to.
 
     For more information see [here](https://docs.docker.com/storage/volumes/) on how to mount a drive to be able to input configuration and data files.
+
+9. 
 
 ### Static Binary (Out of Date) <a name="statbin"></a>
 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git)

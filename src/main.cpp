@@ -99,7 +99,7 @@ int main(int argc, char** argv){
             yt3Mats[i] = filterZeros(yt3Mats[i]);
             cout << "After removing all negative rows, Y"<< i << " has " << yt3Mats[i].rows() << " rows." << endl;
             yt3Vecs.push_back(momentVector(yt3Mats[i], nMoments));
-            cout << times(i+1) << " "<< yt3Vecs[i].transpose() << endl;
+            cout << "t" << times(i+1) << " moments:"<< yt3Vecs[i].transpose() << endl;
         }
         ogYt3Mats = yt3Mats;
     }
@@ -468,7 +468,7 @@ int main(int argc, char** argv){
             if(parameters.reportMoments > 0){
                 cout << "For Least Cost Estimate:" << leastCostRunPos.transpose() << endl;
                 cout << "RSS (NOT GMM) COST FROM DATASET:" << costFunction(XtmVec, yt3Vecs[t-1], MatrixXd::Identity(nMoments, nMoments)) << endl;
-                cout << XtmVec.transpose() << endl;
+                cout << "Moments:"<< XtmVec.transpose() << endl;
             }
         }
 

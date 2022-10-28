@@ -220,7 +220,6 @@ if "-g" not in sys.argv:
     print("Error Need to Specify Graph Types with -g")
     exit(0)
 
-mpl.rcParams['font.family'] = 'Arial'
 plt.rcParams['figure.constrained_layout.use'] = True
 plt.tight_layout()
 graphType = getGraphType(sys.argv)
