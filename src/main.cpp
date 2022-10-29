@@ -516,6 +516,7 @@ int main(int argc, char** argv){
         Grapher graph = Grapher(parameters.outPath,file_without_extension, getTrueRatesPath(argc, argv), times);
         graph.graphMoments(xt3Mats[0].cols());
         graph.graphConfidenceIntervals(parameters.simulateYt > 0 );
+        
 
     /* 
     ******************************************************************************************************************************
