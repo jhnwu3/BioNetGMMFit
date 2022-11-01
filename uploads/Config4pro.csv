@@ -1,4 +1,4 @@
-Number of Particles Blind PSO,150
+Number of Particles Blind PSO,100
 Number of Steps Blind PSO,25
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
@@ -15,6 +15,6 @@ Use Deterministic?,-1
 Number of BNGL Steps,15
 Seed,-1
 ParallelNumberOfThreads,8
-Initial Particle Best Weight, 3.0
-Initial Global Best Weight, 1.0
-Particle Inertial Weight, 6.0
+Initial Particle Best Weight,3
+Initial Global Best Weight,1
+Particle Inertial Weight,6

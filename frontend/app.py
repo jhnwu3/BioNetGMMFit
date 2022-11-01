@@ -127,9 +127,9 @@ def run():
       deleteFilesInDirectory(UPLOAD_FOLDER + '/X')
       deleteFilesInDirectory(UPLOAD_FOLDER + '/Y')
       deleteFilesInDirectory(OUTPUT_FOLDER)
-      shutil.move(UPLOAD_FOLDER + '/' + INPUTS['xData'], UPLOAD_FOLDER + '/X/' + INPUTS['xData'])
+      shutil.copyfile(UPLOAD_FOLDER + '/' + INPUTS['xData'], UPLOAD_FOLDER + '/X/' + INPUTS['xData'])
       for f in INPUTS['yData']:
-         shutil.move(UPLOAD_FOLDER + '/' + f, UPLOAD_FOLDER + '/Y/' + f)
+         shutil.copyfile(UPLOAD_FOLDER + '/' + f, UPLOAD_FOLDER + '/Y/' + f)
       
       if(allFull):
          if INPUTS['truerates'] == "":
