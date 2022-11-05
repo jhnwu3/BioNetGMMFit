@@ -1,4 +1,6 @@
 Flask==2.1.2
+Flask_Executor==1.0.0
+Flask_SocketIO==5.3.1
 matplotlib==3.5.1
 numpy==1.23.0
 pandas==1.4.2

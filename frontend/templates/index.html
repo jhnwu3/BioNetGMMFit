@@ -36,6 +36,17 @@
         .dropdown:hover .dropdown-content {display: block;}
         
         .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+        #Progress_Status {
+            width: 50%;
+            background-color: #ddd;
+        }
+        
+        #myprogressBar {
+            width: 2%;
+            height: 20px;
+            background-color: #4CAF50;
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
@@ -137,14 +148,24 @@
         </form>
     </div>
     <h3>3. Run The Program (May Take Upwards of 10 Minutes to Load Depending on Run and Data) </h3>
+        
     <div  style="margin-bottom: 30px">
         <form method="post" action="/run">
-            <button type="submit" name="Run" value="Run" class="btn btn-primary">Run CyGMM</button>
+            <button id="long-running-operation" type="submit" name="Run" value="Run" class="btn btn-primary">Run CyGMM</button>
         </form>
     </div>
+
+
     <body>
+
+        <div  style="margin-bottom: 30px">
+            <h3> 4. After Running, Wait 1 Minute, Click To Refresh Page To Get Results! </h3>
+        <a class="btn btn-primary" href="/">Refresh</a>
+        </div>
+
         <img src="{{outputs['estimates']}}" alt="Estimate">
         <img src="{{outputs['prediction']}}" alt="Prediction Fits">
     </center>
+
     </body>
 </html>
