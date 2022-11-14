@@ -85,9 +85,9 @@
         {% endfor %}
     </div>
 
-    <h3> 2. Please Specify Configuration Files After Uploading Them From Above </h3>
+    <h3> 2. Please Specify Configuration Files After Uploading Them From Above. Red = Required </h3>
     <div class="dropdown" style="margin-bottom: 30px">
-        <button class="btn btn-secondary">Configuration File: {{inputs['config']}}</button>
+        <button class="btn btn-danger">Configuration File: {{inputs['config']}}</button>
         <div class="dropdown-content">
             {% for item in uploadedFiles %}
             <a href="/config/{{item}}"> {{ item }} </a>
@@ -97,7 +97,7 @@
 
 
     <div class="dropdown" style="margin-bottom: 30px">
-        <button class="btn btn-secondary">BioNetGen File: {{inputs['bngl']}}</button>
+        <button class="btn btn-danger">BioNetGen File: {{inputs['bngl']}}</button>
         <div class="dropdown-content">
             {% for item in uploadedFiles %}
             <a href="/model/{{item}}"> {{ item }} </a>
@@ -106,16 +106,25 @@
     </div>
 
     <div class="dropdown" style="margin-bottom: 30px">
-        <button class="btn btn-secondary">Time Steps: {{inputs['timesteps']}}</button>
+        <button class="btn btn-danger">Time Steps: {{inputs['timesteps']}}</button>
         <div class="dropdown-content">
             {% for item in uploadedFiles %}
             <a href="/ts/{{item}}"> {{ item }} </a>
             {% endfor %}
         </div>
     </div>
+    <div class="dropdown" style="margin-bottom: 30px">
+        <button class="btn btn-secondary">Proteins of Interest File: {{inputs['poi']}}</button>
+        <div class="dropdown-content">
+            {% for item in uploadedFiles %}
+            <a href="/poi/{{item}}"> {{ item }} </a>
+            {% endfor %}
+        </div>
+    </div>
+
 
     <div class="dropdown" style="margin-bottom: 30px">
-        <button class="btn btn-secondary">X - Initial Abundances: {{inputs['xData']}}</button>
+        <button class="btn btn-danger">X - Initial Abundances: {{inputs['xData']}}</button>
         <div class="dropdown-content">
             {% for item in uploadedFiles %}
             <a href="/X/{{item}}"> {{ item }} </a>
@@ -134,7 +143,7 @@
 
     <p> Please Specify All Final Conditions Associated With Your Time Points (Make sure they're numbered at the end i.e Yt1, Yt2 for concentrations at t=1 and t=2 respectively) </p>
     <div class="dropdown" style="margin-bottom: 30px">
-        <button class="btn btn-secondary">Y - Final Abundances: {{inputs['yData']}}</button>
+        <button class="btn btn-danger">Y - Final Abundances: {{inputs['yData']}}</button>
         <div class="dropdown-content">
             {% for item in uploadedFiles %}
             <a href="/Y/{{item}}"> {{ item }} </a>
@@ -159,7 +168,7 @@
     <body>
 
         <div  style="margin-bottom: 30px">
-            <h3> 4. After Running, Wait 1 Minute, Click To Refresh Page To Get Results! </h3>
+            <h3> 4. After Running, Wait 1 Minute, If nothing shows up, please click To Refresh Page To Get Results! </h3>
         <a class="btn btn-primary" href="/">Refresh</a>
         </div>
 

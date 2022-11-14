@@ -10,7 +10,6 @@ from werkzeug.datastructures import  FileStorage
 import os, shutil
 import sys
 
-
 def deleteFilesInDirectory(folder):
    for filename in os.listdir(folder):
       file_path = os.path.join(folder, filename)
@@ -30,7 +29,7 @@ executor = Executor(app)
 socketio = SocketIO(app)
 socketio.init_app(app, cors_allowed_origins="*")
 ALLFILES = []
-INPUTS = {"config":"", "bngl":"", "timesteps":"", "truerates":"", "xData":"", "yData":[]}
+INPUTS = {"config":"", "bngl":"","poi":"", "timesteps":"", "truerates":"", "xData":"", "yData":[]}
 OUTPUTS = {"estimates":"", "prediction":""}
 RUNNING = False
 # Get current path
@@ -90,7 +89,14 @@ def select_time(file):
    if request.method == 'GET':
       INPUTS['timesteps'] = file
       return redirect('/')
-   
+
+# proteins of interest
+@app.route('/poi/<file>', methods = ['GET'])
+def select_proteins(file):
+   if request.method == 'GET':
+      INPUTS['poi'] = file
+      return redirect('/')
+
 # x data
 @app.route('/X/<file>', methods = ['GET'])
 def select_initial(file):
@@ -122,6 +128,8 @@ def reset():
    INPUTS['xData'] = ""
    INPUTS['timesteps'] = ""
    INPUTS['bngl'] = ""
+   INPUTS['truerates'] = ""
+   INPUTS['poi'] = ""
    return redirect('/')
 
 # @copy_current_request_context
@@ -133,7 +141,7 @@ def run():
       allFull = True
       error = None
       for key, value in INPUTS.items():
-         if key != 'truerates':
+         if key != 'truerates' and key != 'poi':
             if value == "" or value == []:
                allFull = False 
                
@@ -144,7 +152,8 @@ def run():
          shutil.copyfile(UPLOAD_FOLDER + '/' + INPUTS['xData'], UPLOAD_FOLDER + '/X/' + INPUTS['xData'])
          for f in INPUTS['yData']:
             shutil.copyfile(UPLOAD_FOLDER + '/' + f, UPLOAD_FOLDER + '/Y/' + f)
-         executor.submit(runBNGMM)
+         # executor.submit(runBNGMM)
+         runBNGMM()
          # executor.add_default_done_callback(my_event)
 
          # if INPUTS['truerates'] == "":

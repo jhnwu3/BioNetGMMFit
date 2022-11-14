@@ -19,7 +19,7 @@ It takes into account both linear and nonlinear models as well as stochastic mod
 6. [Defining Your Own System in BioNetGen](#bngl)
 
 ## **Important Note: Operating System**
-The preferred method of using this software is through [Docker](https://docs.docker.com/get-started/) as the docker virtualization engine allows BioNetGMMFit to be compatible with all operating systems as well as reduces any operating system specific dependencies.
+The preferred beginner's method of using this software is through [Docker](https://docs.docker.com/get-started/) as the docker virtualization engine allows BioNetGMMFit to be compatible with all operating systems as well as reduces any operating system specific dependencies.
 
 However should computational performance be a major concern, the non-docker program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
 
@@ -29,14 +29,14 @@ Mac's Unix based system should feasibly still work well with the BioNetGMMFit bi
 
 ## Quickstart  <a name="qstrt"></a>
 
-There are two ways to get BioNetGMMFit up and running, one if you're on Ubuntu, download the latest static binary, otherwise the preferred method is through docker.
+There are two ways to get BioNetGMMFit up and running, one if you're on Ubuntu and need maximum performance, download the latest static binary, otherwise the preferred method is through docker.
 
 To quickly get started with one of the simulated examples, do:
 
 ### Docker  <a name="docker"></a>
 Should the quickstart statically compiled executable in the repository fail to run, there is a docker image that can be easily pulled and run on any operating system from [here](https://hub.docker.com/r/jhnwu3/bngmm). 
 
-1. Install docker [here](https://docs.docker.com/get-docker/) (this should be as easy as an executable)
+1. Install docker [here](https://docs.docker.com/get-docker/) 
 
 If you're on Windows, you will have to install WSL first, which will simply require you to open power shell as an administrator and inputting:
 
@@ -46,34 +46,26 @@ For more information for Windows Linux Subsystem, see [here](https://learn.micro
 
 2. Pull image from dockerhub, in your command line (bash, linux terminal if on Windows, etc.), input 
 
-    docker pull jhnwu3/bngmm:bngmm
+    docker pull jhnwu3/bngmm:ui
 
 3. Run docker image to check, which should error on not having a configuration file specified with "-c".
 
-    docker run -t bngmm
+    docker run -d -p 5000:5000  jhnwu3/bngmm:ui
 
-4. Create a project directory for use i.e
+    If you have docker desktop setup, you should be able to see the program's running logs as shown below.
+    ![Step 3](/img/dockerdesktop.png)
 
-    mkdir BNGMM
+4. Then, to see the web UI, simply go open your browser, and enter the URL as follows
 
-5. Enter the directory i.e
+    http://127.0.0.1:5000
 
-    cd BNGMM
+    which should open up something like this below:
+     ![Step 4](/img/WebUI.png)
 
-6. Now, let's get started with a basic example, please download the folder from [here](https://github.com/jhnwu3/BioNetGMMFit-Example) or do
+
+5. Now, let's get started with a basic example, please download the folder from [here](https://github.com/jhnwu3/BioNetGMMFit-Example) or do
 
     git clone https://github.com/jhnwu3/BioNetGMMFit-Example.git
-
-7. cd BioNetGMMFit-Example
-
-
-8.  Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
-
-    docker run --rm -v $PWD:/data jhnwu3/bngmm -c /data/Config4pro.csv -m /data/4proV2.bngl -t /data/time_steps4.csv -x /data/X -y /data/Y -o /data
-
-Note each directory and observe which each parameter corresponds to.
-
-    For more information see [here](https://docs.docker.com/storage/volumes/) on how to mount a drive to be able to input configuration and data files.
 
 9. 
 
@@ -405,5 +397,13 @@ Contains various examples for use with the linear and nonlinear system provided 
 
 
 
+### *(defunct)* Mounting Volumes and Running Command Line Version of BNGMM Docker
+  
+Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
 
+    docker run --rm -v $PWD:/data jhnwu3/bngmm -c /data/Config4pro.csv -m /data/4proV2.bngl -t /data/time_steps4.csv -x /data/X -y /data/Y -o /data
+
+Note each directory and observe which each parameter corresponds to.
+
+    For more information see [here](https://docs.docker.com/storage/volumes/) on how to mount a drive to be able to input configuration and data files.
 
