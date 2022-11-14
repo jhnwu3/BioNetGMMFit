@@ -23,18 +23,18 @@ The preferred beginner's method of using this software is through [Docker](https
 
 However should computational performance be a major concern, the non-docker program has only been compiled and tested on debian Linux based systems, specifically the latest version of Ubuntu.
 
-Keep in mind, should you still want to pursue this on Windows 10, there is a Windows Linux Subsystem that runs at a similar level of performance that you can enable in the operating system. A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake to get this C++ code/program up and running on Windows. 
+Keep in mind, on Windows 10, there is a Windows Linux Subsystem that runs at a similar level of performance that you can enable in the operating system. A Youtube video I've found helpful to get Linux up and running on Windows can be found [here](https://www.youtube.com/watch?v=A0eqZujVfYU). This code has been tested successfully on Windows Linux Subsystem. This is arguably a simpler solution than going through the trouble of CMake to get this C++ code/program up and running on Windows. 
 
 Mac's Unix based system should feasibly still work well with the BioNetGMMFit binary, but has been untested in this current iteration.
 
 ## Quickstart  <a name="qstrt"></a>
 
-There are two ways to get BioNetGMMFit up and running, one if you're on Ubuntu and need maximum performance, download the latest static binary, otherwise the preferred method is through docker.
+There are two ways to get BioNetGMMFit up and running, one if you're on Ubuntu and/or a Linux Based System and need maximum performance on an HPC, download the latest static binary from the static binary section, otherwise the preferred method is through docker.
 
 To quickly get started with one of the simulated examples, do:
 
 ### Docker  <a name="docker"></a>
-Should the quickstart statically compiled executable in the repository fail to run, there is a docker image that can be easily pulled and run on any operating system from [here](https://hub.docker.com/r/jhnwu3/bngmm). 
+There is a docker image that can be easily pulled and run on any operating system from [here](https://hub.docker.com/r/jhnwu3/bngmm). 
 
 1. Install docker [here](https://docs.docker.com/get-docker/) 
 
@@ -48,7 +48,7 @@ For more information for Windows Linux Subsystem, see [here](https://learn.micro
 
     docker pull jhnwu3/bngmm:ui
 
-3. Run docker image to check, which should error on not having a configuration file specified with "-c".
+3. Run docker image in terminal
 
     docker run -d -p 5000:5000  jhnwu3/bngmm:ui
 
@@ -67,7 +67,48 @@ For more information for Windows Linux Subsystem, see [here](https://learn.micro
 
     git clone https://github.com/jhnwu3/BioNetGMMFit-Example.git
 
-9. 
+in one of your preferred directories, i.e a download folder, etc.
+
+6. Now, to upload the necessary files, first click on the "Browse..." button, as shown below
+
+     ![Step 6](/img/BrowseButton.png)
+
+7. Then, a file explorer button should open up, this will change depending on which operating system you are on. If windows, it will look like below.
+    
+    ![Step 7](/img/FileUpload.png)
+
+Simply highlight all of them by holding left click on all of the files and selecting them by clicking the open button.
+
+![Step 7.1](/img/uploadButton.png)
+
+Then just upload the files, by clicking the big blue "submit" button.
+
+![Step 7.2](/img/Submit.png)
+
+8. Once uploaded, you will see the uploaded files listed below.
+![Step 8](/img/uploaded.png)
+
+9. Now, match all uploaded files to each BNGMM output like below.
+![Step 9](/img/UIConfig.png)
+
+Please match:
+    Config4pro.csv to the Configuration File.
+    4proV2.bngl to BioNetGen
+    time_steps4.csv to Time Steps
+    t1m_processed.csv to X - Initial Abundances
+    t2m_processed.csv to Y - Final Abundances
+
+![Config UI](/img/FullyConfigured.png)
+
+10. Click the big blue button Run CyGMM to run the program. 
+![Run](/img/Run.png)
+
+If you have docker desktop installed, its terminal view should show something like this.
+![RunD](/img/dockerRun.png)
+
+11. Wait approximately 20 - 30 seconds, and the browser page should update with something like this.
+
+![Result](/img/uiResults.png)
 
 ### Static Binary (Out of Date) <a name="statbin"></a>
 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git)
