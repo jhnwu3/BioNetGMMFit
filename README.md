@@ -112,25 +112,19 @@ If you have docker desktop installed, its terminal view should show something li
 
 ### Static Binary (Out of Date) <a name="statbin"></a>
 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git)
-1. In your bash terminal, pick a suitable directory for your liking and input
-    
-        git clone https://github.com/jhnwu3/BioNetGMMFit.git
+1. In your bash terminal, pick a suitable directory for your liking and download [here](https://buckeyemailosu-my.sharepoint.com/:u:/g/personal/wu_4427_buckeyemail_osu_edu/EfQoUI1IhzlEoph7QQfSRVgBRqRGePstQjqYE0cLJNYdFA?e=rEDeBu)
 
     to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click to download the zipfile.
-    ![Step 1](/img/REPO.png)
-    ![Step 2](/img/DLST.png)
+    <!-- ![Step 1](/img/REPO.png)
+    ![Step 2](/img/DLST.png) -->
 
     make sure to unzip the directory before use. Make sure you also have bionetgen installed, if not, look [here](https://bng-vscode-extension.readthedocs.io/en/latest/install.html). Or one can download a binary from Google Drive [here]() (might be missing).
 
-2. Then, make sure you're still in the newly created repo directory
+2. Then, make sure you're in the directory with the executable.
 
-        cd BioNetGMMFit
+        cd /path/to/your/dir
 
-3. By default, parameters for the 3 protein linear system are provided and simulated with a pre-defined evolution matrix defined in system.cpp in the main directory, hence to get started, simply run the run executable to begin:
-
-        ./BNGMM > out.txt
-
-4. All output (final estimate of rate constants) is recorded in **out.txt** . For command line options to be able to feed configuration files, please see 
+3. To see all possible suffix commands, do:
 
          ./BNGMM -h
 
