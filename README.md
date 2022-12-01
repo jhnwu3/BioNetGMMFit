@@ -428,7 +428,7 @@ Contains all C++ source and header files needed to recompile the program.
 This is where protein input data is read in from the program. Example data (used in the paper) is provided in the example folder.
 
 ### *example*
-Contains various examples for use with the linear and nonlinear system provided by default in the program / code. There should be codes associated with them.
+Contains various examples for use with the linear and nonlinear system provided by default in the program / code. There should be codes associated with them. The 4 protein CD8 T Cell data was sourced from [here](https://dpeerlab.github.io/dpeerlab-website/dremi-data.html).
 
 
 
