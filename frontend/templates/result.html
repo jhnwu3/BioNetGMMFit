@@ -1,0 +1,22 @@
+<html>
+
+    <body>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <center>
+    <h1>BioNetGMMFit</h1>
+    <p> <a href="https://github.com/jhnwu3/BioNetGMMFit">See here for more information</a> </p>
+    <h2>Please Refresh Page to See if Your Job has Finished. Graphs will appear below if done. </h2>
+
+
+        {% if done %}
+        <!-- HTML code block -->
+            <h3> Code Finished Running </h3>
+        {% endif %}
+
+        <img src="{{outputs['estimates']}}" alt="Estimate">
+        <img src="{{outputs['prediction']}}" alt="Prediction Fits">
+    </center>
+    </body>
+</html>
