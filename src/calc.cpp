@@ -91,7 +91,16 @@ MatrixXd wolfWtMat(const MatrixXd& Yt, int nMoments, bool useInverse){
                 wt(j,i) = wt(i,j); // across diagonal
             }
         }
-        wt = wt.inverse();
+        // [2 0 <- variances on diagonal
+        //  0 4]
+        // [1/2 0 <- inverse of that
+        //   0  1/4 ]
+        // [2 1
+        //  -1 4 ]
+        //  [0.asdasd  0.asddas ]
+        //    0.asdas
+        // 
+        wt = wt.colPivHouseholderQr().solve(MatrixXd::Identity(wt.cols(), wt.cols()));
 
     }else{
         for(int i = 0; i < nMoments; i++){

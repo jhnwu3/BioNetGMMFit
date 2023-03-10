@@ -1,13 +1,13 @@
 Number of Particles Blind PSO,200
-Number of Steps Blind PSO,20
-Exclude Mixed Moments?,0
-Exclude Mixed and Second Moments?,0
-Number of Runs,1
-Simulate Y_t?,1
+Number of Steps Blind PSO,30
+Exclude Mixed Moments?,1
+Exclude Mixed and Second Moments?,1
+Number of Runs,100
+Simulate Y_t?,-1
 Use Matrix Inverse?,-1
 Number of Rates,6
-Index of Held Rate Constant,-1
-Value of Held Rate Constant,0.0415627
+Index of Held Rate Constant,1
+Value of Held Rate Constant,0.1
 Hypercube Dimension,1
 Report Moments?,1
 Bootstrap?,0

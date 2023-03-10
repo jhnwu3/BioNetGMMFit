@@ -214,6 +214,10 @@ int main(int argc, char** argv){
         }
         for(int y = 0; y < yt3Mats.size(); ++y){ 
             weights.push_back(wolfWtMat(yt3Mats[y], nMoments, parameters.useInverse > 0));
+            cout << "--------------------------------------------------------" << endl;
+            cout << "Computed GMM Weight Matrix" << endl;
+            cout << weights[y] << endl;
+            cout << "--------------------------------------------------------" << endl << endl;
         }
         for(int run = 0; run < parameters.nRuns; ++run){ // for multiple runs aka bootstrapping (for now)
             if (run > 0 && parameters.bootstrap > 0){

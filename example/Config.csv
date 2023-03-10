@@ -3,7 +3,7 @@ Number of Steps Blind PSO,5
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Number of Runs,2
-Simulate Y_t?,1
+Simulate Y_t?,-1
 Use Matrix Inverse?,1
 Number of Rates,6
 Index of Held Rate Constant,-1
@@ -18,3 +18,4 @@ ParallelNumberOfThreads,8
 Initial Particle Best Weight, 3.0
 Initial Global Best Weight, 1.0
 Particle Inertial Weight, 6.0
+./

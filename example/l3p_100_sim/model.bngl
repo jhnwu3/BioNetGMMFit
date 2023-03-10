@@ -1,0 +1,31 @@
+begin model
+
+begin parameters
+    k1 0.1
+    k2 0.1
+    k3 0.95
+    k4 0.17
+    k5 0.05
+end parameters
+begin species
+   P1() 192.7959
+   P2() 1463.265
+   P3() 5.251
+end species
+
+begin observables
+    Molecules P1 P1()
+    Molecules P2 P2()
+    Molecules P3 P3()
+end observables
+
+begin reaction rules
+    P1() <-> P2() k3,k2
+    P2() <-> P3() k5,k1
+    P3() -> P1() k4
+end reaction rules
+
+end model
+
+generate_network()
+writeSBML()
