@@ -55,7 +55,7 @@ class Grapher{
     void graphConfidenceIntervals(bool simulated){
         string cmd = "python3 graph.py -f " + estFile + " -g CI";
         if(simulated){
-            cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r" + trueRatesFile + " -n Parameter Estimates";
+            cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r " + trueRatesFile + " -n Parameter Estimates";
         }
         int status = system(cmd.c_str());
         if (status < 0)

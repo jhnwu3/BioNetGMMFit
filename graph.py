@@ -207,34 +207,36 @@ class Graph:
         axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line"])
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
         
-if '-h' in sys.argv:
-    print("Specify graphing type with -g <graph type> ")
-    print("Specify files with -f <filename> <optional 2nd final name only if graph type is 'dMoments'>")
-    exit(0)
+if __name__ == "__main__": 
+    print(sys.argv)
+    if '-h' in sys.argv:
+        print("Specify graphing type with -g <graph type> ")
+        print("Specify files with -f <filename> <optional 2nd final name only if graph type is 'dMoments'>")
+        exit(0)
+            
+    if "-f" not in sys.argv:
+        print("Error Need to Specify Graph Files with -f")
+        exit(0)
         
-if "-f" not in sys.argv:
-    print("Error Need to Specify Graph Files with -f")
-    exit(0)
-    
-if "-g" not in sys.argv:
-    print("Error Need to Specify Graph Types with -g")
-    exit(0)
+    if "-g" not in sys.argv:
+        print("Error Need to Specify Graph Types with -g")
+        exit(0)
 
-plt.rcParams['figure.constrained_layout.use'] = True
-plt.tight_layout()
-graphType = getGraphType(sys.argv)
-if graphType == 'CI':
-    Graph.plotConfidenceIntervals(1.96, getFile(sys.argv), title=getName(sys.argv))
-elif graphType == 'CI_truth':
-    Graph.plotConfidenceIntervals(1.96, getFile(sys.argv),simulated=True, trueRatesFile=getSimulatedRates(sys.argv), title=getName(sys.argv))
-elif graphType == 'Moments':
-    Graph.plotMoments(getFile(sys.argv), title=getName(sys.argv), nSpecies= getMomentSubset(sys.argv))
-elif graphType == 'dMoments':
-    dataX, dataY = getFile(sys.argv, multi=True)
-    Graph.plotMomentsWithActualEvolvedMatrices(dataX,dataY)
-elif graphType =='allMoments':
-    dataX, dataY = getFile(sys.argv, multi=True)
-    Graph.plotAllMoments(dataX,dataY,title=getName(sys.argv))
-else:
-    print("Error Invalid Graph Type Inputted:", graphType)
-    print("")
+    plt.rcParams['figure.constrained_layout.use'] = True
+    plt.tight_layout()
+    graphType = getGraphType(sys.argv)
+    if graphType == 'CI':
+        Graph.plotConfidenceIntervals(1.96, getFile(sys.argv), title=getName(sys.argv))
+    elif graphType == 'CI_truth':
+        Graph.plotConfidenceIntervals(1.96, getFile(sys.argv),simulated=True, trueRatesFile=getSimulatedRates(sys.argv), title=getName(sys.argv))
+    elif graphType == 'Moments':
+        Graph.plotMoments(getFile(sys.argv), title=getName(sys.argv), nSpecies= getMomentSubset(sys.argv))
+    elif graphType == 'dMoments':
+        dataX, dataY = getFile(sys.argv, multi=True)
+        Graph.plotMomentsWithActualEvolvedMatrices(dataX,dataY)
+    elif graphType =='allMoments':
+        dataX, dataY = getFile(sys.argv, multi=True)
+        Graph.plotAllMoments(dataX,dataY,title=getName(sys.argv))
+    else:
+        print("Error Invalid Graph Type Inputted:", graphType)
+        print("")
