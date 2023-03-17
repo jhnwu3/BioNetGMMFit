@@ -16,7 +16,6 @@ class Parameters{
         int nRuns;
         int simulateYt;
         int useInverse; // currently just inverse only occurs in linear model.
-        int heldTheta;
         int reportMoments;
         int nest;
         int bootstrap;
@@ -26,7 +25,6 @@ class Parameters{
         int seed;
         int nThreads;
         int nMoments;
-        double heldThetaVal;
         double hyperCubeScale;
         string outPath;
         double pBestWeight;
@@ -58,18 +56,16 @@ class Parameters{
             simulateYt = params.at(5);
             useInverse = params.at(6);
             nRates = params.at(7);
-            heldTheta = params.at(8);
-            heldThetaVal = params.at(9);
-            hyperCubeScale = params.at(10);
-            reportMoments = params.at(11);
-            bootstrap = params.at(12);
-            useDet = params.at(13);
-            odeSteps = params.at(14);
-            seed = params.at(15);
-            nThreads = params.at(16); 
-            pBestWeight = params.at(17);
-            globalBestWeight = params.at(18);
-            pInertia = params.at(19);
+            hyperCubeScale = params.at(8);
+            reportMoments = params.at(9);
+            bootstrap = params.at(10);
+            useDet = params.at(11);
+            odeSteps = params.at(12);
+            seed = params.at(13);
+            nThreads = params.at(14); 
+            pBestWeight = params.at(15);
+            globalBestWeight = params.at(16);
+            pInertia = params.at(17);
             
             useSBML = 0;
             outPath = "";
@@ -87,9 +83,9 @@ class Parameters{
             }else if(useOnlySecMom){
                 cout << "Using Only Means and Second Moments!" << endl;
             }
-            if(heldTheta > - 1){
-                cout << "Theta Held Index:" << heldTheta << " held value:" << heldThetaVal << endl;
-            }
+            // if(heldTheta > - 1){
+            //     cout << "Theta Held Index:" << heldTheta << " held value:" << heldThetaVal << endl;
+            // }
             cout << "Hyper Cube Width:" << hyperCubeScale << endl;
             cout << "Using Times:" << times.transpose() << endl;
             cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;

@@ -1,4 +1,4 @@
-Number of Particles Blind PSO,1000
+Number of Particles Blind PSO,3000
 Number of Steps Blind PSO,20
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
@@ -6,10 +6,10 @@ Number of Runs,1
 Simulate Y_t?,1
 Use Matrix Inverse?,-1
 Number of Rates,5
-Hypercube Dimension,1
+Hypercube Scale,1
 Report Moments?,1
 Bootstrap?,0
-Use Deterministic?,-1
+Use Deterministic?,1
 Number of BNGL Steps,1
 Seed,-1
 ParallelNumberOfThreads,8

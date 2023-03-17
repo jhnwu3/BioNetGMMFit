@@ -106,7 +106,7 @@ class Graph:
             Graph.plot_confidence_interval(i + 1, estimates[:,i], axes, z)
         if simulated:
             tRates = np.genfromtxt(trueRatesFile, delimiter=',')
-            print(tRates)
+            # print(tRates)
             for i in range(nRates):
                 groundTruth.append(axes.plot(i+1,tRates[i], 'D', color='#013220'))
         # plt.style.use('ggplot')
@@ -208,7 +208,7 @@ class Graph:
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
         
 if __name__ == "__main__": 
-    print(sys.argv)
+    # print(sys.argv)
     if '-h' in sys.argv:
         print("Specify graphing type with -g <graph type> ")
         print("Specify files with -f <filename> <optional 2nd final name only if graph type is 'dMoments'>")

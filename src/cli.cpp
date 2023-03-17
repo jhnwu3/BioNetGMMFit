@@ -98,3 +98,24 @@ bool helpCall(int argc, char **argv){
     }
     return false;
 }
+
+bool holdRates(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-hr");
+    return flag != -1;
+}
+
+bool seedRates(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-s");
+    return flag != -1;
+}
+
+
+string getHeldRatesDir(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-hr");
+    return argv[flag+1];
+}
+
+string getSeededRates(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-s");
+    return argv[flag+1];
+}

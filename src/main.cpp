@@ -206,6 +206,16 @@ int main(int argc, char** argv){
             }
             cout << "--------------------------------------------------------" << endl;
         }
+        MatrixXd heldTheta;
+        /* HeldRates if it happens*/ 
+        if (holdRates(argc, argv)){
+            cout << "Held Rate Constants With Respect to Their Indices:" << endl;
+            const string hr = getHeldRatesDir(argc, argv);
+            cout << hr << endl;
+            heldTheta = heldThetas(parameters.nRates, hr);
+            cout << heldTheta << endl;
+        }
+
         /* Compute initial wolfe weights */
         if (yt3Mats[0].cols() != x0.cols()){
             cout << "Error, mismatch in number of species/columns between X and Y!" << endl;
@@ -235,7 +245,16 @@ int main(int argc, char** argv){
             VectorXd seed = VectorXd::Zero(parameters.nRates);
             for (int i = 0; i < parameters.nRates; i++) {seed(i) = unifDist(gen);}
             // seed << 0.1,  0.1,  0.95,  0.17, 0.05,  0.18;
-            if(parameters.heldTheta > -1){seed(parameters.heldTheta) = parameters.heldThetaVal;}
+            if(holdRates(argc,argv)){
+                for(int i = 0; i < heldTheta.rows(); ++i){
+                    if (heldTheta(i,0) != 0){
+                        seed(i) = heldTheta(i,1);
+                    }
+                }
+            }
+            if(seedRates(argc, argv)){
+                seed = readSeed(parameters.nRates, getSeededRates(argc,argv));
+            }
             
             /* Evolve initial Global Best and Calculate a Cost*/
             double costSeedK = 0;
@@ -298,12 +317,13 @@ int main(int argc, char** argv){
                             POSMAT(particle, i) = pUnifDist(pGen);
                             scaledPos(i)= parameters.hyperCubeScale * POSMAT(particle,i);
                         }
-                        if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}
-                        // if(POSMAT.cols() == 6){
-                        //     if(pUnifDist(gen) < 0.25){
-                        //         POSMAT.row(particle) = tru;
-                        //     }
-                        // }
+                        if(holdRates(argc,argv)){
+                            for(int i = 0; i < heldTheta.rows(); ++i){
+                                if (heldTheta(i,0) != 0){
+                                    scaledPos(i) = heldTheta(i,1);
+                                }
+                            }
+                        }
                         
                         double cost = 0;    
                         
@@ -311,9 +331,11 @@ int main(int argc, char** argv){
                             MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
                             RoadRunner paraModel = r;
                             double parallelTheta[parameters.nRates];
+
                             for(int i = 0; i < parameters.nRates; ++i){
                                 parallelTheta[i] = scaledPos(i);
                             }
+
                             paraModel.getModel()->setGlobalParameterValues(parameters.nRates,0, parallelTheta); // set new global parameter values here.
                             SimulateOptions pOpt = opt;
                             pOpt.start = times(0);
@@ -353,8 +375,14 @@ int main(int argc, char** argv){
                         for(int i = 0; i < parameters.nRates; ++i){PBVEC(i) = PBMAT(particle, i);}
                         POSMAT.row(particle) = (w1 * rpoint + w2 * PBVEC + w3 * GBVEC); // update position of particle
                         scaledPos = parameters.hyperCubeScale*POSMAT.row(particle);
-                       
-                        if(parameters.heldTheta > -1){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}
+                        if(holdRates(argc,argv)){
+                            for(int i = 0; i < heldTheta.rows(); ++i){
+                                if (heldTheta(i,0) != 0){
+                                    scaledPos(i) = heldTheta(i,1);
+                                }
+                            }
+                        }
+                        // if(holdRates(argc, argv)){POSMAT.row(particle)(parameters.heldTheta) = parameters.heldThetaVal;}
                         double cost = 0;
                     
                         for(int t = 1; t < times.size(); ++t){ 
@@ -410,7 +438,9 @@ int main(int argc, char** argv){
                 sfi = sfi - (sfe - sfg) / parameters.nSteps;   // reduce the inertial weight after each step 
                 sfs = sfs + (sfe - sfg) / parameters.nSteps;
             }
-
+            cout << "----------------PSO Best Each Iterations----------------" << endl;
+            cout << GBMAT << endl;
+            cout << "--------------------------------------------------------" << endl;
             for(int i = 0; i < parameters.nRates; i++){
                 GBVECS(run, i) = scaledGBVEC(i); // or is now something scaled to GBVEC. 
             }

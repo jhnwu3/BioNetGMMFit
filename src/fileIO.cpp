@@ -361,3 +361,71 @@ VectorXd readRates(int nRates, const string &path){
     input.close();
     return rates;
 }
+
+
+MatrixXd heldThetas(int nRates, const string& path){
+    cout << path << endl;
+    std::ifstream input(path);
+    if(!input.is_open()){
+        throw std::runtime_error("Could not open data parameters file");
+        exit;
+    }
+    vector<double> params;
+    string line;
+    while(std::getline(input, line)){
+        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
+        string col;
+        while(std::getline(ss, col, ',')){
+            if(isNumber(col) || isDouble(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stod(col)); 
+                // cout << std::stod(col) << endl;
+            }
+        }
+    }
+    cout << "HI" << endl;
+    MatrixXd rates = MatrixXd::Zero(nRates, 2);
+    if(params.size() % 2 != 0){
+        cout << "Error, missing some columns in held rates file!" << endl;
+        exit(1);
+    }
+    // go every other element 
+    for(int i = 0; i < params.size(); i++){
+        if (i % 2 == 0){
+            rates(int(params.at(i)), 0) = 1;
+        }else{
+            rates(int(params.at(i - 1)), 1) = params.at(i);
+        }
+    }
+
+    input.close();
+    return rates;
+}
+
+VectorXd readSeed(int nRates, const string& path){
+    std::ifstream input(path);
+    if(!input.is_open()){
+        throw std::runtime_error("Could not open data parameters file");
+        exit;
+    }
+    vector<double> params;
+    string line;
+    while(std::getline(input, line)){
+        std::stringstream ss(line); // make a string stream from the line such that you can isolate each word even further.
+        string col;
+        while(std::getline(ss, col, ',')){
+            if(isNumber(col) || isDouble(col)){ // only add into parameter vector if actually an int.
+                params.push_back(std::stod(col)); 
+            }
+        }
+    }
+    VectorXd rates(nRates);
+    if(params.size() < nRates){
+        cout << "Error, number of rates in parameters do not match number of true rates simulated!" << endl;
+        exit(1);
+    }
+    for(int i = 0; i < nRates; i++){
+        rates(i) = params.at(i);
+    }
+    input.close();
+    return rates;
+}

@@ -32,7 +32,8 @@ void reportAllMoments(vector<MatrixXd> & x, vector<VectorXd> & y, const VectorXd
 /* Reading in time and rate parameters */
 VectorXd readCsvTimeParam(const string &path);
 VectorXd readRates(int nRates, const string &path);
-
+MatrixXd heldThetas(int nRates, const string& path);
+VectorXd readSeed(int nRates, const string& path);
 template <typename T>
 std::string to_string_with_precision(const T a_value, const int n = 6)
 {
