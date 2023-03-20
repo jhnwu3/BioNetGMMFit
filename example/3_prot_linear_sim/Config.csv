@@ -1,8 +1,8 @@
-Number of Particles Blind PSO,1500
-Number of Steps Blind PSO,30
+Number of Particles Blind PSO,2
+Number of Steps Blind PSO,2
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
-Number of Runs,30
+Number of Runs,1
 Simulate Y_t?,1
 Use Matrix Inverse?,-1
 Number of Rates,5
