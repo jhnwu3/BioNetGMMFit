@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=0-50:10:00 
-#SBATCH --job-name=4proteinlinear
+#SBATCH --job-name=3proteinlinear
 #SBATCH --partition=general
 #SBATCH --nodes=1
 #SBATCH --output=./slurm_outputs/3pro%j.txt
