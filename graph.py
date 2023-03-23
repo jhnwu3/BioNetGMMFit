@@ -208,14 +208,17 @@ class Graph:
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
     
     # actual moments, estimated moments, and you want forecasted moments, and their time points
-    def plot_trajectories(file, title):
-        data = np.loadtxt(file,delimiter=',')
+    def plot_trajectories(forecasted, observed, title):
+        data = np.loadtxt(forecasted,delimiter=',')
+        true = np.loadtxt(observed,delimiter=',')
         for i in range(1,data.shape[1]):
             plt.plot(data[:,0], data[:,i])
-        
+            plt.scatter(observed[:,0], true[:,i])
+            
+        plt.title(title)
         plt.xlabel("Time")
         plt.ylabel("Abundances")
-        plt.savefig(file[:-4] + '.png')  
+        plt.savefig(forecasted[:-4] + '.png')  
         
 if __name__ == "__main__": 
     # print(sys.argv)
@@ -248,8 +251,8 @@ if __name__ == "__main__":
         dataX, dataY = getFile(sys.argv, multi=True)
         Graph.plotAllMoments(dataX,dataY,title=getName(sys.argv))
     elif graphType =='forecast':
-        dataX, dataY = getFile(sys.argv, multi=True)
-        Graph.plot_trajectories(file=getFile(sys.argv), title=getName(sys.argv))
+        forecasted, observed = getFile(sys.argv, multi=True)
+        Graph.plot_trajectories(forecasted=forecasted, observed=observed, title=getName(sys.argv))
     else:
         print("Error Invalid Graph Type Inputted:", graphType)
         print("")

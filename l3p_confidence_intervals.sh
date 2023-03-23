@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0-50:10:00 
+#SBATCH --time=0-99:10:00 
 #SBATCH --job-name=3proteinlinear
 #SBATCH --partition=general
 #SBATCH --nodes=1

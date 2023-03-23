@@ -560,6 +560,10 @@ int main(int argc, char** argv){
             VectorXd futureT = readCsvTimeParam(getForecastedTimes(argc, argv));
             VectorXd avgMu = GBVECS.colwise().mean();
             MatrixXd futurecast = MatrixXd::Zero(futureT.size(), nMoments + 1);
+            MatrixXd observedData = MatrixXd::Zero(times.size(), nMoments + 1);
+            for(int t = 0; t < times.size(); ++t){
+                
+            }
             /* Calculate New Moments */
             cout << "--------------- Forecasted Moments in Time: ----------" << endl;
             for(int t = 0; t < futureT.size(); ++t){
