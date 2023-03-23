@@ -206,6 +206,16 @@ class Graph:
         axes.errorbar(xAvgs, yMoments, yerr = 10, fmt='-', elinewidth = 5, capsize=10)
         axes.legend([optimalLine, bestFit], ["Perfect Fit",  "Best Fit of Observed vs. Predicted Line"])
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
+    
+    # actual moments, estimated moments, and you want forecasted moments, and their time points
+    def plot_trajectories(file, title):
+        data = np.loadtxt(file,delimiter=',')
+        for i in range(1,data.shape[1]):
+            plt.plot(data[:,0], data[:,i])
+        
+        plt.xlabel("Time")
+        plt.ylabel("Abundances")
+        plt.savefig(file[:-4] + '.png')  
         
 if __name__ == "__main__": 
     # print(sys.argv)
@@ -237,6 +247,9 @@ if __name__ == "__main__":
     elif graphType =='allMoments':
         dataX, dataY = getFile(sys.argv, multi=True)
         Graph.plotAllMoments(dataX,dataY,title=getName(sys.argv))
+    elif graphType =='forecast':
+        dataX, dataY = getFile(sys.argv, multi=True)
+        Graph.plot_trajectories(file=getFile(sys.argv), title=getName(sys.argv))
     else:
         print("Error Invalid Graph Type Inputted:", graphType)
         print("")

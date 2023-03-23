@@ -3,7 +3,7 @@ BioNetGMMFit is C++ software designed for parameter estimation of BioNetGen mode
 It takes into account both linear and nonlinear models as well as stochastic models of evolution for estimating parameters. 
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
-    1. [Dockers](#docker)
+    1. [Docker](#docker)
     2. [Static Binary](#statbin)
 2. [Prerequisites](#paragraph1)
     1. [Eigen](#eig)
@@ -110,9 +110,15 @@ If you have docker desktop installed, its terminal view should show something li
 
 ![Result](/img/uiResults.png)
 
-### Static Binary (Out of Date) <a name="statbin"></a>
+### CMAKE Static Binary (Recommended for Linux and HPC Users) <a name="statbin"></a>
+
+1. Get prerequisites for compiling.
+
+    sudo apt-get install -y build-essential git cmake autoconf libtool pkg-config libncurses5-dev libeigen3-dev libboost-all-dev python3 python3-pip && \
+    pip install bionetgen matplotlib flask
+
 <!-- 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git) -->
-1. In your bash terminal, pick a suitable directory for your liking and download [here](https://buckeyemailosu-my.sharepoint.com/:u:/g/personal/wu_4427_buckeyemail_osu_edu/EfQoUI1IhzlEoph7QQfSRVgBRqRGePstQjqYE0cLJNYdFA?e=rEDeBu)
+2. In your bash terminal, pick a suitable directory for your liking and download [here](https://buckeyemailosu-my.sharepoint.com/:u:/g/personal/wu_4427_buckeyemail_osu_edu/EfQoUI1IhzlEoph7QQfSRVgBRqRGePstQjqYE0cLJNYdFA?e=rEDeBu)
 
     <!-- to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click to download the zipfile. -->
     <!-- ![Step 1](/img/REPO.png)
@@ -120,14 +126,26 @@ If you have docker desktop installed, its terminal view should show something li
 
     <!-- make sure to unzip the directory before use. Make sure you also have bionetgen installed, if not, look [here](https://bng-vscode-extension.readthedocs.io/en/latest/install.html). Or one can download a binary from Google Drive [here]() (might be missing). -->
 
-2. Then, make sure you're in the directory with the executable.
+3. Then, make sure you're in the source directory.
 
-        cd /path/to/your/dir
+        cd /path/to/your/dir/BNGMM_DockerBuild/BNGMM/src
 
-3. To see all possible suffix commands, do:
+4. Make sure to cmake:
 
-         ./BNGMM -h
+        cmake .
 
+5. compile the executable
+
+        make 
+
+6. Exit the src directory and run the options screen for all possible commands
+
+        cd ..
+        ./BNGMM -h 
+
+7. As a final note, one can take out the BNGMM executable and throw it anywhere for use in any other directory. The rest of the directory can be discarded if space is a major concern.
+
+ 
 ## Prequisites to Compiling <a name="prq"></a>
 
 ### *Eigen* <a name="eig"></a>

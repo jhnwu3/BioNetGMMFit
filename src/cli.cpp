@@ -109,6 +109,10 @@ bool seedRates(int argc, char **argv){
     return flag != -1;
 }
 
+bool forecast(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-f");
+    return flag != -1;
+}
 
 string getHeldRatesDir(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-hr");
@@ -117,5 +121,10 @@ string getHeldRatesDir(int argc, char **argv){
 
 string getSeededRates(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-s");
+    return argv[flag+1];
+}
+
+string getForecastedTimes(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-f");
     return argv[flag+1];
 }

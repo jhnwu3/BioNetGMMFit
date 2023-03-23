@@ -16,7 +16,10 @@ bool proPathExists(int argc, char **argv);
 bool helpCall(int argc, char **argv);
 bool holdRates(int argc, char **argv);
 bool seedRates(int argc, char **argv);
+bool forecast(int argc, char **argv);
+
 string getHeldRatesDir(int argc, char **argv);
 string getSeededRates(int argc, char **argv);
+string getForecastedTimes(int argc, char **argv);
 #endif
 

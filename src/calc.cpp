@@ -248,3 +248,4 @@ MatrixXd filterZeros(const MatrixXd &X){
     }
     return x_filtered;
 }
+

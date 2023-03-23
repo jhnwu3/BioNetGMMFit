@@ -14,6 +14,7 @@ class Grapher{
         string estFile;
         string leastCostEstFile;
         string trueRatesFile;
+        string forecastFile;
         vector<string> leastCostMoments;
         vector<string> allEstimatedMoments;
         vector<string> observedDataFiles;
@@ -31,6 +32,7 @@ class Grapher{
                 observedMoments.push_back(generalPath + "YtMoments" + to_string_with_precision(times(t),2));
             }
             trueRatesFile = trueRatesPath;
+            forecastFile = generalPath + "_forecast.csv";
         }
 
     void graphMoments(int nSpecies){
@@ -57,6 +59,21 @@ class Grapher{
         if(simulated){
             cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r " + trueRatesFile + " -n Parameter Estimates";
         }
+        int status = system(cmd.c_str());
+        if (status < 0)
+            std::cout << "Error: " << strerror(errno) << '\n';
+        else
+        {
+            if (WIFEXITED(status))
+                std::cout << "Program returned normally, exit code " << WEXITSTATUS(status) << '\n';
+            else
+                std::cout << "Program exited abnormaly\n";
+        }
+    }
+
+    void graphForecasts(int nSpecies){
+        string cmd = "python3 graph.py -f " + forecastFile + " -g forecast";
+
         int status = system(cmd.c_str());
         if (status < 0)
             std::cout << "Error: " << strerror(errno) << '\n';

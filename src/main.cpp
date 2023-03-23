@@ -433,7 +433,7 @@ int main(int argc, char** argv){
                     }
                 }
                 GBMAT.conservativeResize(GBMAT.rows() + 1, parameters.nRates + 1); // Add to GBMAT after resizing
-                for (int i = 0; i < parameters.nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = GBVEC(i);}
+                for (int i = 0; i < parameters.nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = scaledGBVEC(i);} // ideally want to save
                 GBMAT(GBMAT.rows() - 1, parameters.nRates) = gCost;
                 sfi = sfi - (sfe - sfg) / parameters.nSteps;   // reduce the inertial weight after each step 
                 sfs = sfs + (sfe - sfg) / parameters.nSteps;
@@ -441,6 +441,8 @@ int main(int argc, char** argv){
             cout << "----------------PSO Best Each Iterations----------------" << endl;
             cout << GBMAT << endl;
             cout << "--------------------------------------------------------" << endl;
+
+
             for(int i = 0; i < parameters.nRates; i++){
                 GBVECS(run, i) = scaledGBVEC(i); // or is now something scaled to GBVEC. 
             }
@@ -500,9 +502,11 @@ int main(int argc, char** argv){
             xt3Mats.push_back(XtMat);    
             reportLeastCostMoments(XtmVec,yt3Vecs[t-1],times(t), parameters.outPath + file_without_extension); // FIND BEST FIT.
             if(parameters.reportMoments > 0){
+                cout << "--------------------------------------------------------" << endl;
                 cout << "For Least Cost Estimate:" << leastCostRunPos.transpose() << endl;
                 cout << "RSS (NOT GMM) COST FROM DATASET:" << costFunction(XtmVec, yt3Vecs[t-1], MatrixXd::Identity(nMoments, nMoments)) << endl;
                 cout << "Moments:"<< XtmVec.transpose() << endl;
+                cout << "--------------------------------------------------------" << endl;
             }
         }
 
@@ -547,10 +551,51 @@ int main(int argc, char** argv){
 
         // Graphing Time
         /* Necessary Graphing Initialization */
+        cout << "Plotting R^2 Plot and Confidence Intervals!" << endl;
         Grapher graph = Grapher(parameters.outPath,file_without_extension, getTrueRatesPath(argc, argv), times);
         graph.graphMoments(xt3Mats[0].cols());
         graph.graphConfidenceIntervals(parameters.simulateYt > 0 );
-        
+            
+        if(forecast(argc, argv)){
+            VectorXd futureT = readCsvTimeParam(getForecastedTimes(argc, argv));
+            VectorXd avgMu = GBVECS.colwise().mean();
+            MatrixXd futurecast = MatrixXd::Zero(futureT.size(), nMoments + 1);
+            /* Calculate New Moments */
+            cout << "--------------- Forecasted Moments in Time: ----------" << endl;
+            for(int t = 0; t < futureT.size(); ++t){
+                MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
+                for(int j = 0; j < GBVECS.cols() - 1; ++j){
+                    theta[j] = avgMu(j);
+                }
+                r.getModel()->setGlobalParameterValues(avgMu.size() - 1, 0, theta); // set new global parameter values here.
+                opt.start = futureT(0);
+                opt.duration = futureT(t);
+                for(int i = 0; i < x0.rows(); ++i){
+                    if(specifiedProteins.size() > 0){
+                        vector<double> init = r.getFloatingSpeciesInitialConcentrations();
+                        for(int p = 0; p < specifiedProteins.size(); p++){
+                            init[specifiedProteins[p]] = x0(i,p);
+                        }
+                        r.changeInitialConditions(init);
+                    }else{    
+                        r.changeInitialConditions(convertInit(x0.row(i)));
+                    }
+                    const DoubleMatrix res = *r.simulate(&opt);
+                    for(int j = 0; j < x0.cols(); ++j){
+                        XtMat(i,j) = res[res.numRows() - 1][j + 1];
+                    }
+                }
+                VectorXd XtmVec = momentVector(XtMat, nMoments);
+                cout << futureT(t) <<" " << XtmVec.transpose() << endl;
+                futurecast(t,0) = futureT(t);
+                for(int mom = 1; mom < nMoments + 1; ++mom){
+                    futurecast(t,mom) = XtmVec(mom - 1);
+                }
+            }
+            cout << "------------------------------------------------------" << endl;
+            matrixToCsv(futurecast,  parameters.outPath + file_without_extension + "_forecast");
+            graph.graphForecasts(x0.cols());
+        }
 
     /* 
     ******************************************************************************************************************************
@@ -568,7 +613,7 @@ int main(int argc, char** argv){
     ******************************************************************************************************************************
     ******************************************************************************************************************************
     */
-    cout << endl << "-------------- All Run Estimates: -------------------" << endl;
+    cout << endl << "--------------- All Run Estimates: -------------------" << endl;
     if(parameters.useSBML > 0){
         for (int i = 0; i < parameterNames.size(); i++){cout << parameterNames[i] << " ";}
         cout << endl;
@@ -576,6 +621,7 @@ int main(int argc, char** argv){
     cout << GBVECS << endl;
     /* Compute 95% CI's with basic z=1.96 normal distribution assumption for now if n>1 */
     if(parameters.nRuns > 1){computeConfidenceIntervals(GBVECS, 1.96, parameters.nRates);}
+
     auto tB = std::chrono::high_resolution_clock::now();
     auto bDuration = std::chrono::duration_cast<std::chrono::seconds>(tB - t1).count();
     cout << "CODE FINISHED RUNNING IN " << bDuration << " s TIME!" << endl;

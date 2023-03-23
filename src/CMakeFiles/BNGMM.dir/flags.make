@@ -6,5 +6,5 @@ CXX_DEFINES = -DPOCO_ENABLE_CPP11 -DPOCO_ENABLE_CPP14 -DPOCO_HAVE_FD_EPOLL -DPOC
 
 CXX_INCLUDES = -isystem /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include -isystem /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/install-Release/include/libxml2 -isystem /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/buildroadrunner/roadrunner/include
 
-CXX_FLAGS =  -std=c++17  -static-libgcc -static-libstdc++ -lstdc++fs -O3 -fopenmp -std=gnu++17
+CXX_FLAGS =  -std=c++17  -static-libgcc -static-libstdc++ -lstdc++fs -O2 -fopenmp -std=gnu++17
 

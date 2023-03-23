@@ -1,0 +1,142 @@
+Program Begin:
+** Please Make Sure That All Inputted Files are in the UNIX Line Formatting to Prevent Bugs! To see the full list of commands with BNGMM, please do ./BNGMM -h **
+Reading in Parameters from Configuration File!
+------ Reading in X_0! ------
+"example/l3p_100_sim/X/l3pX.csv"
+Reading in (rows,columns): (5000,3) from X data directory
+After removing all negative rows, X has 5000 rows.
+If dimensions are unexpected of input data, please make sure to check csv files contains all possible values in each row/column.
+---------------------------
+---------------------  Parameters  --------------------
+Total Number of Runs:1
+Number of Moments:9
+Hyper Cube Width:1
+Using Times:0 3
+Blind PSO --> nParts:100 Nsteps:50
+Targeted PSO --> nParts:0 Nsteps:0
+Number of Rates:5
+Particle Best Weight:3 Global Best Weight:1 Particle Inertia:6
+Redirecting Model to SBML/BNGL
+Modeling with Gillespie
+Number of Steps of Integration Determined:1
+Using Matrix Inverse!
+Outputting data to:
+--------------------------------------------------------
+BioNetGen version 2.8.0
+Reading from file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/BNGMM/example/l3p_100_sim/model.bngl (level 0)
+Read 5 parameters.
+Read 3 species.
+Read 3 observable(s).
+Read 3 reaction rule(s).
+ACTION: generate_network( model )
+Iteration   0:     3 species      0 rxns  0.00e+00 CPU s
+Iteration   1:     3 species      5 rxns  0.00e+00 CPU s
+Cumulative CPU time for each rule
+Rule   1:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   2:     2 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Rule   3:     1 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+Total   :     5 reactions 0.00e+00 CPU s 0.00e+00 CPU s/rxn
+WARNING: writeFile(): Overwriting existing file ./model.net.
+Wrote network in net format to ./model.net.
+CPU TIME: generate_network 0.00 s.
+Wrote SBML to ./model_sbml.xml.
+CPU TIME: writeSBML 0.00 s.
+Finished processing file /mnt/c/Project_Folder/Cpp/CyGMM_DockerBuild/BNGMM/example/l3p_100_sim/model.bngl.
+CPU TIME: total 0.00 s.
+--------------------------------------------------------
+------- Matching Columns of X Data files to Ids -------
+P1() to column:0 with first value:326.155
+P2() to column:1 with first value:843.096
+P3() to column:2 with first value:1051.61
+--------------------------------------------------------
+------ SIMULATING YT! ------
+Read in Rates: 0.276782  0.837081  0.443217 0.0424412  0.304645
+------ Reading in Yt! ------
+"example/l3p_100_sim/Y/l3pY.csv"
+Read in 5000 rows! 3 columns!
+---------------------------
+Note: We will only be using the first Yt file read in for this simulation!
+After removing all negative rows, Y has 5000 rows.
+Time Point 		 Moments
+3 1244.58 698.488 906.222  937925  320209  847230  537313  727523  473556
+--------------------------------------------------------
+--------------------------------------------------------
+Computed GMM Weight Matrix
+1.06618e-06           0           0           0           0           0           0           0           0
+          0 3.12296e-06           0           0           0           0           0           0           0
+          0           0 1.18032e-06           0           0           0           0           0           0
+          0           0           0  2.9582e-14           0           0           0           0           0
+          0           0           0           0 2.44953e-13           0           0           0           0
+          0           0           0           0           0 2.67071e-14           0           0           0
+          0           0           0           0           0           0 8.82424e-14           0           0
+          0           0           0           0           0           0           0 3.88365e-14           0
+          0           0           0           0           0           0           0           0 9.22478e-14
+--------------------------------------------------------
+
+PSO Seeded At:0.741665   0.9107 0.248777 0.405483 0.791867| cost:1.11942
+PSO Estimation Has Begun, This may take some time...
+----------------PSO Best Each Iterations----------------
+   0.741665      0.9107    0.248777    0.405483    0.791867     1.11942
+   0.741665      0.9107    0.248777    0.405483    0.791867     1.11942
+   0.185053    0.439249    0.441883    0.313718    0.590834  0.00280294
+   0.185053    0.439249    0.441883    0.313718    0.590834  0.00280294
+   0.185053    0.439249    0.441883    0.313718    0.590834  0.00280294
+   0.185053    0.439249    0.441883    0.313718    0.590834  0.00280294
+   0.187699    0.444695    0.438488    0.321904    0.581798  0.00200771
+   0.264781    0.433381    0.301535    0.177474    0.465599  0.00131288
+   0.264781    0.433381    0.301535    0.177474    0.465599  0.00131288
+   0.264781    0.433381    0.301535    0.177474    0.465599  0.00131288
+   0.264781    0.433381    0.301535    0.177474    0.465599  0.00131288
+   0.264781    0.433381    0.301535    0.177474    0.465599  0.00131288
+   0.279057    0.431049    0.308755    0.173895    0.495357  0.00130451
+   0.228866    0.416469    0.335623    0.217983    0.466092  0.00126303
+   0.247775    0.412692    0.320248    0.199476    0.475875  0.00104148
+   0.247775    0.412692    0.320248    0.199476    0.475875  0.00104148
+   0.248474    0.423593     0.32641      0.1994     0.48065  0.00102735
+   0.248474    0.423593     0.32641      0.1994     0.48065  0.00102735
+   0.249124    0.423721    0.326715    0.202121    0.486515  0.00100475
+   0.233228    0.450305    0.342386    0.199849    0.458889 0.000926896
+   0.233228    0.450305    0.342386    0.199849    0.458889 0.000926896
+   0.233228    0.450305    0.342386    0.199849    0.458889 0.000926896
+   0.233228    0.450305    0.342386    0.199849    0.458889 0.000926896
+   0.244755    0.453647    0.331659    0.189567    0.457368 0.000915999
+   0.244755    0.453647    0.331659    0.189567    0.457368 0.000915999
+    0.24108    0.449921    0.334478    0.192792    0.459144 0.000913583
+    0.24066    0.447895    0.332714    0.191449     0.45821 0.000908268
+    0.24066    0.447895    0.332714    0.191449     0.45821 0.000908268
+    0.24066    0.447895    0.332714    0.191449     0.45821 0.000908268
+    0.24066    0.447895    0.332714    0.191449     0.45821 0.000908268
+    0.24066    0.447895    0.332714    0.191449     0.45821 0.000908268
+   0.240758    0.446742     0.33235    0.192631    0.458296 0.000898823
+   0.240758    0.446742     0.33235    0.192631    0.458296 0.000898823
+   0.240758    0.446742     0.33235    0.192631    0.458296 0.000898823
+   0.235841    0.443853    0.321535    0.184418    0.440017 0.000856514
+   0.235841    0.443853    0.321535    0.184418    0.440017 0.000856514
+   0.235841    0.443853    0.321535    0.184418    0.440017 0.000856514
+   0.235759     0.44423    0.322253    0.184111    0.439861  0.00085042
+   0.235759     0.44423    0.322253    0.184111    0.439861  0.00085042
+   0.235759     0.44423    0.322253    0.183986    0.439632 0.000842879
+   0.235759     0.44423    0.322253    0.183986    0.439632 0.000842879
+   0.235759     0.44423    0.322253    0.183986    0.439632 0.000842879
+   0.235759     0.44423    0.322253    0.183986    0.439632 0.000842879
+   0.235759     0.44423    0.322253    0.183986    0.439632 0.000842879
+   0.235759     0.44423    0.322253    0.183986    0.439632 0.000842879
+   0.230478    0.442627    0.322384    0.184157    0.429481 0.000830453
+   0.230478    0.442627    0.322384    0.184157    0.429481 0.000830453
+   0.230478    0.442627    0.322384    0.184157    0.429481 0.000830453
+   0.222936    0.442876    0.322554    0.183768    0.419903 0.000816055
+    0.22541    0.445609    0.323347    0.183482    0.423313 0.000812043
+   0.226188    0.445113    0.323038    0.183638    0.424031 0.000809307
+--------------------------------------------------------
+   0.226188    0.445113    0.323038    0.183638    0.424031 0.000809307
+3 1236.55 695.047   901.9  978307  337194  816901  569088  825483  501634
+For Least Cost Estimate:0.226188 0.445113 0.323038 0.183638 0.424031
+RSS (NOT GMM) COST FROM DATASET:1.42332e+10
+Moments:1236.55 695.047   901.9  978307  337194  816901  569088  825483  501634
+Program returned normally, exit code 0
+Program returned normally, exit code 0
+
+-------------- All Run Estimates: -------------------
+k1 k2 k3 k4 k5 cost 
+   0.226188    0.445113    0.323038    0.183638    0.424031 0.000809307
+CODE FINISHED RUNNING IN 5415 s TIME!
