@@ -15,6 +15,7 @@ class Grapher{
         string leastCostEstFile;
         string trueRatesFile;
         string forecastFile;
+        string observedFile;
         vector<string> leastCostMoments;
         vector<string> allEstimatedMoments;
         vector<string> observedDataFiles;
@@ -33,6 +34,7 @@ class Grapher{
             }
             trueRatesFile = trueRatesPath;
             forecastFile = generalPath + "_forecast.csv";
+            observedFile = generalPath + "_observed.csv";
         }
 
     void graphMoments(int nSpecies){
@@ -57,7 +59,7 @@ class Grapher{
     void graphConfidenceIntervals(bool simulated){
         string cmd = "python3 graph.py -f " + estFile + " -g CI";
         if(simulated){
-            cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r " + trueRatesFile + " -n Parameter Estimates";
+            cmd = "python3 graph.py -f " + estFile + " -g CI_truth -r " + trueRatesFile + " -n \"Parameter Estimates\"";
         }
         int status = system(cmd.c_str());
         if (status < 0)
@@ -72,7 +74,8 @@ class Grapher{
     }
 
     void graphForecasts(int nSpecies){
-        string cmd = "python3 graph.py -f " + forecastFile + " -g forecast";
+        string whichMoments = " -m " + to_string(nSpecies);
+        string cmd = "python3 graph.py -f " + forecastFile + " " + observedFile + " -g forecast" + whichMoments;
 
         int status = system(cmd.c_str());
         if (status < 0)

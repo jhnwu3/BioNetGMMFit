@@ -561,9 +561,13 @@ int main(int argc, char** argv){
             VectorXd avgMu = GBVECS.colwise().mean();
             MatrixXd futurecast = MatrixXd::Zero(futureT.size(), nMoments + 1);
             MatrixXd observedData = MatrixXd::Zero(times.size(), nMoments + 1);
-            for(int t = 0; t < times.size(); ++t){
-                
+            for(int t = 1; t < times.size(); ++t){
+                observedData(t - 1, 0) = times(t);
+                for(int mom = 1; mom < nMoments + 1; ++mom){
+                    observedData(t - 1, mom) = yt3Vecs[t - 1](mom - 1);
+                }
             }
+            matrixToCsv(observedData, parameters.outPath + file_without_extension + "_observed");
             /* Calculate New Moments */
             cout << "--------------- Forecasted Moments in Time: ----------" << endl;
             for(int t = 0; t < futureT.size(); ++t){

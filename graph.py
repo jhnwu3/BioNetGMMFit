@@ -208,14 +208,57 @@ class Graph:
         plt.savefig(xFile[:-4] + 'intervalMomentsEstimated.png')
     
     # actual moments, estimated moments, and you want forecasted moments, and their time points
-    def plot_trajectories(forecasted, observed, title):
+    def plot_trajectories(forecasted, observed, title, nSpecies=""):
         data = np.loadtxt(forecasted,delimiter=',')
         true = np.loadtxt(observed,delimiter=',')
-        for i in range(1,data.shape[1]):
-            plt.plot(data[:,0], data[:,i])
-            plt.scatter(observed[:,0], true[:,i])
+        totMoments = data.shape[1] - 1
+        if(nSpecies != ""):
+            means = []
+            variances = []
+            covariances = []
+            for i in range(1,data.shape[1]):
+                if(nSpecies*(nSpecies + 3) / 2 == totMoments):
+                    if i < nSpecies: 
+                        if i == 1:
+                            plt.scatter(true[:,0], true[:,i], c='r', label='means')
+                        plt.plot(data[:,0], data[:,i], 'r--')
+                        plt.scatter(true[:,0], true[:,i], c='r')
+                    elif i < 2*nSpecies:
+                        if i == 2*nSpecies - 2:
+                            plt.scatter(true[:,0], true[:,i], c='g', label='variances')
+                        plt.plot(data[:,0], data[:,i], 'g--')
+                        plt.scatter(true[:,0], true[:,i], c='g')
+                    else: 
+                        if i == 2*nSpecies:
+                            plt.scatter(true[:,0], true[:,i], c='b', label='covariances')
+                            
+                        plt.plot(data[:,0], data[:,i], 'b--')
+                        plt.scatter(true[:,0], true[:,i], c='b')
+                        
+                elif(2*nSpecies == totMoments):
+                    if i < nSpecies: 
+                        if i == 1:
+                            plt.scatter(true[:,0], true[:,i], c='r', label='means')
+                        plt.plot(data[:,0], data[:,i], 'r--')
+                        plt.scatter(true[:,0], true[:,i], c='r')
+                    elif i < 2*nSpecies:
+                        if i == 2*nSpecies - 2:
+                            plt.scatter(true[:,0], true[:,i], c='g', label='variances')
+                        plt.plot(data[:,0], data[:,i], 'g--')
+                        plt.scatter(true[:,0], true[:,i], c='g')
+                else:
+                    if i == 1:
+                        plt.scatter(true[:,0], true[:,i], label='means')
+                        
+                    plt.plot(data[:,0], data[:,i])
+                    plt.scatter(true[:,0], true[:,i])
+        else: 
+            for i in range(1,data.shape[1]):
+                plt.plot(data[:,0], data[:,i])
+                plt.scatter(true[:,0], true[:,i])
             
         plt.title(title)
+        plt.legend()
         plt.xlabel("Time")
         plt.ylabel("Abundances")
         plt.savefig(forecasted[:-4] + '.png')  
@@ -252,7 +295,7 @@ if __name__ == "__main__":
         Graph.plotAllMoments(dataX,dataY,title=getName(sys.argv))
     elif graphType =='forecast':
         forecasted, observed = getFile(sys.argv, multi=True)
-        Graph.plot_trajectories(forecasted=forecasted, observed=observed, title=getName(sys.argv))
+        Graph.plot_trajectories(forecasted=forecasted, observed=observed, title=getName(sys.argv), nSpecies=int(getMomentSubset(sys.argv)))
     else:
         print("Error Invalid Graph Type Inputted:", graphType)
         print("")
