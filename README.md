@@ -118,7 +118,7 @@ If you have docker desktop installed, its terminal view should show something li
     pip install bionetgen matplotlib flask
 
 <!-- 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git) -->
-2. In your bash terminal, pick a suitable directory for your liking and download [here](https://buckeyemailosu-my.sharepoint.com/:u:/g/personal/wu_4427_buckeyemail_osu_edu/EfQoUI1IhzlEoph7QQfSRVgBRqRGePstQjqYE0cLJNYdFA?e=rEDeBu)
+2. In your bash terminal, pick a suitable directory for your liking and download [here](https://sandbox.zenodo.org/record/1172961)
 
     <!-- to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click to download the zipfile. -->
     <!-- ![Step 1](/img/REPO.png)
@@ -128,7 +128,7 @@ If you have docker desktop installed, its terminal view should show something li
 
 3. Then, make sure you're in the source directory.
 
-        cd /path/to/your/dir/BNGMM_DockerBuild/BNGMM/src
+        cd /path/to/your/dir/CyGMM_DockerBuild/BNGMM/src
 
 4. Make sure to cmake:
 
