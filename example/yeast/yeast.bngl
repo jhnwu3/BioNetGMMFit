@@ -1,0 +1,47 @@
+begin model
+
+begin parameters
+    # kdim 1
+    # kdis 1
+    kon 0.0024
+    koff 0.24
+    pb 0.25
+    pd  0.01
+    kb 0.66666667
+    kd 0.05
+
+
+end parameters
+# let's make the order, T, T2, D, Da, m, P  
+begin species
+   T() 100
+#    T2() 100
+   D() 2
+   Da() 2
+   m() 0
+   P() 0 
+end species
+
+begin observables
+    Molecules T T() 
+    # Molecules T2 T2() 
+    Molecules D D() 
+    Molecules Da Da()
+    Molecules m m()
+    Molecules P P() 
+end observables
+
+begin reaction rules
+    # T()+T() -> T2() kdim
+    # T2() -> T() + T() kdis 
+    D() + T() <-> Da() kon, koff 
+    Da() -> Da() + m()  kb 
+    m() -> m() + P() pb
+    m() -> 0 kd
+    P() -> 0 pd
+end reaction rules
+
+end model
+
+generate_network()
+writeSBML()

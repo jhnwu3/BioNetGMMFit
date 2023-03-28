@@ -1,0 +1,37 @@
+# Created by BioNetGen 2.8.0
+begin parameters
+    1 kdim  1  # Constant
+    2 kdis  1  # Constant
+    3 kon   0.0024  # Constant
+    4 koff  0.24  # Constant
+    5 pb    0.25  # Constant
+    6 pd    0.01  # Constant
+    7 kb    0.66666667  # Constant
+    8 kd    0.05  # Constant
+end parameters
+begin species
+    1 T() 100
+    2 T2() 100
+    3 D() 2
+    4 Da() 2
+    5 m() 0
+    6 P() 0
+end species
+begin reactions
+    1 1,1 2 0.5*kdim #_R1
+    2 2 1,1 kdis #_R2
+    3 2,3 4 kon #_R3
+    4 4 2,3 koff #_reverse__R3
+    5 4 4,5 kb #_R4
+    6 5 5,6 pb #_R5
+    7 5 0 kd #_R6
+    8 6 0 pd #_R7
+end reactions
+begin groups
+    1 T                    1
+    2 T2                   2
+    3 D                    3
+    4 Da                   4
+    5 m                    5
+    6 P                    6
+end groups
