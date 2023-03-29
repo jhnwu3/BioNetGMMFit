@@ -15,6 +15,7 @@ end parameters
 # let's make the order, T, T2, D, Da, m, P  
 begin species
    T() 100
+#    T2() 100
    D() 2
    Da() 2
    m() 0
@@ -23,6 +24,7 @@ end species
 
 begin observables
     Molecules T T() 
+    # Molecules T2 T2() 
     Molecules D D() 
     Molecules Da Da()
     Molecules m m()
@@ -30,6 +32,8 @@ begin observables
 end observables
 
 begin reaction rules
+    # T()+T() -> T2() kdim
+    # T2() -> T() + T() kdis 
     D() + T() <-> Da() kon, koff 
     Da() -> Da() + m()  kb 
     m() -> m() + P() pb

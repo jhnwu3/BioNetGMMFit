@@ -17,7 +17,7 @@ def bins_list(min, max, step_size):
         binss.append(current)
     return binss
 
-directory = "6_protein_nonlinear_sim/X"#"4_prot_CD3_CD8_CD28/1min_2min/Y" #"3_prot_linear_sim/X"
+directory = "yeast/X"#"4_prot_CD3_CD8_CD28/1min_2min/Y" #"3_prot_linear_sim/X"
 file = "X.csv"
 path = os.path.join(directory, file)
 print(path)
