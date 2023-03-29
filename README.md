@@ -1,6 +1,10 @@
 # **BioNetGMMFit**
-BioNetGMMFit is C++ software designed for parameter estimation of BioNetGen models using Snapshot Data. 
-It takes into account both linear and nonlinear models as well as stochastic models of evolution for estimating parameters. 
+BioNetGMMFit (formerly CyGMM) is a C++ software designed for parameter estimation of BioNetGen models using Snapshot Data. 
+It takes into account both deterministic as well as stochastic models of evolution for estimating parameters. 
+
+[Methods Paper](https://www.biorxiv.org/content/10.1101/2022.03.17.484491v1)
+[Software Paper](https://www.biorxiv.org/content/10.1101/2022.12.08.519526v1)
+
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
     1. [Docker](#docker)
