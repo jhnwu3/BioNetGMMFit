@@ -45,10 +45,10 @@ int main(int argc, char** argv){
     ogx0 = x0;
     /* Decide Number of Moments to Use in Estimation */
     int nMoments = (x0.cols() * (x0.cols() + 3)) / 2;
-    if(parameters.useOnlySecMom){  // these will be added to the options sheet later.
+    if(parameters.useOnlySecMom > 0){  // these will be added to the options sheet later.
         nMoments = 2 * x0.cols();
     }
-    if(parameters.useOnlyFirstMom){
+    if(parameters.useOnlyFirstMom > 0){
         nMoments = x0.cols();
     }
     parameters.printParameters(nMoments, times);
@@ -206,6 +206,7 @@ int main(int argc, char** argv){
             }
             cout << "--------------------------------------------------------" << endl;
         }
+
         MatrixXd heldTheta;
         /* HeldRates if it happens*/ 
         if (holdRates(argc, argv)){
@@ -229,6 +230,74 @@ int main(int argc, char** argv){
             cout << weights[y] << endl;
             cout << "--------------------------------------------------------" << endl << endl;
         }
+
+        /* Contour Function - ONLY RUNS IF SIMULATED OR IF SEEDED */
+        if(contour(argc, argv) && (seedRates(argc, argv) || parameters.simulateYt > 0 )){
+            int stepSize = 50;
+            vector<int> pairwise1;
+            vector<int> pairwise2;
+            for(int i = 0; i < parameters.nRates - 1; ++i){
+                pairwise1.push_back(i);
+                pairwise2.push_back(i+1);
+            }
+
+            MatrixXd contour = MatrixXd::Zero(stepSize*stepSize, 3); // # of pairwise params x Coordinate + Cost
+            VectorXd contourTheta;
+            if(parameters.simulateYt > 0){
+                contourTheta = tru;
+            }else if(seedRates(argc, argv)){
+                contourTheta = readSeed(parameters.nRates, getSeededRates(argc,argv));
+            }
+            int cdex = 0;
+            for(int thta = 0; thta < parameters.nRates-1; ++thta){
+                int fIdx = pairwise1[thta];
+                int sIdx = pairwise2[thta];
+                double firstTheta = 0;
+                for(int i = 0; i < stepSize; ++i){
+                    double secondTheta = 0;
+                    for(int j = 0; j < stepSize; ++j){
+                        double gmm = 0;
+                        for(int t = 1; t < times.size(); t++){
+                            MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
+                            for(int idx = 0; idx < contourTheta.size(); ++idx){
+                                theta[idx] = contourTheta(idx);
+                            }
+                            theta[fIdx] = firstTheta;
+                            theta[sIdx] = secondTheta;
+                            r.getModel()->setGlobalParameterValues(contourTheta.size(),0,theta); // set new global parameter values here.
+                            opt.start = times(0);
+                            opt.duration = times(t);
+                            for(int i = 0; i < x0.rows(); ++i){
+                                if(specifiedProteins.size() > 0){
+                                    vector<double> init = r.getFloatingSpeciesInitialConcentrations();
+                                    for(int p = 0; p < specifiedProteins.size(); p++){
+                                        init[specifiedProteins[p]] = x0(i,p);
+                                    }
+                                    r.changeInitialConditions(init);
+                                }else{ 
+                                    r.changeInitialConditions(convertInit(x0.row(i)));
+                                }
+                                const DoubleMatrix res = *r.simulate(&opt);
+                                for(int j = 0; j < x0.cols(); ++j){
+                                    XtMat(i,j) = res[res.numRows() - 1][j + 1];
+                                }
+                            }
+                            VectorXd XtmVec = momentVector(XtMat, nMoments);
+                            gmm += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
+                        }
+                        contour(cdex,0) = firstTheta;
+                        contour(cdex,1) = secondTheta;
+                        contour(cdex,2) = gmm;
+                        secondTheta += 1.0 / stepSize;
+                        // contour()
+                        cdex++;
+                    }
+                    firstTheta += 1.0 / stepSize;
+                }
+            }
+        }
+        
+        /*------------ PSO SECTION ------------*/
         for(int run = 0; run < parameters.nRuns; ++run){ // for multiple runs aka bootstrapping (for now)
             if (run > 0 && parameters.bootstrap > 0){
                 for(int y = 0; y < yt3Mats.size(); ++y){ 
@@ -379,6 +448,7 @@ int main(int argc, char** argv){
                             for(int i = 0; i < heldTheta.rows(); ++i){
                                 if (heldTheta(i,0) != 0){
                                     scaledPos(i) = heldTheta(i,1);
+                                    POSMAT.row(particle)(i) = scaledPos(i);
                                 }
                             }
                         }

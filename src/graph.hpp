@@ -88,6 +88,8 @@ class Grapher{
                 std::cout << "Program exited abnormaly\n";
         }
     }
+
+    
 };
 
 

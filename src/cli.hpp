@@ -17,6 +17,7 @@ bool helpCall(int argc, char **argv);
 bool holdRates(int argc, char **argv);
 bool seedRates(int argc, char **argv);
 bool forecast(int argc, char **argv);
+bool contour(int argc, char **argv);
 
 string getHeldRatesDir(int argc, char **argv);
 string getSeededRates(int argc, char **argv);

@@ -11,4 +11,6 @@ VectorXd cwiseVar(const MatrixXd& sample);
 void computeConfidenceIntervals(const MatrixXd& sample, double z, int nRates);
 bool rowIsAllPositive(const VectorXd &x);
 MatrixXd filterZeros(const MatrixXd &X);
+// MatrixXd generatePairwiseContour(const RoadRunner &model, const SimulateOptions &opt, const VectorXd &pos, int theta1, int theta2, int stepSize);
+
 #endif 

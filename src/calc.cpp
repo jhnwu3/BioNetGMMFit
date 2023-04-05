@@ -248,4 +248,10 @@ MatrixXd filterZeros(const MatrixXd &X){
     }
     return x_filtered;
 }
+// pos should be the ground truth parameter set that remains.
 
+// MatrixXd generatePairwiseContour(const RoadRunner &model, SimulateOptions &opt, const VectorXd &pos, const MatrixXd &x0, const vector<VectorXd> &yt, const vector<MatrixXd> &wts, int theta1, int theta2, int stepSize){
+
+
+//     MatrixXd
+// }

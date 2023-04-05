@@ -114,6 +114,11 @@ bool forecast(int argc, char **argv){
     return flag != -1;
 }
 
+bool contour(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "--contour");
+    return flag != -1;
+}
+
 string getHeldRatesDir(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-hr");
     return argv[flag+1];
