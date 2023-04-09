@@ -304,6 +304,8 @@ The default PSO parameters are listed below, Note that many of the hyperparamete
 | Initial Particle Best Weight     | 3.0   | How much historical weight (i.e last known particle position) to affect PSO step.|
 | Global Best Weight               | 1.0   | How much weight best particle affects next PSO Step.                     |
 | Particle Inertial Weight         | 6.0   | PSO Particle Inertia Component (to avoid local minima)                   |
+
+
 By default, the PSO runs with all moments, with means, variances, and covariances. Currently, there are only two other options for specifying which estimators to use. For instance, set
 
     Exclude Mixed Moments?,1
