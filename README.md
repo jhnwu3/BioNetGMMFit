@@ -290,14 +290,11 @@ The default PSO parameters are listed below, Note that many of the hyperparamete
 | Number of Steps Blind PSO        | 10    | Sets number of steps for first stage PSO                                 |
 | Exclude Mixed Moments?           | 0     | 1 to use only means and variances, 0 otherwise                           |
 | Exclude Mixed and Second Moments?| 0     | 1 to use only means, 0 otherwise                                         |
-| Use Matrix Exp Model?            | 1     | 1 to use a matrix system, 0 to use nonlinear  (Defunct-Ignore)           |
 | Number of Runs                   | 1     | Sets total number of PSO runs for estimation                             |
 | Simulate Y_t?                    | 1     | 1 to simulate Yt with a true rate vector, 0 to provide own Yt matrix     |
 | Use Matrix Inverse?              | 0     | 1 to use C++'s Matrix Inverse, 0 otherwise                               |
-| Number of Rates                  | 5     | Sets number of rates in rate vector                                      |
-| Index of Held Rate Constant      | -1    | -1 to not hold a rate constant, else specified theta i is held constant  |
-| Value of Held Rate Constant      | 0     | Value between 0 and 1 that a rate constant would be held at              |
-| Hypercube Dimension              | 1.0   | Real Value Dimensions of Hypercube to be searched in PSO.                |
+| Number of Rates                  | 5     | Sets number of parameters to be estimated                                |
+| Hypercube Dimension              | 1.0   | Real Value Bounds of Hypercube to be searched in PSO.                    |
 | Report Moments?                  | 1     | 1 to report predicted moments in out.txt                                 |
 | Bootstrap?                       | 1     | 1 to estimate 95% CI's, 0 otherwise                                      |   
 | Use Deterministic?               | 1     | 1 to use CVode integrators, 0 to use roadrunner gillespie simulation     |

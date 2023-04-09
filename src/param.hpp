@@ -89,7 +89,7 @@ class Parameters{
             cout << "Hyper Cube Width:" << hyperCubeScale << endl;
             cout << "Using Times:" << times.transpose() << endl;
             cout << "Blind PSO --> nParts:" << nParts << " Nsteps:" << nSteps << endl;
-            cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
+            // cout << "Targeted PSO --> nParts:" <<  nParts2 << " Nsteps:" << nSteps2 << endl;
             cout << "Number of Rates:" << nRates << endl;
             cout << "Particle Best Weight:" << pBestWeight << " Global Best Weight:"<< globalBestWeight << " Particle Inertia:" << pInertia << endl;
             if(useSBML){
