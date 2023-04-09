@@ -233,7 +233,7 @@ int main(int argc, char** argv){
 
         /* Contour Function - ONLY RUNS IF SIMULATED OR IF SEEDED */
         if(contour(argc, argv) && (seedRates(argc, argv) || parameters.simulateYt > 0 )){
-            int stepSize = 50;
+            int stepSize = 20;
             vector<int> pairwise1;
             vector<int> pairwise2;
             for(int i = 0; i < parameters.nRates - 1; ++i){
@@ -241,60 +241,70 @@ int main(int argc, char** argv){
                 pairwise2.push_back(i+1);
             }
 
-            MatrixXd contour = MatrixXd::Zero(stepSize*stepSize, 3); // # of pairwise params x Coordinate + Cost
             VectorXd contourTheta;
             if(parameters.simulateYt > 0){
                 contourTheta = tru;
             }else if(seedRates(argc, argv)){
                 contourTheta = readSeed(parameters.nRates, getSeededRates(argc,argv));
             }
-            int cdex = 0;
-            for(int thta = 0; thta < parameters.nRates-1; ++thta){
-                int fIdx = pairwise1[thta];
-                int sIdx = pairwise2[thta];
-                double firstTheta = 0;
-                for(int i = 0; i < stepSize; ++i){
-                    double secondTheta = 0;
-                    for(int j = 0; j < stepSize; ++j){
-                        double gmm = 0;
-                        for(int t = 1; t < times.size(); t++){
-                            MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
-                            for(int idx = 0; idx < contourTheta.size(); ++idx){
-                                theta[idx] = contourTheta(idx);
-                            }
-                            theta[fIdx] = firstTheta;
-                            theta[sIdx] = secondTheta;
-                            r.getModel()->setGlobalParameterValues(contourTheta.size(),0,theta); // set new global parameter values here.
-                            opt.start = times(0);
-                            opt.duration = times(t);
-                            for(int i = 0; i < x0.rows(); ++i){
-                                if(specifiedProteins.size() > 0){
-                                    vector<double> init = r.getFloatingSpeciesInitialConcentrations();
-                                    for(int p = 0; p < specifiedProteins.size(); p++){
-                                        init[specifiedProteins[p]] = x0(i,p);
+            #pragma omp parallel for schedule(dynamic)
+                for(int thta = 0; thta < parameters.nRates-1; ++thta){
+                    vector<string> contourLabels;
+                    MatrixXd contour = MatrixXd::Zero(stepSize*stepSize, 3); // # of pairwise params x Coordinate + Cost
+                    int fIdx = pairwise1[thta];
+                    int sIdx = pairwise2[thta];
+                    contourLabels.push_back(parameterNames[fIdx]);
+                    contourLabels.push_back(parameterNames[sIdx]);
+                    contourLabels.push_back("Cost");
+                    int cdex = 0;
+                    RoadRunner paraMod = r;
+                    double firstTheta = 0;
+                    for(int idxs = 0; idxs < stepSize; ++idxs){
+                        double secondTheta = 0;
+                        for(int jdx = 0; jdx < stepSize; ++jdx){
+                            double gmm = 0;
+                            for(int t = 1; t < times.size(); t++){
+                                MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
+                                for(int idx = 0; idx < contourTheta.size(); ++idx){
+                                    theta[idx] = contourTheta(idx);
+                                }
+                                theta[fIdx] = firstTheta;
+                                theta[sIdx] = secondTheta;
+                                paraMod.getModel()->setGlobalParameterValues(contourTheta.size(),0,theta); // set new global parameter values here.
+                                opt.start = times(0);
+                                opt.duration = times(t);
+                                for(int i = 0; i < x0.rows(); ++i){
+                                    if(specifiedProteins.size() > 0){
+                                        vector<double> init = paraMod.getFloatingSpeciesInitialConcentrations();
+                                        for(int p = 0; p < specifiedProteins.size(); p++){
+                                            init[specifiedProteins[p]] = x0(i,p);
+                                        }
+                                        r.changeInitialConditions(init);
+                                    }else{ 
+                                        r.changeInitialConditions(convertInit(x0.row(i)));
                                     }
-                                    r.changeInitialConditions(init);
-                                }else{ 
-                                    r.changeInitialConditions(convertInit(x0.row(i)));
+                                    const DoubleMatrix res = *paraMod.simulate(&opt);
+                                    for(int j = 0; j < x0.cols(); ++j){
+                                        XtMat(i,j) = res[res.numRows() - 1][j + 1];
+                                    }
                                 }
-                                const DoubleMatrix res = *r.simulate(&opt);
-                                for(int j = 0; j < x0.cols(); ++j){
-                                    XtMat(i,j) = res[res.numRows() - 1][j + 1];
-                                }
+                                VectorXd XtmVec = momentVector(XtMat, nMoments);
+                                gmm += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
                             }
-                            VectorXd XtmVec = momentVector(XtMat, nMoments);
-                            gmm += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
+                            contour(cdex,0) = firstTheta;
+                            contour(cdex,1) = secondTheta;
+                            contour(cdex,2) = gmm;
+                            secondTheta += 1.0 / stepSize;
+                            // contour()
+                            cdex++; 
                         }
-                        contour(cdex,0) = firstTheta;
-                        contour(cdex,1) = secondTheta;
-                        contour(cdex,2) = gmm;
-                        secondTheta += 1.0 / stepSize;
-                        // contour()
-                        cdex++;
+                        firstTheta += 1.0 / stepSize;
                     }
-                    firstTheta += 1.0 / stepSize;
+                    #pragma omp critical
+                    {
+                        matrixToCsvWithLabels(contour, contourLabels, parameters.outPath + file_without_extension + "_contour" + to_string(fIdx) + "_" + to_string(sIdx));
+                    }
                 }
-            }
         }
         
         /*------------ PSO SECTION ------------*/
@@ -368,7 +378,7 @@ int main(int argc, char** argv){
             /* Blind PSO begins */
             cout << "PSO Estimation Has Begun, This may take some time..." << endl;
             for(int step = 0; step < parameters.nSteps; step++){
-            #pragma omp parallel for schedule(static)
+            #pragma omp parallel for schedule(dynamic)
                 for(int particle = 0; particle < parameters.nParts; particle++){
                     /* initialize all particle rate constants with unifDist */
                     random_device pRanDev;
