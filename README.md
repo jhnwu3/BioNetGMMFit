@@ -286,8 +286,8 @@ The default PSO parameters are listed below, Note that many of the hyperparamete
 
 | Parameter                        | Value | Explanation                                                              |
 |----------------------------------|-------|--------------------------------------------------------------------------|
-| Number of Particles Blind PSO    | 1000  | Sets number of particles in first stage PSO                              |
-| Number of Steps Blind PSO        | 10    | Sets number of steps for first stage PSO                                 |
+| Number of Particles PSO          | 1000  | Sets number of particles in PSO                                          |
+| Number of Steps PSO              | 10    | Sets number of steps for  PSO                                            |
 | Exclude Mixed Moments?           | 0     | 1 to use only means and variances, 0 otherwise                           |
 | Exclude Mixed and Second Moments?| 0     | 1 to use only means, 0 otherwise                                         |
 | Number of Runs                   | 1     | Sets total number of PSO runs for estimation                             |
