@@ -12,17 +12,20 @@ class Grapher{
     public:
         string generalPath;
         string estFile;
+        string modelName;
         string leastCostEstFile;
         string trueRatesFile;
         string forecastFile;
         string observedFile;
+        string contourFile; // these may not exist, but it just assumes a set of paths automatically
         vector<string> leastCostMoments;
         vector<string> allEstimatedMoments;
         vector<string> observedDataFiles;
         vector<string> estimatedDataFiles;
         vector<string> observedMoments; 
-        Grapher(const string & path, const string & modelFileName, const string & trueRatesPath, const VectorXd &times){
+        Grapher(const string & path, const string & modelFileName, const string & trueRatesPath, const VectorXd &times, int nRates){
             generalPath = path + modelFileName;
+            modelName = modelFileName;
             estFile = generalPath + "_estimates.csv";
             leastCostEstFile = generalPath + "_leastCostEstimate.csv";
             for(int t=1; t < times.size(); ++t){
@@ -32,6 +35,8 @@ class Grapher{
                 allEstimatedMoments.push_back(generalPath + "XtMoments" + to_string_with_precision(times(t),2));
                 observedMoments.push_back(generalPath + "YtMoments" + to_string_with_precision(times(t),2));
             }
+            
+            contourFile = generalPath + "_contour";
             trueRatesFile = trueRatesPath;
             forecastFile = generalPath + "_forecast.csv";
             observedFile = generalPath + "_observed.csv";
@@ -89,6 +94,22 @@ class Grapher{
         }
     }
 
+    void graphContours(int nRates){
+        string whichMoments = " -m " + to_string(nRates);
+        string titleFig = " -n " + modelName;
+        string cmd = "python3 graph.py -f "+ contourFile + " -g contour" + whichMoments + titleFig;
+
+        int status = system(cmd.c_str());
+        if (status < 0)
+            std::cout << "Error: " << strerror(errno) << '\n';
+        else
+        {
+            if (WIFEXITED(status))
+                std::cout << "Program returned normally, exit code " << WEXITSTATUS(status) << '\n';
+            else
+                std::cout << "Program exited abnormaly\n";
+        }
+    }
     
 };
 

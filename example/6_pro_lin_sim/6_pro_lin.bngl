@@ -1,0 +1,42 @@
+begin model
+
+begin parameters
+    k1 0.1
+    k2 0.1
+    k3 0.95
+    k4 0.17
+    k5 0.05
+    k6 0.18
+end parameters
+begin species
+   X1() 192.7959
+   X2() 1463.265
+   X3() 5.251
+   X4() 435.2968
+   X5() 5.809538
+   X6() 6.254916
+end species
+
+begin observables
+    Molecules X1 X1()
+    Molecules X2 X2()
+    Molecules X3 X3()
+    Molecules X4 X4()
+    Molecules X5 X5()
+    Molecules X6 X6()
+
+end observables
+
+begin reaction rules
+    X1() -> X2() k1 
+    X2() -> X3() k2 
+    X3() -> X4() k3 
+    X4() -> X6() k4
+    X5() -> X4() k5 
+    X6() -> X2() k6
+end reaction rules
+
+end model
+
+generate_network()
+writeSBML()

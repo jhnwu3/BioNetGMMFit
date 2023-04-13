@@ -1,5 +1,5 @@
-Number of Particles Blind PSO,10
-Number of Steps Blind PSO,4
+Number of Particles Blind PSO,2
+Number of Steps Blind PSO,1
 Exclude Mixed Moments?,0
 Exclude Mixed and Second Moments?,0
 Number of Runs,1
@@ -9,7 +9,7 @@ Number of Rates,5
 Hypercube Dimension,1
 Report Moments?,1
 Bootstrap?,0
-Use Deterministic?,1
+Use Deterministic?,-1
 Number of BNGL Steps,1
 Seed,-1
 ParallelNumberOfThreads,8

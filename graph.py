@@ -143,8 +143,8 @@ class Graph:
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})    
         plt.xlabel("Predicted Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
-        axes.spines.right.set_visible(False)
-        axes.spines.top.set_visible(False)
+        # axes.spines.right.set_visible(False)
+        # axes.spines.top.set_visible(False)
     
         x123 = np.arange(np.min(moments[:]), np.max(moments[:]))
         y123 = x123
@@ -263,7 +263,61 @@ class Graph:
         plt.ylabel("Abundances")
         plt.savefig(forecasted[:-4] + '.png')  
         
+    def plot_contours(filename, title, nRates=""):
+        nPlots = nRates - 1
+        if nRates == "":
+            print("Error: # of Rates Not Specified")
+            exit(0)
+        files = []
+        for i in range(nPlots):
+            files.append(filename + str(i)+ "_" + str(i+1) + ".csv")
+        nCols = 4
+        nRows = int(nPlots / nCols)
+        if nPlots % nCols > 0: 
+            nRows = int(nPlots / nCols) + 1
+        # print(files)
+        plt.figure()
+        
+        fig, ax = plt.subplots(nRows, nCols, constrained_layout=True, figsize=(nPlots*10,nPlots * 2))
+        fig.suptitle(title, fontsize=36)
+        file = 0
+        for r in range(nRows):
+            for c in range(nCols):
+                contourData = pd.read_csv(files[file])
+                labels = contourData.columns
+                contourData = contourData.to_numpy()
+                d = int(np.sqrt(contourData.shape[0]))
+                x = np.reshape(contourData[:,0], (d,d))
+                y = np.reshape(contourData[:,1], (d,d))
+                z = np.reshape(contourData[:,2], (d,d))
+                if nRows < 2:
+                    cont = ax[c].contourf(x,y,z, cmap="plasma") 
+                    ax[c].set_xlabel(labels[0], fontsize=24)
+                    ax[c].set_ylabel(labels[1], fontsize=24)
+                    # ax[c].xticks(fontsize=20)
+                    plt.colorbar(cont)  
+                else: 
+                    cont = ax[r,c].contourf(x,y,z, cmap="plasma") 
+                    ax[r,c].set_xlabel(labels[0], fontsize=24)
+                    ax[r,c].set_ylabel(labels[1], fontsize=24)
+                    plt.colorbar(cont)  
+                    
+                for tick in ax[c].xaxis.get_major_ticks():
+                    tick.label1.set_fontsize(12) 
+                    
+                for tick in ax[c].yaxis.get_major_ticks():
+                    tick.label1.set_fontsize(12) 
+                file+=1
+                
+        plt.savefig(filename + '.png')
+        
 if __name__ == "__main__": 
+    # Graph.plot_contours("test/model_contour0_1.csv" , title="", nSpecies="")
+    # Graph.plot_contours("test/model_contour1_2.csv" , title="", nSpecies="")
+    # Graph.plot_contours("test/model_contour2_3.csv" , title="", nSpecies="")
+    # Graph.plot_contours("test/model_contour3_4.csv" , title="", nSpecies="")
+    # Graph.plot
+    # exit(0)
     # print(sys.argv)
     if '-h' in sys.argv:
         print("Specify graphing type with -g <graph type> ")
@@ -296,6 +350,8 @@ if __name__ == "__main__":
     elif graphType =='forecast':
         forecasted, observed = getFile(sys.argv, multi=True)
         Graph.plot_trajectories(forecasted=forecasted, observed=observed, title=getName(sys.argv), nSpecies=int(getMomentSubset(sys.argv)))
+    elif graphType == 'contour':
+        Graph.plot_contours(getFile(sys.argv), title=getName(sys.argv), nRates=int(getMomentSubset(sys.argv)))
     else:
         print("Error Invalid Graph Type Inputted:", graphType)
         print("")

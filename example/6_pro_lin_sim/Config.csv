@@ -1,0 +1,18 @@
+Number of Particles Blind PSO,1500
+Number of Steps Blind PSO,50
+Exclude Mixed Moments?,0
+Exclude Mixed and Second Moments?,0
+Number of Runs,1
+Simulate Y_t?,1
+Use Matrix Inverse?,-1
+Number of Rates,5
+Hypercube Dimension,1
+Report Moments?,1
+Bootstrap?,0
+Use Deterministic?,1
+Number of BNGL Steps,1
+Seed,-1
+ParallelNumberOfThreads,30
+Initial Particle Best Weight, 3.0
+Initial Global Best Weight, 1.0
+Particle Inertial Weight, 6.0

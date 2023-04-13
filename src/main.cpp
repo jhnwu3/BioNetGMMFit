@@ -114,6 +114,7 @@ int main(int argc, char** argv){
         string file_without_extension = getFileNameWithoutExtensions(modelPath);
         string sbmlModel = "sbml/"+ file_without_extension + sbml;
         const string bnglCall = "bionetgen run -i" + modelPath + " -o sbml";
+        Grapher graph = Grapher(parameters.outPath, file_without_extension, getTrueRatesPath(argc, argv), times, parameters.nRates);
         if(system(bnglCall.c_str()) < 0){
             cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;
             return EXIT_FAILURE;
@@ -226,14 +227,17 @@ int main(int argc, char** argv){
         for(int y = 0; y < yt3Mats.size(); ++y){ 
             weights.push_back(wolfWtMat(yt3Mats[y], nMoments, parameters.useInverse > 0));
             cout << "--------------------------------------------------------" << endl;
-            cout << "Computed GMM Weight Matrix" << endl;
+            cout << "Computed GMM Weight Matrix:" << endl;
             cout << weights[y] << endl;
+            // matrixToCsv(weights[y], parameters.outPath + file_without_extension + "_weight_t" + to_string_with_precision(times(y+1),2));
             cout << "--------------------------------------------------------" << endl << endl;
         }
 
         /* Contour Function - ONLY RUNS IF SIMULATED OR IF SEEDED */
         if(contour(argc, argv) && (seedRates(argc, argv) || parameters.simulateYt > 0 )){
-            int stepSize = 20;
+            cout << "--------------------------------------------------------" << endl;
+            cout << "Generating Contour Files With" << endl;
+            int stepSize = 25;
             vector<int> pairwise1;
             vector<int> pairwise2;
             for(int i = 0; i < parameters.nRates - 1; ++i){
@@ -247,6 +251,7 @@ int main(int argc, char** argv){
             }else if(seedRates(argc, argv)){
                 contourTheta = readSeed(parameters.nRates, getSeededRates(argc,argv));
             }
+            cout << "Theta:" << contourTheta.transpose() << endl;
             #pragma omp parallel for schedule(dynamic)
                 for(int thta = 0; thta < parameters.nRates-1; ++thta){
                     vector<string> contourLabels;
@@ -305,6 +310,8 @@ int main(int argc, char** argv){
                         matrixToCsvWithLabels(contour, contourLabels, parameters.outPath + file_without_extension + "_contour" + to_string(fIdx) + "_" + to_string(sIdx));
                     }
                 }
+            graph.graphContours(parameters.nRates);
+            cout << "--------------------------------------------------------" << endl;
         }
         
         /*------------ PSO SECTION ------------*/
@@ -578,14 +585,14 @@ int main(int argc, char** argv){
                 }
             }
             VectorXd XtmVec = momentVector(XtMat, nMoments);
-            cout << times(t) << " " << XtmVec.transpose() << endl;
             xt3Mats.push_back(XtMat);    
             reportLeastCostMoments(XtmVec,yt3Vecs[t-1],times(t), parameters.outPath + file_without_extension); // FIND BEST FIT.
             if(parameters.reportMoments > 0){
                 cout << "--------------------------------------------------------" << endl;
                 cout << "For Least Cost Estimate:" << leastCostRunPos.transpose() << endl;
                 cout << "RSS (NOT GMM) COST FROM DATASET:" << costFunction(XtmVec, yt3Vecs[t-1], MatrixXd::Identity(nMoments, nMoments)) << endl;
-                cout << "Moments:"<< XtmVec.transpose() << endl;
+                cout << "t                  moments" << endl;
+                cout << times(t) << " " << XtmVec.transpose() << endl;
                 cout << "--------------------------------------------------------" << endl;
             }
         }
@@ -615,7 +622,7 @@ int main(int argc, char** argv){
                     }
                 }
                 VectorXd XtmVec = momentVector(XtMat, nMoments);
-                allMomentsAcrossTime[t-1].row(n) = XtmVec;
+                allMomentsAcrossTime[t-1].row(n) = XtmVec; 
             }
         }
 
@@ -632,10 +639,9 @@ int main(int argc, char** argv){
         // Graphing Time
         /* Necessary Graphing Initialization */
         cout << "Plotting R^2 Plot and Confidence Intervals!" << endl;
-        Grapher graph = Grapher(parameters.outPath,file_without_extension, getTrueRatesPath(argc, argv), times);
         graph.graphMoments(xt3Mats[0].cols());
         graph.graphConfidenceIntervals(parameters.simulateYt > 0 );
-            
+
         if(forecast(argc, argv)){
             VectorXd futureT = readCsvTimeParam(getForecastedTimes(argc, argv));
             VectorXd avgMu = GBVECS.colwise().mean();
