@@ -535,6 +535,7 @@ int main(int argc, char** argv){
             }
             GBVECS(run, parameters.nRates) = gCost;
             cout << GBVECS.row(run) << endl;
+            cout << "--------------------------------------------------------" << endl;
             /* bootstrap X0 and Y matrices if more than 1 run is specified */
             if(parameters.nRuns > 1 && parameters.bootstrap > 0){
                 x0 = bootStrap(ogx0);
