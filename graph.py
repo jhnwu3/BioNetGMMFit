@@ -95,8 +95,8 @@ class Graph:
         for i in range(estimates.shape[1]): 
             categoriesNumeric.append(i+1)
         fig, axes = plt.subplots(figsize=(5.0, 5.0))
-        axes.spines.right.set_visible(False)
-        axes.spines.top.set_visible(False)
+        # axes.spines.right.set_visible(False) 
+        # axes.spines.top.set_visible(False)
         axes.set_xticks(categoriesNumeric, df.columns)
         axes.tick_params(axis='both', which='major', labelsize=12)
         axes.set_title(title,wrap=True, fontdict = {'fontsize' : 18})
@@ -143,8 +143,8 @@ class Graph:
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})    
         plt.xlabel("Predicted Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
-        # axes.spines.right.set_visible(False)
-        # axes.spines.top.set_visible(False)
+        axes.spines.right.set_visible(False)
+        axes.spines.top.set_visible(False)
     
         x123 = np.arange(np.min(moments[:]), np.max(moments[:]))
         y123 = x123
@@ -195,8 +195,8 @@ class Graph:
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})   
         plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
-        axes.spines.right.set_visible(False)
-        axes.spines.top.set_visible(False)
+        # axes.spines.right.set_visible(False)
+        # axes.spines.top.set_visible(False)
         axes.scatter(xAvgs,yMoments)
        
         x123 = np.arange(np.min(xAvgs), np.max(xAvgs))
