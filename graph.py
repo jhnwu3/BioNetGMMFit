@@ -193,7 +193,7 @@ class Graph:
         # plt.figure(frameon=False)
         fig, axes = plt.subplots(figsize=(6.5, 6.0))
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})   
-        plt.xlabel("Estimated Moment", fontdict = {'fontsize' : 12})
+        plt.xlabel("Predicted Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
         # axes.spines.right.set_visible(False)
         # axes.spines.top.set_visible(False)
