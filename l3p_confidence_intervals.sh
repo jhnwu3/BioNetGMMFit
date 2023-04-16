@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --time=0-99:10:00 
-#SBATCH --job-name=6proteinlinear
+#SBATCH --job-name=yeast
 #SBATCH --partition=general
 #SBATCH --nodes=1
 #SBATCH --output=./slurm_outputs/yeast%j.txt

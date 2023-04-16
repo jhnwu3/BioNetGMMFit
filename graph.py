@@ -143,8 +143,8 @@ class Graph:
         axes.set_title(title, wrap=True,loc='center', fontdict = {'fontsize' : 20})    
         plt.xlabel("Predicted Moment", fontdict = {'fontsize' : 12})
         plt.ylabel("Observed Moment", fontdict = {'fontsize' : 12})
-        axes.spines.right.set_visible(False)
-        axes.spines.top.set_visible(False)
+        # axes.spines.right.set_visible(False)
+        # axes.spines.top.set_visible(False)
     
         x123 = np.arange(np.min(moments[:]), np.max(moments[:]))
         y123 = x123
@@ -278,36 +278,42 @@ class Graph:
         # print(files)
         plt.figure()
         
-        fig, ax = plt.subplots(nRows, nCols, constrained_layout=True, figsize=(nPlots*10,nPlots * 2))
+        fig, ax = plt.subplots(nRows, nCols, constrained_layout=True, figsize=(nPlots*10, nPlots * 4))
         fig.suptitle(title, fontsize=36)
         file = 0
         for r in range(nRows):
             for c in range(nCols):
-                contourData = pd.read_csv(files[file])
-                labels = contourData.columns
-                contourData = contourData.to_numpy()
-                d = int(np.sqrt(contourData.shape[0]))
-                x = np.reshape(contourData[:,0], (d,d))
-                y = np.reshape(contourData[:,1], (d,d))
-                z = np.reshape(contourData[:,2], (d,d))
-                if nRows < 2:
-                    cont = ax[c].contourf(x,y,z, cmap="plasma") 
-                    ax[c].set_xlabel(labels[0], fontsize=24)
-                    ax[c].set_ylabel(labels[1], fontsize=24)
-                    # ax[c].xticks(fontsize=20)
-                    plt.colorbar(cont)  
-                else: 
-                    cont = ax[r,c].contourf(x,y,z, cmap="plasma") 
-                    ax[r,c].set_xlabel(labels[0], fontsize=24)
-                    ax[r,c].set_ylabel(labels[1], fontsize=24)
-                    plt.colorbar(cont)  
-                    
-                for tick in ax[c].xaxis.get_major_ticks():
-                    tick.label1.set_fontsize(12) 
-                    
-                for tick in ax[c].yaxis.get_major_ticks():
-                    tick.label1.set_fontsize(12) 
-                file+=1
+                if file < len(files): 
+                    contourData = pd.read_csv(files[file])
+                    labels = contourData.columns
+                    contourData = contourData.to_numpy()
+                    d = int(np.sqrt(contourData.shape[0]))
+                    x = np.reshape(contourData[:,0], (d,d))
+                    y = np.reshape(contourData[:,1], (d,d))
+                    z = np.reshape(contourData[:,2], (d,d))
+                    if nRows < 2:
+                        cont = ax[c].contourf(x,y,z, cmap="plasma", levels=20) 
+                        ax[c].set_xlabel(labels[0], fontsize=24)
+                        ax[c].set_ylabel(labels[1], fontsize=24)
+                        for tick in ax[c].xaxis.get_major_ticks():
+                            tick.label1.set_fontsize(12) 
+                            
+                        for tick in ax[c].yaxis.get_major_ticks():
+                            tick.label1.set_fontsize(12) 
+                        # ax[c].xticks(fontsize=20)
+                        plt.colorbar(cont)  
+                    else: 
+                        cont = ax[r,c].contourf(x,y,z, cmap="plasma", levels=20) 
+                        ax[r,c].set_xlabel(labels[0], fontsize=24)
+                        ax[r,c].set_ylabel(labels[1], fontsize=24)
+                        plt.colorbar(cont)  
+                        for tick in ax[r,c].xaxis.get_major_ticks():
+                            tick.label1.set_fontsize(12) 
+                        for tick in ax[r,c].yaxis.get_major_ticks():
+                            tick.label1.set_fontsize(12) 
+                        # print(file)
+                        # print(files[file])
+                    file+=1
                 
         plt.savefig(filename + '.png')
         

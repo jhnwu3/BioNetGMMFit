@@ -237,7 +237,7 @@ int main(int argc, char** argv){
         if(contour(argc, argv) && (seedRates(argc, argv) || parameters.simulateYt > 0 )){
             cout << "--------------------------------------------------------" << endl;
             cout << "Generating Contour Files With" << endl;
-            int stepSize = 25;
+            int stepSize = 50;
             vector<int> pairwise1;
             vector<int> pairwise2;
             for(int i = 0; i < parameters.nRates - 1; ++i){
@@ -299,11 +299,11 @@ int main(int argc, char** argv){
                             contour(cdex,0) = firstTheta;
                             contour(cdex,1) = secondTheta;
                             contour(cdex,2) = gmm;
-                            secondTheta += 1.0 / stepSize;
+                            secondTheta +=  parameters.hyperCubeScale * 1.0 / stepSize;
                             // contour()
                             cdex++; 
                         }
-                        firstTheta += 1.0 / stepSize;
+                        firstTheta += parameters.hyperCubeScale * 1.0 / stepSize;
                     }
                     #pragma omp critical
                     {
