@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --time=0-99:10:00 
-#SBATCH --job-name=yeast
+#SBATCH --job-name=l6p
 #SBATCH --partition=general
 #SBATCH --nodes=1
-#SBATCH --output=./slurm_outputs/yeast%j.txt
+#SBATCH --output=./slurm_outputs/6linpro%j.txt
 #SBATCH --cpus-per-task=30
 
 # ./BNGMM -m example/l3p_100_sim/model.bngl -x example/l3p_100_sim/X -y example/l3p_100_sim/Y -t example/l3p_100_sim/time_steps.csv -r example/l3p_100_sim/true_rates.csv -c example/l3p_100_sim/Config.csv
