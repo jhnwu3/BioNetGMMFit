@@ -119,6 +119,17 @@ bool contour(int argc, char **argv){
     return flag != -1;
 }
 
+
+string getContourTheta1(int argc, char**argv){
+    int flag = getIndexFlag(argc, argv, "--contour");
+    return argv[flag+1];
+}
+string getContourTheta2(int argc, char**argv){
+    int flag = getIndexFlag(argc, argv, "--contour");
+    return argv[flag+2];
+}
+
+
 string getHeldRatesDir(int argc, char **argv){
     int flag = getIndexFlag(argc, argv, "-hr");
     return argv[flag+1];

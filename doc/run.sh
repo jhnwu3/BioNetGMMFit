@@ -10,4 +10,4 @@
 
 
 
-./BNGMM -m example/6_pro_lin_sim/6pro.bngl -c example/6_pro_lin_sim/Config.csv -x example/6_pro_lin_sim/X -y example/6_pro_lin_sim/Y -t example/6_pro_lin_sim/ts.csv -r example/6_pro_lin_sim/tr.csv -o test/ --g
+./BNGMM -m example/6_pro_lin_sim/6_pro_lin.bngl -c example/6_pro_lin_sim/Config.csv -x example/6_pro_lin_sim/X -y example/6_pro_lin_sim/Y -t example/6_pro_lin_sim/ts.csv -r example/6_pro_lin_sim/tr.csv -o test/ --g

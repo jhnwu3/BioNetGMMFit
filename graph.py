@@ -218,31 +218,31 @@ class Graph:
             covariances = []
             for i in range(1,data.shape[1]):
                 if(nSpecies*(nSpecies + 3) / 2 == totMoments):
-                    if i < nSpecies: 
+                    if i < nSpecies + 1:
                         if i == 1:
                             plt.scatter(true[:,0], true[:,i], c='r', label='means')
                         plt.plot(data[:,0], data[:,i], 'r--')
                         plt.scatter(true[:,0], true[:,i], c='r')
-                    elif i < 2*nSpecies:
+                    elif i < 2*nSpecies + 1:
                         if i == 2*nSpecies - 2:
                             plt.scatter(true[:,0], true[:,i], c='g', label='variances')
                         plt.plot(data[:,0], data[:,i], 'g--')
                         plt.scatter(true[:,0], true[:,i], c='g')
                     else: 
-                        if i == 2*nSpecies:
+                        if i == 2*nSpecies + 1:
                             plt.scatter(true[:,0], true[:,i], c='b', label='covariances')
                             
                         plt.plot(data[:,0], data[:,i], 'b--')
                         plt.scatter(true[:,0], true[:,i], c='b')
                         
                 elif(2*nSpecies == totMoments):
-                    if i < nSpecies: 
+                    if i < nSpecies + 1: 
                         if i == 1:
                             plt.scatter(true[:,0], true[:,i], c='r', label='means')
                         plt.plot(data[:,0], data[:,i], 'r--')
                         plt.scatter(true[:,0], true[:,i], c='r')
-                    elif i < 2*nSpecies:
-                        if i == 2*nSpecies - 2:
+                    elif i < 2*nSpecies + 1:
+                        if i == 2*nSpecies - 1:
                             plt.scatter(true[:,0], true[:,i], c='g', label='variances')
                         plt.plot(data[:,0], data[:,i], 'g--')
                         plt.scatter(true[:,0], true[:,i], c='g')
@@ -264,56 +264,31 @@ class Graph:
         plt.savefig(forecasted[:-4] + '.png')  
         
     def plot_contours(filename, title, nRates=""):
-        nPlots = nRates - 1
         if nRates == "":
             print("Error: # of Rates Not Specified")
             exit(0)
-        files = []
-        for i in range(nPlots):
-            files.append(filename + str(i)+ "_" + str(i+1) + ".csv")
-        nCols = 4
-        nRows = int(nPlots / nCols)
-        if nPlots % nCols > 0: 
-            nRows = int(nPlots / nCols) + 1
-        # print(files)
-        plt.figure()
+     
+        plt.figure(figsize=(8,8))
         
-        fig, ax = plt.subplots(nRows, nCols, constrained_layout=True, figsize=(nPlots*10, nPlots * 4))
-        fig.suptitle(title, fontsize=36)
-        file = 0
-        for r in range(nRows):
-            for c in range(nCols):
-                if file < len(files): 
-                    contourData = pd.read_csv(files[file])
-                    labels = contourData.columns
-                    contourData = contourData.to_numpy()
-                    d = int(np.sqrt(contourData.shape[0]))
-                    x = np.reshape(contourData[:,0], (d,d))
-                    y = np.reshape(contourData[:,1], (d,d))
-                    z = np.reshape(contourData[:,2], (d,d))
-                    if nRows < 2:
-                        cont = ax[c].contourf(x,y,z, cmap="plasma", levels=20) 
-                        ax[c].set_xlabel(labels[0], fontsize=24)
-                        ax[c].set_ylabel(labels[1], fontsize=24)
-                        for tick in ax[c].xaxis.get_major_ticks():
-                            tick.label1.set_fontsize(12) 
-                            
-                        for tick in ax[c].yaxis.get_major_ticks():
-                            tick.label1.set_fontsize(12) 
-                        # ax[c].xticks(fontsize=20)
-                        plt.colorbar(cont)  
-                    else: 
-                        cont = ax[r,c].contourf(x,y,z, cmap="plasma", levels=20) 
-                        ax[r,c].set_xlabel(labels[0], fontsize=24)
-                        ax[r,c].set_ylabel(labels[1], fontsize=24)
-                        plt.colorbar(cont)  
-                        for tick in ax[r,c].xaxis.get_major_ticks():
-                            tick.label1.set_fontsize(12) 
-                        for tick in ax[r,c].yaxis.get_major_ticks():
-                            tick.label1.set_fontsize(12) 
-                        # print(file)
-                        # print(files[file])
-                    file+=1
+      
+        contourData = pd.read_csv(filename)
+        labels = contourData.columns
+        contourData = contourData.to_numpy()
+        contourData[:,2] = np.log10(contourData[:,2])
+        d = int(np.sqrt(contourData.shape[0]))
+        print(contourData.shape)
+        x = np.reshape(contourData[:,0], (d,d))
+        y = np.reshape(contourData[:,1], (d,d))
+        z = np.reshape(contourData[:,2], (d,d))
+            
+        cont = plt.contourf(x,y,z, cmap="plasma", levels=50) 
+        plt.xlabel(labels[0], fontsize=24)
+        plt.ylabel(labels[1], fontsize=24)
+        plt.xticks(fontsize=12)
+        plt.yticks(fontsize=12)
+        plt.title(title)
+        plt.colorbar(cont)  
+      
                 
         plt.savefig(filename + '.png')
         

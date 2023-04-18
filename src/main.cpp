@@ -237,13 +237,7 @@ int main(int argc, char** argv){
         if(contour(argc, argv) && (seedRates(argc, argv) || parameters.simulateYt > 0 )){
             cout << "--------------------------------------------------------" << endl;
             cout << "Generating Contour Files With" << endl;
-            int stepSize = 50;
-            vector<int> pairwise1;
-            vector<int> pairwise2;
-            for(int i = 0; i < parameters.nRates - 1; ++i){
-                pairwise1.push_back(i);
-                pairwise2.push_back(i+1);
-            }
+            int stepSize = 25;
 
             VectorXd contourTheta;
             if(parameters.simulateYt > 0){
@@ -252,65 +246,84 @@ int main(int argc, char** argv){
                 contourTheta = readSeed(parameters.nRates, getSeededRates(argc,argv));
             }
             cout << "Theta:" << contourTheta.transpose() << endl;
-            #pragma omp parallel for schedule(dynamic)
-                for(int thta = 0; thta < parameters.nRates-1; ++thta){
-                    vector<string> contourLabels;
-                    MatrixXd contour = MatrixXd::Zero(stepSize*stepSize, 3); // # of pairwise params x Coordinate + Cost
-                    int fIdx = pairwise1[thta];
-                    int sIdx = pairwise2[thta];
-                    contourLabels.push_back(parameterNames[fIdx]);
-                    contourLabels.push_back(parameterNames[sIdx]);
-                    contourLabels.push_back("Cost");
-                    int cdex = 0;
-                    RoadRunner paraMod = r;
-                    double firstTheta = 0;
-                    for(int idxs = 0; idxs < stepSize; ++idxs){
-                        double secondTheta = 0;
-                        for(int jdx = 0; jdx < stepSize; ++jdx){
-                            double gmm = 0;
-                            for(int t = 1; t < times.size(); t++){
-                                MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
-                                for(int idx = 0; idx < contourTheta.size(); ++idx){
-                                    theta[idx] = contourTheta(idx);
-                                }
-                                theta[fIdx] = firstTheta;
-                                theta[sIdx] = secondTheta;
-                                paraMod.getModel()->setGlobalParameterValues(contourTheta.size(),0,theta); // set new global parameter values here.
-                                opt.start = times(0);
-                                opt.duration = times(t);
-                                for(int i = 0; i < x0.rows(); ++i){
-                                    if(specifiedProteins.size() > 0){
-                                        vector<double> init = paraMod.getFloatingSpeciesInitialConcentrations();
-                                        for(int p = 0; p < specifiedProteins.size(); p++){
-                                            init[specifiedProteins[p]] = x0(i,p);
-                                        }
-                                        r.changeInitialConditions(init);
-                                    }else{ 
-                                        r.changeInitialConditions(convertInit(x0.row(i)));
-                                    }
-                                    const DoubleMatrix res = *paraMod.simulate(&opt);
-                                    for(int j = 0; j < x0.cols(); ++j){
-                                        XtMat(i,j) = res[res.numRows() - 1][j + 1];
-                                    }
-                                }
-                                VectorXd XtmVec = momentVector(XtMat, nMoments);
-                                gmm += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
-                            }
-                            contour(cdex,0) = firstTheta;
-                            contour(cdex,1) = secondTheta;
-                            contour(cdex,2) = gmm;
-                            secondTheta +=  parameters.hyperCubeScale * 1.0 / stepSize;
-                            // contour()
-                            cdex++; 
-                        }
-                        firstTheta += parameters.hyperCubeScale * 1.0 / stepSize;
-                    }
-                    #pragma omp critical
-                    {
-                        matrixToCsvWithLabels(contour, contourLabels, parameters.outPath + file_without_extension + "_contour" + to_string(fIdx) + "_" + to_string(sIdx));
-                    }
+            int fIdx = 0;
+            int sIdx = 0;
+            string fT = getContourTheta1(argc,argv);
+            string sT = getContourTheta2(argc,argv);
+            for(int param = 0; param < parameterNames.size(); ++param){
+                if(parameterNames[param] == fT){
+                    fIdx = param;
+                }else if(parameterNames[param] == sT){
+                    sIdx = param;
                 }
-            graph.graphContours(parameters.nRates);
+            }
+
+            vector<string> contourLabels;
+            MatrixXd contour = MatrixXd::Zero(stepSize*stepSize, 3); // # of pairwise params x Coordinate + Cost that we will eventually convert to csv
+            MatrixXd contourGrid = MatrixXd::Zero(stepSize, stepSize);  // to store all the costs parallel wise
+            MatrixXd contourX = MatrixXd::Zero(stepSize, stepSize); // first column i.e columnwise coordinates
+            MatrixXd contourY = MatrixXd::Zero(stepSize, stepSize); // 2nd column i.e rowwise coordinates (when plotting)
+            contourLabels.push_back(parameterNames[fIdx]);
+            contourLabels.push_back(parameterNames[sIdx]);
+            contourLabels.push_back("Cost");
+                
+            #pragma omp parallel for schedule(dynamic)
+                for(int idxs = 0; idxs < stepSize; ++idxs){
+                    SimulateOptions pOpt = opt;
+                    RoadRunner paraMod = r;
+                    double firstTheta = parameters.hyperCubeScale * double(idxs) / stepSize;
+                    double pTheta[parameters.nRates];
+                    for(int jdx = 0; jdx < stepSize; ++jdx){
+                        double gmm = 0;
+                        double secondTheta = parameters.hyperCubeScale * double(jdx) / stepSize;
+                        for(int idx = 0; idx < contourTheta.size(); ++idx){
+                            pTheta[idx] = contourTheta(idx);
+                        }
+                        pTheta[fIdx] = firstTheta;
+                        pTheta[sIdx] = secondTheta;
+                        for(int t = 1; t < times.size(); t++){
+                            MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
+                            paraMod.getModel()->setGlobalParameterValues(contourTheta.size(),0,pTheta); // set new global parameter values here.
+                            pOpt.start = times(0);
+                            pOpt.duration = times(t);
+                            for(int i = 0; i < x0.rows(); ++i){
+                                if(specifiedProteins.size() > 0){
+                                    vector<double> init = paraMod.getFloatingSpeciesInitialConcentrations();
+                                    for(int p = 0; p < specifiedProteins.size(); p++){
+                                        init[specifiedProteins[p]] = x0(i,p);
+                                    }
+                                    paraMod.changeInitialConditions(init);
+                                }else{ 
+                                    paraMod.changeInitialConditions(convertInit(x0.row(i)));
+                                }
+                                const DoubleMatrix res = *paraMod.simulate(&pOpt);
+                                for(int j = 0; j < x0.cols(); ++j){
+                                    XtMat(i,j) = res[res.numRows() - 1][j + 1];
+                                }
+                            }
+                            VectorXd XtmVec = momentVector(XtMat, nMoments);
+                            gmm += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
+                        }
+                        contourX(idxs, jdx) = pTheta[fIdx];
+                        contourY(idxs, jdx) = pTheta[sIdx];
+                        contourGrid(idxs, jdx) = gmm;
+                        // secondTheta +=  parameters.hyperCubeScale * 1.0 / stepSize;
+                        // contour()
+                    }
+                    // firstTheta += parameters.hyperCubeScale * 1.0 / stepSize;
+                }
+                    
+            int cdx = 0;
+            for(int i = 0; i < stepSize; ++i){
+                for(int j = 0; j < stepSize; ++j){
+                    contour(cdx,0) = contourX(i,j);
+                    contour(cdx,1) = contourY(i,j);
+                    contour(cdx,2) = contourGrid(i,j);
+                    cdx++; 
+                }
+            }
+            matrixToCsvWithLabels(contour, contourLabels, parameters.outPath + file_without_extension + "_contour" + fT + "_" + sT);
+            graph.graphContours(parameters.nRates, parameters.outPath + file_without_extension + "_contour" + fT + "_" + sT + ".csv");
             cout << "--------------------------------------------------------" << endl;
         }
         
@@ -344,12 +357,13 @@ int main(int argc, char** argv){
             
             /* Evolve initial Global Best and Calculate a Cost*/
             double costSeedK = 0;
+            for(int i = 0; i < seed.size(); ++i){
+                theta[i] = parameters.hyperCubeScale * seed(i);
+            }
+            r.getModel()->setGlobalParameterValues(seed.size(),0,theta); // set new global parameter values here.
+
             for(int t = 1; t < times.size(); t++){
                 MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
-                for(int i = 0; i < seed.size(); ++i){
-                    theta[i] = parameters.hyperCubeScale * seed(i);
-                }
-                r.getModel()->setGlobalParameterValues(seed.size(),0,theta); // set new global parameter values here.
                 opt.start = times(0);
                 opt.duration = times(t);
                 for(int i = 0; i < x0.rows(); ++i){
@@ -397,6 +411,9 @@ int main(int argc, char** argv){
                         pGen.seed(pSeed);
                     }
                     VectorXd scaledPos = VectorXd::Zero(parameters.nRates);
+                    RoadRunner paraModel = r;
+                    SimulateOptions pOpt = opt;
+                    double parallelTheta[parameters.nRates];
                     if(step == 0){
                         /* initialize all particles with random rate constant positions */
                         for(int i = 0; i < parameters.nRates; i++){
@@ -412,18 +429,12 @@ int main(int argc, char** argv){
                         }
                         
                         double cost = 0;    
-                        
+                        for(int i = 0; i < parameters.nRates; ++i){
+                            parallelTheta[i] = scaledPos(i);
+                        }
+                        paraModel.getModel()->setGlobalParameterValues(parameters.nRates,0, parallelTheta); // set new global parameter values here.
                         for(int t = 1; t < times.size(); ++t){
                             MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
-                            RoadRunner paraModel = r;
-                            double parallelTheta[parameters.nRates];
-
-                            for(int i = 0; i < parameters.nRates; ++i){
-                                parallelTheta[i] = scaledPos(i);
-                            }
-
-                            paraModel.getModel()->setGlobalParameterValues(parameters.nRates,0, parallelTheta); // set new global parameter values here.
-                            SimulateOptions pOpt = opt;
                             pOpt.start = times(0);
                             pOpt.duration = times(t);                   
                             for(int i = 0; i < x0.rows(); ++i){
@@ -465,7 +476,6 @@ int main(int argc, char** argv){
                             for(int i = 0; i < heldTheta.rows(); ++i){
                                 if (heldTheta(i,0) != 0){
                                     scaledPos(i) = heldTheta(i,1);
-                                    POSMAT.row(particle)(i) = scaledPos(i);
                                 }
                             }
                         }
@@ -474,13 +484,13 @@ int main(int argc, char** argv){
                     
                         for(int t = 1; t < times.size(); ++t){ 
                             MatrixXd XtMat = MatrixXd::Zero(x0.rows(), x0.cols());
-                            RoadRunner paraModel = r;
-                            double parallelTheta[parameters.nRates];
+                            // RoadRunner paraModel = r;
+                            // double parallelTheta[parameters.nRates];
                             for(int i = 0; i < parameters.nRates; ++i){
                                 parallelTheta[i] = scaledPos(i);
                             }
                             paraModel.getModel()->setGlobalParameterValues(parameters.nRates,0, parallelTheta); // set new global parameter values here.
-                            SimulateOptions pOpt = opt;
+                            // SimulateOptions pOpt = opt;
                             pOpt.start = times(0);
                             pOpt.duration = times(t);                   
                             for(int i = 0; i < x0.rows(); ++i){
@@ -520,7 +530,7 @@ int main(int argc, char** argv){
                     }
                 }
                 GBMAT.conservativeResize(GBMAT.rows() + 1, parameters.nRates + 1); // Add to GBMAT after resizing
-                for (int i = 0; i < parameters.nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = scaledGBVEC(i);} // ideally want to save
+                for (int i = 0; i < parameters.nRates; i++) {GBMAT(GBMAT.rows() - 1, i) = scaledGBVEC(i);} // ideally want to save scaled version
                 GBMAT(GBMAT.rows() - 1, parameters.nRates) = gCost;
                 sfi = sfi - (sfe - sfg) / parameters.nSteps;   // reduce the inertial weight after each step 
                 sfs = sfs + (sfe - sfg) / parameters.nSteps;

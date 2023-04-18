@@ -19,6 +19,9 @@ bool seedRates(int argc, char **argv);
 bool forecast(int argc, char **argv);
 bool contour(int argc, char **argv);
 
+string getContourTheta1(int argc, char**argv);
+string getContourTheta2(int argc, char**argv);
+
 string getHeldRatesDir(int argc, char **argv);
 string getSeededRates(int argc, char **argv);
 string getForecastedTimes(int argc, char **argv);

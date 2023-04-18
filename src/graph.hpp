@@ -17,7 +17,7 @@ class Grapher{
         string trueRatesFile;
         string forecastFile;
         string observedFile;
-        string contourFile; // these may not exist, but it just assumes a set of paths automatically
+        // string contourFile; // these may not exist, but it just assumes a set of paths automatically
         vector<string> leastCostMoments;
         vector<string> allEstimatedMoments;
         vector<string> observedDataFiles;
@@ -36,7 +36,7 @@ class Grapher{
                 observedMoments.push_back(generalPath + "YtMoments" + to_string_with_precision(times(t),2));
             }
             
-            contourFile = generalPath + "_contour";
+            // contourFile = generalPath + "_contour";
             trueRatesFile = trueRatesPath;
             forecastFile = generalPath + "_forecast.csv";
             observedFile = generalPath + "_observed.csv";
@@ -94,7 +94,7 @@ class Grapher{
         }
     }
 
-    void graphContours(int nRates){
+    void graphContours(int nRates, const string & contourFile){
         string whichMoments = " -m " + to_string(nRates);
         string titleFig = " -n " + modelName;
         string cmd = "python3 graph.py -f "+ contourFile + " -g contour" + whichMoments + titleFig;
