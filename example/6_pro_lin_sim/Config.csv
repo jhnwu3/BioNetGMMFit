@@ -4,7 +4,7 @@ Exclude Mixed Moments?,-1
 Exclude Mixed and Second Moments?,-1
 Number of Runs,30
 Simulate Y_t?,1
-Use Matrix Inverse?,1
+Use Matrix Inverse?,-1
 Number of Rates,6
 Hypercube Dimension,1
 Report Moments?,1
