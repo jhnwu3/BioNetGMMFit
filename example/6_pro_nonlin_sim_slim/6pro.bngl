@@ -24,7 +24,6 @@ begin observables
     Molecules pVav pVav()
     Molecules SHP1 SHP1()
     Molecules SHP1PVav SHP1PVav()
-
 end observables
 
 begin reaction rules

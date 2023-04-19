@@ -24,7 +24,6 @@ begin observables
     Molecules X4 X4()
     Molecules X5 X5()
     Molecules X6 X6()
-
 end observables
 
 begin reaction rules
