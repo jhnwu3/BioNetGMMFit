@@ -1,5 +1,5 @@
-Number of Particles Blind PSO,2100
-Number of Steps Blind PSO,150
+Number of Particles Blind PSO,1500
+Number of Steps Blind PSO,50
 Exclude Mixed Moments?,-1
 Exclude Mixed and Second Moments?,-1
 Number of Runs,30
@@ -15,4 +15,4 @@ Seed,-1
 ParallelNumberOfThreads,30
 Initial Particle Best Weight, 3.0
 Initial Global Best Weight, 1.0
-Particle Inertial Weight, 9.0
+Particle Inertial Weight, 6.0

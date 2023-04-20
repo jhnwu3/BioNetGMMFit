@@ -1,4 +1,4 @@
-python3 graph.py -f test/l6p/l6p_estimates.txt -g CI_truth -n "Linear 6 Protein" -r test/l6p/tr.csv 
+python3 graph.py -f test/l6p/l6p_est.csv -g CI_truth -n "Means Vars & Covars" -r test/l6p/tr.csv 
 python3 graph.py -f test/l6p/l6p_est_m.csv -g CI_truth -n "Linear 6 Protein Means Only" -r test/l6p/tr.csv 
 python3 graph.py -f test/l6p/l6p_est_mv.csv -g CI_truth -n "Linear 6 Protein Means and Variances Only" -r test/l6p/tr.csv 
 python3 graph.py -f test/l6p/6_pro_lint1.50_leastCostMoments.csv -g Moments -n "Linear 6 Protein" -m 6
