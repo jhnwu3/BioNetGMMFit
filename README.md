@@ -6,6 +6,8 @@ It takes into account both deterministic as well as stochastic models of evoluti
 
 [Software Paper](https://www.biorxiv.org/content/10.1101/2022.12.08.519526v1)
 
+For a quick web demo to see what one can do, please see [here](https://bngmm.nchigm.org/)
+
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
     1. [Docker](#docker)
