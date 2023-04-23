@@ -142,17 +142,21 @@ If you have docker desktop installed, its terminal view should show something li
     ./BNGMM -h 
 
 
-4. If you have executable errors and most likely are on a separate linux distribution (i.e redhat), make sure you're in the source directory.
+4. If you have executable errors and most likely are on a separate linux distribution (i.e redhat), we will need to recompile the executable. So, first sure you're in the build-release directory.
 
-        cd /path/to/your/dir/BNGMM_DockerBuild/BNGMM/src
+        cd /path/to/your/dir/BNGMM_DockerBuild/buildroadrunner/roadrunner/build-release
 
-5. Make sure to cmake:
+5. Make sure to cmake to reset all build-targets to your local directory:
 
+        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="../../llvm-13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
+
+        cmake --build . --target install --config Release
+
+6. Go to the BNGMM src directory and compile the executable
+
+        cd ../../../BNGMM/src
         cmake .
-
-6. compile the executable
-
-        make 
+        make
 
 7. Exit the src directory and run the options screen for all possible commands
 
