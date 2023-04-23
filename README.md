@@ -117,7 +117,7 @@ If you have docker desktop installed, its terminal view should show something li
 
 ![Result](/img/uiResults.png)
 
-### CMAKE Static Binary (Recommended for Linux and HPC Users) <a name="statbin"></a>
+### CMAKE Static Binary (Recommended for Linux/WSL and HPC Users) <a name="statbin"></a>
 
 1. Get prerequisites for compiling.
 
@@ -133,24 +133,33 @@ If you have docker desktop installed, its terminal view should show something li
 
     <!-- make sure to unzip the directory before use. Make sure you also have bionetgen installed, if not, look [here](https://bng-vscode-extension.readthedocs.io/en/latest/install.html). Or one can download a binary from Google Drive [here]() (might be missing). -->
 
-3. Then, make sure you're in the source directory.
+    and make sure to unzip the zip file.
 
-        cd /path/to/your/dir/CyGMM_DockerBuild/BNGMM/src
+        unzip BNGMM_Build.zip
 
-4. Make sure to cmake:
+3. To run BNGMM (Ubuntu and WSL Ubuntu users only)
+
+    ./BNGMM -h 
+
+
+4. If you have executable errors and most likely are on a separate linux distribution (i.e redhat), make sure you're in the source directory.
+
+        cd /path/to/your/dir/BNGMM_DockerBuild/BNGMM/src
+
+5. Make sure to cmake:
 
         cmake .
 
-5. compile the executable
+6. compile the executable
 
         make 
 
-6. Exit the src directory and run the options screen for all possible commands
+7. Exit the src directory and run the options screen for all possible commands
 
         cd ..
         ./BNGMM -h 
 
-7. As a final note, one can take out the BNGMM executable and throw it anywhere for use in any other directory. The rest of the directory can be discarded if space is a major concern.
+8. As a final note, one can take out the BNGMM executable and throw it anywhere for use in any other directory. The rest of the directory can be discarded if space is a major concern.
 
  
 ## Prequisites to Compiling <a name="prq"></a>
