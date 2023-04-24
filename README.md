@@ -125,7 +125,7 @@ If you have docker desktop installed, its terminal view should show something li
     pip install bionetgen matplotlib flask
 
 <!-- 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git) -->
-2. In your bash terminal, pick a suitable directory for your liking and download [here](https://sandbox.zenodo.org/record/1172961)
+2. In your bash terminal, pick a suitable directory for your liking and download [here](https://zenodo.org/record/7733865)
 
     <!-- to quickly download the program to a specified directory or if you don't have git, simply click on the green code button and left click download. Images below show where to click to download the zipfile. -->
     <!-- ![Step 1](/img/REPO.png)
