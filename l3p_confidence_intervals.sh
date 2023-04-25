@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0-99:10:00 
+#SBATCH --time=0-10:10:00 
 #SBATCH --job-name=l6p
 #SBATCH --partition=general
 #SBATCH --nodes=1
