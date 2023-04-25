@@ -165,7 +165,7 @@ If you have docker desktop installed, its terminal view should show something li
 
     Now, to quickly 
 
-6. Unfortunately, the rebuilding of this distribution's libRoadRunner build package will mostt likely contain minor bugs with pathing, but fortunately, there's an easy fix. Please go to the new install-Release's cmake directory.
+6. Unfortunately, the rebuilding of this distribution's libRoadRunner build package will most likely contain minor bugs with pathing, but fortunately, there's an easy fix. Please go to the new install-Release's cmake directory.
 
         cd ../install-Release/lib/cmake 
 
