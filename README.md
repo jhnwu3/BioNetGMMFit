@@ -143,28 +143,121 @@ If you have docker desktop installed, its terminal view should show something li
     ./BNGMM -h 
 
 
-4. If you have executable errors and most likely are on a separate linux distribution (i.e redhat), we will need to recompile the executable. So, first sure you're in the build-release directory.
+4. If you have executable errors and most likely are on a separate linux distribution (i.e redhat), we will need to recompile the executable. So, first make sure you're in the build-release directory.
 
-        cd /path/to/your/dir/BNGMM_DockerBuild/buildroadrunner/roadrunner/build-release
+        cd /path/to/your/dir/BNGMM_build/BNGMM_DockerBuild/buildroadrunner/roadrunner/build-release
 
-5. Make sure to cmake to reset all build-targets to your local directory:
+    where /path/to/your/dir is the directory that is housing your unzipped build folder. For instance, if you're in the downloads folder, it'd be something like 
+        
+        cd ~/Downloads/BNGMM_build/BNGMM_DockerBuild/buildroadrunner/roadrunner/build-release
 
-        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="../../llvm-13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
+5. cmake build to reset all build-targets to your local directory.
+
+        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="full/path/to/dir/llvm-13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
 
         cmake --build . --target install --config Release
 
-6. Go to the BNGMM src directory and compile the executable
+    For instance, if downloaded and unzipped in the Downloads directory, it might look like
 
-        cd ../../BNGMM/src
+        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="/home/user/Downloads/BNGMM_Build/BNGMM_DockerBuild/buildroadrunner/llvm-13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
+
+        cmake --build . --target install --config Release 
+
+    Now, to quickly 
+
+6. Unfortunately, the rebuilding of this distribution's libRoadRunner build package will mostt likely contain minor bugs with pathing, but fortunately, there's an easy fix. Please go to the new install-Release's cmake directory.
+
+        cd ../install-Release/lib/cmake 
+
+7. Now open the ImportRoadrunnerAndDependencies.cmake file with your preferred text editor.
+
+        vi ImportRoadrunnerAndDependencies.cmake 
+
+    where you will see something like the following below,
+
+        find_package(Threads) # for libxml2, FindThreads.cmake is shipped with cmake
+        find_package(LibLZMA) # for libxml2, LibLZMA.cmake is shipped with cmake
+        find_package(zlib CONFIG REQUIRED)
+        find_package(bzip2 CONFIG REQUIRED)
+        find_package(iconv CONFIG REQUIRED)
+        find_package(LibXml2 CONFIG REQUIRED)
+        find_package(libsbml-static CONFIG REQUIRED)
+        find_package(rr-libstruct CONFIG REQUIRED)
+        find_package(clapack CONFIG REQUIRED)
+        find_package(nleq1 CONFIG REQUIRED)
+        find_package(nleq2 CONFIG REQUIRED)
+        find_package(PocoFoundation CONFIG REQUIRED)
+        find_package(PocoNet CONFIG REQUIRED)
+        find_package(PocoXML CONFIG REQUIRED)
+        find_package(Sundials CONFIG REQUIRED)
+        find_package(LLVM REQUIRED)
+        find_package(roadrunner-static CONFIG REQUIRED)
+        find_package(roadrunner CONFIG REQUIRED)
+        find_package(roadrunner_c_api CONFIG REQUIRED)
+
+8. Edit this to edit the following line 
+
+        find_package(libsbml-static CONFIG REQUIRED)
+    
+    To
+
+        find_package(sbml-static CONFIG REQUIRED)
+
+
+    and 
+
+        find_package(sundials CONFIG REQUIRED)
+
+    to 
+
+        find_package(SUNDIALS CONFIG REQUIRED)
+
+    or just copy and paste the following into the ImportRoadrunnerAndDependencies.cmake file
+
+        find_package(Threads) # for libxml2, FindThreads.cmake is shipped with cmake
+        find_package(LibLZMA) # for libxml2, LibLZMA.cmake is shipped with cmake
+        find_package(zlib CONFIG REQUIRED)
+        find_package(bzip2 CONFIG REQUIRED)
+        find_package(iconv CONFIG REQUIRED)
+        find_package(LibXml2 CONFIG REQUIRED)
+        find_package(sbml-static CONFIG REQUIRED)
+        find_package(rr-libstruct CONFIG REQUIRED)
+        find_package(clapack CONFIG REQUIRED)
+        find_package(nleq1 CONFIG REQUIRED)
+        find_package(nleq2 CONFIG REQUIRED)
+        find_package(PocoFoundation CONFIG REQUIRED)
+        find_package(PocoNet CONFIG REQUIRED)
+        find_package(PocoXML CONFIG REQUIRED)
+        find_package(SUNDIALS CONFIG REQUIRED)
+        find_package(LLVM REQUIRED)
+        find_package(roadrunner-static CONFIG REQUIRED)
+        find_package(roadrunner CONFIG REQUIRED)
+        find_package(roadrunner_c_api CONFIG REQUIRED)
+
+10. Go to the BNGMM src directory and compile the executable
+
+        cd ../../../../../BNGMM/src
         cmake .
         make
 
-7. Exit the src directory and run the options screen for all possible commands
+    If it errors, and says something about the Eigen library (i.e cannot #include<Eigen/Dense>), taken from [stackoverflow](https://stackoverflow.com/questions/23284473/fatal-error-eigen-dense-no-such-file-or-directory), the solution would be to, depending on the Linux distribution and version,
+
+        cd /usr/local/include
+        sudo ln -sf eigen3/Eigen Eigen
+        sudo ln -sf eigen3/unsupported unsupported
+
+    or 
+
+        cd /usr/include
+        sudo ln -sf eigen3/Eigen Eigen
+        sudo ln -sf eigen3/unsupported unsupported
+
+11. Exit the src directory and run the options screen for all possible commands
 
         cd ..
         ./BNGMM -h 
 
-8. As a final note, one can take out the BNGMM executable and throw it anywhere for use in any other directory. The rest of the directory can be discarded if space is a major concern.
+12. As a final note, one can take out the BNGMM executable and throw it anywhere for use in any other directory. The rest of the directory can be discarded if space is a major concern.
 
  
 ## Prequisites to Compiling <a name="prq"></a>
