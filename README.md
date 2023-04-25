@@ -154,7 +154,7 @@ If you have docker desktop installed, its terminal view should show something li
 
 6. Go to the BNGMM src directory and compile the executable
 
-        cd ../../../BNGMM/src
+        cd ../../BNGMM/src
         cmake .
         make
 
