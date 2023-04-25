@@ -139,6 +139,7 @@ If you have docker desktop installed, its terminal view should show something li
 
 3. To run BNGMM (Ubuntu and WSL Ubuntu users only)
 
+    cd BNGMM_Build/BNGMM_DockerBuild/BNGMM
     ./BNGMM -h 
 
 
