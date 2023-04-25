@@ -18,7 +18,7 @@
       <species id="S3" compartment="cell" initialAmount="5.251" name="X3()"/>
       <species id="S4" compartment="cell" initialAmount="435.2968" name="X4()"/>
       <species id="S5" compartment="cell" initialAmount="5.809538" name="X5()"/>
-      <species id="S6" compartment="cell" initialAmount="6.254916" name="X6()"/>
+      <species id="S6" compartment="cell" initialAmount="0" name="X6()"/>
     </listOfSpecies>
     <listOfParameters>
       <!-- Independent variables -->
@@ -34,7 +34,6 @@
       <parameter id="X3" constant="false"/>
       <parameter id="X4" constant="false"/>
       <parameter id="X5" constant="false"/>
-      <parameter id="X6" constant="false"/>
     </listOfParameters>
     <listOfRules>
       <!-- Observables -->
@@ -80,15 +79,6 @@
               <plus/>
               <cn> 0 </cn>
               <ci> S5 </ci>
-            </apply>
-          </math>
-      </assignmentRule>
-      <assignmentRule variable="X6">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <plus/>
-              <cn> 0 </cn>
-              <ci> S6 </ci>
             </apply>
           </math>
       </assignmentRule>
@@ -150,7 +140,7 @@
           <speciesReference species="S4"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="S6"/>
+          <speciesReference species="S5"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -167,7 +157,7 @@
           <speciesReference species="S5"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="S4"/>
+          <speciesReference species="S6"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -175,23 +165,6 @@
               <times/>
               <ci> k5 </ci>
               <ci> S5 </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="R6" reversible="false">
-        <listOfReactants>
-          <speciesReference species="S6"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="S2"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> k6 </ci>
-              <ci> S6 </ci>
             </apply>
           </math>
         </kineticLaw>
