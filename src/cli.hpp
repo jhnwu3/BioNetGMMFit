@@ -18,6 +18,10 @@ bool holdRates(int argc, char **argv);
 bool seedRates(int argc, char **argv);
 bool forecast(int argc, char **argv);
 bool contour(int argc, char **argv);
+bool useSBML(int argc, char **argv);
+
+
+string getSBML(int argc, char**argv);
 
 string getContourTheta1(int argc, char**argv);
 string getContourTheta2(int argc, char**argv);

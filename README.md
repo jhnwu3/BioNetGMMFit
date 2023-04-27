@@ -153,17 +153,17 @@ If you have docker desktop installed, its terminal view should show something li
 
 5. cmake build to reset all build-targets to your local directory.
 
-        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="full/path/to/dir/llvm-13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
+        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="full/path/to/dir/llvm13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
 
         cmake --build . --target install --config Release
 
     For instance, if downloaded and unzipped in the Downloads directory, it might look like
 
-        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="/home/user/Downloads/BNGMM_Build/BNGMM_DockerBuild/buildroadrunner/llvm-13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
+        cmake -DCMAKE_INSTALL_PREFIX="../install-Release" -DLLVM_INSTALL_PREFIX="/home/user/Downloads/BNGMM_Build/BNGMM_DockerBuild/buildroadrunner/llvm13-ubuntu-gcc10-rel" -DRR_DEPENDENCIES_INSTALL_PREFIX="../../libroadrunner-deps/install-Release" -DCMAKE_BUILD_TYPE="Release" ..
 
         cmake --build . --target install --config Release 
 
-    Now, to quickly 
+    Now, one might run into errors in the process of compilation (i.e cannot find LLVM or something like that), which we will explain how to resolve below.
 
 6. Unfortunately, the rebuilding of this distribution's libRoadRunner build package will most likely contain minor bugs with pathing, but fortunately, there's an easy fix. Please go to the new install-Release's cmake directory.
 

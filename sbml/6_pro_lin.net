@@ -13,14 +13,15 @@ begin species
     3 X3() 5.251
     4 X4() 435.2968
     5 X5() 5.809538
-    6 X6() 0
+    6 X6() 6.254916
 end species
 begin reactions
     1 1 2 k1 #_R1
     2 2 3 k2 #_R2
     3 3 4 k3 #_R3
-    4 4 5 k4 #_R4
-    5 5 6 k5 #_R5
+    4 4 6 k4 #_R4
+    5 5 4 k5 #_R5
+    6 6 2 k6 #_R6
 end reactions
 begin groups
     1 X1                   1
@@ -28,4 +29,5 @@ begin groups
     3 X3                   3
     4 X4                   4
     5 X5                   5
+    6 X6                   6
 end groups

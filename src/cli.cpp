@@ -119,6 +119,15 @@ bool contour(int argc, char **argv){
     return flag != -1;
 }
 
+bool useSBML(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "-sbml");
+    return flag != -1;
+}
+
+string getSBML(int argc, char**argv){
+    int flag = getIndexFlag(argc, argv, "-sbml");
+    return argv[flag+1];
+}
 
 string getContourTheta1(int argc, char**argv){
     int flag = getIndexFlag(argc, argv, "--contour");

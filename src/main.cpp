@@ -105,7 +105,7 @@ int main(int argc, char** argv){
     }
     /* Default Bionetgen Mode */
     vector<string> parameterNames;
-    if(parameters.useSBML > 0){
+    if(parameters.useSBML > 0 || useSBML(argc, argv) > 0){
         const string bngl = ".bngl"; // suffixes for sbml/bngl file types
         const string sbml = "_sbml.xml";
 
@@ -115,11 +115,14 @@ int main(int argc, char** argv){
         string sbmlModel = "sbml/"+ file_without_extension + sbml;
         const string bnglCall = "bionetgen run -i" + modelPath + " -o sbml";
         Grapher graph = Grapher(parameters.outPath, file_without_extension, getTrueRatesPath(argc, argv), times, parameters.nRates);
-        if(system(bnglCall.c_str()) < 0){
+        if(system(bnglCall.c_str()) < 0 && useSBML(argc, argv) < 0){
             cout << "Error Running BioNetGen -> Make sure you have installed it through pip install bionetgen or check program permissions!" << endl;
             return EXIT_FAILURE;
         }
         /* RoadRunner Configuration and Simulation Variables */
+        if(useSBML(argc, argv)){
+            sbmlModel = getSBML(argc,argv);
+        }
         RoadRunner r = RoadRunner(sbmlModel);
         vector<int> specifiedProteins;
         parameterNames = r.getGlobalParameterIds(); // parameter names check
@@ -709,7 +712,7 @@ int main(int argc, char** argv){
     ******************************************************************************************************************************
     */
     }else{
-        cout << "Error No .BNGL Model Specified! Please specify a model by \"./BNGMM -m model.bngl\". To get more possible BNGMM parameters, please do \"./BNGMM -h\". Exiting!" << endl;
+        cout << "Error No .BNGL or SBML Model Specified! Please specify a model by \"./BNGMM -m model.bngl\". To get more possible BNGMM parameters, please do \"./BNGMM -h\". Exiting!" << endl;
         return EXIT_FAILURE;
     }
     /* 
