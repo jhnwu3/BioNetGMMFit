@@ -549,23 +549,25 @@ and then call BioNetGMMFit with the -p tag as such.
 
 Example BioNetGen Models and their .bngl files can be found in example/ such as the one seen with /6_pro_nonlin_sim_slim/6pro.bngl.
 More documentation of BioNetGen can be found [here](http://bionetgen.org/)
+
+Other command line arguments can be shown in the table below.
+
+![cliargs](/img/CommandLineArguments.png)
+
 ## **Directory Structure (In Progress)** ## <a name="dir"></a>
 
-### *CyGMM*
+### *BNGMM*
 Main Directory with general configuration files and system.cpp code files.
 
 ### *src*
 Contains all C++ source and header files needed to recompile the program.
-
-### *data*
-This is where protein input data is read in from the program. Example data (used in the paper) is provided in the example folder.
 
 ### *example*
 Contains various examples for use with the linear and nonlinear system provided by default in the program / code. There should be codes associated with them. The 4 protein CD8 T Cell data was sourced from [here](https://dpeerlab.github.io/dpeerlab-website/dremi-data.html).
 
 
 
-### *(defunct)* Mounting Volumes and Running Command Line Version of BNGMM Docker
+### *(not updated to match most recent C++ version)* Mounting Volumes and Running Command Line Version of BNGMM Docker
   
 Mounting Volumes to Write/Feed in Own Configuration Files (in the process of writing a python script to run this process with docker), do:
 
