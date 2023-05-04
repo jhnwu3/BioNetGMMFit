@@ -11,7 +11,7 @@ For a quick web demo to see what one can do, please see [here](https://bngmm.nch
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
     1. [Docker](#docker)
-    2. [Static Binary](#statbin)
+    2. [Static Binary (Recommended for Linux Users and Performance)](#statbin)
 2. [Prerequisites](#paragraph1)
     1. [Eigen](#eig)
     2. [Boost](#bst)
