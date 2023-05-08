@@ -314,9 +314,15 @@ To run the program, simply enter
 
 in your terminal. For more information about parameters and writing your own system, look below.
 
-### Examples
+### Simple Example
 
 Examples of parameter estimation tasks and models are in the example/ directory of the repo. In particular, the ones used in the [Software Paper](https://www.biorxiv.org/content/10.1101/2022.12.08.519526v1) (revision in progress as of 5/3/2023 so may be outdated currently) were of the linear 6 protein model under the "6_pro_lin_sim/" or "l6p_5p_sim/" directories, the yeast nonlinear model under "yeast/" directory, the 6 protein nonlinear model under "6_pro_nonlinear_slim/" directory, and the CD8+ T cell problem under "4_prot_CD3_CD8_CD28/". Please note that each directory should contain two directories, "X/" and "Y/" with their respective time snapshot data files, each should contain some .bngl file that would be ran for parameter estimation, and each should contain a time_steps.csv file that defines the time points of evolution that are being analyzed. Some directories also contain a true_rates.csv file that contain the rate constants (in order i.e topmost value corresponds to the first rate constant defined in the .bngl file) that were used for simulating the data (for examples containing simulated datasets). 
+
+An example of one running BioNetGMMFit for a simple linear 3 protein problem (in CLI form) would be the following
+
+    ./BNGMM -m example/3_prot_linear_sim/model.bngl -x example/3_prot_linear_sim/X -y example/3_prot_linear_sim/Y -t example/3_prot_linear_sim/time_steps.csv -r example/3_prot_linear_sim/true_rates.csv -c example/3_prot_linear_sim/Config.csv -o test/l3p/ --contour k1 k2
+
+where it will run parameter estimation and save the results to the test/l3p/ directory. It will generate some contour plots as well and simulate the data at the given time steps in the time_steps.csv file. 
 
 ## Program Inputs <a name="pin"></a>
 All data inputs are taken from the Data directory. By default, a set of randomly generated data points have been provided for the 3 species linear case for both X_0 and Y_0. For more run example data, look into the folder titled
