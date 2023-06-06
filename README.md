@@ -8,6 +8,8 @@ It takes into account both deterministic as well as stochastic models of evoluti
 
 For a quick web demo to see what one can do, please see [here](https://bngmm.nchigm.org/)
 
+For those who are unfamiliar with why one would even care about generalized method of moments (GMM), please look [here](https://github.com/jhnwu3/BioNetGMMFit/blob/main/example/gmm_tutorial.ipynb) for a quick python tutorial.
+
 # Table of Contents
 1. [Quickstart Guide](#qstrt)
     1. [Docker](#docker)
