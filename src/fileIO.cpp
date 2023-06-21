@@ -429,3 +429,8 @@ VectorXd readSeed(int nRates, const string& path){
     input.close();
     return rates;
 }
+
+void writeSurrogate(MatrixXd & posmat, MatrixXd & moments, const string & fileName){
+    matrixToCsv(posmat, fileName + "_params");
+    matrixToCsv(moments, fileName + "_moms");
+}

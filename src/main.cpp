@@ -32,6 +32,11 @@ int main(int argc, char** argv){
         parameters.outPath = getOutputPath(argc,argv);       
         fs::create_directory(parameters.outPath);
     }
+    bool generatingSurrogate = generateSurrogate(argc, argv); // use a local variable because calling a function every time to access argv and argc is inefficient.
+    if(generatingSurrogate){
+        fs::create_directory(parameters.outPath + "/surrogate/");
+    }
+    
     /* Read time steps*/
     VectorXd times = readCsvTimeParam(getTimeStepsPath(argc, argv));
     /* Important! Max Thread Count Test */
@@ -338,6 +343,9 @@ int main(int argc, char** argv){
                 }
             }
             // make sure to reset GBMAT, POSMAT, AND PBMAT every run
+            // sfe is the pInertia wt
+            //  sfp ~ particle best
+            // sfg ~ global best
             double sfi = sfe, sfc = sfp, sfs = sfg; // below are the variables being used to reiterate weights
             GBMAT = MatrixXd::Zero(0,0); // iterations of global best vectors
             MatrixXd PBMAT = MatrixXd::Zero(parameters.nParts, parameters.nRates + 1); // particle best matrix + 1 for cost component
@@ -400,8 +408,11 @@ int main(int argc, char** argv){
             GBMAT(GBMAT.rows() - 1, parameters.nRates) = gCost;
             double probabilityToTeleport = 3.0/4.0; 
             /* Blind PSO begins */
+            
+           
             cout << "PSO Estimation Has Begun, This may take some time..." << endl;
             for(int step = 0; step < parameters.nSteps; step++){
+                MatrixXd surrogateData = MatrixXd::Zero(parameters.nParts, nMoments);
             #pragma omp parallel for schedule(dynamic)
                 for(int particle = 0; particle < parameters.nParts; particle++){
                     /* initialize all particle rate constants with unifDist */
@@ -423,6 +434,7 @@ int main(int argc, char** argv){
                             POSMAT(particle, i) = pUnifDist(pGen);
                             scaledPos(i)= parameters.hyperCubeScale * POSMAT(particle,i);
                         }
+
                         if(holdRates(argc,argv)){
                             for(int i = 0; i < heldTheta.rows(); ++i){
                                 if (heldTheta(i,0) != 0){
@@ -456,6 +468,10 @@ int main(int argc, char** argv){
                                 }
                             }
                             VectorXd XtmVec = momentVector(XtMat, nMoments);
+                            if(generatingSurrogate){
+                                surrogateData.row(particle) = XtmVec;
+                            }
+                            
                             cost += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]); 
                         }
                         
@@ -512,12 +528,19 @@ int main(int argc, char** argv){
                                 }
                             }
                             VectorXd XtmVec = momentVector(XtMat, nMoments);
+                            if(generatingSurrogate){
+                                surrogateData.row(particle) = XtmVec;
+                            }
                             cost += costFunction(yt3Vecs[t - 1], XtmVec, weights[t - 1]);   
                         }
                     
                         /* update gBest and pBest */
                     #pragma omp critical
-                    {
+                    {   
+                        if(generatingSurrogate){
+                            cout << "SURROGATE DATA GENERATION!!!" << endl;
+                            writeSurrogate(POSMAT, surrogateData, parameters.outPath + "/surrogate/" + file_without_extension + "_step" + to_string(step));
+                        }
                         if(cost < PBMAT(particle, parameters.nRates)){ // particle best cost
                             for(int i = 0; i < parameters.nRates; i++){
                                 PBMAT(particle, i) = POSMAT.row(particle)(i);

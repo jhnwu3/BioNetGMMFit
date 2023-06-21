@@ -124,6 +124,11 @@ bool useSBML(int argc, char **argv){
     return flag != -1;
 }
 
+bool generateSurrogate(int argc, char **argv){
+    int flag = getIndexFlag(argc, argv, "--surrogate");
+    return flag != -1;
+}
+
 string getSBML(int argc, char**argv){
     int flag = getIndexFlag(argc, argv, "-sbml");
     return argv[flag+1];

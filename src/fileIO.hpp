@@ -29,6 +29,7 @@ void matrixToCsvWithLabels(const MatrixXd& mat,  vector<string> &labels, const s
 void vectorToCsv(const VectorXd& v, const string& fileName);
 void reportLeastCostMoments(const VectorXd & est, const VectorXd & obs, double t, const string& fileName);
 void reportAllMoments(vector<MatrixXd> & x, vector<VectorXd> & y, const VectorXd& times, const string& fileName);
+void writeSurrogate(MatrixXd & posmat, MatrixXd & moments, const string & fileName);
 /* Reading in time and rate parameters */
 VectorXd readCsvTimeParam(const string &path);
 VectorXd readRates(int nRates, const string &path);

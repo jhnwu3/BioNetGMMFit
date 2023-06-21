@@ -19,7 +19,7 @@ bool seedRates(int argc, char **argv);
 bool forecast(int argc, char **argv);
 bool contour(int argc, char **argv);
 bool useSBML(int argc, char **argv);
-
+bool generateSurrogate(int argc, char**argv);
 
 string getSBML(int argc, char**argv);
 
