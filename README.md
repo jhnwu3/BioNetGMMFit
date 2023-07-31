@@ -141,8 +141,8 @@ If you have docker desktop installed, its terminal view should show something li
 
 3. To run BNGMM (Ubuntu and WSL Ubuntu users only)
 
-    cd BNGMM_Build/BNGMM_DockerBuild/BNGMM
-    ./BNGMM -h 
+        cd BNGMM_Build/BNGMM_DockerBuild/BNGMM
+        ./BNGMM -h 
 
 
 4. If you have executable errors and most likely are on a separate linux distribution (i.e redhat), we will need to recompile the executable. So, first make sure you're in the build-release directory.

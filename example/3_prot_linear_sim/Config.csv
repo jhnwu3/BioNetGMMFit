@@ -1,5 +1,5 @@
-Number of Particles Blind PSO,200
-Number of Steps Blind PSO,30
+Number of Particles Blind PSO,1000
+Number of Steps Blind PSO,10
 Exclude Mixed Moments?,-1
 Exclude Mixed and Second Moments?,-1
 Number of Runs,10
