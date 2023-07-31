@@ -123,8 +123,8 @@ If you have docker desktop installed, its terminal view should show something li
 
 1. Get prerequisites for compiling.
 
-    sudo apt-get install -y build-essential git cmake autoconf libtool pkg-config libncurses5-dev libeigen3-dev libboost-all-dev python3 python3-pip && \
-    pip install bionetgen matplotlib flask
+        sudo apt-get install -y build-essential git cmake autoconf libtool pkg-config libncurses5-dev libeigen3-dev libboost-all-dev python3 python3-pip && \
+        pip install bionetgen matplotlib flask
 
 <!-- 0. Make sure to have git installed, see [here](https://github.com/git-guides/install-git) -->
 2. In your bash terminal, pick a suitable directory for your liking and download [here](https://zenodo.org/record/7733865)
